@@ -14,10 +14,12 @@ return new class extends Migration
         Schema::create('areas_on_specialties', function (Blueprint $table) {
             $table->foreignId('know_area_id')
                 ->references('id')
-                ->on('know_areas');
+                ->on('know_areas')
+                ->onDelete('cascade');
             $table->foreignId('specialty_id')
                 ->references('id')
-                ->on('specialties');
+                ->on('specialties')
+                ->onDelete('cascade');
             $table->primary(['know_area_id', 'specialty_id']);
             $table->timestamps();
         });

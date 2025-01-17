@@ -14,10 +14,12 @@ return new class extends Migration
         Schema::create('specialties_on_topics', function (Blueprint $table) {
             $table->foreignId('specialty_id')
                 ->references('id')
-                ->on('specialties');
+                ->on('specialties')
+                ->onDelete('cascade');
             $table->foreignId('topic_id')
                 ->references('id')
-                ->on('topics');
+                ->on('topics')
+                ->onDelete('cascade');
             $table->primary(['specialty_id', 'topic_id']);
             $table->timestamps();
         });
