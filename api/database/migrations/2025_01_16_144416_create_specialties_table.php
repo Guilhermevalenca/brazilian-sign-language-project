@@ -14,9 +14,6 @@ return new class extends Migration
         Schema::create('specialties', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->foreignId('know_area_id')
-                ->references('id')
-                ->on('know_areas');
             $table->timestamps();
         });
     }
