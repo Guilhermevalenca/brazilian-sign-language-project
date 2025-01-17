@@ -14,9 +14,6 @@ return new class extends Migration
         Schema::create('topics', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->foreignId('specialty_id')
-                ->references('id')
-                ->on('specialties');
             $table->timestamps();
         });
     }
