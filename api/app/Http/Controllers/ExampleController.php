@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreExampleRequest;
 use App\Http\Requests\UpdateExampleRequest;
 use App\Models\Example;
 

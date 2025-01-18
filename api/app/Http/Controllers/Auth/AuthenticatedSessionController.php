@@ -17,9 +17,11 @@ class AuthenticatedSessionController extends Controller
     {
         $request->authenticate();
 
-        $request->session()->regenerate();
+//        $request->session()->regenerate();
 
-        return response()->noContent();
+        return response([
+            'token' => auth()->user()->createToken('user')->plainTextToken
+        ], 200);
     }
 
     /**

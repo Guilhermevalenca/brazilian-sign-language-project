@@ -13,7 +13,7 @@ class KeywordController extends Controller
      */
     public function index()
     {
-        //
+        return Keyword::paginate();
     }
 
     /**
@@ -29,7 +29,11 @@ class KeywordController extends Controller
      */
     public function store(StoreKeywordRequest $request)
     {
-        //
+        $validation = $request->validated();
+
+        Keyword::create($validation);
+
+        return response(null, 204);
     }
 
     /**
