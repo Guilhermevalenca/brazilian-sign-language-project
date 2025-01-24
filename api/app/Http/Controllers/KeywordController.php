@@ -41,7 +41,7 @@ class KeywordController extends Controller
      */
     public function show(Keyword $keyword)
     {
-        //
+        return response($keyword, 200);
     }
 
     /**
@@ -57,7 +57,11 @@ class KeywordController extends Controller
      */
     public function update(UpdateKeywordRequest $request, Keyword $keyword)
     {
-        //
+        $validation = $request->validated();
+
+        $keyword->update($validation);
+
+        return response(null, 204);
     }
 
     /**
@@ -65,6 +69,8 @@ class KeywordController extends Controller
      */
     public function destroy(Keyword $keyword)
     {
-        //
+        $keyword->delete();
+
+        return response(null, 204);
     }
 }

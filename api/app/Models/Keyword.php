@@ -9,4 +9,8 @@ class Keyword extends Model
 {
     /** @use HasFactory<\Database\Factories\KeywordFactory> */
     use HasFactory;
+
+    protected $fillable = [
+        'name',
+    ];
 }
