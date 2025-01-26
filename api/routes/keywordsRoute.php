@@ -8,15 +8,20 @@ Route::prefix('keywords')
     ->whereNumber('keyword')
     ->group(function () {
 
-        Route::get('', 'index');
-        Route::get('{keyword}', 'show');
+        Route::get('', 'index')
+            ->name('keywords.index');
+        Route::get('{keyword}', 'show')
+            ->name('keywords.show');
 
         Route::middleware(['auth:sanctum'])
             ->group(function () {
 
-                Route::post('', 'store');
-                Route::put('{keyword}', 'update');
-                Route::delete('{keyword}', 'destroy');
+                Route::post('', 'store')
+                    ->name('keywords.store');
+                Route::put('{keyword}', 'update')
+                    ->name('keywords.update');
+                Route::delete('{keyword}', 'destroy')
+                    ->name('keywords.destroy');
 
             });
 
