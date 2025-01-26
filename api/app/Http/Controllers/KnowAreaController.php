@@ -13,7 +13,7 @@ class KnowAreaController extends Controller
      */
     public function index()
     {
-        //
+        return KnowArea::paginate();
     }
 
     /**
@@ -29,7 +29,13 @@ class KnowAreaController extends Controller
      */
     public function store(StoreKnowAreaRequest $request)
     {
-        //
+        $validated = $request->validate([
+            'nome' => 'required|string|max:255',
+        ]);
+
+        $knowarea = Knowarea::create($validated);
+
+        return response()->json($knowarea, 201);
     }
 
     /**
