@@ -11,7 +11,7 @@ class StoreSignRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,17 @@ class StoreSignRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => ['required', 'string'],
+            'display' => ['required', 'string'],
+            'moveset' => ['nullable', 'array'],
+            'moveset.right' => ['required_with:moveset', 'string'],
+            'moveset.left' => ['required_with:moveset', 'string'],
+            'examples' => ['nullable', 'array'],
+            'examples.*.description' => ['required_with:examples', 'string'],
+            'examples.*.display' => ['required_with:examples', 'string'],
+            'description' => ['nullable', 'array'],
+            'description.text' => ['required_with:description', 'string'],
+            'description.display' => ['required_with:description', 'string'],
         ];
     }
 }
