@@ -9,15 +9,20 @@ Route::prefix('signs')
     ->whereNumber('sign')
     ->group(function () {
 
-        Route::get('', 'index');
-        Route::get('{sign}', 'show');
+        Route::get('', 'index')
+            ->name('sign.index');
+        Route::get('{sign}', 'show')
+            ->name('sign.show');
 
         Route::middleware('auth:sanctum')
             ->group(function () {
 
-                Route::post('', 'store');
-                Route::put('{sign}', 'update');
-                Route::delete('{sign}', 'destroy');
+                Route::post('', 'store')
+                    ->name('sign.store');
+                Route::put('{sign}', 'update')
+                    ->name('sign.update');
+                Route::delete('{sign}', 'destroy')
+                    ->name('sign.destroy');
 
             });
 
