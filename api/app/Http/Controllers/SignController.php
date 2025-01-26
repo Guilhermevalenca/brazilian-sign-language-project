@@ -29,7 +29,23 @@ class SignController extends Controller
      */
     public function store(StoreSignRequest $request)
     {
-        //
+        $validated = $request->validated();
+
+        $sign = Sign::create($validated);
+
+        if(array_key_exists('moveset', $validated)){
+            $sign->moveset()->create($validated['moveset']);
+        }
+
+        if(array_key_exists('examples', $validated)){
+            $sign->examples()->createMany($validated['examples']);
+        }
+
+        if(array_key_exists('description', $validated)){
+            $sign->description()->create($validated['description']);
+        }
+
+        return response(null, 204);
     }
 
     /**
