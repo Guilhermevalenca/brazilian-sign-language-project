@@ -1,92 +1,92 @@
 type KnowArea {
     id: ID!
     name: String!
-    specialties: [Specialties!]!
-    keywords: [Keywords!]
+    specialties: [Specialty!]!
+    keywords: [Keyword!]
 }
 
-type Specialties {
+type Specialty {
     id: ID!
     name: String!
     areas: [KnowArea!]
-    topics: [Topics!]
-    keywords: [Keywords!]
+    topics: [Topic!]
+    keywords: [Keyword!]
 }
 
-type Topics {
+type Topic {
     id: ID!
     name: String!
-    specialties: [Specialties!]
-    keywords: [Keywords!]
-    signs: [Signs!]
+    specialties: [Specialty!]
+    keywords: [Keyword!]
+    signs: [Sign!]
 }
 
- type Keywords {
+ type Keyword {
      id: ID!
      name: String!
      areas: [KnowArea!]
-     specialties: [Specialties!]
-     topics: [Topics!]
-     signs: [Signs!]
+     specialties: [Specialty!]
+     topics: [Topic!]
+     signs: [Sign!]
  }
 
-type Signs {
+type Sign {
     id: ID!
     name: String!
     display: String!
     topic_id: Int!
-    topic: Topics!
-    keywords: [Keywords!]
-    moveset: Movesets!
-    description: Descriptions!
-    examples: [Examples!]
+    topic: Topic!
+    keywords: [Keyword!]
+    moveset: Moveset!
+    description: Description!
+    examples: [Example!]
 }
 
-type Movesets {
+type Moveset {
     id: ID!
     right: String!
     left: String!
     sign_id: Int!
-    sign: Signs!
+    sign: Sign!
 }
 
-type Descriptions {
+type Description {
     id: ID!
     text: String!
     display: String!
     sign_id: Int!
-    sign: Signs!
+    sign: Sign!
 }
 
-type Examples {
+type Example {
     id: ID!
     description: String!
     display: String!
     sign_id: Int!
-    sign: Signs!
+    sign: Sign!
 }
 
 type Query {
     area(id: Int!): KnowArea
     areas: [KnowArea!] @paginate
 
-    specialty(id: Int!): Specialties
-    specialties: [Specialties!] @paginate
+    specialty(id: Int!): Specialty
+    specialties: [Specialty!] @paginate
 
-    topic(id: Int!): Topics
-    topics: [Topics!] @paginate
+    topic(id: Int!): Topic
+    topics: [Topic!] @paginate
 
-    keyword(name: String! @where(operator: "Like")): [Topics!] @paginate
+    keyword(name: String! @where(operator: "Like")): [Topic!] @paginate
 
-    sign(id: Int!): Signs
-    signs: [Topics!] @paginate
+    sign(id: Int!): Sign
+    signs: [Topic!] @all
 
-    moveset(id: Int!): Movesets
-    movesets: [Movesets!] @paginate
+    moveset(id: Int!): Moveset
+    movesets: [Moveset!] @paginate
 
-    description(id: Int!): Descriptions
-    descriptions: [Descriptions!] @paginate
+    description(id: Int!): Description
+    descriptions: [Description!] @paginate
 
-    example(id: Int!): Examples
-    examples: [Examples!] @paginate
+    example(id: Int!): Example
+    examples: [Example!] @paginate
 }
