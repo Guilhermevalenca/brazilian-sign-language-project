@@ -1,8 +1,92 @@
-type User {
+type KnowArea {
     id: ID!
     name: String!
+    specialties: [Specialties!]!
+    keywords: [Keywords!]
+}
+
+type Specialties {
+    id: ID!
+    name: String!
+    areas: [KnowArea!]
+    topics: [Topics!]
+    keywords: [Keywords!]
+}
+
+type Topics {
+    id: ID!
+    name: String!
+    specialties: [Specialties!]
+    keywords: [Keywords!]
+    signs: [Signs!]
+}
+
+ type Keywords {
+     id: ID!
+     name: String!
+     areas: [KnowArea!]
+     specialties: [Specialties!]
+     topics: [Topics!]
+     signs: [Signs!]
+ }
+
+type Signs {
+    id: ID!
+    name: String!
+    display: String!
+    topic_id: Int!
+    topic: Topics!
+    keywords: [Keywords!]
+    moveset: Movesets!
+    description: Descriptions!
+    examples: [Examples!]
+}
+
+type Movesets {
+    id: ID!
+    right: String!
+    left: String!
+    sign_id: Int!
+    sign: Signs!
+}
+
+type Descriptions {
+    id: ID!
+    text: String!
+    display: String!
+    sign_id: Int!
+    sign: Signs!
+}
+
+type Examples {
+    id: ID!
+    description: String!
+    display: String!
+    sign_id: Int!
+    sign: Signs!
 }
 
 type Query {
-    users: [User!]! @all
+    area(id: Int!): KnowArea
+    areas: [KnowArea!] @paginate
+
+    specialty(id: Int!): Specialties
+    specialties: [Specialties!] @paginate
+
+    topic(id: Int!): Topics
+    topics: [Topics!] @paginate
+
+    keyword(name: String! @where(operator: "Like")): [Topics!] @paginate
+
+    sign(id: Int!): Signs
+    signs: [Topics!] @paginate
+
+    moveset(id: Int!): Movesets
+    movesets: [Movesets!] @paginate
+
+    description(id: Int!): Descriptions
+    descriptions: [Descriptions!] @paginate
+
+    example(id: Int!): Examples
+    examples: [Examples!] @paginate
 }
