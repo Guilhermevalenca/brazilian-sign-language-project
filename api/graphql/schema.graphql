@@ -79,7 +79,7 @@ type Query {
     keyword(name: String! @where(operator: "Like")): [Topic!] @paginate
 
     sign(id: Int!): Sign
-    signs: [Topic!] @all
+    signs: [Topic!] @paginate
 
     moveset(id: Int!): Moveset
     movesets: [Moveset!] @paginate
