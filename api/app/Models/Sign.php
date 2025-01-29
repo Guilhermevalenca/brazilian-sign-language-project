@@ -12,7 +12,7 @@ class Sign extends Model
     /** @use HasFactory<\Database\Factories\SignFactory> */
     use HasFactory;
 
-    public function movesets(): HasOne
+    public function moveset(): HasOne
     {
         return $this->hasOne(Moveset::class);
     }
@@ -22,7 +22,7 @@ class Sign extends Model
         return $this->hasMany(Example::class);
     }
 
-    public function descriptions(): HasOne
+    public function description(): HasOne
     {
         return $this->hasOne(Description::class);
     }
