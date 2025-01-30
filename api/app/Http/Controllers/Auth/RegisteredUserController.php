@@ -38,6 +38,6 @@ class RegisteredUserController extends Controller
 
         return response([
             'token' => $user->createToken($user->email)->plainTextToken
-        ], 200);
+        ],201);
     }
 }
