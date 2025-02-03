@@ -12,7 +12,6 @@
 
 import User from "~/classes/User";
 import AuthService from "~/services/AuthService";
-import UserService from "~/services/UserService";
 import useUserStore from '~/stores/useUserStore';
 
 export default defineComponent({
@@ -33,8 +32,7 @@ export default defineComponent({
       const response = await AuthService.login(this.$axios, this.user)
 
       if(response) {
-        await new UserService(useUserStore().data)
-            .fetch(this.$axios);
+        await useUserStore().data.fetch(this.$axios);
         this.$router.push('/');
       }
     }
