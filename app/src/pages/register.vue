@@ -14,8 +14,8 @@
 
 <script lang="ts">
 import User from "~/classes/User";
-import UserService from '~/services/UserService';
 import useUserStore from '~/stores/useUserStore';
+import {type AxiosError, type AxiosResponse} from "axios";
 
 export default defineComponent({
   name: "register",
@@ -34,15 +34,19 @@ export default defineComponent({
 
   methods: {
     async submit() {
-      await new UserService(this.user)
-          .register(this.$axios)
-          .then((res) => {
-            if(res) {
-              useUserStore().data.sync(this.user);
-              alert('success');
-              this.$router.push('/');
-            }
-          })
+      try {
+        const res = await this.user.register(this.$axios);
+        if(typeof res === 'object' && 'data' in res) {
+          const token = res.data.token;
+          this.$axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+          localStorage.setItem('token', token);
+
+          await useUserStore().data.fetch(this.$axios);
+          this.$router.push('/');
+        }
+      } catch (e: AxiosResponse | AxiosError | any) {
+        console.log(e);
+      }
     }
   },
 });

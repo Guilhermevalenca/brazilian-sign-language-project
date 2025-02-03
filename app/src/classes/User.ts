@@ -1,18 +1,19 @@
-import type {ApiModel} from "~/interfaces/ApiModel";
-import type {AxiosInstance} from "axios";
+import type {IApiModel} from "~/interfaces/IApiModel";
+import type {UserType} from "~/types/UserType";
+import type {AxiosInstance, AxiosResponse} from "axios";
 
 export type UserType = {
     id?: number;
     name?: string;
     email?: string;
-    password?: string | undefined;
-    password_confirmation?: string | undefined;
+    password?: string;
+    password_confirmation?: string;
 }
 
-export default class User implements UserType {
-    id?: number;
-    name?: string;
-    email?: string;
+export default class User implements UserType, IApiModel {
+    id?: number | undefined;
+    name?: string | undefined;
+    email?: string | undefined;
     password?: string | undefined;
     password_confirmation?: string | undefined;
 
@@ -30,5 +31,24 @@ export default class User implements UserType {
         this.email = data.email;
         this.password = data.password;
         this.password_confirmation = data.password_confirmation;
+    }
+
+    async fetch(axios: AxiosInstance): Promise<void | boolean | AxiosResponse> {
+        return axios.get('api/user')
+            .then((res: AxiosResponse) => {
+                this.sync(res.data);
+            });
+    }
+
+    async register(axios: AxiosInstance): Promise<void | boolean | AxiosResponse> {
+        return axios.post('api/register', this as UserType) as Promise<AxiosResponse>;
+    }
+
+    update(): Promise<void | boolean | AxiosResponse> {
+        throw new Error('Método não implementado!');
+    }
+
+    delete(): Promise<void | boolean | AxiosResponse> {
+        throw new Error('Método não implementado!');
     }
 }
