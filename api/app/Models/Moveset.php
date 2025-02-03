@@ -9,4 +9,6 @@ class Moveset extends Model
 {
     /** @use HasFactory<\Database\Factories\MovesetFactory> */
     use HasFactory;
+
+    protected $primaryKey = 'sign_id';
 }

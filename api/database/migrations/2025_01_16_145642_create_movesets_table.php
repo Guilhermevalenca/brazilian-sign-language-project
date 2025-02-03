@@ -12,12 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('movesets', function (Blueprint $table) {
-            $table->id();
             $table->string('right');
             $table->string('left');
             $table->foreignId('sign_id')
                 ->references('id')
                 ->on('signs');
+            $table->primary('sign_id');
             $table->timestamps();
         });
     }
