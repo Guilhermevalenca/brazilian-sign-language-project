@@ -9,4 +9,6 @@ class Description extends Model
 {
     /** @use HasFactory<\Database\Factories\DescriptionFactory> */
     use HasFactory;
+
+    protected $primaryKey = 'sign_id';
 }
