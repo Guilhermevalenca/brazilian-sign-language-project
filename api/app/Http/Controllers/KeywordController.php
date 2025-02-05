@@ -33,7 +33,7 @@ class KeywordController extends Controller
 
         Keyword::create($validation);
 
-        return response(null, 204);
+        return response(null, 201);
     }
 
     /**
