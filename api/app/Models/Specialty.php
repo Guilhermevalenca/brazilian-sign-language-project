@@ -9,4 +9,8 @@ class Specialty extends Model
 {
     /** @use HasFactory<\Database\Factories\SpecialtyFactory> */
     use HasFactory;
+
+    protected $fillable = [
+        'name',
+    ];
 }

@@ -13,7 +13,7 @@ class KnowAreaController extends Controller
      */
     public function index()
     {
-        //
+        return KnowArea::paginate();
     }
 
     /**
@@ -29,7 +29,11 @@ class KnowAreaController extends Controller
      */
     public function store(StoreKnowAreaRequest $request)
     {
-        //
+        $validated = $request->validated();
+
+        $knowarea = Knowarea::create($validated);
+
+        return response()->json($knowarea, 201);
     }
 
     /**
@@ -37,7 +41,7 @@ class KnowAreaController extends Controller
      */
     public function show(KnowArea $knowArea)
     {
-        //
+        return response()->json($knowArea, 200);
     }
 
     /**
@@ -53,7 +57,9 @@ class KnowAreaController extends Controller
      */
     public function update(UpdateKnowAreaRequest $request, KnowArea $knowArea)
     {
-        //
+        $validated = $request->validated();
+        $knowArea->update($request->all());
+        return response()->json($knowArea, 200);
     }
 
     /**
@@ -61,6 +67,9 @@ class KnowAreaController extends Controller
      */
     public function destroy(KnowArea $knowArea)
     {
-        //
+        $knowArea->delete();
+        return response()->json([
+            "message" => "KnowArea deleted successfully"
+        ], 204);
     }
 }
