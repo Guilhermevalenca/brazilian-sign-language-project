@@ -13,7 +13,7 @@ class SpecialtyController extends Controller
      */
     public function index()
     {
-        //
+        return Specialty::paginate();
     }
 
     /**
@@ -29,7 +29,9 @@ class SpecialtyController extends Controller
      */
     public function store(StoreSpecialtyRequest $request)
     {
-        //
+        $validated = $request->validated();
+        $specialty = Specialty::create($validated);
+        return response()->json($specialty, 200);
     }
 
     /**
@@ -37,7 +39,7 @@ class SpecialtyController extends Controller
      */
     public function show(Specialty $specialty)
     {
-        //
+        return response()->json($specialty, 200);
     }
 
     /**
@@ -53,7 +55,9 @@ class SpecialtyController extends Controller
      */
     public function update(UpdateSpecialtyRequest $request, Specialty $specialty)
     {
-        //
+        $validated = $request->validated();
+        $specialty->update($validated);
+        return response()->json($specialty, 200);
     }
 
     /**
@@ -61,6 +65,9 @@ class SpecialtyController extends Controller
      */
     public function destroy(Specialty $specialty)
     {
-        //
+        $specialty->delete();
+        return response()->json([
+            "message" => "Specialty deleted successfully"
+        ], 200);
     }
 }

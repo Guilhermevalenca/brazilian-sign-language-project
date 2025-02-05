@@ -13,7 +13,7 @@ class TopicController extends Controller
      */
     public function index()
     {
-        //
+        return Topic::paginate();
     }
 
     /**
@@ -29,7 +29,9 @@ class TopicController extends Controller
      */
     public function store(StoreTopicRequest $request)
     {
-        //
+        $validated = $request->validated();
+        $topic = Topic::create($validated);
+        return response()->json($topic, 200);
     }
 
     /**
@@ -37,7 +39,7 @@ class TopicController extends Controller
      */
     public function show(Topic $topic)
     {
-        //
+        return response()->json($topic, 200);
     }
 
     /**
@@ -53,7 +55,9 @@ class TopicController extends Controller
      */
     public function update(UpdateTopicRequest $request, Topic $topic)
     {
-        //
+        $validated = $request->validated();
+        $topic->update($validated);
+        return response()->json($topic, 200);
     }
 
     /**
@@ -61,6 +65,9 @@ class TopicController extends Controller
      */
     public function destroy(Topic $topic)
     {
-        //
+        $topic->delete();
+        return response()->json([
+            "message" => "Topic deleted successfully"
+        ], 200);
     }
 }
