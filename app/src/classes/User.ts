@@ -1,6 +1,4 @@
-import type {IApiModel} from "~/interfaces/IApiModel";
-import type {UserType} from "~/types/UserType";
-import type {AxiosInstance, AxiosResponse} from "axios";
+import ApiModel from "./ApiModel";
 
 export type UserType = {
     id?: number;
@@ -10,7 +8,9 @@ export type UserType = {
     password_confirmation?: string;
 }
 
-export default class User implements UserType, IApiModel {
+export default class User extends ApiModel<UserType> implements UserType {
+    url: string = 'api/users';
+    
     id?: number | undefined;
     name?: string | undefined;
     email?: string | undefined;
@@ -18,37 +18,18 @@ export default class User implements UserType, IApiModel {
     password_confirmation?: string | undefined;
 
     constructor(data: UserType) {
-        this.id = data.id;
-        this.name = data.name;
-        this.email = data.email;
-        this.password = data.password;
-        this.password_confirmation = data.password_confirmation;
+        super();
+        this.sync(data);
     }
-
+    
     sync(data: UserType) {
-        this.id = data.id;
-        this.name = data.name;
-        this.email = data.email;
-        this.password = data.password;
-        this.password_confirmation = data.password_confirmation;
+        Object.assign(this, data);
     }
 
-    async fetch(axios: AxiosInstance): Promise<void | boolean | AxiosResponse> {
-        return axios.get('api/user')
-            .then((res: AxiosResponse) => {
-                this.sync(res.data);
-            });
-    }
-
-    async register(axios: AxiosInstance): Promise<void | boolean | AxiosResponse> {
+    override protected async register(axios: AxiosInstance): Promise<void | boolean | AxiosResponse> {
+        if(!this.url) {
+            throw new Error('url não definida');
+        }
         return axios.post('api/register', this as UserType) as Promise<AxiosResponse>;
-    }
-
-    update(): Promise<void | boolean | AxiosResponse> {
-        throw new Error('Método não implementado!');
-    }
-
-    delete(): Promise<void | boolean | AxiosResponse> {
-        throw new Error('Método não implementado!');
     }
 }
