@@ -1,3 +1,4 @@
+import type { AxiosInstance, AxiosResponse } from "axios";
 import ApiModel from "./ApiModel";
 
 export type UserType = {
@@ -9,8 +10,8 @@ export type UserType = {
 }
 
 export default class User extends ApiModel<UserType> implements UserType {
-    url: string = 'api/users';
-    
+    private url: string = 'api/users';
+   
     id?: number | undefined;
     name?: string | undefined;
     email?: string | undefined;
@@ -21,15 +22,16 @@ export default class User extends ApiModel<UserType> implements UserType {
         super();
         this.sync(data);
     }
-    
-    sync(data: UserType) {
-        Object.assign(this, data);
-    }
 
-    override protected async register(axios: AxiosInstance): Promise<void | boolean | AxiosResponse> {
+    protected override async register(axios: AxiosInstance): Promise<void | boolean | AxiosResponse> {
         if(!this.url) {
             throw new Error('url não definida');
         }
-        return axios.post('api/register', this as UserType) as Promise<AxiosResponse>;
+        this.loading = true;
+        return axios.post('api/register', this as UserType)
+            .then((res) => {
+                this.loading = false;
+                return res;
+            });
     }
 }
