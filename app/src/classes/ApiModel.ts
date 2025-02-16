@@ -1,7 +1,7 @@
 import type {AxiosInstance, AxiosResponse} from "axios";
 
 export default abstract class ApiModel<ClassType> {
-	protected abstract url: string;
+	abstract url: string;
 	protected loading: boolean = false;
 	protected created_at?: Date;
 	protected updated_at?: Date;
@@ -10,10 +10,10 @@ export default abstract class ApiModel<ClassType> {
 		return this.disableSetModificationDuringLoading();
 	}
 
-	// public alterLoading() {
-	// 	this.loading = !this.loading;
-	// 	console.log('alterado para: ', this.loading);
-	// }
+	public alterLoading() {
+		this.loading = !this.loading;
+		console.log('alterado para: ', this.loading);
+	}
 
 	protected sync(data: ClassType) {
 		if(data !== null && typeof data === 'object') {
@@ -45,6 +45,7 @@ export default abstract class ApiModel<ClassType> {
 			throw new Error('url não definida');
 		}
 		this.loading = true;
+		//@ts-ignore
         return axios.post(this.url, this as ClassType)
         	.then((res) => {
 				this.loading = false;
