@@ -10,11 +10,6 @@ export default abstract class ApiModel<ClassType> {
 		return this.disableSetModificationDuringLoading();
 	}
 
-	public alterLoading() {
-		this.loading = !this.loading;
-		console.log('alterado para: ', this.loading);
-	}
-
 	protected sync(data: ClassType) {
 		if(data !== null && typeof data === 'object') {
 			if('created_at' in data) {
