@@ -12,11 +12,6 @@ class Sign extends Model
     /** @use HasFactory<\Database\Factories\SignFactory> */
     use HasFactory;
 
-    public function moveset(): HasOne
-    {
-        return $this->hasOne(Moveset::class);
-    }
-
     public function examples(): HasMany
     {
         return $this->hasMany(Example::class);
