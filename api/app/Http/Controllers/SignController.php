@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreSignRequest;
-use App\Http\Requests\UpdateSignRequest;
+use App\Http\Requests\sign\StoreSignRequest;
+use App\Http\Requests\sign\UpdateSignRequest;
 use App\Models\Sign;
 
 class SignController extends Controller
@@ -33,10 +33,6 @@ class SignController extends Controller
         $validation = $request->validated();
 
         $sign = Sign::create($validation);
-
-        if(isset($validation['moveset'])) {
-            $sign->moveset()->create($validation['moveset']);
-        }
 
         if(isset($validation['examples'])) {
             $sign->examples()->createMany($validation['examples']);
@@ -75,9 +71,6 @@ class SignController extends Controller
         $validation = $request->validated();
         $sign->update($validation);
 
-        if(isset($validation['moveset'])) {
-            $sign->moveset()->update($validation['moveset']);
-        }
         if(isset($validation['examples'])) {
             $sign->examples()->update($validation['examples']);
         }
@@ -93,5 +86,13 @@ class SignController extends Controller
     {
         $sign->delete();
         return response(null, 204);
+    }
+
+    public function favorite(Sign $sign)
+    {
+        auth()->user()->favorites()->create([
+            'sign_id' => $sign->id
+        ]);
+        return response(null, 201);
     }
 }

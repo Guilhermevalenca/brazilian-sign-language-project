@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreKeywordRequest;
-use App\Http\Requests\UpdateKeywordRequest;
+use App\Http\Requests\keyword\StoreKeywordRequest;
+use App\Http\Requests\keyword\UpdateKeywordRequest;
 use App\Models\Keyword;
 
 class KeywordController extends Controller
