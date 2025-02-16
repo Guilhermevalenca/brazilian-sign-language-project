@@ -11,13 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('movesets', function (Blueprint $table) {
-            $table->string('right');
-            $table->string('left');
-            $table->foreignId('sign_id')
-                ->references('id')
-                ->on('signs');
-            $table->primary('sign_id');
+        Schema::create('favorites', function (Blueprint $table) {
+            $table->id();
             $table->timestamps();
         });
     }
@@ -27,6 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('movesets');
+        Schema::dropIfExists('favorites');
     }
 };

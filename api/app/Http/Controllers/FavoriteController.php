@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreMovesetRequest;
-use App\Http\Requests\UpdateMovesetRequest;
-use App\Models\Moveset;
+use App\Http\Requests\StoreFavoriteRequest;
+use App\Http\Requests\UpdateFavoriteRequest;
+use App\Models\Favorite;
 
-class MovesetController extends Controller
+class FavoriteController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -27,7 +27,7 @@ class MovesetController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreMovesetRequest $request)
+    public function store(StoreFavoriteRequest $request)
     {
         //
     }
@@ -35,7 +35,7 @@ class MovesetController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Moveset $moveset)
+    public function show(Favorite $favorite)
     {
         //
     }
@@ -43,7 +43,7 @@ class MovesetController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Moveset $moveset)
+    public function edit(Favorite $favorite)
     {
         //
     }
@@ -51,7 +51,7 @@ class MovesetController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateMovesetRequest $request, Moveset $moveset)
+    public function update(UpdateFavoriteRequest $request, Favorite $favorite)
     {
         //
     }
@@ -59,7 +59,7 @@ class MovesetController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Moveset $moveset)
+    public function destroy(Favorite $favorite)
     {
         //
     }

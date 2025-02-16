@@ -5,10 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Moveset extends Model
+class Favorite extends Model
 {
-    /** @use HasFactory<\Database\Factories\MovesetFactory> */
+    /** @use HasFactory<\Database\Factories\FavoriteFactory> */
     use HasFactory;
-
-    protected $primaryKey = 'sign_id';
 }
