@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\example;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -11,7 +11,7 @@ class UpdateExampleRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,8 @@ class UpdateExampleRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'display' => ['required', 'string'],
+            'description' => ['required', 'string'],
         ];
     }
 }

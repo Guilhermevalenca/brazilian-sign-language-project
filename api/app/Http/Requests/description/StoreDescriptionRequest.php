@@ -11,7 +11,7 @@ class StoreDescriptionRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,8 @@ class StoreDescriptionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'text' => ['required', 'string'],
+            'display' => ['required', 'string'],
         ];
     }
 }

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\description;
+namespace App\Http\Requests\example;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateDescriptionRequest extends FormRequest
+class StoreExampleRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,8 +22,8 @@ class UpdateDescriptionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'text' => ['required', 'string'],
             'display' => ['required', 'string'],
+            'description' => ['required', 'string'],
         ];
     }
 }
