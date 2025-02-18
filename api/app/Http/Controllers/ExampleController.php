@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\UpdateExampleRequest;
+use App\Http\Requests\example\StoreExampleRequest;
+use App\Http\Requests\example\UpdateExampleRequest;
 use App\Models\Example;
 use App\Models\Sign;
 
