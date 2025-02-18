@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\keyword;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateSpecialtyRequest extends FormRequest
+class UpdateKeywordRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,7 +22,8 @@ class UpdateSpecialtyRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ["required", "string", "max:255", "unique:know_areas"],
+            'name' => ['required', 'string', 'unique:keywords,name'],
         ];
+
     }
 }

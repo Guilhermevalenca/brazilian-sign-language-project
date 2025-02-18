@@ -42,14 +42,6 @@ type Sign {
     examples: [Example!]
 }
 
-type Moveset {
-    id: ID!
-    right: String!
-    left: String!
-    sign_id: Int!
-    sign: Sign!
-}
-
 type Description {
     id: ID!
     text: String!
@@ -80,9 +72,6 @@ type Query {
 
     sign(id: Int!): Sign
     signs: [Topic!] @paginate
-
-    moveset(id: Int!): Moveset
-    movesets: [Moveset!] @paginate
 
     description(id: Int!): Description
     descriptions: [Description!] @paginate

@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreTopicRequest;
-use App\Http\Requests\UpdateTopicRequest;
+use App\Http\Requests\topic\StoreTopicRequest;
+use App\Http\Requests\topic\UpdateTopicRequest;
 use App\Models\Topic;
 
 class TopicController extends Controller

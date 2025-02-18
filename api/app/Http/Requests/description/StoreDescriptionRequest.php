@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\description;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateDescriptionRequest extends FormRequest
+class StoreDescriptionRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
