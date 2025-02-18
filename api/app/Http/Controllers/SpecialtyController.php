@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreSpecialtyRequest;
-use App\Http\Requests\UpdateSpecialtyRequest;
+use App\Http\Requests\specialty\StoreSpecialtyRequest;
+use App\Http\Requests\specialty\UpdateSpecialtyRequest;
 use App\Models\Specialty;
 
 class SpecialtyController extends Controller

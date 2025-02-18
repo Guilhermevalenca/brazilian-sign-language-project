@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreDescriptionRequest;
-use App\Http\Requests\UpdateDescriptionRequest;
+use App\Http\Requests\description\StoreDescriptionRequest;
+use App\Http\Requests\description\UpdateDescriptionRequest;
 use App\Models\Description;
 use App\Models\Sign;
 

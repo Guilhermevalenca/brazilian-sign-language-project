@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\sign;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -24,9 +24,6 @@ class StoreSignRequest extends FormRequest
         return [
             'name' => ['required', 'string'],
             'display' => ['required', 'string'],
-            'moveset' => ['nullable', 'array'],
-            'moveset.right' => ['required_with:moveset', 'string'],
-            'moveset.left' => ['required_with:moveset', 'string'],
             'examples' => ['nullable', 'array'],
             'examples.*.description' => ['required_with:examples', 'string'],
             'examples.*.display' => ['required_with:examples', 'string'],

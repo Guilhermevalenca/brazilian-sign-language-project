@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreKnowAreaRequest;
-use App\Http\Requests\UpdateKnowAreaRequest;
+use App\Http\Requests\know_area\StoreKnowAreaRequest;
+use App\Http\Requests\know_area\UpdateKnowAreaRequest;
 use App\Models\KnowArea;
 
 class KnowAreaController extends Controller

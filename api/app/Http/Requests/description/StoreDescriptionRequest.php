@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\description;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreMovesetRequest extends FormRequest
+class StoreDescriptionRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,8 @@ class StoreMovesetRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'text' => ['required', 'string'],
+            'display' => ['required', 'string'],
         ];
     }
 }

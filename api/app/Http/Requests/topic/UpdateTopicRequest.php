@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\topic;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateDescriptionRequest extends FormRequest
+class UpdateTopicRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,8 +22,7 @@ class UpdateDescriptionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'text' => ['required', 'string'],
-            'display' => ['required', 'string'],
+            "name" => ["required", "string", "max:255", "unique:topics"],
         ];
     }
 }

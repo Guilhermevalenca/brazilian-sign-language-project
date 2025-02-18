@@ -11,13 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('movesets', function (Blueprint $table) {
-            $table->string('right');
-            $table->string('left');
+        Schema::create('favorites', function (Blueprint $table) {
             $table->foreignId('sign_id')
                 ->references('id')
-                ->on('signs');
-            $table->primary('sign_id');
+                ->on('signs')
+                ->onDelete('cascade');
+            $table->foreignId('user_id')
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade');
+            $table->primary(['sign_id', 'user_id']);
             $table->timestamps();
         });
     }
@@ -27,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('movesets');
+        Schema::dropIfExists('favorites');
     }
 };

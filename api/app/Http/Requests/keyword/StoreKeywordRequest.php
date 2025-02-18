@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\keyword;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreDescriptionRequest extends FormRequest
+class StoreKeywordRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,8 +22,7 @@ class StoreDescriptionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'text' => ['required', 'string'],
-            'display' => ['required', 'string'],
+            'name' => ['required', 'string', 'unique:keywords,name'],
         ];
     }
 }
