@@ -12,7 +12,7 @@
 - [ ] Todas as funcionalidades afetadas por essa mudança foram testadas manualmente  
 
 ### ✅ Revisão e Aprovação  
-- [ ] O PR foi revisado por pelo menos **duas pessoas**
+- [ ] O PR foi revisado por pelo menos **uma pessoas**
 - [ ] Todos os comentários relevantes da revisão foram resolvidos  
 - [ ] O PR está atualizado com a branch base `develop`  
 
