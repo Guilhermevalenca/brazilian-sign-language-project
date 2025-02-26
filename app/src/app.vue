@@ -9,7 +9,7 @@
 
 <script lang="ts">
 import useUserStore from '~/stores/useUserStore';
-import User from './classes/User';
+
 export default defineComponent({
   name: 'App',
 
@@ -22,6 +22,6 @@ export default defineComponent({
     }
 
     this.$axios.get('/sanctum/csrf-cookie');
-  }
+  },
 });
 </script>

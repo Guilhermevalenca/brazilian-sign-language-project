@@ -12,9 +12,22 @@ export default defineNuxtConfig({
     },
   },
   modules: [
-      '@pinia/nuxt',
+    '@pinia/nuxt',
   ],
   pinia: {
     storesDirs: ['./stores/**'],
   },
+  app: {
+    head: {
+      htmlAttrs: {
+        lang: 'pt-BR'
+      },
+      script: [
+        {
+          src: import.meta.env.VITE_API_URL + '/vlibras.js',
+          tagPosition: 'bodyClose'
+        }
+      ]
+    }
+  }
 });
