@@ -4,6 +4,8 @@ namespace App\Http\Controllers\auth;
 
 use App\Events\SendVerificationCodeEvent;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\auth\LoginAuthenticationRequest;
+use App\Http\Requests\auth\RegisterAuthenticationRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -11,12 +13,9 @@ use Illuminate\Validation\ValidationException;
 
 class AuthenticationController extends Controller
 {
-    public function login(Request $request)
+    public function login(LoginAuthenticationRequest $request)
     {
-        $request->validate([
-            'email' => ['required','email'],
-            'password' => ['required', 'string', 'min:6']
-        ]);
+        $request->validated();
 
         $user = User::where('email', $request->email)->first();
 
@@ -35,13 +34,9 @@ class AuthenticationController extends Controller
         ], 200);
     }
 
-    public function register(Request $request)
+    public function register(RegisterAuthenticationRequest $request)
     {
-        $request->validate([
-            'name' => ['required'],
-            'email' => ['required','email'],
-            'password' => ['required', 'string', 'min:6', 'confirmed']
-        ]);
+        $request->validated();
 
         $user = User::create([
             'name' => $request->name,

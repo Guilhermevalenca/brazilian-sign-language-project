@@ -4,6 +4,7 @@ namespace App\Http\Controllers\auth;
 
 use App\Events\SendVerificationCodeEvent;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\auth\VerifyCodeVerificationMailRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 
@@ -18,11 +19,9 @@ class VerificationMailController extends Controller
         return response(['message' => 'Código de verificação enviado'], 200);
     }
 
-    public function verifyCode(Request $request)
+    public function verifyCode(VerifyCodeVerificationMailRequest $request)
     {
-        $request->validate([
-            'code' => ['required', 'digits:8']
-        ]);
+        $request->validated();
 
         $user = $request->user();
         $code = $request->code;
