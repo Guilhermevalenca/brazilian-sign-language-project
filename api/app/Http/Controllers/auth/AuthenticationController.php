@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\auth;
 
+use App\Events\SendVerificationCodeEvent;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -25,6 +26,8 @@ class AuthenticationController extends Controller
             ], 404);
         }
 
+        event(new SendVerificationCodeEvent($user->email));
+
         $token = $user->createToken($user->email, [
             $user->is_admin ? 'user-admin' : 'user-common'
         ])->plainTextToken;
@@ -47,6 +50,8 @@ class AuthenticationController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password)
         ]);
+
+        event(new SendVerificationCodeEvent($user->email));
 
         $token = $user->createToken($user->email, ['user-common'])->plainTextToken;
 
