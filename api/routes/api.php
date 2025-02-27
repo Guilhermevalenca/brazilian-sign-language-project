@@ -1,15 +1,6 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
 
-Route::middleware(['auth:sanctum'])->get('/users', function (Request $request) {
-    return $request->user();
-});
-
-require __DIR__ . '/auth.php';
-require __DIR__ . '/keywordsRoute.php';
-require __DIR__ . '/knowAreasRoute.php';
-require __DIR__ . '/specialtyRoute.php';
-require __DIR__ . '/topicRoute.php';
-require __DIR__ . '/signRoute.php';
+require __DIR__.'/auth.php';

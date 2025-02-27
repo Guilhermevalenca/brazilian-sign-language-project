@@ -1,33 +1,35 @@
 <?php
 
-use App\Http\Controllers\Auth\AuthenticatedSessionController;
-use App\Http\Controllers\Auth\EmailVerificationNotificationController;
-use App\Http\Controllers\Auth\NewPasswordController;
-use App\Http\Controllers\Auth\PasswordResetLinkController;
-use App\Http\Controllers\Auth\RegisteredUserController;
-use App\Http\Controllers\Auth\VerifyEmailController;
+use App\Http\Controllers\auth\VerificationMailController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\auth\AuthenticationController;
 
-Route::post('/register', [RegisteredUserController::class, 'store'])
-    ->name('register');
+Route::prefix('users')
+    ->group(function() {
 
-Route::post('/login', [AuthenticatedSessionController::class, 'store'])
-    ->name('login');
+        Route::controller(AuthenticationController::class)
+            ->group(function () {
 
-Route::post('/forgot-password', [PasswordResetLinkController::class, 'store'])
-    ->name('password.email');
+                Route::post('/login','login');
+                Route::post('/register','register');
 
-Route::post('/reset-password', [NewPasswordController::class, 'store'])
-    ->name('password.store');
+                Route::middleware('auth:sanctum')
+                    ->group(function () {
 
-Route::get('/verify-email/{id}/{hash}', VerifyEmailController::class)
-    ->middleware(['auth', 'signed', 'throttle:6,1'])
-    ->name('verification.verify');
+                        Route::get('','me');
+                        Route::get('/refresh','refresh');
+                        Route::post('/logout','logout');
 
-Route::post('/email/verification-notification', [EmailVerificationNotificationController::class, 'store'])
-    ->middleware(['auth', 'throttle:6,1'])
-    ->name('verification.send');
+                    });
+            });
 
-Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
-    ->middleware('auth')
-    ->name('logout');
+        Route::controller(VerificationMailController::class)
+            ->middleware('auth:sanctum')
+            ->group(function() {
+
+                Route::get('/send-verification-code','sendVerificationCode');
+                Route::post('/verify-code','verifyCode');
+
+            });
+
+    });

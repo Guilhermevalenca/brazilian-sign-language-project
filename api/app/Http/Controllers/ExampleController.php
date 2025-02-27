@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\example\StoreExampleRequest;
 use App\Http\Requests\example\UpdateExampleRequest;
 use App\Models\Example;
-use App\Models\Sign;
 
 class ExampleController extends Controller
 {
@@ -28,12 +27,9 @@ class ExampleController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreExampleRequest $request, Sign $sign)
+    public function store(StoreExampleRequest $request)
     {
-        $validated = $request->validated();
-        $sign->examples()->create($validated);
-
-        return response(null, 201);
+        //
     }
 
     /**
@@ -41,7 +37,7 @@ class ExampleController extends Controller
      */
     public function show(Example $example)
     {
-        return response($example, 200);
+        //
     }
 
     /**
@@ -57,10 +53,7 @@ class ExampleController extends Controller
      */
     public function update(UpdateExampleRequest $request, Example $example)
     {
-        $validated = $request->validated();
-        $example->update($validated);
-
-        return response(null, 204);
+        //
     }
 
     /**
@@ -68,7 +61,6 @@ class ExampleController extends Controller
      */
     public function destroy(Example $example)
     {
-        $example->delete();
-        return response(null, 204);
+        //
     }
 }

@@ -2,7 +2,6 @@
 
 namespace Database\Factories;
 
-use App\Models\Topic;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -19,8 +18,7 @@ class SignFactory extends Factory
     {
         return [
             'name' => fake()->name(),
-            'display' => fake()->text(),
-            'topic_id' => Topic::query()->inRandomOrder()->value('id'),
+            'display' => "https://youtu.be/SRXH9AbT280?si=BSJtzaz9t47dtP2o",
         ];
     }
 }

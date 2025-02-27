@@ -11,7 +11,7 @@ class UpdateDescriptionRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        return false;
     }
 
     /**
@@ -22,8 +22,7 @@ class UpdateDescriptionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'text' => ['required', 'string'],
-            'display' => ['required', 'string'],
+            //
         ];
     }
 }

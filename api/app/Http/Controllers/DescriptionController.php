@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\description\StoreDescriptionRequest;
 use App\Http\Requests\description\UpdateDescriptionRequest;
 use App\Models\Description;
-use App\Models\Sign;
 
 class DescriptionController extends Controller
 {
@@ -14,7 +13,7 @@ class DescriptionController extends Controller
      */
     public function index()
     {
-//        return response(Description::paginate(), 200);
+        //
     }
 
     /**
@@ -28,13 +27,9 @@ class DescriptionController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreDescriptionRequest $request, Sign $sign)
+    public function store(StoreDescriptionRequest $request)
     {
-        $validated = $request->validated();
-
-        $sign->description()->create($validated);
-
-        return response(null, 201);
+        //
     }
 
     /**
@@ -42,7 +37,7 @@ class DescriptionController extends Controller
      */
     public function show(Description $description)
     {
-        return response($description, 200);
+        //
     }
 
     /**
@@ -58,10 +53,7 @@ class DescriptionController extends Controller
      */
     public function update(UpdateDescriptionRequest $request, Description $description)
     {
-        $validated = $request->validated();
-        $description->update($validated);
-
-        return response(null, 200);
+        //
     }
 
     /**
@@ -69,6 +61,6 @@ class DescriptionController extends Controller
      */
     public function destroy(Description $description)
     {
-        $description->delete();
+        //
     }
 }

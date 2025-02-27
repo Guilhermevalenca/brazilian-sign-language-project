@@ -11,7 +11,7 @@ class StoreExampleRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        return false;
     }
 
     /**
@@ -22,8 +22,7 @@ class StoreExampleRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'display' => ['required', 'string'],
-            'description' => ['required', 'string'],
+            //
         ];
     }
 }
