@@ -26,8 +26,6 @@ class AuthenticationController extends Controller
             ], 404);
         }
 
-        event(new SendVerificationCodeEvent($user->email));
-
         $token = $user->createToken($user->email, [
             $user->is_admin ? 'user-admin' : 'user-common'
         ])->plainTextToken;
