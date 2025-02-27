@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Sign;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -9,15 +11,27 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class FavoriteFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
+    protected static array $usedSignIds = [];
+
     public function definition(): array
     {
         return [
-            //
+            'user_id' => User::inRandomOrder()->first()->id,
+            'sign_id' => $this->getUniqueSignId()
         ];
+    }
+
+    private function getUniqueSignId(): int
+    {
+        $availableSignIds = Sign::whereNotIn('id', static::$usedSignIds)->pluck('id')->toArray();
+
+        if (empty($availableSignIds)) {
+            throw new \Exception("Não há mais Sign disponíveis para associação única.");
+        }
+
+        $signId = fake()->randomElement($availableSignIds);
+        static::$usedSignIds[] = $signId;
+
+        return $signId;
     }
 }

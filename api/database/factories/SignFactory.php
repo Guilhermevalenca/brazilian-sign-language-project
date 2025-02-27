@@ -17,7 +17,8 @@ class SignFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'name' => fake()->name(),
+            'display' => "https://youtu.be/SRXH9AbT280?si=BSJtzaz9t47dtP2o",
         ];
     }
 }

@@ -36,4 +36,9 @@ class Sign extends Model
     {
         return $this->belongsToMany(Suggestion::class);
     }
+
+    public function subjects(): BelongsToMany
+    {
+        return $this->belongsToMany(Subject::class);
+    }
 }

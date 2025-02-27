@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Sign;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -12,6 +13,6 @@ class SignSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        Sign::factory(30)->create();
     }
 }

@@ -16,9 +16,9 @@ class Subject extends Model
         'name',
     ];
 
-    public function signs(): HasMany
+    public function signs(): BelongsToMany
     {
-        return $this->hasMany(Sign::class);
+        return $this->belongsToMany(Sign::class);
     }
 
     public function suggestions(): BelongsToMany
