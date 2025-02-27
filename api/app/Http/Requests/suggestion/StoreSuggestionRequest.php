@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\suggestion;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreDescriptionRequest extends FormRequest
+class StoreSuggestionRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

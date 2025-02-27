@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreCourseRequest;
-use App\Http\Requests\UpdateCourseRequest;
+use App\Http\Requests\course\StoreCourseRequest;
+use App\Http\Requests\course\UpdateCourseRequest;
 use App\Models\Course;
 
 class CourseController extends Controller

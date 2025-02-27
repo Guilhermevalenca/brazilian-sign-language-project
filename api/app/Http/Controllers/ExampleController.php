@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreExampleRequest;
-use App\Http\Requests\UpdateExampleRequest;
+use App\Http\Requests\example\StoreExampleRequest;
+use App\Http\Requests\example\UpdateExampleRequest;
 use App\Models\Example;
 
 class ExampleController extends Controller

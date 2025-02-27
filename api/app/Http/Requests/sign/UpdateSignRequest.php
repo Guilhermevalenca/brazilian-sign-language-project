@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\sign;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateExampleRequest extends FormRequest
+class UpdateSignRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

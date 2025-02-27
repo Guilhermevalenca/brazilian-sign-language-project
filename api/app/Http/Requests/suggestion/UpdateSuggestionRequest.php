@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\suggestion;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateSignRequest extends FormRequest
+class UpdateSuggestionRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

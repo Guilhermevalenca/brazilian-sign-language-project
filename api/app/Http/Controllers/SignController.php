@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreSignRequest;
-use App\Http\Requests\UpdateSignRequest;
+use App\Http\Requests\sign\StoreSignRequest;
+use App\Http\Requests\sign\UpdateSignRequest;
 use App\Models\Sign;
 
 class SignController extends Controller

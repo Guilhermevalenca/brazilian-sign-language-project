@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreSuggestionRequest;
-use App\Http\Requests\UpdateSuggestionRequest;
+use App\Http\Requests\suggestion\StoreSuggestionRequest;
+use App\Http\Requests\suggestion\UpdateSuggestionRequest;
 use App\Models\Suggestion;
 
 class SuggestionController extends Controller
