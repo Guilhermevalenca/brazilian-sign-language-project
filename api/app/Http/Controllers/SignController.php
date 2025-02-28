@@ -59,22 +59,4 @@ class SignController extends Controller
 
         return response(null, 204);
     }
-
-    public function addFavorite(Sign $sign)
-    {
-        $sign->favorites()->create([
-            'user_id' => auth()->user()->id
-        ]);
-
-        return response(null, 204);
-    }
-
-    public function removeFavorite(Sign $sign)
-    {
-        $sign->favorites()
-            ->where('user_id', auth()->user()->id)
-            ->delete();
-
-        return response(null, 204);
-    }
 }
