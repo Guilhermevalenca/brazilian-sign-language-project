@@ -41,4 +41,9 @@ class Sign extends Model
     {
         return $this->belongsToMany(Subject::class);
     }
+
+    public function favorites(): BelongsToMany
+    {
+        return $this->belongsToMany(Favorite::class);
+    }
 }

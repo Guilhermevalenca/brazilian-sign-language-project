@@ -2,65 +2,39 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\favorite\StoreFavoriteRequest;
 use App\Http\Requests\favorite\UpdateFavoriteRequest;
+use App\Http\Requests\FavoriteRequest;
 use App\Models\Favorite;
 
 class FavoriteController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $favorites = auth()->user()
+            ->favorites()
+            ->with('sign')
+            ->paginate();
+
+        return response($favorites, 200);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+   public function store(FavoriteRequest $request)
     {
-        //
+        $validated = $request->validated();
+
+        auth()->user()->favorites()->create($validated);
+
+        return response(null, 204);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreFavoriteRequest $request)
+    public function destroy(FavoriteRequest $request)
     {
-        //
-    }
+        $request->validated();
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Favorite $favorite)
-    {
-        //
-    }
+        auth()->user()->favorites()
+            ->where('sign_id', $request->sign_id)
+            ->delete();
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Favorite $favorite)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateFavoriteRequest $request, Favorite $favorite)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Favorite $favorite)
-    {
-        //
+        return response(null, 204);
     }
 }

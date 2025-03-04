@@ -2,65 +2,61 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\sign\StoreSignRequest;
-use App\Http\Requests\sign\UpdateSignRequest;
+use App\Http\Requests\SignRequest;
 use App\Models\Sign;
 
 class SignController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        return response(Sign::paginate(), 200);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function store(SignRequest $request)
     {
-        //
+        $validated = $request->validated();
+
+        $sign = Sign::create($validated);
+
+        if(isset($validated['description'])) {
+            $sign->description()->create($validated['description']);
+        }
+
+        if(isset($validated['example'])) {
+            $sign->example()->create($validated['example']);
+        }
+
+        return response($sign, 201);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreSignRequest $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
     public function show(Sign $sign)
     {
-        //
+        $sign->load('description', 'example');
+
+        return response($sign, 200);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Sign $sign)
+    public function update(SignRequest $request, Sign $sign)
     {
-        //
+        $validated = $request->validated();
+
+        $sign->update($validated);
+
+        if(isset($validated['description'])) {
+            $sign->description()->update($validated['description']);
+        }
+
+        if(isset($validated['example'])) {
+            $sign->example()->update($validated['example']);
+        }
+
+        return response($sign, 200);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateSignRequest $request, Sign $sign)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Sign $sign)
     {
-        //
+        $sign->delete();
+
+        return response(null, 204);
     }
 }

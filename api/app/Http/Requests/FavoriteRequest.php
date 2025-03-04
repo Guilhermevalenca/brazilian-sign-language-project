@@ -1,16 +1,14 @@
 <?php
 
-namespace App\Http\Requests\example;
+namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreExampleRequest extends FormRequest
+class FavoriteRequest extends FormRequest
 {
     public function rules(): array
     {
         return [
-            'description' => ['required', 'string'],
-            'display' => ['required', 'string'],
             'sign_id' => ['required', 'exists:signs,id'],
         ];
     }

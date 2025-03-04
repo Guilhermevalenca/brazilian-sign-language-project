@@ -8,59 +8,32 @@ use App\Models\Description;
 
 class DescriptionController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(StoreDescriptionRequest $request)
     {
-        //
+        $validated = $request->validated();
+
+        $description = Description::create($validated);
+
+        return response($description, 201);
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(Description $description)
     {
-        //
+        return response($description, 200);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Description $description)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(UpdateDescriptionRequest $request, Description $description)
     {
-        //
-    }
+        $validated = $request->validated();
 
-    /**
-     * Remove the specified resource from storage.
-     */
+        $description->update($validated);
+
+        return response($description, 200);
+    }
     public function destroy(Description $description)
     {
-        //
+        $description->delete();
+
+        return response(null, 204);
     }
 }
