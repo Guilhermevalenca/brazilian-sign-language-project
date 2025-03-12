@@ -9,7 +9,7 @@ declare module '@vue/runtime-core' {
 export default defineNuxtPlugin((nuxtApp) => {
     const api: AxiosInstance = axios.create({
         baseURL: import.meta.env.VITE_API_BASE_URL ?? 'http://localhost',
-        withCredentials: true,
+        withCredentials: false,
         withXSRFToken: true,
     });
     nuxtApp.vueApp.config.globalProperties.$axios = api;
