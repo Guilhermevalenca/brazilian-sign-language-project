@@ -4,7 +4,7 @@ import type {AxiosInstance} from "axios";
 export default class AuthService {
 
     static async login(axios: AxiosInstance, user: UserType): Promise<boolean> {
-        return axios.post('api/login', {
+        return axios.post('api/users/login', {
             email: user.email,
             password: user.password,
         })

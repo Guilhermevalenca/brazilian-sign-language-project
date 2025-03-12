@@ -42,7 +42,7 @@ export default defineComponent({
           localStorage.setItem('token', token);
 
           await useUserStore().data.fetch(this.$axios);
-          this.$router.push('/');
+          this.$router.push('/auth/check-email-code');
         }
       } catch (e: AxiosResponse | AxiosError | any) {
         console.log(e);

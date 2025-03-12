@@ -24,7 +24,7 @@ export default class User extends ApiModel<UserType> implements UserType {
     }
 
     protected override async register(axios: AxiosInstance): Promise<void | boolean | AxiosResponse> {
-        this.url = 'api/register';
+        this.url = 'api/users/register';
         return super.register(axios)
             .finally(() => {
                 this.url = 'api/users';
