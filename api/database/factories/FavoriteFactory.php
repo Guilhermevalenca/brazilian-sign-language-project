@@ -16,7 +16,7 @@ class FavoriteFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id' => User::inRandomOrder()->first()->id,
+            'user_id' => 1,
             'sign_id' => $this->getUniqueSignId()
         ];
     }

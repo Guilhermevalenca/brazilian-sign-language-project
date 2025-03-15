@@ -42,18 +42,60 @@ export default abstract class ApiModel<ClassType> {
 		this.loading = true;
 		//@ts-ignore
         return axios.post(this.url, this as ClassType)
-        	.then((res) => {
+        	.then((res: AxiosResponse) => {
 				this.loading = false;
 				return res;
+			})
+			.finally(() => {
+				this.loading = false;
 			});
     }
     
-    protected async update(): Promise<void | boolean | AxiosResponse> {
-        throw new Error('Método não implementado!');
+    protected async update(axios: AxiosInstance): Promise<void | boolean | AxiosResponse> {
+        if(!this.url) {
+			throw new Error('url não definida');
+		}
+		
+		let id: number | undefined | unknown;
+		if('id' in this) {
+			id = this.id;
+		} else {
+			throw new Error('id nao definido');
+		}
+
+		this.loading = true;
+		//@ts-ignore
+		return axios.put(this.url + '/' + id, this as ClassType)
+			.then((res: AxiosResponse) => {
+				this.loading = false;
+				return res;
+			})
+			.finally(() => {
+				this.loading = false;
+			});
     }
 
-    protected async delete(): Promise<void | boolean | AxiosResponse> {
-        throw new Error('Método não implementado!');
+    protected async delete(axios: AxiosInstance): Promise<void | boolean | AxiosResponse> {
+		if(!this.url) {
+			throw new Error('url não definida');
+		}
+	
+		let id: number | undefined | unknown;
+		if('id' in this) {
+			id = this.id;
+		} else {
+			throw new Error('id nao definido');
+		}
+		
+		this.loading = true;
+		return axios.delete(this.url + '/' + id)
+			.then((res: AxiosResponse) => {
+				this.loading = false;
+				return res;
+			})
+			.finally(() => {
+				this.loading = false;
+			});
     }
 
     protected disableSetModificationDuringLoading() {

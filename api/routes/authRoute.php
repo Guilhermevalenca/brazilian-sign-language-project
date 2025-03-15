@@ -3,6 +3,7 @@
 use App\Http\Controllers\auth\VerificationMailController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\auth\AuthenticationController;
+use Illuminate\Http\Request;
 
 Route::prefix('users')
     ->group(function() {
@@ -19,7 +20,6 @@ Route::prefix('users')
                         Route::get('','me');
                         Route::get('/refresh','refresh');
                         Route::post('/logout','logout');
-
                     });
             });
 
@@ -30,6 +30,13 @@ Route::prefix('users')
                 Route::get('/send-verification-code','sendVerificationCode');
                 Route::post('/verify-code','verifyCode');
 
+            });
+
+        Route::middleware('auth:sanctum')
+            ->get('/is_admin', function(Request $request) {
+                return response([
+                    'is_admin' => $request->user()->is_admin
+                ], 200);
             });
 
     });

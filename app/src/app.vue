@@ -13,12 +13,17 @@ import useUserStore from '~/stores/useUserStore';
 export default defineComponent({
   name: 'App',
 
-  mounted() {
+  async mounted() {
     if(localStorage.getItem('token')) {
       this.$axios.defaults.headers
           .common['Authorization'] = `Bearer ${localStorage.getItem('token')}`;
 
-      useUserStore().data.fetch(this.$axios);
+      useUserStore().data.fetch(this.$axios)
+        .then(() => {
+          if(useUserStore().data.id) {
+            useUserStore().fetchIsAdmin(this.$axios);
+          }
+        })
     }
 
     this.$axios.get('/sanctum/csrf-cookie');
