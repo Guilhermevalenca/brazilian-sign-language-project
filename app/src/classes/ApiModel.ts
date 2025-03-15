@@ -1,16 +1,17 @@
 import type {AxiosInstance, AxiosResponse} from "axios";
 
 export default abstract class ApiModel<ClassType> {
-	abstract url: string;
+	url: string;
 	protected loading: boolean = false;
 	protected created_at?: Date;
 	protected updated_at?: Date;
 
-	constructor() {
+	constructor(url: string) {
+		this.url = url;
 		return this.disableSetModificationDuringLoading();
 	}
 
-	protected sync(data: ClassType) {
+	protected sync = (data: ClassType) => {
 		if(data !== null && typeof data === 'object') {
 			if('created_at' in data) {
 				data.created_at = new Date(String(data.created_at));

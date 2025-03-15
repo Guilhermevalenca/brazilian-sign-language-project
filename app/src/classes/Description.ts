@@ -8,23 +8,21 @@ export type DescriptionType = {
 }
 
 export default class Description extends ApiModel<DescriptionType> implements DescriptionType {
-    url: string = 'api/descriptions';
-
     sign_id?: number;
     text?: string;
     display?: string;
     #sign?: Sign;
 
     constructor(data: DescriptionType) {
-        super();
+        super('api/descriptions');
         this.sync(data);
     }
 
-    get sign(): Sign | undefined {
+    getSign = (): Sign | undefined => {
         return this.#sign;
     }
 
-    set sign(value: Sign | SignType) {
+    setSign = (value: Sign | SignType) => {
         this.#sign = value instanceof Sign ? value : new Sign(value);
     }
 }

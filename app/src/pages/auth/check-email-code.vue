@@ -19,6 +19,12 @@
 export default defineComponent({
   name: "check-email-code",
 
+  async setup() {
+    definePageMeta({
+      middleware: 'auth',
+    });
+  },
+
   data() {
     return {
       code: ['', '', '', '', '', '', '', ''] as [string, string, string, string, string, string, string, string]

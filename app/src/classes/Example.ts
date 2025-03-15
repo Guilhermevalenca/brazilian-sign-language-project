@@ -8,23 +8,21 @@ export type ExampleType = {
 }
 
 export default class Example extends ApiModel<ExampleType> implements ExampleType {
-    url: string = 'api/examples'
-
     sign_id?: number;
     description?: string;
     display?: string;
     #sign?: Sign;
 
     constructor(data: ExampleType) {
-        super();
+        super('api/examples');
         this.sync(data);
     }
 
-    get sign(): Sign | undefined {
+    getSign = (): Sign | undefined => {
         return this.#sign;
     }
 
-    set sign(value: Sign | SignType) {
+    setSign = (value: Sign | SignType) => {
         this.#sign = value instanceof Sign ? value : new Sign(value);
     }
 }

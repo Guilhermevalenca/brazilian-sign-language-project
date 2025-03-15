@@ -11,8 +11,6 @@ export type UserType = {
 }
 
 export default class User extends ApiModel<UserType> implements UserType {
-    url: string = 'api/users';
-   
     id?: number | undefined;
     name?: string | undefined;
     email?: string | undefined;
@@ -21,11 +19,11 @@ export default class User extends ApiModel<UserType> implements UserType {
     #favorites: Sign[] = [];
 
     constructor(data: UserType) {
-        super();
+        super('api/users');
         this.sync(data);
     }
 
-    protected override async register(axios: AxiosInstance): Promise<void | boolean | AxiosResponse> {
+    protected override register = async (axios: AxiosInstance): Promise<void | boolean | AxiosResponse> => {
         this.url = 'api/users/register';
         return super.register(axios)
             .finally(() => {

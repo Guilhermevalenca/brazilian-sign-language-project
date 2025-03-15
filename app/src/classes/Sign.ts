@@ -9,8 +9,6 @@ export type SignType = {
 }
 
 export default class Sign extends ApiModel<SignType> implements SignType {
-    url: string = 'api/signs';
-
     id?: number;
     name?: string;
     display?: string;
@@ -18,7 +16,7 @@ export default class Sign extends ApiModel<SignType> implements SignType {
     #description?: Description;
 
     constructor(data: SignType) {
-        super();
+        super('api/signs');
         this.sync(data);
     }
 
@@ -60,7 +58,7 @@ export default class Sign extends ApiModel<SignType> implements SignType {
         this.#description = undefined;
     }
 
-    toJSON() {
+    toJSON = () => {
         return {
             ...this,
             description: this.getDescription(),

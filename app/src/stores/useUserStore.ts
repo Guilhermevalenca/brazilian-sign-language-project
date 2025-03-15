@@ -20,5 +20,12 @@ export default defineStore("user", {
                 this.fetchIsAdmin(axios);
             }, 5 * 60 * 1000);
         },
+        resetDatas() {
+            this.data = new User({
+                name: '',
+                email: '',
+            });
+            this.is_admin = false;
+        }
     },
 });

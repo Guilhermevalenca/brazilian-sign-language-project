@@ -17,7 +17,9 @@ export default class AuthService {
 
     }
 
-    static async logout() {
-
+    static async logout(axios: AxiosInstance) {
+        await axios.post('api/users/logout');
+        localStorage.removeItem('token');
+        delete axios.defaults.headers.common['Authorization'];
     }
 }
