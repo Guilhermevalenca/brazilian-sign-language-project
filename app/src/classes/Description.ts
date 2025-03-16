@@ -25,4 +25,10 @@ export default class Description extends ApiModel<DescriptionType> implements De
     setSign = (value: Sign | SignType) => {
         this.#sign = value instanceof Sign ? value : new Sign(value);
     }
+
+    toJSON = () => {
+        return {
+            ...this,
+        }
+    }
 }
