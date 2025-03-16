@@ -47,6 +47,6 @@ export default defineComponent({
                 console.log(e);
             }
         }
-    }
+    },
 });
 </script>

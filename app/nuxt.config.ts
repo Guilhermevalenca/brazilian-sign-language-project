@@ -2,7 +2,7 @@
 export default defineNuxtConfig({
   compatibilityDate: '2024-11-01',
   devtools: { enabled: true },
-  ssr: true,
+  ssr: false,
   srcDir: 'src',
   css: ['~/assets/css/main.scss'],
   postcss: {

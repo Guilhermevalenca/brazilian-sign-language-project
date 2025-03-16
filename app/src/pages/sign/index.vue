@@ -62,6 +62,6 @@ export default defineComponent({
 
     mounted() {
         this.userStore = useUserStore();
-    }
+    },
 });
 </script>

@@ -61,8 +61,8 @@ export default class Sign extends ApiModel<SignType> implements SignType {
     toJSON = () => {
         return {
             ...this,
-            description: this.getDescription(),
-            example: this.getExample()
+            description: {...this.getDescription()},
+            example: {...this.getExample()}
         }
     }
 }
