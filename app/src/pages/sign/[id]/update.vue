@@ -33,6 +33,11 @@ export default defineComponent({
     name: 'updateSignPage',
 
     async setup() {
+
+        definePageMeta({
+            middleware: 'is-admin',
+        });
+
         const { $axios } = useNuxtApp();
         const { id } = useRoute().params;
         const { data } = await $axios.get(`/api/signs/${id}`);

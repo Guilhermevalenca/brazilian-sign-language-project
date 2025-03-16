@@ -47,6 +47,9 @@ export default defineComponent({
           this.$axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
           localStorage.setItem('token', token);
 
+          const tokenCookie = useCookie('token');
+          tokenCookie.value = token;
+
           await useUserStore().data.fetch(this.$axios);
           await useUserStore().fetchIsAdmin(this.$axios);
           this.$router.push('/auth/check-email-code');

@@ -12,6 +12,10 @@ export default class AuthService {
                 const token = response.data.token;
                 axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
                 localStorage.setItem('token', token);
+                
+                const tokenCookie = useCookie('token');
+                tokenCookie.value = token;
+
                 return true;
             });
 
@@ -21,5 +25,8 @@ export default class AuthService {
         await axios.post('api/users/logout');
         localStorage.removeItem('token');
         delete axios.defaults.headers.common['Authorization'];
+
+        const tokenCookie = useCookie('token');
+        tokenCookie.value = null;
     }
 }

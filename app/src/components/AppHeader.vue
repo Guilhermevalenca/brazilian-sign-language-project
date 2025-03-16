@@ -39,7 +39,6 @@ export default defineComponent({
   watch: {
     userStore: {
       handler($new) {
-        console.log('atualizado no computed');
         this.showOptionsAuth = !$new?.data?.id;
       },
       deep: true

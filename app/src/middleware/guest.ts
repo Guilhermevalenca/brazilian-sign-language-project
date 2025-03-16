@@ -1,8 +1,6 @@
-import useUserStore from '~/stores/useUserStore';
-
 export default defineNuxtRouteMiddleware((to, from) => {
-    const userStore = useUserStore();
-    if(userStore.data.id) {
-        return navigateTo('/');
+    const token = useCookie('token').value;
+    if(token) {
+        return navigateTo('/');   
     }
 });
