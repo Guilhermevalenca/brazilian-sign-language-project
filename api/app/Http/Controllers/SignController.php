@@ -24,7 +24,6 @@ class SignController extends Controller
                 'origin' => 'sign',
            ], 400);
         }
-
         $validated['display'] = $this->getVideoId($validated['display'], 'sign');
 
         $sign = Sign::create($validated);
@@ -36,7 +35,6 @@ class SignController extends Controller
                      'origin' => 'description',
                 ], 400);
             }
-
             $validated['description']['display'] = $this->getVideoId($validated['description']['display'], 'description');
             $sign->description()->create($validated['description']);
         }
@@ -72,7 +70,6 @@ class SignController extends Controller
                  'origin' => 'sign',
             ], 400);
          }
-
         $validated['display'] = $this->getVideoId($validated['display'], 'sign');
 
         $sign->update($validated);
@@ -84,10 +81,13 @@ class SignController extends Controller
                      'origin' => 'description',
                 ], 400);
             }
-
             $validated['description']['display'] = $this->getVideoId($validated['description']['display'], 'description');
 
-            $sign->description()->update($validated['description']);
+            if($sign->description) {
+                $sign->description()->update($validated['description']);
+            } else {
+                $sign->description()->create($validated['description']);
+            }
         }
 
         if(isset($validated['example'])) {
@@ -98,7 +98,12 @@ class SignController extends Controller
                 ], 400);
             }
             $validated['example']['display'] = $this->getVideoId($validated['example']['display'], 'example');
-            $sign->example()->update($validated['example']);
+            
+            if($sign->example) {
+                $sign->example()->update($validated['example']);
+            } else {
+                $sign->example()->create($validated['example']);
+            }
         }
 
         return response($sign, 200);

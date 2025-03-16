@@ -41,9 +41,13 @@ export default defineComponent({
 
         if(data.example) {
             sign.setExample(data.example);
+        } else {
+            sign.setExample();
         }
         if(data.description) {
             sign.setDescription(data.description);
+        } else {
+            sign.setDescription();
         }
 
         return {

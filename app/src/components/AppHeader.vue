@@ -11,12 +11,10 @@
         <button @click="logout">Logout</button>
       </span>
     </nav>
-    <p>{{ showOptionsAuth }}</p>
   </header>
 </template>
 
 <script lang="ts">
-import type User from '~/classes/User';
 import AuthService from '~/services/AuthService';
 import useUserStore from '~/stores/useUserStore';
 
