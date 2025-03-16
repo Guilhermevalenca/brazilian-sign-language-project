@@ -58,4 +58,10 @@ export default class User extends ApiModel<UserType> implements UserType {
             return false;
         }
     }
+
+    toJSON = () => {
+        return {
+            ...this,
+        }
+    }
 }

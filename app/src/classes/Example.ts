@@ -25,4 +25,10 @@ export default class Example extends ApiModel<ExampleType> implements ExampleTyp
     setSign = (value: Sign | SignType) => {
         this.#sign = value instanceof Sign ? value : new Sign(value);
     }
+
+    toJSON = () => {
+        return {
+            ...this,
+        }
+    }
 }
