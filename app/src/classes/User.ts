@@ -1,6 +1,6 @@
-import type {IApiModel} from "~/interfaces/IApiModel";
-import type {UserType} from "~/types/UserType";
-import type {AxiosInstance, AxiosResponse} from "axios";
+import type { AxiosInstance, AxiosResponse } from "axios";
+import ApiModel from "./ApiModel";
+import Sign, { type SignType } from "./Sign";
 
 export type UserType = {
     id?: number;
@@ -10,45 +10,58 @@ export type UserType = {
     password_confirmation?: string;
 }
 
-export default class User implements UserType, IApiModel {
+export default class User extends ApiModel<UserType> implements UserType {
     id?: number | undefined;
     name?: string | undefined;
     email?: string | undefined;
     password?: string | undefined;
     password_confirmation?: string | undefined;
+    #favorites: Sign[] = [];
 
     constructor(data: UserType) {
-        this.id = data.id;
-        this.name = data.name;
-        this.email = data.email;
-        this.password = data.password;
-        this.password_confirmation = data.password_confirmation;
+        super('api/users');
+        this.sync(data);
     }
 
-    sync(data: UserType) {
-        this.id = data.id;
-        this.name = data.name;
-        this.email = data.email;
-        this.password = data.password;
-        this.password_confirmation = data.password_confirmation;
-    }
-
-    async fetch(axios: AxiosInstance): Promise<void | boolean | AxiosResponse> {
-        return axios.get('api/user')
-            .then((res: AxiosResponse) => {
-                this.sync(res.data);
+    protected override register = async (axios: AxiosInstance): Promise<void | boolean | AxiosResponse> => {
+        this.url = 'api/users/register';
+        return super.register(axios)
+            .finally(() => {
+                this.url = 'api/users';
             });
     }
 
-    async register(axios: AxiosInstance): Promise<void | boolean | AxiosResponse> {
-        return axios.post('api/register', this as UserType) as Promise<AxiosResponse>;
+    getFavorites = (): Sign[] => {
+        return [...this.#favorites];
     }
 
-    update(): Promise<void | boolean | AxiosResponse> {
-        throw new Error('Método não implementado!');
+    fetchFavorites = async (axios: AxiosInstance): Promise<boolean> => {
+        let page = 0;
+        let last_page = 0;
+        const fetch = async () => {
+            if(page <= last_page) {
+                const { data } = await axios.get(`api/favorites`, { 
+                    params: { 
+                        page: ++page, 
+                    }
+                });
+                this.#favorites.push(...data.data.map((sign: SignType) => new Sign(sign)));
+                last_page = data.last_page;
+                await fetch();
+            }
+        }
+        try {
+            await fetch();
+            return true;
+        } catch (e) {
+            console.log(e);
+            return false;
+        }
     }
 
-    delete(): Promise<void | boolean | AxiosResponse> {
-        throw new Error('Método não implementado!');
+    toJSON = () => {
+        return {
+            ...this,
+        }
     }
 }

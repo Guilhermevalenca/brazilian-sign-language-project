@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Keyword;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -12,6 +13,6 @@ class KeywordSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        Keyword::factory(30)->create();
     }
 }

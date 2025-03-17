@@ -3,27 +3,19 @@
 use App\Http\Controllers\SignController;
 use Illuminate\Support\Facades\Route;
 
-
 Route::prefix('signs')
     ->controller(SignController::class)
-    ->whereNumber('sign')
-    ->group(function () {
+    ->group(function() {
 
-        Route::get('', 'index')
-            ->name('sign.index');
-        Route::get('{sign}', 'show')
-            ->name('sign.show');
+        Route::get('/','index');
+        Route::get('/{sign}','show');
 
-        Route::middleware('auth:sanctum')
-            ->group(function () {
+        Route::middleware(['auth:sanctum', 'ability:user-admin'])
+            ->group(function() {
 
-                Route::post('', 'store')
-                    ->name('sign.store');
-                Route::put('{sign}', 'update')
-                    ->name('sign.update');
-                Route::delete('{sign}', 'destroy')
-                    ->name('sign.destroy');
+                Route::post('/','store');
+                Route::put('/{sign}','update');
+                Route::delete('/{sign}','destroy');
 
             });
-
     });

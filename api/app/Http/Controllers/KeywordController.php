@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreKeywordRequest;
-use App\Http\Requests\UpdateKeywordRequest;
+use App\Http\Requests\keyword\StoreKeywordRequest;
+use App\Http\Requests\keyword\UpdateKeywordRequest;
 use App\Models\Keyword;
 
 class KeywordController extends Controller
@@ -13,7 +13,7 @@ class KeywordController extends Controller
      */
     public function index()
     {
-        return Keyword::paginate();
+        //
     }
 
     /**
@@ -29,11 +29,7 @@ class KeywordController extends Controller
      */
     public function store(StoreKeywordRequest $request)
     {
-        $validation = $request->validated();
-
-        Keyword::create($validation);
-
-        return response(null, 201);
+        //
     }
 
     /**
@@ -41,7 +37,7 @@ class KeywordController extends Controller
      */
     public function show(Keyword $keyword)
     {
-        return response($keyword, 200);
+        //
     }
 
     /**
@@ -57,11 +53,7 @@ class KeywordController extends Controller
      */
     public function update(UpdateKeywordRequest $request, Keyword $keyword)
     {
-        $validation = $request->validated();
-
-        $keyword->update($validation);
-
-        return response(null, 204);
+        //
     }
 
     /**
@@ -69,8 +61,6 @@ class KeywordController extends Controller
      */
     public function destroy(Keyword $keyword)
     {
-        $keyword->delete();
-
-        return response(null, 204);
+        //
     }
 }

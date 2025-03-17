@@ -2,96 +2,137 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreSignRequest;
-use App\Http\Requests\UpdateSignRequest;
+use App\Http\Requests\SignRequest;
 use App\Models\Sign;
+use Exception;
 
 class SignController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        Sign::with('moveset')
-            ->paginate();
+        $signs = Sign::paginate();
+        return response($signs, 200);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function store(SignRequest $request)
     {
-        //
+        $validated = $request->validated();
+
+        if(!$this->validUrl($validated['display'])) {
+           return response([
+                'error' => 'O link precisa ser do youtube',
+                'origin' => 'sign',
+           ], 400);
+        }
+        $validated['display'] = $this->getVideoId($validated['display'], 'sign');
+
+        $sign = Sign::create($validated);
+
+        if(isset($validated['description'])) {
+            if(!$this->validUrl($validated['description']['display'])) {
+                return response([
+                     'error' => 'O link precisa ser do youtube',
+                     'origin' => 'description',
+                ], 400);
+            }
+            $validated['description']['display'] = $this->getVideoId($validated['description']['display'], 'description');
+            $sign->description()->create($validated['description']);
+        }
+
+        if(isset($validated['example'])) {
+            if(!$this->validUrl($validated['example']['display'])) {
+                return response([
+                     'error' => 'O link precisa ser do youtube',
+                     'origin' => 'example',
+                ], 400);
+            }
+            $validated['example']['display'] = $this->getVideoId($validated['example']['display'], 'example');
+            $sign->example()->create($validated['example']);
+        }
+
+        return response($sign, 201);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreSignRequest $request)
-    {
-        $validation = $request->validated();
-
-        $sign = Sign::create($validation);
-
-        if(isset($validation['moveset'])) {
-            $sign->moveset()->create($validation['moveset']);
-        }
-
-        if(isset($validation['examples'])) {
-            $sign->examples()->createMany($validation['examples']);
-        }
-
-        if(isset($validation['description'])) {
-            $sign->description()->create($validation['description']);
-        }
-
-        return response(null, 201);
-    }
-
-    /**
-     * Display the specified resource.
-     */
     public function show(Sign $sign)
     {
-        $sign->load('moveset', 'examples', 'description');
+        $sign->load('description', 'example');
 
-        return response($sign,200);
+        return response($sign, 200);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Sign $sign)
+    public function update(SignRequest $request, Sign $sign)
     {
+        $validated = $request->validated();
 
+        if(!$this->validUrl($validated['display'])) {
+            return response([
+                 'error' => 'O link precisa ser do youtube',
+                 'origin' => 'sign',
+            ], 400);
+         }
+        $validated['display'] = $this->getVideoId($validated['display'], 'sign');
+
+        $sign->update($validated);
+
+        if(isset($validated['description'])) {
+            if(!$this->validUrl($validated['description']['display'])) {
+                return response([
+                     'error' => 'O link precisa ser do youtube',
+                     'origin' => 'description',
+                ], 400);
+            }
+            $validated['description']['display'] = $this->getVideoId($validated['description']['display'], 'description');
+
+            if($sign->description) {
+                $sign->description()->update($validated['description']);
+            } else {
+                $sign->description()->create($validated['description']);
+            }
+        }
+
+        if(isset($validated['example'])) {
+            if(!$this->validUrl($validated['example']['display'])) {
+                return response([
+                     'error' => 'O link precisa ser do youtube',
+                     'origin' => 'example',
+                ], 400);
+            }
+            $validated['example']['display'] = $this->getVideoId($validated['example']['display'], 'example');
+            
+            if($sign->example) {
+                $sign->example()->update($validated['example']);
+            } else {
+                $sign->example()->create($validated['example']);
+            }
+        }
+
+        return response($sign, 200);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateSignRequest $request, Sign $sign)
-    {
-        $validation = $request->validated();
-        $sign->update($validation);
-
-        if(isset($validation['moveset'])) {
-            $sign->moveset()->update($validation['moveset']);
-        }
-        if(isset($validation['examples'])) {
-            $sign->examples()->update($validation['examples']);
-        }
-        if(isset($validation['description'])) {
-            $sign->description()->update($validation['description']);
-        }
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Sign $sign)
     {
         $sign->delete();
+
         return response(null, 204);
     }
+
+    private function validUrl($url) {
+        return strpos($url, 'https://www.youtube.com') === 0 || strpos($url, 'https://youtu.be') === 0;
+    }
+
+    private function getVideoId($display) {
+        if (strpos($display, "watch?v=") !== false) {
+            preg_match('/watch\?v=([^&\s]+)/', $display, $matches);
+            if (!empty($matches[1])) {
+                $display = $matches[1];
+            }
+        } else {
+            preg_match('/\/([^\/\?]+)\?/', $display, $matches);
+            if (!empty($matches[1])) {
+                $display = $matches[1];
+            }
+        }
+
+        return 'https://www.youtube.com/embed/' . $display;
+    } 
 }
