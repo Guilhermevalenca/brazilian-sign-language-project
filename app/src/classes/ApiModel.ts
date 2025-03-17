@@ -23,12 +23,13 @@ export default abstract class ApiModel<ClassType> {
 		}
     }
 
-	protected async fetch(axios: AxiosInstance): Promise<void | boolean | AxiosResponse> {
+	protected async fetch(): Promise<void | boolean | AxiosResponse> {
 		if(!this.url) {
 			throw new Error('url não definida');
 		}
+		const { $axios } = useNuxtApp();
 		this.loading = true;
-        return axios.get(this.url)
+        return $axios.get(this.url)
             .then((res: AxiosResponse) => {
             	this.loading = false;
 				this.sync(res.data);
@@ -36,13 +37,14 @@ export default abstract class ApiModel<ClassType> {
             });
     }
 
-    protected async register(axios: AxiosInstance): Promise<void | boolean | AxiosResponse> {
+    protected async register(): Promise<void | boolean | AxiosResponse> {
         if(!this.url) {
 			throw new Error('url não definida');
 		}
 		this.loading = true;
+		const { $axios } = useNuxtApp();
 		//@ts-ignore
-        return axios.post(this.url, this as ClassType)
+        return $axios.post(this.url, this as ClassType)
         	.then((res: AxiosResponse) => {
 				this.loading = false;
 				return res;
@@ -52,7 +54,7 @@ export default abstract class ApiModel<ClassType> {
 			});
     }
     
-    protected async update(axios: AxiosInstance): Promise<void | boolean | AxiosResponse> {
+    protected async update(): Promise<void | boolean | AxiosResponse> {
         if(!this.url) {
 			throw new Error('url não definida');
 		}
@@ -65,8 +67,9 @@ export default abstract class ApiModel<ClassType> {
 		}
 
 		this.loading = true;
+		const { $axios } = useNuxtApp();
 		//@ts-ignore
-		return axios.put(this.url + '/' + id, this as ClassType)
+		return $axios.put(this.url + '/' + id, this as ClassType)
 			.then((res: AxiosResponse) => {
 				this.loading = false;
 				return res;
@@ -76,7 +79,7 @@ export default abstract class ApiModel<ClassType> {
 			});
     }
 
-    protected async delete(axios: AxiosInstance): Promise<void | boolean | AxiosResponse> {
+    protected async delete(): Promise<void | boolean | AxiosResponse> {
 		if(!this.url) {
 			throw new Error('url não definida');
 		}
@@ -89,7 +92,8 @@ export default abstract class ApiModel<ClassType> {
 		}
 		
 		this.loading = true;
-		return axios.delete(this.url + '/' + id)
+		const { $axios } = useNuxtApp();
+		return $axios.delete(this.url + '/' + id)
 			.then((res: AxiosResponse) => {
 				this.loading = false;
 				return res;

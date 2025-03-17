@@ -60,7 +60,7 @@ export default defineComponent({
                 if(!this.sign.getDescription()?.text || !this.sign.getDescription()?.display) {
                     this.sign.resetDescription();
                 }
-                await this.sign.register(this.$axios);
+                await this.sign.register();
                 this.$router.push('/sign');
             } catch (e) {
                 console.log(e);

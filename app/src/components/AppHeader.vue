@@ -30,7 +30,7 @@ export default defineComponent({
 
   methods: {
     async logout() {
-      await AuthService.logout(this.$axios);
+      await AuthService.logout();
       this.userStore!.resetDatas();
       this.$router.push('/auth/login');
     }

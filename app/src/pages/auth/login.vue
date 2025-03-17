@@ -35,11 +35,11 @@ export default defineComponent({
 
   methods: {
     async submit() {
-      const response = await AuthService.login(this.$axios, this.user)
+      const response = await AuthService.login(this.user)
 
       if(response) {
-        await useUserStore().data.fetch(this.$axios);
-        await useUserStore().fetchIsAdmin(this.$axios);
+        await useUserStore().data.fetch();
+        await useUserStore().fetchIsAdmin();
         this.$router.push('/');
       }
     }
