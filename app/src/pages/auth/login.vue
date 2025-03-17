@@ -17,6 +17,12 @@ import useUserStore from '~/stores/useUserStore';
 export default defineComponent({
   name: "login",
 
+  async setup() {
+    definePageMeta({
+      middleware: 'guest',
+    })
+  },
+
   data() {
     const user = new User({
       email: '',
@@ -33,6 +39,7 @@ export default defineComponent({
 
       if(response) {
         await useUserStore().data.fetch(this.$axios);
+        await useUserStore().fetchIsAdmin(this.$axios);
         this.$router.push('/');
       }
     }

@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Sign extends Model
 {
@@ -17,14 +18,14 @@ class Sign extends Model
         'display'
     ];
 
-    public function description(): BelongsTo
+    public function description(): HasOne
     {
-        return $this->belongsTo(Description::class);
+        return $this->HasOne(Description::class);
     }
 
-    public function example(): BelongsTo
+    public function example(): HasOne
     {
-        return $this->belongsTo(Example::class);
+        return $this->HasOne(Example::class);
     }
 
     public function keywords(): BelongsToMany

@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Example extends Model
 {
@@ -19,8 +20,8 @@ class Example extends Model
         'sign_id'
     ];
 
-    public function sign(): BelongsTo
+    public function sign(): HasOne
     {
-        return $this->belongsTo(Sign::class);
+        return $this->hasOne(Sign::class);
     }
 }
