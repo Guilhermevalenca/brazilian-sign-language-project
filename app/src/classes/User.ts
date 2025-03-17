@@ -8,6 +8,8 @@ export type UserType = {
     email?: string;
     password?: string;
     password_confirmation?: string;
+    new_password?: string;
+    new_password_confirmation?: string;
 }
 
 export default class User extends ApiModel<UserType> implements UserType {
@@ -16,6 +18,8 @@ export default class User extends ApiModel<UserType> implements UserType {
     email?: string | undefined;
     password?: string | undefined;
     password_confirmation?: string | undefined;
+    new_password?: string;
+    new_password_confirmation?: string;
     #favorites: Sign[] = [];
 
     constructor(data: UserType) {
