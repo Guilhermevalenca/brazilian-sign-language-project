@@ -35,12 +35,13 @@ export default class User extends ApiModel<UserType> implements UserType {
         return [...this.#favorites];
     }
 
-    fetchFavorites = async (axios: AxiosInstance): Promise<boolean> => {
+    fetchFavorites = async (): Promise<boolean> => {
         let page = 0;
         let last_page = 0;
+        const { $axios } = useNuxtApp();
         const fetch = async () => {
             if(page <= last_page) {
-                const { data } = await axios.get(`api/favorites`, { 
+                const { data } = await $axios.get(`api/favorites`, { 
                     params: { 
                         page: ++page, 
                     }
