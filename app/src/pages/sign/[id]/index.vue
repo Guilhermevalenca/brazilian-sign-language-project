@@ -41,7 +41,7 @@ export default defineComponent({
     methods: {
         async destroy() {
             try {
-                await this.sign.delete(this.$axios);
+                await this.sign.delete();
                 this.$router.push('/sign');
             } catch(e) {
                 console.log(e);

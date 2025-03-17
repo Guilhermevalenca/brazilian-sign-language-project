@@ -8,3 +8,4 @@ require __DIR__ . '/signRoute.php';
 require __DIR__ . '/descriptionRoute.php';
 require __DIR__ . '/exampleRoute.php';
 require __DIR__ . '/favoriteRoute.php';
+require __DIR__ . '/keywordRoute.php';

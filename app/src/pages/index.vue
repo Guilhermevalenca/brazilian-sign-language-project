@@ -2,6 +2,12 @@
   <div>
     <ExampleComponent />
   </div>
+  <fieldset>
+    <p>Sistema de busca:</p>
+    <client-only>
+      <AppSearch />
+    </client-only>
+  </fieldset>
 </template>
 
 <script lang="ts">

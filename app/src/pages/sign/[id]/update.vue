@@ -69,7 +69,7 @@ export default defineComponent({
                 if(!this.sign.getDescription()?.text || !this.sign.getDescription()?.display) {
                     this.sign.resetDescription();
                 }
-                await this.sign.update(this.$axios);
+                await this.sign.update();
                 this.$router.push('/sign');
             } catch (e) {
                 console.log(e);

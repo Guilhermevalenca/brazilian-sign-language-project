@@ -18,10 +18,19 @@ export default defineComponent({
       this.$axios.defaults.headers
           .common['Authorization'] = `Bearer ${localStorage.getItem('token')}`;
 
-      useUserStore().data.fetch(this.$axios)
+      useUserStore().data.fetch()
         .then(() => {
           if(useUserStore().data.id) {
-            useUserStore().fetchIsAdmin(this.$axios);
+            useUserStore().fetchIsAdmin();
+          }
+        })
+        .catch((err) => {
+          if(err.response.status === 401) {
+            useUserStore().resetDatas();
+            localStorage.removeItem('token');
+            delete this.$axios.defaults.headers.common['Authorization'];
+            const tokenCookie = useCookie('token');
+            tokenCookie.value = null;
           }
         })
     }
