@@ -9,9 +9,9 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
         try {
             await $axios.get('/api/users');
         } catch (e: AxiosError | any) {
-            return navigateTo('/login');
+            return navigateTo('/auth/login');
         }
     } else {
-        return navigateTo('/login');
+        return navigateTo('/auth/login');
     }
 });

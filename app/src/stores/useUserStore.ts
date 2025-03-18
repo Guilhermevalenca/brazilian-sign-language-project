@@ -1,4 +1,3 @@
-import type { AxiosInstance } from "axios";
 import { defineStore } from "pinia";
 import User from "~/classes/User";
 
