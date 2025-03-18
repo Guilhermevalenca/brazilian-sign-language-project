@@ -4,6 +4,7 @@
     <slot />
   </button>
 </template>
+
 <script lang="ts">
 export default {
   name:'ButttonApp',
@@ -35,14 +36,14 @@ export default {
   text-align: center;
   font-family: Quantico;
   font-weight: bold;
-  font-size: 8px;
+  font-size: 16px;
   background-color: #2266D2;
   border:none;
   border-radius: 1vw;
   box-shadow: 0px -2px 0px 0px rgb(0, 0, 0,0.30) inset;
   width: auto;
-  min-width: 10vw;
-  height: 3vw;
+  min-width: 8em;
+  height: 2.5em;
 }
 .button-default:hover{
   background-color: #1E5AC0;
