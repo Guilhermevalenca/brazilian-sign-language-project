@@ -2,6 +2,9 @@
   <div>
     <ExampleComponent />
   </div>
+  <div>
+    <Menu/>
+  </div>
   <fieldset>
     <p>Sistema de busca:</p>
     <client-only>
@@ -17,3 +20,9 @@ export default defineComponent({
 });
   
 </script>
+<style>
+*{
+  margin:0;
+  padding: 0;
+}
+</style>
