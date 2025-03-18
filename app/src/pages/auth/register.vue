@@ -41,7 +41,7 @@ export default defineComponent({
   methods: {
     async submit() {
       try {
-        const res = await this.user.register(this.$axios);
+        const res = await this.user.register();
         if(typeof res === 'object' && 'data' in res) {
           const token = res.data.token;
           this.$axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
@@ -50,8 +50,8 @@ export default defineComponent({
           const tokenCookie = useCookie('token');
           tokenCookie.value = token;
 
-          await useUserStore().data.fetch(this.$axios);
-          await useUserStore().fetchIsAdmin(this.$axios);
+          await useUserStore().data.fetch();
+          await useUserStore().fetchIsAdmin();
           this.$router.push('/auth/check-email-code');
         }
       } catch (e: AxiosResponse | AxiosError | any) {

@@ -24,12 +24,12 @@ class DatabaseSeeder extends Seeder
         $this->call([
             CourseSeeder::class,
             SubjectSeeder::class,
-            KeywordSeeder::class,
             SignSeeder::class,
             DescriptionSeeder::class,
             ExampleSeeder::class,
             FavoriteSeeder::class,
             SuggestionSeeder::class,
+            KeywordSeeder::class,
         ]);
     }
 }

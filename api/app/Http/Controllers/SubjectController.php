@@ -13,7 +13,8 @@ class SubjectController extends Controller
      */
     public function index()
     {
-        //
+        $subject = Subject::paginate();
+        return response($subject, 200);
     }
 
     /**
@@ -29,7 +30,9 @@ class SubjectController extends Controller
      */
     public function store(StoreSubjectRequest $request)
     {
-        //
+        $validated = $request->validated();
+        $subject = Subject::create($validated);
+        return response($subject, 201);
     }
 
     /**
@@ -37,7 +40,7 @@ class SubjectController extends Controller
      */
     public function show(Subject $subject)
     {
-        //
+        return response($subject, 200);
     }
 
     /**
@@ -53,7 +56,9 @@ class SubjectController extends Controller
      */
     public function update(UpdateSubjectRequest $request, Subject $subject)
     {
-        //
+        $validated = $request->validated();
+        $subject->update($validated);
+        return response($subject, 200);
     }
 
     /**
@@ -61,6 +66,7 @@ class SubjectController extends Controller
      */
     public function destroy(Subject $subject)
     {
-        //
+        $Subject->delete();
+        return response(null, 204);
     }
 }
