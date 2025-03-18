@@ -3,8 +3,8 @@
     <button @click="showMenu()">
       <img src="~/assets/icons/menu.svg" width="24px" height="24px">
     </button>
-    <button>
-      <img src="../assets/icons/our-logo.svg" width="288px" height="78px">
+    <button @click="$router.push('/')">
+      <img src="~/assets/icons/our-logo.svg" width="288px" height="78px">
     </button>
 
     <div class="auth-container">
@@ -13,7 +13,7 @@
     </div>
     <slot />
   </header>
-  <Menu :isVisible="isVisibleHere"/>
+  <Menu :isVisible="isVisibleHere" />
 </template>
 
 <script lang="ts">
@@ -36,16 +36,12 @@ export default defineComponent({
 
   methods: {
     async logout() {
-      await AuthService.logout(this.$axios);
+      await AuthService.logout();
       this.userStore!.resetDatas();
       this.$router.push('/auth/login');
     },
     showMenu(){
-    if(this.isVisibleHere == false){
-      this.isVisibleHere = true
-    }else{
-      this.isVisibleHere = false
-    }
+      this.isVisibleHere = !this.isVisibleHere;
     }
   },
 

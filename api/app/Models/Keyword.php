@@ -17,16 +17,16 @@ class Keyword extends Model
 
     public function signs(): BelongsToMany
     {
-        return $this->belongsToMany(Sign::class);
+        return $this->belongsToMany(Sign::class, 'sign_keyword');
     }
 
     public function courses(): BelongsToMany
     {
-        return $this->belongsToMany(Course::class);
+        return $this->belongsToMany(Course::class, 'course_keyword');
     }
 
     public function subjects(): BelongsToMany
     {
-        return $this->belongsToMany(Subject::class);
+        return $this->belongsToMany(Subject::class, 'subject_keyword');
     }
 }

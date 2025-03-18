@@ -8,6 +8,8 @@ export type UserType = {
     email?: string;
     password?: string;
     password_confirmation?: string;
+    new_password?: string;
+    new_password_confirmation?: string;
 }
 
 export default class User extends ApiModel<UserType> implements UserType {
@@ -16,6 +18,8 @@ export default class User extends ApiModel<UserType> implements UserType {
     email?: string | undefined;
     password?: string | undefined;
     password_confirmation?: string | undefined;
+    new_password?: string;
+    new_password_confirmation?: string;
     #favorites: Sign[] = [];
 
     constructor(data: UserType) {
@@ -23,9 +27,9 @@ export default class User extends ApiModel<UserType> implements UserType {
         this.sync(data);
     }
 
-    protected override register = async (axios: AxiosInstance): Promise<void | boolean | AxiosResponse> => {
+    protected override register = async (): Promise<void | boolean | AxiosResponse> => {
         this.url = 'api/users/register';
-        return super.register(axios)
+        return super.register()
             .finally(() => {
                 this.url = 'api/users';
             });
@@ -35,12 +39,13 @@ export default class User extends ApiModel<UserType> implements UserType {
         return [...this.#favorites];
     }
 
-    fetchFavorites = async (axios: AxiosInstance): Promise<boolean> => {
+    fetchFavorites = async (): Promise<boolean> => {
         let page = 0;
         let last_page = 0;
+        const { $axios } = useNuxtApp();
         const fetch = async () => {
             if(page <= last_page) {
-                const { data } = await axios.get(`api/favorites`, { 
+                const { data } = await $axios.get(`api/favorites`, { 
                     params: { 
                         page: ++page, 
                     }

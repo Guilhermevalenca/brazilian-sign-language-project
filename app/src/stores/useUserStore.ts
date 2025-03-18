@@ -1,4 +1,3 @@
-import type { AxiosInstance } from "axios";
 import { defineStore } from "pinia";
 import User from "~/classes/User";
 
@@ -12,12 +11,13 @@ export default defineStore("user", {
     }),
 
     actions: {
-        async fetchIsAdmin(axios: AxiosInstance) {
-            const { data } = await axios.get('/api/users/is_admin');
+        async fetchIsAdmin() {
+            const { $axios } = useNuxtApp();
+            const { data } = await $axios.get('/api/users/is_admin');
             this.is_admin = data.is_admin;
             setTimeout(() => {
-                this.fetchIsAdmin(axios);
-            }, 5 * 60 * 1000);
+                this.fetchIsAdmin();
+            }, 5 * 60 * 1000); //5 min
         },
         resetDatas() {
             this.data = new User({

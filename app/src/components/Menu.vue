@@ -1,22 +1,19 @@
 <template>
-  <!-- Menu fechado -->
-<nav class="menu-container-closed">
-  <button>
+<nav class="menu-container-closed" :class="{'menu-container-open': isVisible}">
+  <a @click="$router.push('/')">
     <img src="~/assets/icons/home.svg" width="24px" height="24px">
-  </button>
-  <button>
+    <span v-show="isVisible">Inicio</span>
+  </a>
+  <a @click="$router.push('/favorite')">
     <img src="~/assets/icons/favorite.svg" width="24px" height="24px">
-  </button>
-  <button>
+    <span v-show="isVisible">Favoritos</span>
+  </a>
+  <a @click="$router.push('/about')">
     <img src="~/assets/icons/info.svg" width="24px" height="24px">
-  </button>
+    <span v-show="isVisible">Sobre nós</span>
+  </a>
 </nav>
-<!-- Menu aberto -->
-  <nav class="menu-container-open" v-show="isVisible">
-    <a><img src="~/assets/icons/home.svg" width="24px" height="24px"> Inicio </a>
-    <a><img src="~/assets/icons/favorite.svg" width="24px" height="24px">Favoritos</a>
-    <a><img src="~/assets/icons/info.svg" width="24px" height="24px">Sobre nós</a>
-  </nav>
+
 </template>
 
 <script lang="ts">
@@ -29,7 +26,7 @@ export default {
 </script>
 @import url('https://fonts.googleapis.com/css2?family=Quantico:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 
-<style scoped>
+<style scoped lang="scss">
 .menu-container-closed{
   background-color: #2F9E41;
   display:flex;
@@ -46,19 +43,7 @@ export default {
   position: fixed;
 }
 .menu-container-open{
-  background-color: #2F9E41;
-  display:flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-  align-self: flex-start;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 5em;
-  height: 100vh;
   width: 10em;
-  padding: 2em 2em;
-  margin:0;
-  position: fixed;
 }
 a{
   font-family: Quantico;
@@ -70,12 +55,9 @@ a{
   align-items: center;
   flex-direction: row;
   gap: 2em;
-}
-button{
-  background: none;
-  border: none;
-  padding: 0;
-  margin: 0;
-  cursor: pointer;
+
+  &:hover{
+    cursor: pointer;
+  }
 }
 </style>
