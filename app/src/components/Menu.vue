@@ -1,4 +1,5 @@
 <template>
+  <!-- Menu fechado -->
 <nav class="menu-container-closed">
   <button>
     <img src="~/assets/icons/home.svg" width="24px" height="24px">
@@ -10,7 +11,7 @@
     <img src="~/assets/icons/info.svg" width="24px" height="24px">
   </button>
 </nav>
-
+<!-- Menu aberto -->
   <nav class="menu-container-open" v-show="isVisible">
     <a><img src="~/assets/icons/home.svg" width="24px" height="24px"> Inicio </a>
     <a><img src="~/assets/icons/favorite.svg" width="24px" height="24px">Favoritos</a>
