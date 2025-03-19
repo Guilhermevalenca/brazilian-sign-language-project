@@ -1,4 +1,3 @@
-name: 'brazilian-sign-language-app'
 services:
   app:
     image: 'node:20-alpine'
@@ -9,13 +8,9 @@ services:
       - '.:/app'
       - '/app/node_modules'
     working_dir: '/app'
-    profiles:
-      - dev
   app-prod:
     image: 'node:20-alpine'
     command: sh -c "echo 'iniciando servidor...' && npm i && npm run build && npm run preview"
-    profiles:
-      - prod
     ports:
       - '3000:3000'
     volumes:
