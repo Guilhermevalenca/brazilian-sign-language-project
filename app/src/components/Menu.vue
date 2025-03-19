@@ -1,4 +1,5 @@
 <template>
+
 <nav class="menu-container-closed" :class="{'menu-container-open': isVisible}">
   <a @click="$router.push('/')">
     <img src="~/assets/icons/home.svg" width="24px" height="24px">
