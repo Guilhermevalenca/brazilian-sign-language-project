@@ -7,7 +7,7 @@ export type FilterOptionsType = {
 }
 
 export default class SystemSourceService {
-    static async searhAction(search: string): Promise<AxiosResponse | undefined> {
+    static async searchAction(search: string): Promise<AxiosResponse | undefined> {
         if(search) {
             const { $axios } = useNuxtApp();
             return $axios.get(`/api/keywords`, {
