@@ -41,7 +41,7 @@ export default defineComponent({
     methods: {
         async searhAction() {
             if(this.search) {
-                await SystemSourceService.searhAction(this.search)
+                await SystemSourceService.searchAction(this.search)
                 .then(res => {
                     if(res) {
                         this.results.courses = res.data.courses;
