@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\keyword\StoreKeywordRequest;
 use App\Http\Requests\keyword\UpdateKeywordRequest;
+use App\Http\Requests\WithFiltersKeywordRequest;
 use App\Models\Keyword;
 use Illuminate\Http\Request;
 
@@ -23,15 +24,9 @@ class KeywordController extends Controller
         return response($keywords, 200);
     }
 
-    public function withFilters(Request $request) 
+    public function withFilters(WithFiltersKeywordRequest $request) 
     {
-        $request->validate([
-            'search' => ['required', 'string'],
-            'filterOptions' => ['required', 'array'],
-            'filterOptions.courses' => ['required', 'boolean'],
-            'filterOptions.subjects' => ['required', 'boolean'],
-            'filterOptions.signs' => ['required', 'boolean'],
-        ]);
+        $request->validated();
 
         $keywords = Keyword::where('name', 'like', '%' . $request->search . '%');
 
@@ -57,7 +52,7 @@ class KeywordController extends Controller
      */
     public function create()
     {
-        //
+        return response(Keyword::orderBy('id', 'desc')->get(), 200);
     }
 
     /**
@@ -65,7 +60,15 @@ class KeywordController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => ['required', 'string'],
+        ]);
+
+        Keyword::create([
+            'name' => $request->name 
+        ]);
+
+        return response(null, 201);
     }
 
     /**

@@ -2,9 +2,6 @@
   <div>
     <ExampleComponent />
   </div>
-  <div>
-    <Menu/>
-  </div>
   <fieldset>
     <p>Sistema de busca:</p>
     <client-only>
