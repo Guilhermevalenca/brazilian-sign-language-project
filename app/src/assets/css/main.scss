@@ -1,3 +1,14 @@
 //@tailwind base;
 //@tailwind components;
 @tailwind utilities;
+
+
+$primary-color: #2F9E41;
+$secondary-color: #2266D2;
+$tertiary-color: #F8F9FA;
+
+@import url('https://fonts.googleapis.com/css2?family=Quantico:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+body{
+  font-family: Quantico;
+  background-color: #C4DBC8;
+}

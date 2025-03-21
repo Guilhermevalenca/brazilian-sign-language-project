@@ -1,15 +1,15 @@
 <template>
   <header class="header-container">
     <button @click="showMenu()">
-      <img src="~/assets/icons/menu.svg" width="24px" height="24px">
+      <img src="../../assets/icons/menu.svg" width="24px" height="24px">
     </button>
     <button @click="$router.push('/')">
-      <img src="../assets/logos/our-logo.svg" width="288px" height="78px">
+      <img src="../../assets/logos/our-logo.svg" width="288px" height="78px">
     </button>
-    <AppSearch/>
+    <SearchingBar/>
     <div class="auth-container">
-      <ButtonApp variant="default"> Login </ButtonApp>
-      <ButtonApp varaiant="default"> Cadastre-se </ButtonApp>
+      <AppButton variant="default" @click="$router.push('/auth/login')"> Login </AppButton>
+      <AppButton varaiant="default" @click="$router.push('/auth/register')"> Cadastre-se </AppButton>
     </div>
     <slot />
   </header>

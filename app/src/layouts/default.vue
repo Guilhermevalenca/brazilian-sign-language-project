@@ -1,11 +1,11 @@
 <template>
   <client-only>
-    <LazyAppHeader />
+    <LazyLayoutAppHeader />
   </client-only>
   <main>
     <slot />
   </main>
   <client-only>
-    <LazyAppFooter />
+    <LazyLayoutAppFooter />
   </client-only>
 </template>

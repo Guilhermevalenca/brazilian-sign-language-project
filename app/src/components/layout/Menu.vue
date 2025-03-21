@@ -2,15 +2,15 @@
 
 <nav class="menu-container-closed" :class="{'menu-container-open': isVisible}">
   <a @click="$router.push('/')">
-    <img src="~/assets/icons/home.svg" width="24px" height="24px">
+    <img src="../../assets/icons/home.svg" width="24px" height="24px">
     <span v-show="isVisible">Inicio</span>
   </a>
   <a @click="$router.push('/favorite')">
-    <img src="~/assets/icons/favorite.svg" width="24px" height="24px">
+    <img src="../../assets/icons/favorite.svg" width="24px" height="24px">
     <span v-show="isVisible">Favoritos</span>
   </a>
   <a @click="$router.push('/about')">
-    <img src="~/assets/icons/info.svg" width="24px" height="24px">
+    <img src="../../assets/icons/info.svg" width="24px" height="24px">
     <span v-show="isVisible">Sobre nós</span>
   </a>
 </nav>

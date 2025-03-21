@@ -1,22 +1,57 @@
 <template>
-  <div class="searching-bar-container">
-    <input class="searching-bar-input" type="text" placeholder="Buscar ...">
-    <button class="search-settings">
-      <img src="~/assets/icons/settings.svg" width="24px" height="24px">
-    </button>
-    <button class="search-button">
-      <img src="~/assets/icons/search.svg" width="24px" height="24px">
-    </button>
-  </div>
+  <form @submit.prevent="submit">
+    <div class="searching-bar-container">
+      <input class="searching-bar-input" type="text" v-model="search" required @input="searchAction" placeholder="Buscar ...">
+      <button type="submit" class="search-button">
+        <img src="~/assets/icons/search.svg" width="24px" height="24px">
+      </button>
+    </div>
+  </form>
 </template>
 
 <script lang="ts">
+import SystemSourceService from '~/services/SystemSourceService';
 
-export default{
-  name: "SearchingBar"
-}
+export default defineComponent({
+  name: 'AppSearch',
+
+  data: () => ({
+    search: '',
+    results: {
+      courses: [],
+      subjects: [],
+      signs: [],
+    },
+  }),
+
+  methods: {
+    async searchAction() {
+      if(this.search) {
+        await SystemSourceService.searchAction(this.search)
+            .then(res => {
+              if(res) {
+                this.results.courses = res.data.courses;
+                this.results.subjects = res.data.subjects;
+                this.results.signs = res.data.signs;
+              }
+            });
+      } else {
+        this.results.courses = [];
+        this.results.subjects = [];
+        this.results.signs = [];
+      }
+    },
+    async submit() {
+      const searchData = searchBarData();
+      if(this.search) {
+        searchData.value = this.search;
+        this.$router.push(`/search`);
+      }
+    }
+
+  }
+});
 </script>
-
 <style scoped>
 .searching-bar-container{
   display: flex;
@@ -44,20 +79,11 @@ export default{
   width: 4.5em;
   height: 4em;
 }
-.search-settings{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: none;
-  background-color: #FFFFFF;
-  cursor: pointer;
-  width: 4.5em;
-  height: 4em;
-}
 .searching-bar-input:focus{
-  outline: none;
-  border: none;
+  outline:#2266D2 1px solid ;
+  border: #2266D2 1px solid;
   box-shadow: none;
 }
+
 
 </style>
