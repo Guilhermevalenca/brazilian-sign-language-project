@@ -26,28 +26,17 @@
 
 <script lang="ts">
 import type { PropType } from 'vue';
-import Keyword, { type KeywordType } from '~/classes/Keyword';
+import Keyword from '~/classes/Keyword';
+import KeywordService from '~/services/KeywordService';
 
 export default defineComponent({
     name: 'KeywordSelect',
 
     async setup() {
-        const { $axios } = useNuxtApp();
-        const token = useCookie('token').value;
-        if(token) {
-            $axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-        }
-        const keywords = ref<Keyword[]>([]);
-
-        async function fetchKeywords() {
-            const { data } = await $axios.get('/api/keywords/create');
-            keywords.value = data.map((keyword: KeywordType) => new Keyword(keyword));
-        }
-        fetchKeywords();
+        const keywords = ref<Keyword[]>(await KeywordService.fetch());
 
         return {
             keywords,
-            fetchKeywords,
         }
     },
 
@@ -91,12 +80,11 @@ export default defineComponent({
     methods: {
         async submit() {
             try {
-                await this.$axios.post('/api/keywords', this.newKeyword);
-                await this.fetchKeywords();
+                await this.newKeyword.register();
+                this.keywords = await KeywordService.fetch();
                 this.isAddKeyword = false;
                 this.newKeyword.name = '';
             } catch(e) {
-                console.log(e);
                 alert('deu errado!');
             }
         }

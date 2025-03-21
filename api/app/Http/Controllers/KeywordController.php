@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\keyword\StoreKeywordRequest;
-use App\Http\Requests\keyword\UpdateKeywordRequest;
 use App\Http\Requests\WithFiltersKeywordRequest;
 use App\Models\Keyword;
 use Illuminate\Http\Request;
@@ -46,10 +44,6 @@ class KeywordController extends Controller
 
         return response($keywords->paginate(), 200);
     }
-
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         return response(Keyword::orderBy('id', 'desc')->get(), 200);
@@ -76,7 +70,7 @@ class KeywordController extends Controller
      */
     public function show(Keyword $keyword)
     {
-        //
+        return response($keyword, 200);
     }
 
     /**
