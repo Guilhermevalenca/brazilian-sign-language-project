@@ -32,6 +32,9 @@ export default defineComponent({
         if(data.description) {
             sign.setDescription(data.description);
         }
+        if(data.keywords) {
+            sign.setKeywords(data.keywords);
+        }
 
         return {
             sign,

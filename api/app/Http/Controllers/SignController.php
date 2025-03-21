@@ -10,13 +10,18 @@ class SignController extends Controller
 {
     public function index()
     {
-        $signs = Sign::paginate();
+        $signs = Sign::orderBy('name')->paginate();
         return response($signs, 200);
     }
 
     public function store(SignRequest $request)
     {
         $validated = $request->validated();
+
+        $validated = [
+            ...$validated,
+            'keywords' => array_column($validated['keywords'], 'id'),
+        ];
 
         if(!$this->validUrl($validated['display'])) {
            return response([
@@ -27,6 +32,8 @@ class SignController extends Controller
         $validated['display'] = $this->getVideoId($validated['display'], 'sign');
 
         $sign = Sign::create($validated);
+
+        $sign->keywords()->attach($validated['keywords']);
 
         if(isset($validated['description'])) {
             if(!$this->validUrl($validated['description']['display'])) {
@@ -55,8 +62,11 @@ class SignController extends Controller
 
     public function show(Sign $sign)
     {
-        $sign->load('description', 'example');
-
+        $sign->load([
+            'keywords',
+            'description',
+            'example',
+        ]);
         return response($sign, 200);
     }
 
@@ -73,6 +83,7 @@ class SignController extends Controller
         $validated['display'] = $this->getVideoId($validated['display'], 'sign');
 
         $sign->update($validated);
+        $sign->keywords()->sync(array_column($validated['keywords'], 'id'));
 
         if(isset($validated['description'])) {
             if(!$this->validUrl($validated['description']['display'])) {

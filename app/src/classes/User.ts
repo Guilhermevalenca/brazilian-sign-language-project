@@ -27,6 +27,22 @@ export default class User extends ApiModel<UserType> implements UserType {
         this.sync(data);
     }
 
+    protected override fetch = async (): Promise<void | boolean | AxiosResponse> => {
+        if(!this.url) {
+			throw new Error('url não definida');
+		}
+        const { $axios } = useNuxtApp();
+        return $axios.get(this.url)
+            .then((res: AxiosResponse) => {
+                this.loading = false;
+                this.sync(res.data);
+                return res;
+            })
+            .finally(() => {
+                this.loading = false;
+            });
+    }
+
     protected override register = async (): Promise<void | boolean | AxiosResponse> => {
         this.url = 'api/users/register';
         return super.register()

@@ -1,6 +1,7 @@
 import ApiModel from "./ApiModel";
 import Description, { type DescriptionType } from "./Description";
 import Example, { type ExampleType } from "./Example";
+import type Keyword from "./Keyword";
 
 export type SignType = {
     id?: number;
@@ -14,6 +15,7 @@ export default class Sign extends ApiModel<SignType> implements SignType {
     display?: string;
     #example?: Example;
     #description?: Description;
+    #keywords: Keyword[] = [];
 
     constructor(data: SignType) {
         super('api/signs');
@@ -58,11 +60,26 @@ export default class Sign extends ApiModel<SignType> implements SignType {
         this.#description = undefined;
     }
 
+    getKeywords = (): Keyword[] => {
+        return [...this.#keywords];
+    }
+
+    setKeywords = (value: Keyword[]) => {
+        this.#keywords = value;
+    }
+
+    resetKeywords = () => {
+        this.#keywords = [];
+    }
+
     toJSON = () => {
         return {
-            ...this,
-            description: this.getDescription()?.toJSON(),
-            example: this.getExample()?.toJSON(),
+            id: this.id,
+            name: this.name,
+            display: this.display,
+            description: this.getDescription(),
+            example: this.getExample(),
+            keywords: this.getKeywords(),
         }
     }
 }

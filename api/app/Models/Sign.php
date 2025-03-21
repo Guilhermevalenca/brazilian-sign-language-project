@@ -30,7 +30,7 @@ class Sign extends Model
 
     public function keywords(): BelongsToMany
     {
-        return $this->belongsToMany(Keyword::class);
+        return $this->belongsToMany(Keyword::class, 'sign_keyword', 'sign_id', 'keyword_id');
     }
 
     public function suggestions(): BelongsToMany

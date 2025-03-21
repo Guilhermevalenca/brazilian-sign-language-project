@@ -27,14 +27,25 @@ export default abstract class ApiModel<ClassType> {
 		if(!this.url) {
 			throw new Error('url não definida');
 		}
+
+		let id: number | undefined | unknown;
+		if('id' in this) {
+			id = this.id;
+		} else {
+			throw new Error('id nao definido');
+		}
+
 		const { $axios } = useNuxtApp();
 		this.loading = true;
-        return $axios.get(this.url)
+        return $axios.get(this.url + '/' + id)
             .then((res: AxiosResponse) => {
             	this.loading = false;
 				this.sync(res.data);
 				return res;
-            });
+            })
+			.finally(() => {
+				this.loading = false;
+			});
     }
 
     protected async register(): Promise<void | boolean | AxiosResponse> {
