@@ -5,7 +5,15 @@ export default defineNuxtConfig({
   ssr: true,
   srcDir: 'src',
   debug: false,
-  css: ['~/assets/css/main.scss'],
+  vite: {
+    css: {
+      preprocessorOptions: {
+        scss: {
+          additionalData: '@use "~/assets/css/main.scss" as *;',
+        },
+      },
+    },
+  },
   postcss: {
     plugins: {
       tailwindcss: {},

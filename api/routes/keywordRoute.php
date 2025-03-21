@@ -13,7 +13,9 @@ Route::prefix('keywords')
         Route::middleware(['auth:sanctum', 'ability:user-admin'])
             ->group(function() {
 
+                Route::get('create', 'create');
                 Route::post('', 'store');
+                Route::get('/{keyword}', 'show');
                 Route::put('/{keyword}', 'update');
                 Route::delete('/{keyword}', 'destroy');
 
