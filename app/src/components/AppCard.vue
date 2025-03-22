@@ -17,9 +17,12 @@ name: "AppCard"
   flex-direction: column;
   gap: 1em;
   justify-self: center;
+  align-items: center;
+  justify-items: center;
+  justify-self: center;
   background-color: ghostwhite;
-  padding: 4em;
-  min-width: 20em;
+  padding: 3em;
+  min-width: 25em;
   min-height: 20em;
   width: auto;
   height: auto;

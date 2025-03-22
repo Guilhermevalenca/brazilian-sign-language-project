@@ -12,3 +12,8 @@ body{
   font-family: Quantico;
   background-color: #C4DBC8;
 }
+label{
+  display:flex;
+  flex-direction: column;
+  align-content: flex-start;
+}

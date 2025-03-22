@@ -11,6 +11,7 @@ export default defineComponent({
 
 <style scoped>
 input{
+  width: 25em;
   border-radius: 1em;
   padding: 0.5em;
   border-style: solid;
