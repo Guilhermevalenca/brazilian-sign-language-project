@@ -1,5 +1,8 @@
 <template>
-  <slot />
+  <div></div>
 </template>
-<script setup lang="ts">
+<script lang="ts">
+export default defineComponent({
+  name: "AppFooter",
+});
 </script>

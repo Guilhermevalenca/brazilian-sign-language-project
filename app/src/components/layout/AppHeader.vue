@@ -1,10 +1,10 @@
 <template>
   <header class="header-container">
     <button @click="showMenu()">
-      <img src="../../assets/icons/menu.svg" width="24px" height="24px">
+      <img src="~/assets/icons/menu.svg" width="24px" height="24px">
     </button>
     <button @click="$router.push('/')">
-      <img src="../../assets/logos/our-logo.svg" width="288px" height="78px">
+      <img src="~/assets/logos/our-logo.svg" width="288px" height="78px">
     </button>
     <SearchingBar/>
     <div class="auth-container">
@@ -28,7 +28,7 @@ export default defineComponent({
   },
   data() {
     return {
-      userStore: useUserStore(),
+      userStore: null as null | ReturnType<typeof useUserStore>,
       showOptionsAuth: true,
       isVisibleHere: false
     }
@@ -52,6 +52,10 @@ export default defineComponent({
       },
       deep: true
     }
+  },
+
+  mounted() {
+    this.userStore = useUserStore();
   }
 });
 </script>

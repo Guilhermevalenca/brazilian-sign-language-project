@@ -14,6 +14,16 @@ export default defineNuxtConfig({
       },
     },
   },
+  // nitro: {
+  //   prerender: {
+  //     // components: [
+  //     //   '~/components/AppLogo.vue',
+  //     //   '~/components/AppCard.vue',
+  //     //   '~/components/AppForm.vue',
+  //     //   '~/components/AppButton.vue'
+  //     // ]
+  //   }
+  // },
   postcss: {
     plugins: {
       tailwindcss: {},

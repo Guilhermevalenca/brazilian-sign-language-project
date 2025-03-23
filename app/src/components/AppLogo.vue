@@ -1,11 +1,9 @@
 <template>
-  <img src="../assets/logos/ou-logo-simp.svg" :class="['logo-medium',variants[variant]]" v-bind="$attrs">
+  <img src="~/assets/logos/ou-logo-simp.svg" :class="['logo-medium',variants[variant]]" v-bind="$attrs">
   <slot />
 </template>
 
 <script lang="ts">
-import {defineComponent} from 'vue'
-
 export default{
   name: "AppLogo",
   props:{
