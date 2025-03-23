@@ -1,6 +1,6 @@
 <template>
-  <div class="app-header">
-    <header class="header-container">
+  <header>
+    <section class="header-container">
       <button @click="showMenu()">
         <img src="~/assets/icons/menu.svg" width="24px" height="24px">
       </button>
@@ -12,9 +12,11 @@
         <AppButton variant="default" @click="$router.push('/auth/login')"> Login </AppButton>
         <AppButton varaiant="default" @click="$router.push('/auth/register')"> Cadastre-se </AppButton>
       </div>
-    </header>
-    <Menu :isVisible="isVisibleHere" />
-  </div>
+    </section>
+    <section>
+      <Menu :isVisible="isVisibleHere" />
+    </section>
+  </header>
 </template>
 
 <script lang="ts">
@@ -61,7 +63,7 @@ export default defineComponent({
 });
 </script>
 <style scoped>
-.app-header {
+header {
   position: fixed;
   top: 0;
   width: 100vw;
