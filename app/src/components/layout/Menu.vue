@@ -41,7 +41,6 @@ export default {
   width: 1em;
   padding: 2em 2em;
   margin:0;
-  position: absolute;
 }
 .menu-container-open{
   width: 10em;

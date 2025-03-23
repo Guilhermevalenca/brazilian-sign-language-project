@@ -1,19 +1,20 @@
 <template>
-  <header class="header-container">
-    <button @click="showMenu()">
-      <img src="~/assets/icons/menu.svg" width="24px" height="24px">
-    </button>
-    <button @click="$router.push('/')">
-      <img src="~/assets/logos/our-logo.svg" width="288px" height="78px">
-    </button>
-    <SearchingBar/>
-    <div class="auth-container">
-      <AppButton variant="default" @click="$router.push('/auth/login')"> Login </AppButton>
-      <AppButton varaiant="default" @click="$router.push('/auth/register')"> Cadastre-se </AppButton>
-    </div>
-    <slot />
-  </header>
-  <Menu :isVisible="isVisibleHere" />
+  <div class="app-header">
+    <header class="header-container">
+      <button @click="showMenu()">
+        <img src="~/assets/icons/menu.svg" width="24px" height="24px">
+      </button>
+      <button @click="$router.push('/')">
+        <img src="~/assets/logos/our-logo.svg" width="288px" height="78px">
+      </button>
+      <SearchingBar/>
+      <div class="auth-container">
+        <AppButton variant="default" @click="$router.push('/auth/login')"> Login </AppButton>
+        <AppButton varaiant="default" @click="$router.push('/auth/register')"> Cadastre-se </AppButton>
+      </div>
+    </header>
+    <Menu :isVisible="isVisibleHere" />
+  </div>
 </template>
 
 <script lang="ts">
@@ -60,6 +61,11 @@ export default defineComponent({
 });
 </script>
 <style scoped>
+.app-header {
+  position: fixed;
+  top: 0;
+  width: 100vw;
+}
 .header-container{
   display: flex;
   flex-direction: row;
