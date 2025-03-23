@@ -62,7 +62,7 @@ export default defineComponent({
   }
 });
 </script>
-<style scoped>
+<style lang="scss" scoped>
 header {
   position: fixed;
   top: 0;
@@ -77,8 +77,9 @@ header {
   justify-content:flex-start;
   align-items: center;
   gap: 2em;
+  position: relative;
   padding: 0.5em 2em;
-  background-color: #2F9E41;
+  background-color: $primary-color;
 }
 .auth-container{
   display:flex;

@@ -5,11 +5,13 @@ export default defineNuxtConfig({
   ssr: true,
   srcDir: 'src',
   debug: false,
+  css: ['~/assets/css/main.scss'],
   vite: {
-    css: {
+    css:
+        {
       preprocessorOptions: {
         scss: {
-          additionalData: '@use "~/assets/css/main.scss" as *;',
+          additionalData: "@use '~/assets/css/colors.scss' as *;",
         },
       },
     },

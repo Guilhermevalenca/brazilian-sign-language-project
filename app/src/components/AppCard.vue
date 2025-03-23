@@ -20,7 +20,7 @@ name: "AppCard"
   align-items: center;
   justify-items: center;
   justify-self: center;
-  background-color: ghostwhite;
+  background-color: $tertiary-color;
   padding: 3em;
   min-width: 25em;
   min-height: 20em;
