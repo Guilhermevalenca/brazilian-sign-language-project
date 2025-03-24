@@ -17,7 +17,7 @@ div{
   margin-right: auto;
   margin-top: 1em;
   margin-bottom: 1em;
-  gap:5em;
+  gap: 5em;
   align-items: center;
   flex-direction: row;
   flex-wrap: nowrap;

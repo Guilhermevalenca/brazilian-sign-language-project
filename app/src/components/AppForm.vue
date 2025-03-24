@@ -12,9 +12,9 @@ export default defineComponent({
 
 <style scoped>
 form{
+  display: flex;
   flex-direction: column;
-  justify-items: flex-start;
-  align-items: flex-start;
+  align-items: stretch;
   flex-wrap: nowrap;
   gap: 1em;
 }

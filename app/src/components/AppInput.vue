@@ -16,11 +16,14 @@ export default{
 
 <style lang="scss" scoped>
 input{
-    width: 25em;
+  display: flex;
+  width: 100%;
+  height: 3em;
   border-radius: 1em;
   padding: 0.5em;
   border-style: solid;
   border-width: 1px;
+  box-sizing: border-box;
   border-color: $primary-color;
 }
 input:focus{

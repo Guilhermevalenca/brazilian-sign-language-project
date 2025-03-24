@@ -65,7 +65,7 @@ export default defineComponent({
   border-bottom-left-radius: 5em;
   padding: 0em 2em;
   width: 30em;
-  height: 4em;
+  height: 3.5em;
 }
 .search-button{
   background-color: #2266D2;
@@ -73,11 +73,11 @@ export default defineComponent({
   align-items: center;
   justify-content: center;
   border: none;
-  border-top-right-radius: 50%;
-  border-bottom-right-radius: 50%;
+  border-top-right-radius: 10em;
+  border-bottom-right-radius: 10em;
   cursor:pointer;
-  width: 4.5em;
-  height: 4em;
+  width: 4.0em;
+  height: 3.5em;
 }
 .searching-bar-input:focus{
   outline:#2266D2 1px solid ;
