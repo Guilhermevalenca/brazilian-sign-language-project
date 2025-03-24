@@ -18,20 +18,15 @@ class CourseController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(StoreCourseRequest $request)
     {
         $validated = $request->validated();
         $course = Course::create($validated);
+        if (isset($validated['subjects'])) {
+            $course->subjects()->attach($validated['subjects']);
+        }
         return response($course, 201);
     }
 
@@ -40,15 +35,8 @@ class CourseController extends Controller
      */
     public function show(Course $course)
     {
+        $course->load('subjects');
         return response($course, 200);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Course $course)
-    {
-        //
     }
 
     /**
@@ -56,7 +44,7 @@ class CourseController extends Controller
      */
     public function update(UpdateCourseRequest $request, Course $course)
     {
-        $validated =  $request->validated();
+        $validated = $request->validated();
         $course->update($validated);
         return response($course, 200);
     }
@@ -66,7 +54,8 @@ class CourseController extends Controller
      */
     public function destroy(Course $course)
     {
+        $course->subjects()->detach();
         $course->delete();
-        return(response(null, 204));
+        return (response(null, 204));
     }
 }

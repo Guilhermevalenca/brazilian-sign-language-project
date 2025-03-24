@@ -23,6 +23,7 @@ class StoreCourseRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string'],
+            'subjects.*' => ['integer', 'exists:subjects,id'],
         ];
     }
 }
