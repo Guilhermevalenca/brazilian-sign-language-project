@@ -25,19 +25,42 @@ class CourseController extends Controller
     {
         try {
             $validated = $request->validated();
+
             $path = $request->file('image')->store('courses', 'public');
             $validated['image'] = $path;
+
+            if ($request->has('subjects')) {
+                $subjects = $request->input('subjects');
+
+                // Se for string JSON, decodifica
+                if (is_string($subjects)) {
+                    $validated['subjects'] = json_decode($subjects, true);
+                }
+                // Se já for array, usa diretamente
+                elseif (is_array($subjects)) {
+                    $validated['subjects'] = $subjects;
+                }
+            }
+
             $course = Course::create($validated);
-            if (isset($validated['subjects'])) {
+
+            if (!empty($validated['subjects'])) {
                 $course->subjects()->attach($validated['subjects']);
             }
-            return response($course, 201);
+
+            return response()->json($course, 201);
 
         } catch (\Exception $e) {
-            Storage::disk('public')->delete($path);
-            return response($e->getMessage(), 500);
-        }
+            if (isset($path)) {
+                Storage::disk('public')->delete($path);
+            }
 
+            return response()->json([
+                'message' => 'Erro ao criar curso',
+                'error' => $e->getMessage(),
+                'received_data' => $request->all() // Para debug
+            ], 500);
+        }
     }
 
     /**
@@ -62,16 +85,29 @@ class CourseController extends Controller
                 if ($course->image && Storage::disk('public')->exists($course->image)) {
                     Storage::disk('public')->delete($course->image);
                 }
-
                 // Armazena a nova imagem
                 $path = $request->file('image')->store('courses', 'public');
                 $validated['image'] = $path;
+            }
+            if ($request->has('subjects')) {
+                $subjects = $request->input('subjects');
+
+                // Se for string JSON, decodifica
+                if (is_string($subjects)) {
+                    $validated['subjects'] = json_decode($subjects, true);
+                }
+                // Se já for array, usa diretamente
+                elseif (is_array($subjects)) {
+                    $validated['subjects'] = $subjects;
+                }
+            }
+            if (!empty($validated['subjects'])) {
+                $course->subjects()->sync($validated['subjects']);
             }
 
             $course->update($validated);
             return response($course, 200);
         } catch (\Exception $e) {
-            // Se ocorrer um erro, deleta a nova imagem (se foi criada)
             if (isset($path)) {
                 Storage::disk('public')->delete($path);
             }
