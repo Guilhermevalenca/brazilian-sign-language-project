@@ -5,9 +5,9 @@ export default defineComponent({
 </script>
 
 <template>
-<form>
-</form>
+<form v-bind="$attrs">
   <slot/>
+</form>
 </template>
 
 <style scoped>

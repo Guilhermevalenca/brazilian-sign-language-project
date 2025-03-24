@@ -1,23 +1,30 @@
-<script lang="ts">
-export default defineComponent({
-  name: "AppInput"
-})
-</script>
 <template>
-  <input>
+  <input
+      :value="modelValue"
+      @input="$emit('update:modelValue', $event.target.value)"
+  >
 </template>
 
-<style scoped>
+<script lang="ts">
+export default{
+  name: "AppInput",
+  props: ['modelValue'],
+  emits: ['update:modelValue'],
+
+}
+</script>
+
+<style lang="scss" scoped>
 input{
-  width: 25em;
+    width: 25em;
   border-radius: 1em;
   padding: 0.5em;
   border-style: solid;
   border-width: 1px;
-  border-color: #2F9E41;
+  border-color: $primary-color;
 }
 input:focus{
-  border-color: #2266D2;
-  outline: #2266D2;
+  border-color: $secondary-color;
+  outline: $secondary-color;
 }
 </style>
