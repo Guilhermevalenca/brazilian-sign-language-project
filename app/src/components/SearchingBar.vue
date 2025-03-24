@@ -45,7 +45,7 @@ export default defineComponent({
       const searchData = searchBarData();
       if(this.search) {
         searchData.value = this.search;
-        this.$router.push(`/search`);
+        this.$router.push('/search');
       }
     }
 
