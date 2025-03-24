@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\course\StoreCourseRequest;
 use App\Http\Requests\course\UpdateCourseRequest;
 use App\Models\Course;
@@ -22,12 +23,21 @@ class CourseController extends Controller
      */
     public function store(StoreCourseRequest $request)
     {
-        $validated = $request->validated();
-        $course = Course::create($validated);
-        if (isset($validated['subjects'])) {
-            $course->subjects()->attach($validated['subjects']);
+        try {
+            $validated = $request->validated();
+            $path = $request->file('image')->store('courses', 'public');
+            $validated['image'] = $path;
+            $course = Course::create($validated);
+            if (isset($validated['subjects'])) {
+                $course->subjects()->attach($validated['subjects']);
+            }
+            return response($course, 201);
+
+        } catch (\Exception $e) {
+            Storage::delete($path);
+            return response($e->getMessage(), 500);
         }
-        return response($course, 201);
+
     }
 
     /**
@@ -45,8 +55,19 @@ class CourseController extends Controller
     public function update(UpdateCourseRequest $request, Course $course)
     {
         $validated = $request->validated();
-        $course->update($validated);
-        return response($course, 200);
+        try {
+            if (isset($validated['image'])) {
+                $oldImage = trim($course->image);
+                $path = $request->file('image')->store('courses', 'public');
+                $validated['image'] = $path;
+            }
+            $course->update($validated);
+            Storage::delete($oldImage);
+            return response($course, 200);
+        } catch (\Exception $e) {
+            return response($e->getMessage(), 500);
+        }
+
     }
 
     /**

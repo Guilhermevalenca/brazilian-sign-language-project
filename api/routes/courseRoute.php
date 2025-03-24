@@ -10,12 +10,12 @@ Route::prefix('courses')
         Route::get('/', 'index');
         Route::get('/{course}', 'show');
 
-        Route::middleware(['auth:sanctum', 'ability:user-admin'])
-            ->group(function () {
+        //Route::middleware(['auth:sanctum', 'ability:user-admin'])
+        //->group(function () {
+    
+        Route::post('/', 'store');
+        Route::post('/{course}', 'update');
+        Route::delete('/{course}', 'destroy');
 
-                Route::post('/', 'store');
-                Route::put('/{course}', 'update');
-                Route::delete('/{course}', 'destroy');
-
-            });
+        //});
     });

@@ -13,6 +13,7 @@ class Course extends Model
 
     protected $fillable = [
         'name',
+        'image',
     ];
 
     public function subjects(): BelongsToMany

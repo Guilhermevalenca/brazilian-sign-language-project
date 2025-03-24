@@ -24,6 +24,7 @@ class UpdateCourseRequest extends FormRequest
         return [
             'name' => ['required', 'string'],
             'subjects.*' => ['integer', 'exists:subjects,id'],
+            'image' => ['image', 'mimes:jpeg,png,jpg,gif,svg'],
         ];
     }
 }
