@@ -34,7 +34,7 @@ class CourseController extends Controller
             return response($course, 201);
 
         } catch (\Exception $e) {
-            Storage::delete($path);
+            Storage::disk('public')->delete($path);
             return response($e->getMessage(), 500);
         }
 
@@ -55,19 +55,28 @@ class CourseController extends Controller
     public function update(UpdateCourseRequest $request, Course $course)
     {
         $validated = $request->validated();
+
         try {
-            if (isset($validated['image'])) {
-                $oldImage = trim($course->image);
+            if ($request->hasFile('image')) {
+                // Remove a imagem antiga se existir
+                if ($course->image && Storage::disk('public')->exists($course->image)) {
+                    Storage::disk('public')->delete($course->image);
+                }
+
+                // Armazena a nova imagem
                 $path = $request->file('image')->store('courses', 'public');
                 $validated['image'] = $path;
             }
+
             $course->update($validated);
-            Storage::delete($oldImage);
             return response($course, 200);
         } catch (\Exception $e) {
+            // Se ocorrer um erro, deleta a nova imagem (se foi criada)
+            if (isset($path)) {
+                Storage::disk('public')->delete($path);
+            }
             return response($e->getMessage(), 500);
         }
-
     }
 
     /**

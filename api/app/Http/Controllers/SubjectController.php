@@ -34,6 +34,7 @@ class SubjectController extends Controller
      */
     public function show(Subject $subject)
     {
+        $subject->load('courses');
         return response($subject, 200);
     }
     /**
