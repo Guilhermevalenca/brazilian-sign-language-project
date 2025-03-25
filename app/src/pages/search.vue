@@ -1,6 +1,5 @@
 <template>
     <form>
-        <input v-model="search" @input="searchAction" />
         <p>Filtros</p>
         <div class="tw-flex tw-gap-2">
             <div>
@@ -42,14 +41,13 @@
 </template>
 
 <script lang="ts">
-import type { FilterOptionsType } from '~/services/SystemSourceService';
-import SystemSourceService from '~/services/SystemSourceService';
+import SystemSourceService, { type FilterOptionsType } from '~/services/SystemSourceService';
 
 export default defineComponent({
     name: 'searchPage',
 
     async setup() {
-        const search = ref(searchBarData().value);
+        const searchData = searchBarData();
         const results = ref({
             courses: [],
             subjects: [],
@@ -64,9 +62,10 @@ export default defineComponent({
         const page = ref(1);
 
         async function searchAction() {
-            if(search.value) {
+            const search = searchData?.value;
+            if(search) {
                 await SystemSourceService.searchActionWithFilter(
-                    search.value, 
+                    search,
                     filterOptions.value, 
                     page.value
                 )
@@ -94,8 +93,12 @@ export default defineComponent({
         }
 
         await searchAction();
+
+        watch(searchData, async () => {
+            await searchAction();
+        });
+
         return {
-            search,
             results,
             filterOptions,
             searchAction,
@@ -116,27 +119,19 @@ export default defineComponent({
         }
     },
 
-    mounted() {
-        if(this.search) {
-            this.searchAction();
-        }
-    },
-
     methods: {
         async nextPage() {
             if(this.page < this.last_page) {
                 this.page++;
             }
-            await this.searchAction()
-                .then(() => console.log('atualizado'));
+            await this.searchAction();
         },
         async previousPage() {
             if(this.page > 1) {
                 this.page--;
             }
-            await this.searchAction()
-                .then(() => console.log('atualizado'));
+            await this.searchAction();
         }
-    }
+    },
 })
 </script>

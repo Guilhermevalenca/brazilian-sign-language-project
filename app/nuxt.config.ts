@@ -6,6 +6,26 @@ export default defineNuxtConfig({
   srcDir: 'src',
   debug: false,
   css: ['~/assets/css/main.scss'],
+  vite: {
+    css:
+        {
+      preprocessorOptions: {
+        scss: {
+          additionalData: "@use '~/assets/css/colors.scss' as *;",
+        },
+      },
+    },
+  },
+  // nitro: {
+  //   prerender: {
+  //     // components: [
+  //     //   '~/components/AppLogo.vue',
+  //     //   '~/components/AppCard.vue',
+  //     //   '~/components/AppForm.vue',
+  //     //   '~/components/AppButton.vue'
+  //     // ]
+  //   }
+  // },
   postcss: {
     plugins: {
       tailwindcss: {},

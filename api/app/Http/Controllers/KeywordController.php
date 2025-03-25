@@ -16,7 +16,7 @@ class KeywordController extends Controller
         $request->validate([
             'search' => ['required', 'string'],
         ]);
-        $keywords = Keyword::where('name', 'like', '%' . $request->search . '%')
+        $keywords = Keyword::select('id')->where('name', 'like', '%' . $request->search . '%')
             ->with(['courses', 'subjects', 'signs'])
             ->first();
         return response($keywords, 200);
@@ -26,7 +26,7 @@ class KeywordController extends Controller
     {
         $request->validated();
 
-        $keywords = Keyword::where('name', 'like', '%' . $request->search . '%');
+        $keywords = Keyword::select('id')->where('name', 'like', '%' . $request->search . '%');
 
         if(!$request->filterOptions['courses'] && !$request->filterOptions['subjects'] && !$request->filterOptions['signs']) {
             $keywords = $keywords->with(['courses', 'subjects', 'signs']);

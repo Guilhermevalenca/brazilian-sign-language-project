@@ -1,3 +1,40 @@
 //@tailwind base;
 //@tailwind components;
 @tailwind utilities;
+
+
+@import url('https://fonts.googleapis.com/css2?family=Quantico:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+body,
+html{
+  font-family: Quantico;
+  background-color: $background-color;
+  width: 100%;
+  height:100%;
+  font-size: 1em;
+  color: $soft-black;
+}
+label{
+  display:flex;
+  flex-direction: column;
+  align-content: flex-start;
+}
+button{
+  font-family: Quantico;
+}
+.content-title{
+  display: flex;
+  flex-direction: row;
+  align-self: center;
+  justify-self: center;
+  font-size: 1.5em;
+}
+.content-container{
+  display: flex;
+  align-self: center;
+  justify-self: center;
+  align-items: center;
+  align-content: center;
+  flex-direction: column;
+  justify-items: center;
+  gap: 2em;
+}

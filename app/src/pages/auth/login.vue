@@ -1,11 +1,20 @@
 <template>
-<form @submit.prevent="submit">
-  <input v-model="user.email" placeholder="Email" />
-  <br />
-  <input v-model="user.password" placeholder="Password" />
-  <br />
-  <button type="submit">login</button>
-</form>
+  <AppCard>
+      <AppLogo/>
+      <h1>Login</h1>
+    <AppForm @submit.prevent="submit">
+        <label>Email:
+          <AppInput type="email" v-model="user.email" placeholder="Email" />
+        </label>
+        <label>Senha:
+          <AppInput type="password" v-model="user.password" placeholder="Password" />
+        </label>
+      <FormActions>
+        <a href="/auth/register"> Não Tenho uma conta</a>
+        <AppButton type="submit">Entrar</AppButton>
+      </FormActions>
+    </AppForm>
+  </AppCard>
 </template>
 
 <script lang="ts">
@@ -13,9 +22,12 @@
 import User from "~/classes/User";
 import AuthService from "~/services/AuthService";
 import useUserStore from '~/stores/useUserStore';
+import AppCard from '~/components/AppCard.vue'
+import AppLogo from "~/components/AppLogo.vue";
 
 export default defineComponent({
   name: "login",
+  components: {AppLogo},
 
   async setup() {
     definePageMeta({

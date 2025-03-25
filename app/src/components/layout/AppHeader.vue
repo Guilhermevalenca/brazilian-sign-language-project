@@ -1,19 +1,22 @@
 <template>
-  <header class="header-container">
-    <button @click="showMenu()">
-      <img src="~/assets/icons/menu.svg" width="24px" height="24px">
-    </button>
-    <button @click="$router.push('/')">
-      <img src="~/assets/icons/our-logo.svg" width="288px" height="78px">
-    </button>
-
-    <div class="auth-container">
-      <ButtonApp variant="default"> Login </ButtonApp>
-      <ButtonApp varaiant="default"> Cadastre-se </ButtonApp>
-    </div>
-    <slot />
+  <header>
+    <section class="header-container">
+      <button @click="showMenu()">
+        <img src="~/assets/icons/menu.svg" width="24px" height="24px">
+      </button>
+      <button @click="$router.push('/')">
+        <img src="~/assets/logos/our-logo.svg" width="288px" height="78px">
+      </button>
+      <SearchingBar/>
+      <div class="auth-container">
+        <AppButton variant="default" @click="$router.push('/auth/login')"> Login </AppButton>
+        <AppButton varaiant="default" @click="$router.push('/auth/register')"> Cadastre-se </AppButton>
+      </div>
+    </section>
+    <section>
+      <Menu :isVisible="isVisibleHere" />
+    </section>
   </header>
-  <Menu :isVisible="isVisibleHere" />
 </template>
 
 <script lang="ts">
@@ -28,7 +31,7 @@ export default defineComponent({
   },
   data() {
     return {
-      userStore: useUserStore(),
+      userStore: null as null | ReturnType<typeof useUserStore>,
       showOptionsAuth: true,
       isVisibleHere: false
     }
@@ -52,10 +55,21 @@ export default defineComponent({
       },
       deep: true
     }
+  },
+
+  mounted() {
+    this.userStore = useUserStore();
   }
 });
 </script>
-<style scoped>
+<style lang="scss" scoped>
+header {
+  position: fixed;
+  top: 0;
+  width: 100vw;
+  
+  z-index: 0;
+}
 .header-container{
   display: flex;
   flex-direction: row;
@@ -63,8 +77,9 @@ export default defineComponent({
   justify-content:flex-start;
   align-items: center;
   gap: 2em;
+  position: relative;
   padding: 0.5em 2em;
-  background-color: #2F9E41;
+  background-color: $primary-color;
 }
 .auth-container{
   display:flex;
