@@ -16,7 +16,7 @@
         <AppInput type="password" v-model="user.password_confirmation" placeholder="Confirme sua senha" />
       </label>
       <FormActions>
-        <a href="/auth/login" margin-left="auto" >Já tenho uma conta</a>
+        <NuxtLink to="/auth/login" margin-left="auto" >Já tenho uma conta</NuxtLink>
         <AppButton type="submit">Cadastrar-se</AppButton>
       </FormActions>
     </AppForm>

@@ -10,7 +10,7 @@
           <AppInput type="password" v-model="user.password" placeholder="Password" />
         </label>
       <FormActions>
-        <a href="/auth/register"> Não Tenho uma conta</a>
+        <NuxtLink to="/auth/register"> Não Tenho uma conta</NuxtLink>
         <AppButton type="submit">Entrar</AppButton>
       </FormActions>
     </AppForm>
