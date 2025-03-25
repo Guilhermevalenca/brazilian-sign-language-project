@@ -5,7 +5,7 @@
     </button>
     <div class="adm-actions-options" v-if="showOptions">
       <button type="button" @click="$router.push('/courses/create'); selectOption()">Adicionar Curso</button>
-      <button type="button" @click="$router.push('/sign/create'); selectOption()" >Adicionar Sinal</button>
+      <button type="button" @click="$router.push('/sign/index'); selectOption()" >Adicionar Sinal</button>
       <button type="button" @click="$router.push('/subjects/create'); selectOption()">Adicionar Matéria</button>
     </div>
   </div>
