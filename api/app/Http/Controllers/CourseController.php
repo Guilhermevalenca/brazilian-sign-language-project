@@ -58,7 +58,6 @@ class CourseController extends Controller
             return response()->json([
                 'message' => 'Erro ao criar curso',
                 'error' => $e->getMessage(),
-                'received_data' => $request->all() // Para debug
             ], 500);
         }
     }
@@ -68,7 +67,7 @@ class CourseController extends Controller
      */
     public function show(Course $course)
     {
-        $course->load('subjects');
+        $course->setRelation('subjects', $course->subjects()->paginate());
         return response($course, 200);
     }
 
@@ -81,11 +80,11 @@ class CourseController extends Controller
 
         try {
             if ($request->hasFile('image')) {
-                // Remove a imagem antiga se existir
+                //remove a imagem antiga
                 if ($course->image && Storage::disk('public')->exists($course->image)) {
                     Storage::disk('public')->delete($course->image);
                 }
-                // Armazena a nova imagem
+                //salva a imagem e cria um path da nova imagem para posteriormente salvar no banco
                 $path = $request->file('image')->store('courses', 'public');
                 $validated['image'] = $path;
             }

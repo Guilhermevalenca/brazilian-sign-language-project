@@ -34,7 +34,7 @@ class SubjectController extends Controller
      */
     public function show(Subject $subject)
     {
-        $subject->load('courses');
+        $subject->setRelation('signs', $subject->signs()->paginate());
         return response($subject, 200);
     }
     /**
