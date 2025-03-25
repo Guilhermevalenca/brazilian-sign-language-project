@@ -1,7 +1,7 @@
 services:
   app:
     image: 'node:20-alpine'
-    command: sh -c "echo 'iniciando servidor...' && npm i && npm run dev"
+    command: sh -c "echo 'iniciando servidor...' && npm i && npm run dev-host"
     ports:
       - '3000:3000'
     volumes:
