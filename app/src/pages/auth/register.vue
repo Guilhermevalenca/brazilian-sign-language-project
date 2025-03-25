@@ -7,7 +7,7 @@
         <AppInput v-model="user.name" placeholder="Digite seu nome" />
       </label>
       <label>Email:
-        <AppInput v-model="user.email" placeholder="Digite seu email" />
+        <AppInput type="email" v-model="user.email" placeholder="Digite seu email" />
       </label>
       <label>Senha:
         <AppInput type="password" v-model="user.password" placeholder="Escolha uma senha" />
