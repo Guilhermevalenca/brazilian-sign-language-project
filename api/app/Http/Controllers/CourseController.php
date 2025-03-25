@@ -13,7 +13,8 @@ class CourseController extends Controller
      */
     public function index()
     {
-        //
+        $courses = Course::paginate();
+        return response($courses, 200);
     }
 
     /**
@@ -29,7 +30,9 @@ class CourseController extends Controller
      */
     public function store(StoreCourseRequest $request)
     {
-        //
+        $validated = $request->validated();
+        $course = Course::create($validated);
+        return response($course, 201);
     }
 
     /**
@@ -37,7 +40,7 @@ class CourseController extends Controller
      */
     public function show(Course $course)
     {
-        //
+        return response($course, 200);
     }
 
     /**
@@ -53,7 +56,9 @@ class CourseController extends Controller
      */
     public function update(UpdateCourseRequest $request, Course $course)
     {
-        //
+        $validated =  $request->validated();
+        $course->update($validated);
+        return response($course, 200);
     }
 
     /**
@@ -61,6 +66,7 @@ class CourseController extends Controller
      */
     public function destroy(Course $course)
     {
-        //
+        $course->delete();
+        return(response(null, 204));
     }
 }

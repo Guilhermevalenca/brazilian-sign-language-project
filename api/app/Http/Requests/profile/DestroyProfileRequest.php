@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Http\Requests\keyword;
+namespace App\Http\Requests\profile;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateKeywordRequest extends FormRequest
+class DestroyProfileRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,7 @@ class UpdateKeywordRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'password' => ['required', 'string'],
         ];
     }
 }

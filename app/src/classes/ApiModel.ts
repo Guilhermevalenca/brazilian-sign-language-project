@@ -1,16 +1,17 @@
 import type {AxiosInstance, AxiosResponse} from "axios";
 
 export default abstract class ApiModel<ClassType> {
-	abstract url: string;
+	url: string;
 	protected loading: boolean = false;
 	protected created_at?: Date;
 	protected updated_at?: Date;
 
-	constructor() {
+	constructor(url: string) {
+		this.url = url;
 		return this.disableSetModificationDuringLoading();
 	}
 
-	protected sync(data: ClassType) {
+	protected sync = (data: ClassType) => {
 		if(data !== null && typeof data === 'object') {
 			if('created_at' in data) {
 				data.created_at = new Date(String(data.created_at));
@@ -22,38 +23,95 @@ export default abstract class ApiModel<ClassType> {
 		}
     }
 
-	protected async fetch(axios: AxiosInstance): Promise<void | boolean | AxiosResponse> {
+	protected async fetch(): Promise<void | boolean | AxiosResponse> {
 		if(!this.url) {
 			throw new Error('url não definida');
 		}
+
+		let id: number | undefined | unknown;
+		if('id' in this) {
+			id = this.id;
+		} else {
+			throw new Error('id nao definido');
+		}
+
+		const { $axios } = useNuxtApp();
 		this.loading = true;
-        return axios.get(this.url)
+        return $axios.get(this.url + '/' + id)
             .then((res: AxiosResponse) => {
             	this.loading = false;
 				this.sync(res.data);
 				return res;
-            });
+            })
+			.finally(() => {
+				this.loading = false;
+			});
     }
 
-    protected async register(axios: AxiosInstance): Promise<void | boolean | AxiosResponse> {
+    protected async register(): Promise<void | boolean | AxiosResponse> {
         if(!this.url) {
 			throw new Error('url não definida');
 		}
 		this.loading = true;
+		const { $axios } = useNuxtApp();
 		//@ts-ignore
-        return axios.post(this.url, this as ClassType)
-        	.then((res) => {
+        return $axios.post(this.url, this as ClassType)
+        	.then((res: AxiosResponse) => {
 				this.loading = false;
 				return res;
+			})
+			.finally(() => {
+				this.loading = false;
 			});
     }
     
     protected async update(): Promise<void | boolean | AxiosResponse> {
-        throw new Error('Método não implementado!');
+        if(!this.url) {
+			throw new Error('url não definida');
+		}
+		
+		let id: number | undefined | unknown;
+		if('id' in this) {
+			id = this.id;
+		} else {
+			throw new Error('id nao definido');
+		}
+
+		this.loading = true;
+		const { $axios } = useNuxtApp();
+		//@ts-ignore
+		return $axios.put(this.url + '/' + id, this as ClassType)
+			.then((res: AxiosResponse) => {
+				this.loading = false;
+				return res;
+			})
+			.finally(() => {
+				this.loading = false;
+			});
     }
 
     protected async delete(): Promise<void | boolean | AxiosResponse> {
-        throw new Error('Método não implementado!');
+		if(!this.url) {
+			throw new Error('url não definida');
+		}
+	
+		let id: number | undefined | unknown;
+		if('id' in this) {
+			id = this.id;
+		} else {
+			throw new Error('id nao definido');
+		}
+		
+		this.loading = true;
+		const { $axios } = useNuxtApp();
+		return $axios.delete(this.url + '/' + id)
+			.then((res: AxiosResponse) => {
+				this.loading = false;
+				return res;
+			})
+			.finally(() => {
+				this.loading = false;
+			});
     }
 
     protected disableSetModificationDuringLoading() {

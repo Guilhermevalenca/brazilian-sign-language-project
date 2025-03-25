@@ -12,7 +12,6 @@ class FavoriteController extends Controller
     {
         $favorites = auth()->user()
             ->favorites()
-            ->with('sign')
             ->paginate();
 
         return response($favorites, 200);

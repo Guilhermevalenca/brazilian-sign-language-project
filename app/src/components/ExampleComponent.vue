@@ -1,3 +1,6 @@
 <template>
-  <p class="tw-text-3xl">Example Component.</p>
+  <div>
+  </div>
 </template>
+<script setup lang="ts">
+</script>

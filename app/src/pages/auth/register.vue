@@ -1,24 +1,43 @@
 <template>
-<form @submit.prevent="submit">
-  <input v-model="user.name" placeholder="Name" />
-  <br />
-  <input v-model="user.email" placeholder="Email" />
-  <br />
-  <input v-model="user.password" placeholder="Password" />
-  <br />
-  <input v-model="user.password_confirmation" placeholder="Confirmation Password" />
-  <br />
-  <button type="submit">register</button>
-</form>
+  <AppCard>
+    <AppLogo/>
+    <h1>Cadastro</h1>
+    <AppForm @submit.prevent="submit">
+      <label>Nome:
+        <AppInput v-model="user.name" placeholder="Digite seu nome" />
+      </label>
+      <label>Email:
+        <AppInput type="email" v-model="user.email" placeholder="Digite seu email" />
+      </label>
+      <label>Senha:
+        <AppInput type="password" v-model="user.password" placeholder="Escolha uma senha" />
+      </label>
+      <label>Confirme sua senha:
+        <AppInput type="password" v-model="user.password_confirmation" placeholder="Confirme sua senha" />
+      </label>
+      <FormActions>
+        <a href="/auth/login" margin-left="auto" >Já tenho uma conta</a>
+        <AppButton type="submit">Cadastrar-se</AppButton>
+      </FormActions>
+    </AppForm>
+  </AppCard>
 </template>
 
 <script lang="ts">
 import User from "~/classes/User";
 import useUserStore from '~/stores/useUserStore';
 import {type AxiosError, type AxiosResponse} from "axios";
+import FormActions from "~/components/FormActions.vue";
 
 export default defineComponent({
   name: "register",
+  components: {FormActions},
+
+  async setup() {
+    definePageMeta({
+      middleware: 'guest',
+    })
+  },
 
   data() {
     const user = new User({
@@ -35,13 +54,17 @@ export default defineComponent({
   methods: {
     async submit() {
       try {
-        const res = await this.user.register(this.$axios);
+        const res = await this.user.register();
         if(typeof res === 'object' && 'data' in res) {
           const token = res.data.token;
           this.$axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
           localStorage.setItem('token', token);
 
-          await useUserStore().data.fetch(this.$axios);
+          const tokenCookie = useCookie('token');
+          tokenCookie.value = token;
+
+          await useUserStore().data.fetch();
+          await useUserStore().fetchIsAdmin();
           this.$router.push('/auth/check-email-code');
         }
       } catch (e: AxiosResponse | AxiosError | any) {

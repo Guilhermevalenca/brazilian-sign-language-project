@@ -13,4 +13,10 @@ export default defineNuxtPlugin((nuxtApp) => {
         withXSRFToken: true,
     });
     nuxtApp.vueApp.config.globalProperties.$axios = api;
+
+    return {
+        provide: {
+            axios: api,
+        }
+    }
 });

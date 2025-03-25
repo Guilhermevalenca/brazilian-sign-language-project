@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Http\Requests\keyword;
+namespace App\Http\Requests\profile;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreKeywordRequest extends FormRequest
+class UpdatePasswordProfileRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,8 @@ class StoreKeywordRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'password' => ['required', 'string', 'min:6'],
+            'new_password' => ['required', 'string', 'min:6', 'confirmed'],
         ];
     }
 }
