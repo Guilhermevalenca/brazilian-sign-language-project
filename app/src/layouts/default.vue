@@ -5,9 +5,9 @@
       <slot />
     </section>
   </main>
+  <AdmActions/>
   <LayoutAppFooter />
 </template>
-
 <style lang="scss" scoped>
 
 section {
@@ -17,3 +17,6 @@ section {
   overflow-y: auto;
 }
 </style>
+<script setup lang="ts">
+import AdmActions from "~/components/layout/AdmActions.vue";
+</script>

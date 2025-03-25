@@ -3,11 +3,11 @@
       <AppLogo/>
       <h1>Login</h1>
     <AppForm @submit.prevent="submit">
-        <label for="email">Email:
-          <AppInput id="email" v-model="user.email" placeholder="Email" />
+        <label>Email:
+          <AppInput type="email" v-model="user.email" placeholder="Email" />
         </label>
-        <label for="password">Senha:
-          <AppInput id="password" type="password" v-model="user.password" placeholder="Password" />
+        <label>Senha:
+          <AppInput type="password" v-model="user.password" placeholder="Password" />
         </label>
       <FormActions>
         <a href="/auth/register"> Não Tenho uma conta</a>
