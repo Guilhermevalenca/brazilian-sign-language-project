@@ -6,6 +6,10 @@ export default defineNuxtConfig({
   srcDir: 'src',
   debug: false,
   css: ['~/assets/css/main.scss'],
+  routeRules: {
+    '/about': { isr: true },
+    '/auth/**': { isr: true },
+  },
   vite: {
     css:
         {
