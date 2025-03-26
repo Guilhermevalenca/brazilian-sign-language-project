@@ -22,7 +22,8 @@ class UpdateSubjectRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'=> ['required', 'string'],
+            'name' => ['required', 'string'],
+            'courses.*' => ['integer', 'exists:courses,id'],
         ];
     }
 }

@@ -22,7 +22,9 @@ class UpdateCourseRequest extends FormRequest
     public function rules(): array
     {
         return [
-                'name' => ['required', 'string'],
+            'name' => ['string'],
+            'subjects.*' => ['integer', 'exists:subjects,id'],
+            'image' => ['image', 'mimes:jpeg,png,jpg,gif,svg'],
         ];
     }
 }
