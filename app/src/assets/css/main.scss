@@ -42,5 +42,8 @@ legend{
   align-content: center;
   flex-direction: column;
   justify-items: center;
-  gap: 2em;
+}
+.content-container-list{
+  @extend .content-container;
+  gap:0.5rem;
 }
