@@ -12,13 +12,14 @@ export default {
     variant: {
       type: String,
       default: "default",
-      validator: (value:string)=>["default", "allow", "deny"].includes(value)
+      validator: (value:string)=>["default", "allow", "deny","navigation"].includes(value)
   },
   },
   computed:{
     variants(){
       return{
         default: 'button-default',
+        navigation: 'button-navigation',
         allow: 'button-allow',
         deny: 'button-deny'
       }
@@ -27,23 +28,20 @@ export default {
 }
 </script>
 
-<style scoped>
-@import url('https://fonts.googleapis.com/css2?family=Quantico:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+<style lang="scss" scoped>
 
 .button-default{
   color: #FFF;
-
+  font-size: 1rem;
   text-align: center;
-  font-family: Quantico;
   font-weight: bold;
-  font-size: 16px;
-  background-color: #2266D2;
+  background-color: $secondary-color;
   border:none;
-  border-radius: 1vw;
+  border-radius: 1rem;
   box-shadow: 0px -2px 0px 0px rgb(0, 0, 0,0.30) inset;
   width: auto;
-  min-width: 8em;
-  height: 2.5em;
+  min-width: 8rem;
+  height: 2.5rem;
 }
 .button-default:hover{
   background-color: #1E5AC0;
@@ -52,6 +50,12 @@ export default {
   background-color: #1E5AC0;
   box-shadow: 0px -1px 0px 0px rgb(0, 0, 0,0.30) inset;
   transform: translateY(4px)
+}
+.button-navigation{
+  background-color: $primary-color;
+}
+.button-navigation:hover{
+  background-color: $primary-color-hovered;
 }
 .button-allow{
   background-color: #00ff00;

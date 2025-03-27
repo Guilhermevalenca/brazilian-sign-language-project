@@ -5,7 +5,7 @@
     </button>
     <div class="adm-actions-options" v-if="showOptions">
       <button type="button" @click="$router.push('/courses/create'); selectOption()">Adicionar Curso</button>
-      <button type="button" @click="$router.push('/sign/index'); selectOption()" >Adicionar Sinal</button>
+      <button type="button" @click="$router.push('/sign/create'); selectOption()" >Adicionar Sinal</button>
       <button type="button" @click="$router.push('/subjects/create'); selectOption()">Adicionar Matéria</button>
     </div>
   </div>
@@ -54,7 +54,7 @@ export default{
   right: 4em;
 }
 .adm-actions-button{
-  background-color: $secondary-color;
+  background-color: $primary-color;
   border: none;
   width: 6em;
   height: 6em;

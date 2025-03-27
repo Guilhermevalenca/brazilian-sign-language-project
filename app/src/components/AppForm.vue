@@ -13,6 +13,7 @@ export default defineComponent({
 <style scoped>
 form{
   display: flex;
+  width: 100%;
   flex-direction: column;
   align-items: stretch;
   flex-wrap: nowrap;

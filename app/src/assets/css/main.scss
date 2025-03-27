@@ -2,24 +2,19 @@
 //@tailwind components;
 @tailwind utilities;
 
-
 @import url('https://fonts.googleapis.com/css2?family=Quantico:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+$font-default: Quantico;
+
+*{
+  font-family: $font-default;
+}
 body,
 html{
-  font-family: Quantico;
   background-color: $background-color;
-  width: 100%;
-  height:100%;
-  font-size: 1em;
-  color: $soft-black;
-}
-label{
-  display:flex;
-  flex-direction: column;
-  align-content: flex-start;
-}
-button{
-  font-family: Quantico;
+  width: 100vw;
+  height:100vh;
+  font-size: 1rem;
+  color: $soft-black-1;
 }
 .content-title{
   display: flex;
@@ -27,6 +22,17 @@ button{
   align-self: center;
   justify-self: center;
   font-size: 1.5em;
+}
+input,
+textarea{
+  font-size: 1rem;
+}
+label{
+  color: $soft-black-2;
+}
+legend{
+  font-size: 1.1rem;
+  font-weight: bold;
 }
 .content-container{
   display: flex;
