@@ -27,7 +27,7 @@
           <small>Apenas links do youtube</small>
         </label>
         <legend>Palavras-chave</legend>
-        <SignKeywordSelect
+        <LazyKeywordSelect
             v-model="keywords"
         />
       <AppButton type="submit">Criar sinal</AppButton>
@@ -77,7 +77,7 @@ export default defineComponent({
                     .then(res => {
                         console.log(res);
                     })
-                // this.$router.push('/sign');
+                this.$router.push('/sign');
             } catch (e) {
                 console.log(e);
             }

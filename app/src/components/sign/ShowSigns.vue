@@ -2,7 +2,7 @@
   <div class="pagination-container">
     <div class="container-pagination-item">
       <button class="pagination-button" @click="previousPage" :disabled="page === 1">
-        <img src="../../assets/icons/arrow-left.svg">
+        <img src="~/assets/icons/arrow-left.svg">
       </button>
     </div>
     <div class="container-pagination-item">
@@ -10,11 +10,11 @@
     </div>
     <div class="container-pagination-item">
       <button class="pagination-button" @click="nextPage" :disabled="page === last_page">
-        <img src="../../assets/icons/arrow-right.svg">
+        <img src="~/assets/icons/arrow-right.svg">
       </button>
     </div>
   </div>
-  <div class="signs-container" tabindex="0" v-for="sign in signs" :key="sign.id" @click="router.push('/sign/${sign.id}')">
+  <div class="signs-container" tabindex="0" v-for="sign in signs" :key="sign.id" @click="$router.push(`/sign/${sign.id}`)">
     <div class="sign-card-item">
       <h1>{{ sign.name }}</h1>
       </div>
@@ -22,7 +22,7 @@
   <div class="pagination-container">
     <div class="container-pagination-item">
       <button class="pagination-button" @click="previousPage" :disabled="page === 1">
-        <img src="../../assets/icons/arrow-left.svg">
+        <img src="~/assets/icons/arrow-left.svg">
       </button>
     </div>
     <div class="container-pagination-item">
@@ -30,7 +30,7 @@
     </div>
     <div class="container-pagination-item">
       <button class="pagination-button" @click="nextPage" :disabled="page === last_page">
-        <img src="../../assets/icons/arrow-right.svg">
+        <img src="~/assets/icons/arrow-right.svg">
       </button>
     </div>
   </div>
