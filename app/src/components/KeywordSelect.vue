@@ -1,13 +1,12 @@
 <template>
-    <AppInput type="text" v-model="keywordSearch" />
+  <AppInput type="text" v-model="keywordSearch" />
   <legend>Selecione as categorias:</legend>
   <div class="keywords-list-container">
-    <div class="keywords-list-items" v-for="keyword in keywordsFiltered" :key="keyword.id">
+    <div class="keywords-list-items" v-for="(keyword, index) in keywordsFiltered" :key="keyword.id">
       <input
           type="checkbox"
           :id="`keyword-${keyword.id}`"
-          :value="keyword.name"
-          v-model="keywordSearch"
+          @input="$event.target?.checked ? selected[index] = keyword : selected.splice(index, 1)"
       />
       <label :for="`keyword-${keyword.id}`">{{ keyword.name }}</label>
     </div>
@@ -15,7 +14,7 @@
     <div role="button" @click="isAddKeyword = !isAddKeyword" class="acordion-container">
       <div class="acordion-title">
         Adicionar palavra-chave
-        <img src="../../assets/icons/arrow-down.svg" width="16px" height="16px" :class="{rotate: isAddKeyword}">
+        <img src="~/assets/icons/arrow-down.svg" width="16px" height="16px" :class="{rotate: isAddKeyword}">
       </div>
       <transition name="slide">
         <div v-if="isAddKeyword" class="acordion-content" @click.stop> <!-- 🔹 Adicionando @click.stop -->
@@ -93,7 +92,7 @@ export default defineComponent({
             } catch(e) {
                 alert('deu errado!');
             }
-        }
+        },
     }
 });
 </script>

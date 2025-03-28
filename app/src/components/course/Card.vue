@@ -1,17 +1,26 @@
 <template>
   <div class="course-card-container" tabindex="0" role="button">
-    <img src="../../assets/icons/logistica-4.0.webp" alt="Icone do curso">
-    <h2>Logistica</h2>
+    <NuxtImg 
+      :src="String(course?.image)" 
+      alt="Icone do curso"
+      format="webp"
+    />
+    <h2>{{ course?.name }}</h2>
   </div>
   <slot/>
 
 </template>
 
 <script lang="ts">
+import CourseType from "~/classes/Course";
 
-export default{
-  name: "CourseCard"
-}
+export default defineComponent({
+  name: 'CourseCard',
+
+  props: {
+    course: Object as PropType<CourseType>,
+  }
+});
 </script>
 
 <style lang="scss" scoped>
