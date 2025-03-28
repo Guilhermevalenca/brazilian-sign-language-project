@@ -23,11 +23,11 @@ class SignController extends Controller
             'keywords' => array_column($validated['keywords'], 'id'),
         ];
 
-        if(!$this->validUrl($validated['display'])) {
-           return response([
+        if (!$this->validUrl($validated['display'])) {
+            return response([
                 'error' => 'O link precisa ser do youtube',
                 'origin' => 'sign',
-           ], 400);
+            ], 400);
         }
         $validated['display'] = $this->getVideoId($validated['display'], 'sign');
 
@@ -35,22 +35,22 @@ class SignController extends Controller
 
         $sign->keywords()->attach($validated['keywords']);
 
-        if(isset($validated['description'])) {
-            if(!$this->validUrl($validated['description']['display'])) {
+        if (isset($validated['description'])) {
+            if (!$this->validUrl($validated['description']['display'])) {
                 return response([
-                     'error' => 'O link precisa ser do youtube',
-                     'origin' => 'description',
+                    'error' => 'O link precisa ser do youtube',
+                    'origin' => 'description',
                 ], 400);
             }
             $validated['description']['display'] = $this->getVideoId($validated['description']['display'], 'description');
             $sign->description()->create($validated['description']);
         }
 
-        if(isset($validated['example'])) {
-            if(!$this->validUrl($validated['example']['display'])) {
+        if (isset($validated['example'])) {
+            if (!$this->validUrl($validated['example']['display'])) {
                 return response([
-                     'error' => 'O link precisa ser do youtube',
-                     'origin' => 'example',
+                    'error' => 'O link precisa ser do youtube',
+                    'origin' => 'example',
                 ], 400);
             }
             $validated['example']['display'] = $this->getVideoId($validated['example']['display'], 'example');
@@ -74,43 +74,43 @@ class SignController extends Controller
     {
         $validated = $request->validated();
 
-        if(!$this->validUrl($validated['display'])) {
+        if (!$this->validUrl($validated['display'])) {
             return response([
-                 'error' => 'O link precisa ser do youtube',
-                 'origin' => 'sign',
+                'error' => 'O link precisa ser do youtube',
+                'origin' => 'sign',
             ], 400);
-         }
+        }
         $validated['display'] = $this->getVideoId($validated['display'], 'sign');
 
         $sign->update($validated);
         $sign->keywords()->sync(array_column($validated['keywords'], 'id'));
 
-        if(isset($validated['description'])) {
-            if(!$this->validUrl($validated['description']['display'])) {
+        if (isset($validated['description'])) {
+            if (!$this->validUrl($validated['description']['display'])) {
                 return response([
-                     'error' => 'O link precisa ser do youtube',
-                     'origin' => 'description',
+                    'error' => 'O link precisa ser do youtube',
+                    'origin' => 'description',
                 ], 400);
             }
             $validated['description']['display'] = $this->getVideoId($validated['description']['display'], 'description');
 
-            if($sign->description) {
+            if ($sign->description) {
                 $sign->description()->update($validated['description']);
             } else {
                 $sign->description()->create($validated['description']);
             }
         }
 
-        if(isset($validated['example'])) {
-            if(!$this->validUrl($validated['example']['display'])) {
+        if (isset($validated['example'])) {
+            if (!$this->validUrl($validated['example']['display'])) {
                 return response([
-                     'error' => 'O link precisa ser do youtube',
-                     'origin' => 'example',
+                    'error' => 'O link precisa ser do youtube',
+                    'origin' => 'example',
                 ], 400);
             }
             $validated['example']['display'] = $this->getVideoId($validated['example']['display'], 'example');
-            
-            if($sign->example) {
+
+            if ($sign->example) {
                 $sign->example()->update($validated['example']);
             } else {
                 $sign->example()->create($validated['example']);
@@ -127,11 +127,13 @@ class SignController extends Controller
         return response(null, 204);
     }
 
-    private function validUrl($url) {
+    private function validUrl($url)
+    {
         return strpos($url, 'https://www.youtube.com') === 0 || strpos($url, 'https://youtu.be') === 0;
     }
 
-    private function getVideoId($display) {
+    private function getVideoId($display)
+    {
         if (strpos($display, "watch?v=") !== false) {
             preg_match('/watch\?v=([^&\s]+)/', $display, $matches);
             if (!empty($matches[1])) {
@@ -145,5 +147,5 @@ class SignController extends Controller
         }
 
         return 'https://www.youtube.com/embed/' . $display;
-    } 
+    }
 }

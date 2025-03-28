@@ -23,6 +23,8 @@ class StoreCourseRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string'],
+            'subjects.*' => ['integer', 'exists:subjects,id'],
+            'image' => ['required', 'image', 'mimes:jpeg,png,jpg,gif,svg'],
         ];
     }
 }
