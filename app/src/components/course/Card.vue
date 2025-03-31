@@ -1,10 +1,10 @@
 <template>
 <div class="content">
   <div class="course-card-container" tabindex="0" role="button">
-    <NuxtImg
-        :src="String(course?.image)"
-        alt="Icone do curso"
-        format="webp"
+    <NuxtImg 
+      :src="image"
+      alt="Icone do curso"
+      format="webp"
     />
     <legend>{{ course?.name }}</legend>
   </div>
@@ -21,6 +21,18 @@ export default defineComponent({
 
   props: {
     course: Object as PropType<CourseType>,
+  },
+
+  computed: {
+    image(): string {
+      if(!this.course?.image) {
+        return '/img/no-image.png';
+      }
+      if(this.course?.image.startsWith('http')) {
+        return String(this.course?.image);
+      }
+      return import.meta.env.VITE_API_URL + '/storage/' + String(this.course?.image);
+    }
   }
 });
 </script>
