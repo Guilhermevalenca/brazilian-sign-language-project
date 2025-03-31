@@ -13,7 +13,7 @@ class SubjectController extends Controller
      */
     public function index()
     {
-        $subject = Subject::/*orderBy('name')->*/ paginate();
+        $subject = Subject::orderBy('name')->paginate();
         return response($subject, 200);
     }
     /**
