@@ -23,7 +23,10 @@ class UpdateSubjectRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string'],
+            'courses' => ['array'],
             'courses.*' => ['integer', 'exists:courses,id'],
+            'keywords' => ['array'],
+            'keywords.*' => ['integer', 'exists:keywords,id']
         ];
     }
 }
