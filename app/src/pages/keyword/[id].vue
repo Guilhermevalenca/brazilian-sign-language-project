@@ -22,7 +22,7 @@ export default defineComponent({
             id: Number(id),
             name: ''
         }));
-        await keyword.value.fetch();
+        await keyword.value?.fetch();
         return {
             keyword,
         }

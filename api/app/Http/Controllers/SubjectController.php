@@ -16,15 +16,6 @@ class SubjectController extends Controller
         $subject = Subject::paginate();
         return response($subject, 200);
     }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
     /**
      * Store a newly created resource in storage.
      */
@@ -32,6 +23,9 @@ class SubjectController extends Controller
     {
         $validated = $request->validated();
         $subject = Subject::create($validated);
+        if (isset($validated['courses'])) {
+            $subject->courses()->attach($validated['courses']);
+        }
         return response($subject, 201);
     }
 
@@ -40,17 +34,9 @@ class SubjectController extends Controller
      */
     public function show(Subject $subject)
     {
+        $subject->setRelation('signs', $subject->signs()->paginate());
         return response($subject, 200);
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Subject $subject)
-    {
-        //
-    }
-
     /**
      * Update the specified resource in storage.
      */
@@ -58,6 +44,9 @@ class SubjectController extends Controller
     {
         $validated = $request->validated();
         $subject->update($validated);
+        if (isset($validated['courses'])) {
+            $subject->courses()->attach($validated['courses']);
+        }
         return response($subject, 200);
     }
 
@@ -66,7 +55,8 @@ class SubjectController extends Controller
      */
     public function destroy(Subject $subject)
     {
-        $Subject->delete();
+        $subject->courses()->detach();
+        $subject->delete();
         return response(null, 204);
     }
 }
