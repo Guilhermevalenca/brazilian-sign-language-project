@@ -33,7 +33,11 @@ export default defineComponent({
             last_page.value = data.last_page;
         }
 
-        await getCourses();
+        try {
+          await getCourses();
+        } catch(error) {
+          console.log(error);
+        }
 
         return {
             courses,

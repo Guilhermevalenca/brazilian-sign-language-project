@@ -36,7 +36,14 @@ export default defineComponent({
             middleware: 'is-admin',
         });
 
-        const keywords = ref<Keyword[]>(await KeywordService.fetch());
+        const keywords = ref<Keyword[]>([]);
+
+        try {
+           keywords.value = await KeywordService.fetch();
+        } catch(error) {
+            console.log(error);
+        }
+
         return {
             keywords,
         }

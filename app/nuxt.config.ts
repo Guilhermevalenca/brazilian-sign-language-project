@@ -20,16 +20,6 @@ export default defineNuxtConfig({
       },
     },
   },
-  // nitro: {
-  //   prerender: {
-  //     // components: [
-  //     //   '~/components/AppLogo.vue',
-  //     //   '~/components/AppCard.vue',
-  //     //   '~/components/AppForm.vue',
-  //     //   '~/components/AppButton.vue'
-  //     // ]
-  //   }
-  // },
   postcss: {
     plugins: {
       tailwindcss: {},
@@ -47,11 +37,14 @@ export default defineNuxtConfig({
       },
       script: [
         {
-          src: import.meta.env.VITE_API_URL + '/vlibras.js',
+          src: '/vlibras.js',
           tagPosition: 'bodyClose'
         }
       ],
       title: 'Brazilian sign language',
+      link: [
+        { rel: 'icon', type: 'image/x-icon', href: '/logo.svg' }
+      ]
     }
   }
 });

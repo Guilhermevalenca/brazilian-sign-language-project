@@ -23,7 +23,11 @@ export default defineComponent({
             last_page.value = data.last_page;
         }
         
-        await getSubjects();
+        try {
+            await getSubjects();
+        } catch(error) {
+            console.log(error);
+        }
 
         return {
             subjects,
