@@ -66,8 +66,8 @@ export default defineComponent({
   display: flex;
   align-self: center;
   justify-self: center;
-  align-items: center;
-  align-content: center;
+  align-items: stretch;
+  align-content: stretch;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-around;

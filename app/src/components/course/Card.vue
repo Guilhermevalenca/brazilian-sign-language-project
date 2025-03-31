@@ -1,13 +1,15 @@
 <template>
+<div class="content">
   <div class="course-card-container" tabindex="0" role="button">
-    <NuxtImg 
-      :src="String(course?.image)" 
-      alt="Icone do curso"
-      format="webp"
+    <NuxtImg
+        :src="String(course?.image)"
+        alt="Icone do curso"
+        format="webp"
     />
-    <h2>{{ course?.name }}</h2>
+    <legend>{{ course?.name }}</legend>
   </div>
   <slot/>
+</div>
 
 </template>
 
@@ -24,13 +26,19 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+.content{
+  display: grid;
+  grid-auto-columns: 10em;
+}
 .course-card-container{
-  gap:1em;
   display: flex;
-  flex-direction: column;
+  gap:1em;
+  text-align: center;
+  flex-flow: column wrap  ;
   align-content: center;
   align-items: center;
   font-size: 1em;
+  max-width: 10em;
   cursor: pointer;
 }
 img{
