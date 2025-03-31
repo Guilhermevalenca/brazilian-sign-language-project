@@ -54,7 +54,7 @@ export default{
   right: 4em;
 }
 .adm-actions-button{
-  background-color: $primary-color;
+  background-color: $secondary-color;
   border: none;
   width: 6em;
   height: 6em;
