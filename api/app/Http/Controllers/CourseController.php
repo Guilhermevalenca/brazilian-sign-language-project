@@ -14,7 +14,7 @@ class CourseController extends Controller
      */
     public function index()
     {
-        $courses = Course::paginate();
+        $courses = Course::orderBy('name')->paginate();
         return response($courses, 200);
     }
 
@@ -42,10 +42,26 @@ class CourseController extends Controller
                 }
             }
 
+            if ($request->has('keywords')) {
+                $keywords = $request->input('keywords');
+
+                // Se for string JSON, decodifica
+                if (is_string($keywords)) {
+                    $validated['keywords'] = json_decode($keywords, true);
+                }
+                // Se já for array, usa diretamente
+                elseif (is_array($keywords)) {
+                    $validated['keywords'] = $keywords;
+                }
+            }
+
             $course = Course::create($validated);
 
             if (!empty($validated['subjects'])) {
                 $course->subjects()->attach($validated['subjects']);
+            }
+            if (!empty($validated['keywords'])) {
+                $course->keywords()->attach($validated['keywords']);
             }
 
             return response()->json($course, 201);
@@ -100,8 +116,24 @@ class CourseController extends Controller
                     $validated['subjects'] = $subjects;
                 }
             }
+
+            if ($request->has('keywords')) {
+                $keywords = $request->input('keywords');
+
+                // Se for string JSON, decodifica
+                if (is_string($subjects)) {
+                    $validated['keywords'] = json_decode($keywords, true);
+                }
+                // Se já for array, usa diretamente
+                elseif (is_array($subjects)) {
+                    $validated['keywords'] = $keywords;
+                }
+            }
             if (!empty($validated['subjects'])) {
                 $course->subjects()->sync($validated['subjects']);
+            }
+            if (!empty($validated['keywords'])) {
+                $course->keywords()->sync($validated['keywords']);
             }
 
             $course->update($validated);
@@ -119,7 +151,10 @@ class CourseController extends Controller
      */
     public function destroy(Course $course)
     {
-        $course->subjects()->detach();
+        $relations = ['subjects', 'keywords'];
+        foreach ($relations as $relation) {
+            $course->$relation()->sync([]);
+        }
         $course->delete();
         return (response(null, 204));
     }
