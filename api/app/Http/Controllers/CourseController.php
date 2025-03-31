@@ -151,10 +151,6 @@ class CourseController extends Controller
      */
     public function destroy(Course $course)
     {
-        $relations = ['subjects', 'keywords'];
-        foreach ($relations as $relation) {
-            $course->$relation()->sync([]);
-        }
         $course->delete();
         return (response(null, 204));
     }

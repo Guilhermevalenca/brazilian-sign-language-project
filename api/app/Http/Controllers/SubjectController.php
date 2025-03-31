@@ -61,10 +61,6 @@ class SubjectController extends Controller
      */
     public function destroy(Subject $subject)
     {
-        $relations = ['courses', 'keywords', 'signs'];
-        foreach ($relations as $relation) {
-            $subject->$relation()->sync([]);
-        }
         $subject->delete();
         return response(null, 204);
     }
