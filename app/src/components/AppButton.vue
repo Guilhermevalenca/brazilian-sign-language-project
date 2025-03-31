@@ -31,9 +31,13 @@ export default {
 <style lang="scss" scoped>
 
 .button-default{
-  color: #FFF;
-  font-size: 1rem;
-  text-align: center;
+  display: flex;
+  flex-flow: row;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
+  padding:1rem ;
+  gap: 0.5rem;
   font-weight: bold;
   background-color: $secondary-color;
   border:none;

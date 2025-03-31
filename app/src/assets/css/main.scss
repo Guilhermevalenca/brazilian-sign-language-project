@@ -8,6 +8,10 @@ $font-default: Quantico;
 *{
   font-family: $font-default;
 }
+button{
+  color: $light-texts;
+  font-size: 1rem;
+}
 body,
 html{
   background-color: $background-color;

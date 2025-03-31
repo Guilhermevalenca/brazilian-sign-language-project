@@ -1,7 +1,13 @@
 <template>
 <AppCard>
+  <div class="navigation">
+    <AppButton type="button" @click="$router.push('/')" variant="navigation">
+      <img src="../../assets/icons/arrow-left.svg" width="24" height="24">
+      Voltar
+    </AppButton>
+  </div>
+  <h1>Adicionar Curso</h1>
   <AppForm>
-    <h1>Adicionar Curso</h1>
     <label>
       Nome do curso:
       <AppInput placeholder="Digite o nome do curso"/>
@@ -10,10 +16,7 @@
       Escolha uma imagem:
       <AppInput type="file"/>
     </label>
-    <FormActions>
-      <AppButton type="button" @click="$router.push('/')" variant="deny">Cancelar</AppButton>
       <AppButton type="submit">Criar Curso</AppButton>
-    </FormActions>
   </AppForm>
 </AppCard>
 </template>
@@ -23,4 +26,18 @@ export default{
   name: "create"
 }
 </script>
+<style lang="scss" scoped>
+  .navigation{
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    width: 100%;
+    box-sizing: border-box;
+    AppButton{
+      display: flex;
+      align-content: center;
+      flex: auto;
+    }
+  }
+</style>
 

@@ -21,13 +21,11 @@ input{
   height: 3em;
   border-radius: 1rem;
   padding: 0.5em;
-  border-style: solid;
-  border-width: 1px;
+  border: solid 0.1rem $primary-color;
   box-sizing: border-box;
-  border-color: $primary-color;
 }
 input:focus{
-  border-color: $secondary-color;
+  border: solid 0.2rem $secondary-color;
   outline: $secondary-color;
 }
 </style>
