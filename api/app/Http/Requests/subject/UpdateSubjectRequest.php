@@ -22,7 +22,11 @@ class UpdateSubjectRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'=> ['required', 'string'],
+            'name' => ['required', 'string'],
+            'courses' => ['array'],
+            'courses.*' => ['integer', 'exists:courses,id'],
+            'keywords' => ['array'],
+            'keywords.*' => ['integer', 'exists:keywords,id']
         ];
     }
 }

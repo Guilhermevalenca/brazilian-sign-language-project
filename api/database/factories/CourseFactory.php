@@ -18,6 +18,7 @@ class CourseFactory extends Factory
     {
         return [
             'name' => fake()->name(),
+            'image' => fake()->imageUrl(),
         ];
     }
 }

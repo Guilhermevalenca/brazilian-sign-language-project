@@ -28,7 +28,7 @@ class Subject extends Model
 
     public function keywords(): BelongsToMany
     {
-        return $this->belongsToMany(Keyword::class);
+        return $this->belongsToMany(Keyword::class, 'subject_keyword', 'subject_id', 'keyword_id');
     }
 
     public function courses(): BelongsToMany
