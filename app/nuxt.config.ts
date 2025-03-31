@@ -41,7 +41,7 @@ export default defineNuxtConfig({
           tagPosition: 'bodyClose'
         }
       ],
-      title: 'Brazilian sign language',
+      title: 'Glossário libras',
       link: [
         { rel: 'icon', type: 'image/x-icon', href: '/logo.svg' }
       ]
