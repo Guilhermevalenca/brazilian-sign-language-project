@@ -19,4 +19,21 @@ export default class SubjectService {
         const { $axios } = useNuxtApp();
         return $axios.post('/api/subjects', subject);
     }
+
+    static async find(id: number, page: number) {
+        const { $axios } = useNuxtApp();
+        const { data } = await $axios.get('/api/subjects/' + id, {
+            params: {
+                page,
+            }
+        });
+        return {
+            subject: {
+                id: data.id,
+                name: data.name,
+                signs: data.signs.data,
+            },
+            last_page: data.signs.last_page
+        }
+    }
 }

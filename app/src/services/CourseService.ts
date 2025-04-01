@@ -25,4 +25,21 @@ export default class CourseService {
             }
         });
     }
+
+    static async find(id: number, page: number) {
+        const { $axios } = useNuxtApp();
+        const { data } = await $axios.get('/api/courses/' + id, {
+            params: {
+                page,
+            }
+        });
+        return {
+            course: {
+                id: data.id,
+                name: data.name,
+                subjects: data.subjects.data,
+            } as CourseType,
+            last_page: data.subjects.last_page
+        }
+    }
 }

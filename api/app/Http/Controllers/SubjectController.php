@@ -37,7 +37,9 @@ class SubjectController extends Controller
      */
     public function show(Subject $subject)
     {
-        $subject->setRelation('signs', $subject->signs()->paginate());
+        $subject->signs = $subject->signs()
+            ->orderBy('name')
+            ->paginate();
         return response($subject, 200);
     }
     /**

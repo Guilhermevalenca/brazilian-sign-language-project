@@ -1,7 +1,7 @@
-import type { CourseType } from "./Course";
+import type { SignType } from "./Sign";
 
 export type SubjectType = {
     id?: number;
-    name?: string;
-    courses?: CourseType[];
+    name: string;
+    signs?: SignType[];
 }

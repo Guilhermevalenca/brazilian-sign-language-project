@@ -7,6 +7,7 @@
       <CourseCard
         v-for="course in courses" :key="course.id"
         :course="course"
+        @click="$router.push(`/course/${course.id}`)"
       />
     </div>
     <Pagination v-model:page="page" :last-page="last_page"/>
