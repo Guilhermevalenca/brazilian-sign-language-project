@@ -12,9 +12,13 @@
           </button>
         </div>
         <SearchingBar/>
-        <div class="auth-container">
+        <div v-if="!userStore?.data" class="auth-container">
           <AppButton variant="default" @click="$router.push('/auth/login')"> Login </AppButton>
           <AppButton varaiant="default" @click="$router.push('/auth/register')"> Cadastre-se </AppButton>
+        </div>
+        <div v-else>
+          <span>{{ userStore?.data?.name }}</span>
+          <AppButton variant="default" @click="logout" >Desconectar</AppButton>
         </div>
       </div>
     <section>
@@ -36,7 +40,6 @@ export default defineComponent({
   data() {
     return {
       userStore: null as null | ReturnType<typeof useUserStore>,
-      showOptionsAuth: true,
       isVisibleHere: false
     }
   },
@@ -49,15 +52,6 @@ export default defineComponent({
     },
     showMenu(){
       this.isVisibleHere = !this.isVisibleHere;
-    }
-  },
-
-  watch: {
-    userStore: {
-      handler($new) {
-        this.showOptionsAuth = !$new?.data?.id;
-      },
-      deep: true
     }
   },
 

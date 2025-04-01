@@ -25,7 +25,7 @@
 </template>
 
 <script lang="ts">
-import Keyword from '~/classes/Keyword';
+import type { KeywordType } from '~/types/Keyword';
 import KeywordService from '~/services/KeywordService';
 
 export default defineComponent({
@@ -36,7 +36,7 @@ export default defineComponent({
             middleware: 'is-admin',
         });
 
-        const keywords = ref<Keyword[]>([]);
+        const keywords = ref<KeywordType[]>([]);
 
         try {
            keywords.value = await KeywordService.fetch();
@@ -51,16 +51,16 @@ export default defineComponent({
 
     data: () => ({
         keywordSearch: '',
-        newKeyword: new Keyword({
+        newKeyword: {
             name: '',
-        }),
+        } as KeywordType,
         showAddKeyword: false
     }),
 
     methods: {
         async submit() {
             try {
-                await this.newKeyword.register();
+                await KeywordService.create(this.newKeyword);
                 this.keywords = await KeywordService.fetch();
                 this.showAddKeyword = false;
                 this.newKeyword.name = '';
@@ -71,8 +71,8 @@ export default defineComponent({
     },
 
     computed: {
-        keywordsFiltered(): Keyword[] {
-            return this.keywords.filter((keyword: Keyword) => {
+        keywordsFiltered(): KeywordType[] {
+            return this.keywords.filter((keyword: KeywordType) => {
                 if(keyword.name) {
                     return keyword.name.toLowerCase().includes(this.keywordSearch.toLowerCase());
                 } else {

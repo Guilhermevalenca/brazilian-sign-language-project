@@ -13,7 +13,7 @@
 </template>
 
 <script lang="ts">
-import Course from '~/classes/Course';
+import Course from '~/types/Course';
 import CourseService from '~/services/CourseService';
 
 export default defineComponent({

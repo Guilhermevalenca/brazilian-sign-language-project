@@ -1,4 +1,4 @@
-import type { UserType } from "~/classes/User";
+import type { UserType } from "~/types/User";
 
 export default class ProfileService {
     static async updateProfile(user: UserType) {

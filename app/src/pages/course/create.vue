@@ -30,17 +30,17 @@
 </template>
 
 <script lang="ts">
-import Course from '~/classes/Course';
+import { type CourseType } from '~/types/Course';
 import CourseService from '~/services/CourseService';
 
 export default{
   name: "create",
 
   data: () => ({
-    course: new Course({
+    course: {
       name: '',
       image: '',
-    })
+    } as CourseType
   }),
 
   methods: {

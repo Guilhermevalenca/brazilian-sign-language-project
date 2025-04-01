@@ -29,7 +29,7 @@
 
 <script lang="ts">
 import {defineComponent} from 'vue';
-import Subject from '~/classes/Subject';
+import Subject from '~/types/Subject';
 
 export default defineComponent({
   name: "create",

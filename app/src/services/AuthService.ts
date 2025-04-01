@@ -1,4 +1,4 @@
-import type {UserType} from "~/classes/User";
+import type {UserType} from "~/types/User";
 import type {AxiosInstance} from "axios";
 
 export default class AuthService {
@@ -10,9 +10,8 @@ export default class AuthService {
             password: user.password,
         })
             .then((response) => {
-                const token = response.data.token;
+                const { token } = response.data;
                 $axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-                localStorage.setItem('token', token);
                 
                 const tokenCookie = useCookie('token');
                 tokenCookie.value = token;
@@ -25,10 +24,32 @@ export default class AuthService {
     static async logout() {
         const { $axios } = useNuxtApp();
         await $axios.post('api/users/logout');
-        localStorage.removeItem('token');
         delete $axios.defaults.headers.common['Authorization'];
 
         const tokenCookie = useCookie('token');
         tokenCookie.value = null;
+    }
+
+    static async register(user: UserType) {
+        const { $axios } = useNuxtApp();
+        try {
+            const { data } = await $axios.post('api/users/register', user);
+            const token = useCookie('token');
+            token.value = data.token;
+            $axios.defaults.headers.common['Authorization'] = `Bearer ${token.value}`;
+            return true;
+        } catch(error) {
+            return false;
+        }
+    }
+
+    static async checkEmailCode(code: string) {
+        if(code.length !== 8) {
+            return;
+        }
+        const { $axios } = useNuxtApp();
+        return $axios.post('api/users/verify-code', {
+            code,
+        });
     }
 }

@@ -31,7 +31,7 @@
 
 <script lang="ts">
 import type { PropType } from 'vue';
-import Keyword from '~/classes/Keyword';
+import Keyword from '~/types/Keyword';
 import KeywordService from '~/services/KeywordService';
 
 export default defineComponent({

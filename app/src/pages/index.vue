@@ -17,7 +17,7 @@
 
 <script lang="ts">
 import CourseService from '~/services/CourseService';
-import Course, { type CourseType } from '~/classes/Course';
+import Course, { type CourseType } from '~/types/Course';
 
 export default defineComponent({
   name: 'homePage',

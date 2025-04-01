@@ -19,15 +19,13 @@
 
 <script lang="ts">
 
-import User from "~/classes/User";
+import type { Usertype } from "~/types/User";
 import AuthService from "~/services/AuthService";
 import useUserStore from '~/stores/useUserStore';
-import AppCard from '~/components/AppCard.vue'
-import AppLogo from "~/components/AppLogo.vue";
+import UserService from '~/services/UserService';
 
 export default defineComponent({
   name: "login",
-  components: {AppLogo},
 
   async setup() {
     definePageMeta({
@@ -36,10 +34,10 @@ export default defineComponent({
   },
 
   data() {
-    const user = new User({
+    const user: UserType = {
       email: '',
       password: '',
-    });
+    };
     return {
       user,
     }
@@ -47,12 +45,20 @@ export default defineComponent({
 
   methods: {
     async submit() {
-      const response = await AuthService.login(this.user)
+      const response = AuthService.login(this.user);
 
-      if(response) {
-        await useUserStore().data.fetch();
-        await useUserStore().fetchIsAdmin();
-        this.$router.push('/');
+      if(await response) {
+        try {
+          const { data } = await UserService.fetch();
+          useUserStore().data = data;
+
+          await useUserStore().fetchIsAdmin();
+          this.$router.push('/');
+        } catch(error) {
+          alert('login bem sucedido, mas algo deu errado ao buscar os seus dados');
+        }
+      } else {
+        alert('login falhou');
       }
     }
   }

@@ -27,7 +27,7 @@
 </template>
 
 <script lang="ts">
-import Sign from '~/classes/Sign';
+import Sign from '~/types/Sign';
 
 export default defineComponent({
     name: 'updateSignPage',

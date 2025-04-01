@@ -36,7 +36,7 @@
   </div>
 </template>
 <script lang="ts">
-import Sign, {type SignType} from "~/classes/Sign";
+import Sign, {type SignType} from "~/types/Sign";
 import useUserStore from "~/stores/useUserStore";
 
 export default{

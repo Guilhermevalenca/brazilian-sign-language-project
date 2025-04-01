@@ -7,7 +7,7 @@
 
 <script lang="ts">
 import SubjectService from '~/services/SubjectService';
-import Subject from '~/classes/Subject';
+import Subject from '~/types/Subject';
 
 export default defineComponent({
     name: 'subjectPage',

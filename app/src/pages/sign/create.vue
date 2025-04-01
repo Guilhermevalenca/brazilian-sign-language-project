@@ -36,8 +36,8 @@
 </template>
 
 <script lang="ts">
-import type Keyword from '~/classes/Keyword';
-import Sign from '~/classes/Sign';
+import type Keyword from '~/types/Keyword';
+import Sign from '~/types/Sign';
 
 export default defineComponent({
     name: 'signCreatePage',

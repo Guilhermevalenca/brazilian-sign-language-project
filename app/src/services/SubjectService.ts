@@ -1,5 +1,5 @@
-import type { SubjectType } from "~/classes/Subject";
-import Subject from "~/classes/Subject";
+import type { SubjectType } from "~/types/Subject";
+import Subject from "~/types/Subject";
 
 export default class SubjectService {
     static async fetch(

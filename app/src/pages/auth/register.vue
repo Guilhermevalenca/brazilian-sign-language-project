@@ -24,14 +24,13 @@
 </template>
 
 <script lang="ts">
-import User from "~/classes/User";
+import type { UserType } from "~/types/User";
 import useUserStore from '~/stores/useUserStore';
-import {type AxiosError, type AxiosResponse} from "axios";
-import FormActions from "~/components/FormActions.vue";
+import AuthService from "~/services/AuthService";
+import UserService from "~/services/UserService";
 
 export default defineComponent({
   name: "register",
-  components: {FormActions},
 
   async setup() {
     definePageMeta({
@@ -40,12 +39,12 @@ export default defineComponent({
   },
 
   data() {
-    const user = new User({
+    const user: UserType = {
       name: '',
       email: '',
       password: '',
       password_confirmation: '',
-    });
+    };
     return {
       user,
     }
@@ -53,22 +52,18 @@ export default defineComponent({
 
   methods: {
     async submit() {
-      try {
-        const res = await this.user.register();
-        if(typeof res === 'object' && 'data' in res) {
-          const token = res.data.token;
-          this.$axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-          localStorage.setItem('token', token);
-
-          const tokenCookie = useCookie('token');
-          tokenCookie.value = token;
-
-          await useUserStore().data.fetch();
-          await useUserStore().fetchIsAdmin();
+      const res = await AuthService.register(this.user);
+      if(res) {
+        const userStore = useUserStore();
+        try {
+          const { data } = await UserService.fetch();
+          userStore.data = data;
           this.$router.push('/auth/check-email-code');
+        } catch(error) {
+          alert('o cadastro foi bem sucedido, mas algo deu errado ao buscar os seus dados');
         }
-      } catch (e: AxiosResponse | AxiosError | any) {
-        console.log(e);
+      } else {
+        alert('não foi possivel cadastra-lo');
       }
     }
   },

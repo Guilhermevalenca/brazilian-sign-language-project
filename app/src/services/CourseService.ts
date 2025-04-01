@@ -1,4 +1,4 @@
-import Course, { type CourseType } from "~/classes/Course";
+import Course, { type CourseType } from "~/types/Course";
 
 export default class CourseService {
     static async fetch(
