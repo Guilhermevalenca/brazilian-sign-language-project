@@ -1,6 +1,6 @@
 <template>
-<div class="content">
-  <div class="course-card-container" tabindex="0" role="button">
+<div class="course-card-container">
+  <div class="course-card" tabindex="0" role="button">
     <NuxtImg 
       :src="image"
       alt="Icone do curso"
@@ -38,11 +38,11 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-.content{
-  display: grid;
-  grid-auto-columns: 10em;
-}
 .course-card-container{
+  display: grid;
+  grid-template-columns: repeat(1, 3fr); /* Define 4 colunas fixas */
+}
+.course-card{
   display: flex;
   gap:1em;
   text-align: center;
@@ -50,7 +50,7 @@ export default defineComponent({
   align-content: center;
   align-items: center;
   font-size: 1em;
-  max-width: 10em;
+  width: 10em;
   cursor: pointer;
 }
 img{

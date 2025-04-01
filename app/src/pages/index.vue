@@ -9,10 +9,9 @@
         :course="course"
       />
     </div>
+    <Pagination v-model:page="page" :last-page="last_page"/>
   </div>
 
-  <button @click="page--" :disabled="page === 1">Anterior</button>
-  <button @click="page++" :disabled="page === last_page">Proxima</button>
 </template>
 
 <script lang="ts">
