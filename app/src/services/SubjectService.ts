@@ -1,10 +1,8 @@
 import type { SubjectType } from "~/types/Subject";
-import Subject from "~/types/Subject";
-
 export default class SubjectService {
     static async fetch(
         page: number
-    ): Promise<{subjects: Subject[], last_page: number}> {
+    ): Promise<{subjects: SubjectType[], last_page: number}> {
         const { $axios } = useNuxtApp();
         const { data: { data, last_page } } = await $axios.get('/api/subjects', {
             params: {
@@ -13,7 +11,7 @@ export default class SubjectService {
         });
         
         return {
-            subjects: data.map((subject: SubjectType) => new Subject(subject)),
+            subjects: data,
             last_page,
         }
     }
