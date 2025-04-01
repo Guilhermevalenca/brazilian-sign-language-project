@@ -8,7 +8,8 @@
 </template>
 
 <script lang="ts">
-import Keyword from '~/classes/Keyword';
+import KeywordService from '~/services/KeywordService';
+import { type KeywordType } from '~/types/Keyword';
 
 export default defineComponent({
     name: 'keywordPage',
@@ -18,21 +19,25 @@ export default defineComponent({
             middleware: 'is-admin',
         });
         const { id } = useRoute().params;
-        const keyword = ref(new Keyword({
-            id: Number(id),
+        const keyword = ref<KeywordType>({
             name: ''
-        }));
-        await keyword.value.fetch();
+        });
+        async function fetchKeyword() {
+            const { data } = await KeywordService.find(Number(id));
+            keyword.value = data;
+        }
+        fetchKeyword();
         return {
             keyword,
+            id: Number(id),
+            fetchKeyword,
         }
     },
 
     data() {
-        const newKeyword = new Keyword({
+        const newKeyword: KeywordType = {
             name: this.keyword?.name,
-            id: this.keyword?.id
-        })
+        }
         return {
             showUpdateKeyword: false,
             newKeyword,
@@ -42,8 +47,8 @@ export default defineComponent({
     methods: {
         async submit() {
             try {
-                await this.newKeyword.update();
-                await this.keyword.fetch();
+                await KeywordService.update(this.newKeyword, this.id);
+                await this.fetchKeyword();
                 this.showUpdateKeyword = false;
                 this.newKeyword.name = this.keyword.name;
             } catch(e) {

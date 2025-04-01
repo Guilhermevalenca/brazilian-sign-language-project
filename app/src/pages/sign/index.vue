@@ -1,67 +1,70 @@
 <template>
-    <div v-if="userStore && userStore.is_admin">
-        <button @click="$router.push('/sign/create')">Adicionar Sinal</button>
-    </div>
-    <div>
-        <button @click="previousPage" :disabled="page === 1">previous page</button>
-        <button @click="nextPage" :disabled="page === last_page">next page</button>
-    </div>
-    <div v-for="sign in signs" :key="sign.id">
-        <fieldset>
-            <pre>{{ sign }}</pre>
-            <NuxtLink :to="`/sign/${sign.id}`">ver sinal</NuxtLink>
-        </fieldset>
-    </div>
+  <div class="content-container-list">
+    <Pagination v-model:page="page" :lastPage="last_page"/>
+  <div 
+    class="signs-container" tabindex="0" 
+    v-for="sign in signs" :key="sign.id" 
+    @click="$router.push(`/sign/${sign.id}`)"
+    role="button"
+  >
+    <div class="sign-card-item">
+      <h1>{{ sign.name }}</h1>
+      </div>
+  </div>
+  <Pagination v-model:page="page" :lastPage="last_page"/>
+  </div>
 </template>
 
 <script lang="ts">
-import Sign, { type SignType } from '~/classes/Sign';
-import useUserStore from '~/stores/useUserStore';
+import SignService from "~/services/SignService";
+import {type SignType} from "~/types/Sign";
 
 export default defineComponent({
     name: 'signPage',
 
     async setup() {
-        const { $axios } = useNuxtApp();
-        const { data } = await $axios.get('/api/signs');
+    const page = ref(1);
+    const last_page = ref(1);
+    const signs = ref<SignType[]>([]);
 
-        return {
-            last_page: ref(data.last_page),
-            page: ref(1),
-            signs: ref(data.data.map((sign: SignType) => new Sign(sign))),
-        }
-    },
+    async function fetchSigns() {
+      const data = await SignService.fetch(page.value);
+      signs.value = data.signs;
+      last_page.value = data.last_page;
+    };
 
-    data() {
-        return {
-            userStore: null as null | ReturnType<typeof useUserStore>,
-        }
-    },
+    fetchSigns();
 
-    methods: {
-        async nextPage() {
-            const { data } = await this.$axios.get('/api/signs', {
-                params: {
-                    page: ++this.page
-                }
-            });
-            this.last_page = data.last_page;
-            this.signs = data.data.map((sign: SignType) => new Sign(sign));
-        },
-        
-        async previousPage() {
-            const { data } = await this.$axios.get('/api/signs', {
-                params: {
-                    page: --this.page
-                }
-            });
-            this.last_page = data.last_page;
-            this.signs = data.data.map((sign: SignType) => new Sign(sign));
-        }
-    },
+    return {
+      page,
+      last_page,
+      signs,
+      fetchSigns,
+    };
+  },
 
-    mounted() {
-        this.userStore = useUserStore();
-    },
+  watch: {
+    async page() {
+      await this.fetchSigns();
+    }
+  }
 });
 </script>
+
+<style scoped lang="scss">
+.signs-container{
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: stretch;
+  align-items: center;
+  background-color: $tertiary-color;
+  border: none 0.1rem;
+  width: 35vw;
+  border-radius: 1rem;
+  padding: 0.8rem;
+}
+.sign-card-item{
+  display: flex;
+  flex: auto;
+}
+</style>

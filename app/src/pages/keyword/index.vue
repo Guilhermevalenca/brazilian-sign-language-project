@@ -22,10 +22,11 @@
             <NuxtLink :to="`/keyword/${keyword.id}`">Atualizar palavra-chave</NuxtLink>
         </fieldset>
     </div>
+    <AppButton @click="page++" :disabled="page === last_page">Carregar mais palavras-chave</AppButton>
 </template>
 
 <script lang="ts">
-import Keyword from '~/classes/Keyword';
+import type { KeywordType } from '~/types/Keyword';
 import KeywordService from '~/services/KeywordService';
 
 export default defineComponent({
@@ -36,25 +37,45 @@ export default defineComponent({
             middleware: 'is-admin',
         });
 
-        const keywords = ref<Keyword[]>(await KeywordService.fetch());
+        const keywords = ref<KeywordType[]>([]);
+        const page = ref(1);
+        const last_page = ref(1);
+        
+        async function getKeywords() {
+            const data = await KeywordService.fetch(page.value);
+            keywords.value.push(...data.keywords);
+            last_page.value = data.last_page;
+        }
+
+        try {
+           getKeywords();
+        } catch(error) {
+            console.log(error);
+        }
+
         return {
             keywords,
+            page,
+            last_page,
+            getKeywords,
         }
     },
 
     data: () => ({
         keywordSearch: '',
-        newKeyword: new Keyword({
+        newKeyword: {
             name: '',
-        }),
+        } as KeywordType,
         showAddKeyword: false
     }),
 
     methods: {
         async submit() {
             try {
-                await this.newKeyword.register();
-                this.keywords = await KeywordService.fetch();
+                await KeywordService.create(this.newKeyword);
+                this.page = 1;
+                this.keywords = [];
+                await this.getKeywords();
                 this.showAddKeyword = false;
                 this.newKeyword.name = '';
             } catch(e) {
@@ -64,8 +85,8 @@ export default defineComponent({
     },
 
     computed: {
-        keywordsFiltered(): Keyword[] {
-            return this.keywords.filter((keyword: Keyword) => {
+        keywordsFiltered(): KeywordType[] {
+            return this.keywords.filter((keyword: KeywordType) => {
                 if(keyword.name) {
                     return keyword.name.toLowerCase().includes(this.keywordSearch.toLowerCase());
                 } else {

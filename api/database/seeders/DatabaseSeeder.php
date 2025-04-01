@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
             'is_admin' => true
         ]);
 
-         User::factory(10)->create();
+        User::factory(10)->create();
 
         $this->call([
             CourseSeeder::class,
@@ -30,6 +30,7 @@ class DatabaseSeeder extends Seeder
             FavoriteSeeder::class,
             SuggestionSeeder::class,
             KeywordSeeder::class,
+            PivotSeeder::class
         ]);
     }
 }

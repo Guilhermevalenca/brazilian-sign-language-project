@@ -92,7 +92,11 @@ export default defineComponent({
                 }
         }
 
-        await searchAction();
+        try {
+            await searchAction();
+        } catch(error) {
+            console.log(error);
+        }
 
         watch(searchData, async () => {
             await searchAction();

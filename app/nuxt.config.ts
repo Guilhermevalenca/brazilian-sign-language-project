@@ -20,25 +20,13 @@ export default defineNuxtConfig({
       },
     },
   },
-  // nitro: {
-  //   prerender: {
-  //     // components: [
-  //     //   '~/components/AppLogo.vue',
-  //     //   '~/components/AppCard.vue',
-  //     //   '~/components/AppForm.vue',
-  //     //   '~/components/AppButton.vue'
-  //     // ]
-  //   }
-  // },
   postcss: {
     plugins: {
       tailwindcss: {},
       autoprefixer: {},
     },
   },
-  modules: [
-    '@pinia/nuxt',
-  ],
+  modules: ['@pinia/nuxt', '@nuxt/image'],
   pinia: {
     storesDirs: ['./stores/**'],
   },
@@ -49,11 +37,14 @@ export default defineNuxtConfig({
       },
       script: [
         {
-          src: import.meta.env.VITE_API_URL + '/vlibras.js',
+          src: '/vlibras.js',
           tagPosition: 'bodyClose'
         }
       ],
-      title: 'Brazilian sign language',
+      title: 'Glossário libras',
+      link: [
+        { rel: 'icon', type: 'image/svg+xml', href: '/logo.svg' }
+      ]
     }
   }
 });

@@ -1,12 +1,9 @@
 import { defineStore } from "pinia";
-import User from "~/classes/User";
+import { type UserType } from "~/types/User";
 
 export default defineStore("user", {
     state: () => ({
-        data: new User({
-            name: '',
-            email: '',
-        }),
+        data: null as null | UserType,
         is_admin: false,
     }),
 
@@ -20,11 +17,8 @@ export default defineStore("user", {
             }, 5 * 60 * 1000); //5 min
         },
         resetDatas() {
-            this.data = new User({
-                name: '',
-                email: '',
-            });
+            this.data = null;
             this.is_admin = false;
-        }
+        },
     },
 });

@@ -1,12 +1,12 @@
 <template>
   <div class="adm-actions-container" ref="menuContainer">
     <button class="adm-actions-button" @click="showOptionsAdm()">
-      <img src="../../assets/icons/plus.svg" width="50px" height="50px">
+      <img src="~/assets/icons/plus.svg" width="50px" height="50px">
     </button>
     <div class="adm-actions-options" v-if="showOptions">
-      <button type="button" @click="$router.push('/courses/create'); selectOption()">Adicionar Curso</button>
-      <button type="button" @click="$router.push('/sign/index'); selectOption()" >Adicionar Sinal</button>
-      <button type="button" @click="$router.push('/subjects/create'); selectOption()">Adicionar Matéria</button>
+      <button type="button" @click="$router.push('/course/create'); selectOption()">Adicionar Curso</button>
+      <button type="button" @click="$router.push('/sign/create'); selectOption()" >Adicionar Sinal</button>
+      <button type="button" @click="$router.push('/subject/create'); selectOption()">Adicionar Matéria</button>
     </div>
   </div>
 </template>

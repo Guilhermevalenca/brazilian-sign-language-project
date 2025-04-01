@@ -1,18 +1,26 @@
 <template>
   <header>
-    <section class="header-container">
-      <button @click="showMenu()">
-        <img src="~/assets/icons/menu.svg" width="24px" height="24px">
-      </button>
-      <button @click="$router.push('/')">
-        <img src="~/assets/logos/our-logo.svg" width="288px" height="78px">
-      </button>
-      <SearchingBar/>
-      <div class="auth-container">
-        <AppButton variant="default" @click="$router.push('/auth/login')"> Login </AppButton>
-        <AppButton varaiant="default" @click="$router.push('/auth/register')"> Cadastre-se </AppButton>
+      <div class="header-content">
+        <div>
+          <button @click="showMenu()">
+            <img src="~/assets/icons/menu.svg" width="24px" height="24px">
+          </button>
+        </div>
+        <div  class="logo">
+          <button @click="$router.push('/')">
+            <img src="~/assets/logos/our-logo.svg" width="288px" height="78px">
+          </button>
+        </div>
+        <SearchingBar/>
+        <div v-if="!userStore?.data" class="auth-container">
+          <AppButton variant="default" @click="$router.push('/auth/login')"> Login </AppButton>
+          <AppButton varaiant="default" @click="$router.push('/auth/register')"> Cadastre-se </AppButton>
+        </div>
+        <div v-else>
+          <span>{{ userStore.data?.name }}</span>
+          <AppButton variant="default" @click="logout" >Desconectar</AppButton>
+        </div>
       </div>
-    </section>
     <section>
       <Menu :isVisible="isVisibleHere" />
     </section>
@@ -32,7 +40,6 @@ export default defineComponent({
   data() {
     return {
       userStore: null as null | ReturnType<typeof useUserStore>,
-      showOptionsAuth: true,
       isVisibleHere: false
     }
   },
@@ -48,42 +55,39 @@ export default defineComponent({
     }
   },
 
-  watch: {
-    userStore: {
-      handler($new) {
-        this.showOptionsAuth = !$new?.data?.id;
-      },
-      deep: true
-    }
-  },
-
   mounted() {
     this.userStore = useUserStore();
   }
 });
 </script>
 <style lang="scss" scoped>
-header {
-  position: fixed;
-  top: 0;
-  width: 100vw;
-  
-  z-index: 0;
-}
-.header-container{
+div{
   display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  justify-content:flex-start;
+  flex:auto;
+}
+header {
+  box-sizing: border-box;
+  top: 0;
+  z-index: 0;
+  position: fixed;
+  width: 100vw;
+}
+.header-content{
+  box-sizing: border-box;
+  display: flex;
+  flex:auto;
+  flex-flow: row nowrap;
+  justify-content: space-around;
   align-items: center;
-  gap: 2em;
-  position: relative;
-  padding: 0.5em 2em;
+  align-content: stretch;
+  padding: 0.5rem 2rem;
   background-color: $primary-color;
 }
 .auth-container{
   display:flex;
-  margin-left: auto;
+  justify-content: flex-end;
+  padding: 0rem 2rem;
+  flex:auto;
   gap:1em;
 }
 button {
