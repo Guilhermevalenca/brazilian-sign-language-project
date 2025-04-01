@@ -18,7 +18,7 @@ class SignFactory extends Factory
     {
         return [
             'name' => fake()->name(),
-            'display' => "https://www.youtube.com/embed/Gsu11y3sWCo",
+            'display' => "https://www.youtube.com/embed/SRXH9AbT280",
         ];
     }
 }

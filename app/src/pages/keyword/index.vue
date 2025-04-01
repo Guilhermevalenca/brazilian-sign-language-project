@@ -22,6 +22,7 @@
             <NuxtLink :to="`/keyword/${keyword.id}`">Atualizar palavra-chave</NuxtLink>
         </fieldset>
     </div>
+    <AppButton @click="page++" :disabled="page === last_page">Carregar mais palavras-chave</AppButton>
 </template>
 
 <script lang="ts">
@@ -37,15 +38,26 @@ export default defineComponent({
         });
 
         const keywords = ref<KeywordType[]>([]);
+        const page = ref(1);
+        const last_page = ref(1);
+        
+        async function getKeywords() {
+            const data = await KeywordService.fetch(page.value);
+            keywords.value.push(...data.keywords);
+            last_page.value = data.last_page;
+        }
 
         try {
-           keywords.value = await KeywordService.fetch();
+           getKeywords();
         } catch(error) {
             console.log(error);
         }
 
         return {
             keywords,
+            page,
+            last_page,
+            getKeywords,
         }
     },
 
@@ -61,7 +73,9 @@ export default defineComponent({
         async submit() {
             try {
                 await KeywordService.create(this.newKeyword);
-                this.keywords = await KeywordService.fetch();
+                this.page = 1;
+                this.keywords = [];
+                await this.getKeywords();
                 this.showAddKeyword = false;
                 this.newKeyword.name = '';
             } catch(e) {

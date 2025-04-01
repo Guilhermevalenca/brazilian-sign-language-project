@@ -18,7 +18,7 @@
         <label>
           Selecionar cursos:
           <SubjectCourseSelect 
-            v-model="courses"
+            v-model="subject.courses"
           />
         </label>
       </div>
@@ -29,26 +29,24 @@
 
 <script lang="ts">
 import {defineComponent} from 'vue';
-import Subject from '~/types/Subject';
+import SubjectService from '~/services/SubjectService';
+import { type SubjectType } from '~/types/Subject';
 
 export default defineComponent({
   name: "create",
   data(){
     return{
-      subject: new Subject({
+      subject: {
         name: '',
-      }),
-      courses: [],
+        courses: [],
+      } as SubjectType,
     }
   },
 
   methods: {
     async submit() {
       try {
-        if(this.courses.length > 0) {
-          this.subject.setCourses(this.courses);
-        }
-        await this.subject.register();
+        await SubjectService.create(this.subject);
       } catch(error) {
 
       }

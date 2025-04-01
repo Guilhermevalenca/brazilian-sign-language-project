@@ -31,31 +31,45 @@
 
 <script lang="ts">
 import type { PropType } from 'vue';
-import Keyword from '~/types/Keyword';
+import type {KeywordType} from '~/types/Keyword';
 import KeywordService from '~/services/KeywordService';
 
 export default defineComponent({
     name: 'KeywordSelect',
 
     async setup() {
-        const keywords = ref<Keyword[]>(await KeywordService.fetch());
+        const keywords = ref<KeywordType[]>([]);
+        const page = ref(1);
+        const last_page = ref(1);
+
+        async function getKeywords() {
+            const data = await KeywordService.fetch(page.value);
+            keywords.value.push(...data.keywords);
+            last_page.value = data.last_page;
+        }
+
+        getKeywords();
 
         return {
             keywords,
+            page,
+            last_page,
+            getKeywords,
         }
     },
 
     data: () => ({
         keywordSearch: '',
-        newKeyword: new Keyword({
+        newKeyword: {
             name: '',
-        }),
+        } as KeywordType,
         isAddKeyword: false,
+        selected: [] as KeywordType[]
     }),
 
     props: {
         modelValue: {
-            type: Array as PropType<Keyword[]>,
+            type: Array as PropType<KeywordType[]>,
             required: true
         }
     },
@@ -63,15 +77,7 @@ export default defineComponent({
     emits: ['update:modelValue'],
 
     computed: {
-        selected: {
-            get(): Keyword[] {
-                return this.modelValue;
-            },
-            set(value: Keyword[]) {
-                this.$emit('update:modelValue', value);
-            }
-        },
-        keywordsFiltered(): Keyword[] {
+        keywordsFiltered(): KeywordType[] {
             return this.keywords.filter((keyword) => {
                 if(keyword.name) {
                     return keyword.name.toLowerCase().includes(this.keywordSearch.toLowerCase());
@@ -82,17 +88,38 @@ export default defineComponent({
         }
     },
 
+    watch: {
+      selected($new) {
+        this.$emit('update:modelValue', $new);
+      }
+    },
+
     methods: {
         async submit() {
             try {
-                await this.newKeyword.register();
-                this.keywords = await KeywordService.fetch();
+                await KeywordService.create(this.newKeyword);
+                this.page = 1;
+                this.keywords = [];
+                await this.getAllKeywords();
                 this.isAddKeyword = false;
                 this.newKeyword.name = '';
             } catch(e) {
                 alert('deu errado!');
             }
         },
+        async getAllKeywords() {
+          if(this.page < this.last_page) {
+            await this.getKeywords();
+            this.page++;
+            setTimeout(this.getAllKeywords, 300);
+          } else {
+            await this.getKeywords();
+          }
+        }
+    },
+
+    mounted() {
+      this.getAllKeywords();
     }
 });
 </script>

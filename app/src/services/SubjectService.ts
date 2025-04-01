@@ -17,4 +17,8 @@ export default class SubjectService {
             last_page,
         }
     }
+    static async create(subject: SubjectType) {
+        const { $axios } = useNuxtApp();
+        return $axios.post('/api/subjects', subject);
+    }
 }

@@ -12,7 +12,7 @@
 </template>
 
 <script lang="ts">
-import CourseType from "~/types/Course";
+import type { CourseType } from "~/types/Course";
 
 export default defineComponent({
   name: 'CourseCard',

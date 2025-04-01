@@ -16,7 +16,7 @@ class DescriptionFactory extends Factory
     {
         return [
             'text' => fake()->text(),
-            'display' => "https://youtu.be/SRXH9AbT280?si=BSJtzaz9t47dtP2o",
+            'display' => "https://www.youtube.com/embed/SRXH9AbT280",
             'sign_id' => $this->getUniqueSignId()
         ];
     }

@@ -10,41 +10,58 @@
         allowfullscreen
     >
     </iframe>
-    <pre>{{ sign }}</pre>
+    <!-- apenas para listar as informações do objeto -->
+    <p>informações:</p>
+    <div>
+        <fieldset>
+            <legend>Sinal</legend>
+            <ul>{{ sign.name }}</ul>
+            <ul>{{ sign.display }}</ul>
+        </fieldset>
+        <fieldset>
+            <legend>Descrição</legend>
+            <ul>{{ sign.description?.text }}</ul>
+            <ul>{{ sign.description?.display }}</ul>
+        </fieldset>
+        <fieldset>
+            <legend>Exemplo</legend>
+            <ul>{{ sign.example?.description }}</ul>
+            <ul>{{ sign.example?.display }}</ul>
+        </fieldset>
+    </div>
 </template>
 
 <script lang="ts">
-import Sign from '~/types/Sign';
+
+import SignService from '~/services/SignService';
+import type { SignType } from '~/types/Sign';
 
 export default defineComponent({
     name: 'signPage',
 
     async setup() {
-        const { $axios } = useNuxtApp();
         const { id } = useRoute().params;
-        const { data } = await $axios.get(`/api/signs/${id}`);
+        const sign = ref<SignType>({
+            name: '',
+            display: '',
+        })
+        async function getSign() {
+            const { data } = await SignService.find(Number(id));
+            sign.value = data;
+        }
 
-        const sign = new Sign(data);
-
-        if(data.example) {
-            sign.setExample(data.example);
-        }
-        if(data.description) {
-            sign.setDescription(data.description);
-        }
-        if(data.keywords) {
-            sign.setKeywords(data.keywords);
-        }
+        getSign();
 
         return {
             sign,
+            id
         }
     },
 
     methods: {
         async destroy() {
             try {
-                await this.sign.delete();
+                await SignService.delete(Number(this.id));
                 this.$router.push('/sign');
             } catch(e) {
                 console.log(e);

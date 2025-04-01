@@ -1,19 +1,21 @@
 <template>
-    <button @click="page--" :disabled="page === 1">Anterior</button>
-    <button @click="page++" :disabled="page === last_page">Proxima</button>
-    <pre>{{ subjects }}</pre>
+    <Pagination v-model:page="page" :lastPage="last_page" />
+    <div v-for="subject in subjects" :key="subject.id">
+        {{ subject.name }}
+    </div>
+    <Pagination v-model:page="page" :lastPage="last_page" />
 </template>
 
 
 <script lang="ts">
 import SubjectService from '~/services/SubjectService';
-import Subject from '~/types/Subject';
+import { type SubjectType } from '~/types/Subject';
 
 export default defineComponent({
     name: 'subjectPage',
 
     async setup() {
-        const subjects = ref<Subject[]>([]);
+        const subjects = ref<SubjectType[]>([]);
         const page = ref<number>(1);
         const last_page = ref<number>(1);
         
@@ -24,7 +26,7 @@ export default defineComponent({
         }
         
         try {
-            await getSubjects();
+            getSubjects();
         } catch(error) {
             console.log(error);
         }

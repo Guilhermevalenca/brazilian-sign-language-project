@@ -17,7 +17,7 @@
           <AppButton varaiant="default" @click="$router.push('/auth/register')"> Cadastre-se </AppButton>
         </div>
         <div v-else>
-          <span>{{ userStore?.data?.name }}</span>
+          <span>{{ userStore.data?.name }}</span>
           <AppButton variant="default" @click="logout" >Desconectar</AppButton>
         </div>
       </div>

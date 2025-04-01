@@ -10,16 +10,16 @@
         </div>
         <div>
             <p>descrição do sinal <span class="tw-text-xs">* Campos não obrigatorios</span></p>
-            <textarea v-model="sign.getDescription()!.text" placeholder="Descrição do sinal"></textarea>
+            <textarea v-model="sign.description!.text" placeholder="Descrição do sinal"></textarea>
             <br />
-            <input v-model="sign.getDescription()!.display" placeholder="Video descrevendo o sinal">
+            <input v-model="sign.description!.display" placeholder="Video descrevendo o sinal">
             <small>Apenas links do youtube</small>
         </div>
         <div>
             <p>Exemplo de uso do sinal <span class="tw-text-xs">* Campos não obrigatorios</span></p>
-            <input v-model="sign.getExample()!.description" placeholder="descrição do exemplo" />
+            <input v-model="sign.example!.description" placeholder="descrição do exemplo" />
             <br />
-            <input v-model="sign.getExample()!.display" placeholder="link do exemplo" />
+            <input v-model="sign.example!.display" placeholder="link do exemplo" />
             <small>Apenas links do youtube</small>
         </div>
         <button type="submit">Atualizar sinal</button>
@@ -27,49 +27,58 @@
 </template>
 
 <script lang="ts">
-import Sign from '~/types/Sign';
+import SignService from '~/services/SignService';
+import { type SignType } from '~/types/Sign';
 
 export default defineComponent({
     name: 'updateSignPage',
 
     async setup() {
-
         definePageMeta({
             middleware: 'is-admin',
         });
 
-        const { $axios } = useNuxtApp();
         const { id } = useRoute().params;
-        const { data } = await $axios.get(`/api/signs/${id}`);
+        const sign = ref<SignType>({
+            name: '',
+            display: '',
+            description: {
+                text: '',
+                display: '',
+            },
+            example: {
+                description: '',
+                display: '',
+            }
+        });
 
-        const sign = new Sign(data);
+        async function fetchSign() {
+            const { data } = await SignService.find(Number(id));
+            sign.value = {
+                ...sign,
+                ...data,
+            };
+        }
 
-        if(data.example) {
-            sign.setExample(data.example);
-        } else {
-            sign.setExample();
-        }
-        if(data.description) {
-            sign.setDescription(data.description);
-        } else {
-            sign.setDescription();
-        }
+        fetchSign();
 
         return {
             sign: ref(sign),
+            id,
         }
     },
 
     methods: {
         async submit() {
             try {
-                if(!this.sign.getExample()?.description || !this.sign.getExample()?.display) {
-                    this.sign.resetExample();
+                const sign: SignType = {...this.sign};
+                if(sign.example?.description === '' || sign.example?.display === '') {
+                    delete sign.example;
                 }
-                if(!this.sign.getDescription()?.text || !this.sign.getDescription()?.display) {
-                    this.sign.resetDescription();
+                if(sign.description?.text === '' || sign.description?.display === '') {
+                    delete sign.description;
                 }
-                await this.sign.update();
+                await SignService.update(sign, Number(this.id));
                 this.$router.push('/sign');
             } catch (e) {
                 console.log(e);

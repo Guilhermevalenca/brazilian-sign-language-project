@@ -16,13 +16,13 @@
 
 <script lang="ts">
 import CourseService from '~/services/CourseService';
-import Course, { type CourseType } from '~/types/Course';
+import { type CourseType } from '~/types/Course';
 
 export default defineComponent({
   name: 'homePage',
 
   async setup() {
-        const courses = ref<(Course | CourseType)[]>([]);
+        const courses = ref<(CourseType)[]>([]);
         const page = ref(1);
         const last_page = ref(1);
 

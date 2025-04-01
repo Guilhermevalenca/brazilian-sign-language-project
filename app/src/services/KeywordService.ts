@@ -1,14 +1,21 @@
 import { type KeywordType } from "~/types/Keyword";
 
 export default class KeywordService {
-    static async fetch(): Promise<KeywordType[]> {
+    static async fetch(page: number) {
         const { $axios } = useNuxtApp();
         const token = useCookie('token').value;
         if(token) {
             $axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
         }
-        const { data } = await $axios.get('/api/keywords/create');
-        return data;
+        const { data } = await $axios.get('/api/keywords/create', {
+            params: {
+                page,
+            }
+        });
+        return {
+            keywords: data.data,
+            last_page: data.last_page,
+        };
     }
 
     static async create(keyword: KeywordType) {

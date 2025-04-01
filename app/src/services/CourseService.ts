@@ -1,9 +1,9 @@
-import Course, { type CourseType } from "~/types/Course";
+import { type CourseType } from "~/types/Course";
 
 export default class CourseService {
     static async fetch(
         page: number,
-    ): Promise<{courses: Course[], last_page: number}> {
+    ): Promise<{courses: CourseType[], last_page: number}> {
         const { $axios } = useNuxtApp();
         const { data } = await $axios.get('/api/courses', {
             params: {

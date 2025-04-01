@@ -13,7 +13,7 @@
 </template>
 
 <script lang="ts">
-import Course from '~/types/Course';
+import Course, { type CourseType } from '~/types/Course';
 import CourseService from '~/services/CourseService';
 
 export default defineComponent({
@@ -42,7 +42,7 @@ export default defineComponent({
 
     props: {
         modelValue: {
-            type: Array as PropType<Course[]>,
+            type: Object as PropType<CourseType[]>,
             required: true
         }
     },
@@ -51,15 +51,15 @@ export default defineComponent({
 
     computed: {
         selected: {
-            get(): Course[] {
+            get(): CourseType[] {
                 return this.modelValue;
             },
             set(value: Course[]) {
                 this.$emit('update:modelValue', value);
             }
         },
-        coursesFiltered(): Course[] {
-            return this.courses.filter((course) => {
+        coursesFiltered(): CourseType[] {
+            return this.courses.filter((course: CourseType) => {
                 if(course.name) {
                     return course.name.toLowerCase().includes(this.courseSearch.toLowerCase());
                 } else {
