@@ -83,7 +83,9 @@ class CourseController extends Controller
      */
     public function show(Course $course)
     {
-        $course->setRelation('subjects', $course->subjects()->paginate());
+        $course->subjects = $course->subjects()
+            ->orderBy('name')
+            ->paginate();
         return response($course, 200);
     }
 

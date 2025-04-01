@@ -1,12 +1,14 @@
 <template>
-  <form @submit.prevent="submit" v-bind="$attrs">
-    <div class="searching-bar-container">
-      <input class="searching-bar-input" type="text" v-model="search" required @input="searchAction" placeholder="Buscar ...">
-      <button type="submit" class="search-button">
-        <img src="~/assets/icons/search.svg" width="24px" height="24px">
-      </button>
-    </div>
-  </form>
+  <div class="searching-bar-container">
+    <form @submit.prevent="submit" v-bind="$attrs">
+      <div class="searching-bar">
+        <input class="searching-bar-input" type="text" v-model="search" required @input="searchAction" placeholder="Buscar ...">
+        <button type="submit" class="search-button">
+          <img src="~/assets/icons/search.svg" width="24px" height="24px">
+        </button>
+      </div>
+    </form>
+  </div>
 </template>
 
 <script lang="ts">
@@ -52,32 +54,33 @@ export default defineComponent({
   }
 });
 </script>
-<style lang="scss" scoped>
+<style lang="scss" scoped >
 .searching-bar-container{
   display: flex;
-  align-items: center;
-  justify-self: center;
-  margin-left: auto;
+  flex: auto;
+}
+.searching-bar{
+  display: flex;
+  flex-direction: row;
+  flex:auto;
 }
 .searching-bar-input{
+  font-size: 1rem;
   border: none;
-  border-top-left-radius: 5em;
-  border-bottom-left-radius: 5em;
-  padding: 0em 2em;
-  width: 30em;
-  height: 3.5em;
+  border-top-left-radius: 5rem;
+  border-bottom-left-radius: 5rem;
+  padding: 0rem 2rem;
+  min-width: 30rem;
+  height: 3rem;
 }
 .search-button{
   background-color: $secondary-color;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   border: none;
-  border-top-right-radius: 10em;
-  border-bottom-right-radius: 10em;
+  border-top-right-radius: 10rem;
+  border-bottom-right-radius: 10rem;
   cursor:pointer;
-  width: 4.0em;
-  height: 3.5em;
+  width: 4rem;
+  height: 3rem;
 }
 .searching-bar-input:focus{
   outline:$secondary-color 1px solid ;

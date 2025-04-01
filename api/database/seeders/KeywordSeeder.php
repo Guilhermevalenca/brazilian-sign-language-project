@@ -16,11 +16,6 @@ class KeywordSeeder extends Seeder
      */
     public function run(): void
     {
-        Keyword::factory(30)->create()
-            ->each(function ($keyword) {
-                $keyword->courses()->attach(Course::all()->random(5)->pluck('id'));
-                $keyword->subjects()->attach(Subject::all()->random(5)->pluck('id')); 
-                $keyword->signs()->attach(Sign::all()->random(5)->pluck('id'));
-            });
+        Keyword::factory(30)->create();
     }
 }

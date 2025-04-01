@@ -64,8 +64,8 @@ export default defineComponent({
     watch: {
         userStore: {
             handler() {
-                this.user.email = String(this.userStore?.data.email ?? '');
-                this.user.name = String(this.userStore?.data.name ?? '');
+                this.user.email = String(this.userStore?.data?.email ?? '');
+                this.user.name = String(this.userStore?.data?.name ?? '');
             },
             deep: true,
             immediate: true
@@ -77,8 +77,8 @@ export default defineComponent({
             await ProfileService.updateProfile(this.user)
                 .then(res => {
                     if(res && this.userStore) {
-                        this.userStore.data.name = this.user.name;
-                        this.userStore.data.email = this.user.email;
+                        this.userStore.data!.name = this.user.name;
+                        this.userStore.data!.email = this.user.email;
                         alert('salvo!');
                         this.user.name = '';
                         this.user.email = '';

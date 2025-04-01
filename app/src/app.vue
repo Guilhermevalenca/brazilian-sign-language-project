@@ -9,30 +9,35 @@
 
 <script lang="ts">
 import useUserStore from '~/stores/useUserStore';
+import UserService from "~/services/UserService";
+import type { UserType } from '~/types/User';
 
 export default defineComponent({
   name: 'App',
 
-  async mounted() {
-    if(localStorage.getItem('token')) {
-      this.$axios.defaults.headers
-          .common['Authorization'] = `Bearer ${localStorage.getItem('token')}`;
+  async setup() {
+    const token = useCookie('token').value;
+    if(token) {
+      try {
+        const { data } = await UserService.fetch();
+        return {
+          user: data
+        }
+      } catch(error) {
+        return {
+          user: null
+        }
+      }
+    }
+    return {
+      user: null as null | UserType
+    }
+  },
 
-      useUserStore().data.fetch()
-        .then(() => {
-          if(useUserStore().data.id) {
-            useUserStore().fetchIsAdmin();
-          }
-        })
-        .catch((err) => {
-          if(err.response.status === 401) {
-            useUserStore().resetDatas();
-            localStorage.removeItem('token');
-            delete this.$axios.defaults.headers.common['Authorization'];
-            const tokenCookie = useCookie('token');
-            tokenCookie.value = null;
-          }
-        })
+  async mounted() {
+    const user = useUserStore();
+    if(this.user) {
+      user.data = this.user;
     }
 
     this.$axios.get('/sanctum/csrf-cookie');

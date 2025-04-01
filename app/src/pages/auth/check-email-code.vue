@@ -15,6 +15,7 @@
 </template>
 
 <script lang="ts">
+import AuthService from '~/services/AuthService';
 
 export default defineComponent({
   name: "check-email-code",
@@ -33,14 +34,12 @@ export default defineComponent({
 
   methods: {
     submit() {
-      this.$axios.post('api/users/verify-code', {
-        code: this.code.join('')
-      })
+      AuthService.checkEmailCode(this.code.join(''))
         .then(() => {
           this.$router.push('/');
         })
         .catch((err) => {
-          console.log(err);
+          alert('Não foi possivel verificar o código');
         })
     },
     pasteInputs(e: ClipboardEvent) {

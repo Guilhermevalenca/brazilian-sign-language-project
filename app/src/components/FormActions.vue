@@ -13,12 +13,11 @@ export default {
 <style scoped>
 div{
   display:flex;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 1em;
-  margin-bottom: 1em;
-  gap: 5em;
+  flex: auto;
+  gap: 1rem;
+  justify-content: flex-end;
   align-items: center;
+  align-content: center;
   flex-direction: row;
   flex-wrap: nowrap;
 }

@@ -63,7 +63,6 @@ class SignController extends Controller
     public function show(Sign $sign)
     {
         $sign->load([
-            'keywords',
             'description',
             'example',
         ]);

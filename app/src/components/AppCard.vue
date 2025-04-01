@@ -15,18 +15,15 @@ name: "AppCard"
 .card-app {
   display: flex;
   flex-direction: column;
-  gap: 1em;
+  gap: 1rem;
   justify-self: center;
   align-items: center;
-  justify-items: center;
-  justify-self: center;
+  justify-content: center;
   background-color: $tertiary-color;
-  padding: 3em;
-  min-width: 25em;
-  min-height: 20em;
-  width: auto;
+  padding: 3rem;
+  width: 35vw;
   height: auto;
   box-shadow: 0 1px 1px  0 rgba(0, 0, 0, 0.2);
-  border-radius: 1em;
+  border-radius: 2rem;
 }
 </style>
