@@ -1,8 +1,8 @@
 <template>
   <div class="content-container">
-  <div class="content-title">
-    <h1>Cursos</h1>
-  </div>
+    <div class="content-title">
+      <h1>Cursos</h1>
+    </div>
     <div class="index-content">
       <CourseCard
         v-for="course in courses" :key="course.id"
@@ -34,7 +34,7 @@ export default defineComponent({
         }
 
         try {
-          await getCourses();
+          getCourses();
         } catch(error) {
           console.log(error);
         }

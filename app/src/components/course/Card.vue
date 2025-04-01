@@ -8,9 +8,7 @@
     />
     <legend>{{ course?.name }}</legend>
   </div>
-  <slot/>
 </div>
-
 </template>
 
 <script lang="ts">
@@ -26,9 +24,9 @@ export default defineComponent({
   computed: {
     image(): string {
       if(!this.course?.image) {
-        return '/img/no-image.png';
+        return '/favicon.ico';
       }
-      if(this.course?.image.startsWith('http')) {
+      if(String(this.course?.image).startsWith('http')) {
         return String(this.course?.image);
       }
       return import.meta.env.VITE_API_URL + '/storage/' + String(this.course?.image);

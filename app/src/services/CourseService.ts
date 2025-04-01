@@ -12,7 +12,7 @@ export default class CourseService {
         });
         
         return {
-            courses: data.data.map((course: CourseType) => new Course(course)),
+            courses: data.data,
             last_page: data.last_page
         }
     }

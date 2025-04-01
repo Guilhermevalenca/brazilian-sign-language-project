@@ -28,7 +28,6 @@ export default class Subject extends ApiModel<SubjectType> implements SubjectTyp
 
     toJSON = () => ({
         id: this.id,
-        name: this.name,
-        courses: this.getCourses()
+        name: this.name
     })
 }
