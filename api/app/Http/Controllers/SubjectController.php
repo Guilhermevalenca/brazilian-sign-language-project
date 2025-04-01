@@ -13,7 +13,7 @@ class SubjectController extends Controller
      */
     public function index()
     {
-        $subject = Subject::paginate();
+        $subject = Subject::orderBy('name')->paginate();
         return response($subject, 200);
     }
     /**
@@ -25,6 +25,9 @@ class SubjectController extends Controller
         $subject = Subject::create($validated);
         if (isset($validated['courses'])) {
             $subject->courses()->attach($validated['courses']);
+        }
+        if (isset($validated['keywords'])) {
+            $subject->keywords()->attach($validated['keywords']);
         }
         return response($subject, 201);
     }
@@ -45,7 +48,10 @@ class SubjectController extends Controller
         $validated = $request->validated();
         $subject->update($validated);
         if (isset($validated['courses'])) {
-            $subject->courses()->attach($validated['courses']);
+            $subject->courses()->sync($validated['courses']);
+        }
+        if (isset($validated['keywords'])) {
+            $subject->keywords()->sync($validated['keywords']);
         }
         return response($subject, 200);
     }
@@ -55,7 +61,6 @@ class SubjectController extends Controller
      */
     public function destroy(Subject $subject)
     {
-        $subject->courses()->detach();
         $subject->delete();
         return response(null, 204);
     }
