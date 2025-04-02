@@ -2,14 +2,15 @@
   <LayoutAppHeader />
   <main>
     <section>
+      <LayoutBreadcrumb />
       <slot />
     </section>
   </main>
-  <AdmActions/>
+  <LayoutAdmActions />
   <LayoutAppFooter />
 </template>
-<style lang="scss" scoped>
 
+<style lang="scss" scoped>
 section {
   margin: 0 auto;
   width: 60vw;
@@ -17,6 +18,3 @@ section {
   overflow-y: auto;
 }
 </style>
-<script setup lang="ts">
-import AdmActions from "~/components/layout/AdmActions.vue";
-</script>

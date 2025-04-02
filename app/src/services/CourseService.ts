@@ -12,7 +12,7 @@ export default class CourseService {
         });
         
         return {
-            courses: data.data,
+            courses: data.data as CourseType[],
             last_page: data.last_page
         }
     }

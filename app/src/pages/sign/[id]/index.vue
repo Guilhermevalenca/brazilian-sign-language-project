@@ -34,6 +34,7 @@
 <script lang="ts">
 
 import SignService from '~/services/SignService';
+import useBreadcrumbStore from '~/stores/useBreadcrumbStore';
 import type { SignType } from '~/types/Sign';
 
 export default defineComponent({
@@ -68,5 +69,15 @@ export default defineComponent({
             }
         }
     },
+
+    watch: {
+        "sign.name": {
+            handler($new) {
+                useBreadcrumbStore().activeSign($new ?? '');
+            },
+            deep: true,
+            immediate: true,
+        }
+    }
 });
 </script>

@@ -20,6 +20,7 @@
 
 <script lang="ts">
 import CourseService from '~/services/CourseService';
+import useBreadcrumbStore from '~/stores/useBreadcrumbStore';
 import type { CourseType } from '~/types/Course';
 
 export default defineComponent({
@@ -63,7 +64,14 @@ export default defineComponent({
                 this.page = this.last_page;
             }
             this.getCourse();
+        },
+        "course.name": {
+            handler($new) {
+                useBreadcrumbStore().activeCourse($new ?? '');
+            },
+            deep: true,
+            immediate: true,
         }
-    }
+    },
 })
 </script>

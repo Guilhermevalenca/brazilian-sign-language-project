@@ -32,8 +32,6 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed } from 'vue';
-
 export default defineComponent({
   props: {
     page: { type: Number, required: true }, // Página atual

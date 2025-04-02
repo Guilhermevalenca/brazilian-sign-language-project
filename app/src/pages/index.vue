@@ -17,7 +17,8 @@
 
 <script lang="ts">
 import CourseService from '~/services/CourseService';
-import { type CourseType } from '~/types/Course';
+import useBreadcrumbStore from '~/stores/useBreadcrumbStore';
+import type { CourseType } from '~/types/Course';
 
 export default defineComponent({
   name: 'homePage',
@@ -57,6 +58,10 @@ export default defineComponent({
             }
             this.getCourses();
         }
+    },
+
+    mounted() {
+      useBreadcrumbStore().home();
     }
 });
   

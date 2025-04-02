@@ -19,6 +19,7 @@
 
 <script lang="ts">
 import SubjectService from '~/services/SubjectService';
+import useBreadcrumbStore from '~/stores/useBreadcrumbStore';
 import type { SubjectType } from '~/types/Subject';
 
 export default defineComponent({
@@ -62,6 +63,13 @@ export default defineComponent({
                 this.page = this.last_page;
             }
             this.getSubject();
+        },
+        "subject.name": {
+            handler($new) {
+                useBreadcrumbStore().activeSubject($new ?? undefined);
+            },
+            deep: true,
+            immediate: true
         }
     }
 })
