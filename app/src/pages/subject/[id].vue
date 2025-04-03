@@ -1,17 +1,24 @@
 <template>
 <Pagination v-model:page="page" :lastPage="last_page" />
 <div>
-    <ul>{{ subject.name }}</ul>
     <ul>
-        <div 
-            v-for="sign in subject.signs" :key="sign.id"
-            @click="$router.push(`/sign/${sign.id}`)"
-        >
-            <ul>{{ sign.name }}</ul>
-            <ul>{{ sign.display }}</ul>
-            <br />
-            <br />
-        </div>
+        <strong>{{ subject.name }}</strong>
+    </ul>
+    <br />
+    <br />
+    <ul>
+        <fieldset>
+            <legend>Sinais</legend>
+            <div 
+                v-for="sign in subject.signs" :key="sign.id"
+                @click="$router.push(`/sign/${sign.id}`)"
+            >
+                <ul>{{ sign.name }}</ul>
+                <ul>{{ sign.display }}</ul>
+                <br />
+                <br />
+            </div>
+        </fieldset>
     </ul>
 </div>
 <Pagination v-model:page="page" :lastPage="last_page" />
@@ -51,6 +58,7 @@ export default defineComponent({
             page,
             last_page,
             getSubject,
+            id,
         }
     },
 
@@ -66,7 +74,7 @@ export default defineComponent({
         },
         "subject.name": {
             handler($new) {
-                useBreadcrumbStore().activeSubject($new ?? undefined);
+                useBreadcrumbStore().activeSubject($new ?? '', '/subject/' + this.id);
             },
             deep: true,
             immediate: true

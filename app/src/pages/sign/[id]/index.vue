@@ -63,7 +63,7 @@ export default defineComponent({
         async destroy() {
             try {
                 await SignService.delete(Number(this.id));
-                this.$router.push('/sign');
+                this.$router.go(-1);
             } catch(e) {
                 console.log(e);
             }
@@ -73,7 +73,7 @@ export default defineComponent({
     watch: {
         "sign.name": {
             handler($new) {
-                useBreadcrumbStore().activeSign($new ?? '');
+                useBreadcrumbStore().activeSign($new ?? '', '/sign/' + this.id);
             },
             deep: true,
             immediate: true,

@@ -79,7 +79,7 @@ export default defineComponent({
                     delete sign.description;
                 }
                 await SignService.update(sign, Number(this.id));
-                this.$router.push('/sign');
+                this.$router.go(-1);
             } catch (e) {
                 console.log(e);
             }

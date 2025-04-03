@@ -37,6 +37,7 @@ export default class CourseService {
             course: {
                 id: data.id,
                 name: data.name,
+                image: data.image,
                 subjects: data.subjects.data,
             } as CourseType,
             last_page: data.subjects.last_page

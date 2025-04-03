@@ -47,6 +47,7 @@ export default defineComponent({
     async submit() {
       try {
         await SubjectService.create(this.subject);
+        this.$router.go(-1);
       } catch(error) {
 
       }

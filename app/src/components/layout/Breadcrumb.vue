@@ -1,37 +1,13 @@
 <template>
   <client-only>
     <div>
-      <!-- forma 1 -->
-      {{ path.pathDefault }}
-    </div>
-    <div>
-      <!-- forma 2 -->
-      {{ path.pathSecondary }}
-    </div>
-    <div>
-      <!-- forma 3 -->
-      {{ path.pathWithName }}
-    </div>
-    <div>
-      <!-- forma 4 -->
-      {{ path.pathSecondaryWithName }}
-    </div>
-    <div>
-      <!-- forma 5 -->
-      {{ path.pathTertiaryWithName }}
-    </div>
-    <div>
-      <!-- forma 6 com array -->
-       <span v-if="path.pathInArray.length === 0">/</span>
-       <span v-for="(value, index) in path.pathInArray" :key="index">
-        /{{ value }}
-      </span>
-    </div>
-    <div>
-      <!-- forma 7 com array -->
-      <span v-if="path.pathInArrayWithName.length === 0">/</span>
-      <span v-for="(value, index) in path.pathInArrayWithName" :key="index">
-        /{{ value.activated }} - {{ value.name }}
+      <span @click="$router.push('/')">-> Pagina inicial</span>
+      <span 
+        v-for="(value, index) in breadcrumb.path" 
+        :key="index"
+        @click="$router.push(value.path)"  
+      >
+        -> {{ value.activated }} - {{ value.name }}
       </span>
     </div>
   </client-only>
@@ -44,25 +20,25 @@ export default defineComponent({
   name: "Breadcrumb",
 
   data: () => ({
-    path: useBreadcrumbStore()
+    breadcrumb: useBreadcrumbStore()
   }),
 
   mounted() {
     window.addEventListener("beforeunload", (event) => {
       // event.preventDefault();
       localStorage.setItem('breadcrumb', JSON.stringify({
-        course: this.path.course,
-        subject: this.path.subject,
-        sign: this.path.sign
+        course: this.breadcrumb.course,
+        subject: this.breadcrumb.subject,
+        sign: this.breadcrumb.sign
       }));
     });
     
     const breadcrumb = localStorage.getItem('breadcrumb');
     if (breadcrumb) {
       const parsedBreadcrumb = JSON.parse(breadcrumb);
-      this.path.course = parsedBreadcrumb.course;
-      this.path.subject = parsedBreadcrumb.subject;
-      this.path.sign = parsedBreadcrumb.sign;
+      this.breadcrumb.course = parsedBreadcrumb.course;
+      this.breadcrumb.subject = parsedBreadcrumb.subject;
+      this.breadcrumb.sign = parsedBreadcrumb.sign;
     }
   },
 

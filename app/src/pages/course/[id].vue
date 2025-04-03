@@ -1,18 +1,22 @@
 <template>
 <Pagination v-model:page="page" :lastPage="last_page" />
 <div>
-    <ul>{{ course.name }}</ul>
-    <ul>{{ course.image }}</ul>
+    <CourseCard :course="course" />
+    <br />
+    <br />
     <ul>
-        <div 
-            v-for="subject in course.subjects" 
-            :key="subject.id"
-            @click="$router.push(`/subject/${subject.id}`)"    
-        >
-            <ul>{{ subject.name }}</ul>
-            <br />
-            <br />
-        </div>
+        <fieldset>
+            <legend>Materias</legend>
+            <div 
+                v-for="subject in course.subjects" 
+                :key="subject.id"
+                @click="$router.push(`/subject/${subject.id}`)"    
+            >
+                <ul>{{ subject.name }}</ul>
+                <br />
+                <br />
+            </div>
+        </fieldset>
     </ul>
 </div>
 <Pagination v-model:page="page" :lastPage="last_page" />
@@ -52,6 +56,7 @@ export default defineComponent({
             page,
             last_page,
             getCourse,
+            id
         }
     },
 
@@ -67,7 +72,7 @@ export default defineComponent({
         },
         "course.name": {
             handler($new) {
-                useBreadcrumbStore().activeCourse($new ?? '');
+                useBreadcrumbStore().activeCourse($new ?? '', '/course/' + this.id);
             },
             deep: true,
             immediate: true,
