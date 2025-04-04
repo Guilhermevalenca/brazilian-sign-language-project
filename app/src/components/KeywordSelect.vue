@@ -1,5 +1,5 @@
 <template>
-  <AppInput type="text" v-model="keywordSearch" />
+  <AppInput type="text" v-model="keywordSearch" placeholder="Pesquise pela palavra-chave" />
   <legend>Selecione as categorias:</legend>
   <div class="keywords-list-container">
     <div class="keywords-list-items" v-for="(keyword, index) in keywordsFiltered" :key="keyword.id">
@@ -97,14 +97,38 @@ export default defineComponent({
     methods: {
         async submit() {
             try {
+                this.$swal.fire({
+                  title: 'Criando palavra-chave...',
+                });
+                this.$swal.showLoading();
+
                 await KeywordService.create(this.newKeyword);
                 this.page = 1;
                 this.keywords = [];
                 await this.getAllKeywords();
                 this.isAddKeyword = false;
                 this.newKeyword.name = '';
+
+                this.$swal.fire({
+                  title: 'Palavra-chave criada com sucesso!',
+                  icon: 'success',
+                });
             } catch(e) {
-                alert('deu errado!');
+                this.$swal.fire({
+                  icon: 'error',
+                  title: 'Algo deu errado',
+                  text: 'Ocorreu um erro, gostaria de tentar novamente ?',
+                  timer: 10000,
+                  showConfirmButton: true,
+                  confirmButtonText: 'Tentar novamente',
+                  showCancelButton: true,
+                  cancelButtonText: 'Cancelar',
+                })
+                    .then((res) => {
+                      if(res.isConfirmed) {
+                        this.submit();
+                      }
+                    })
             }
         },
         async getAllKeywords() {
@@ -118,7 +142,7 @@ export default defineComponent({
         }
     },
 
-    mounted() {
+    async mounted() {
       this.getAllKeywords();
     }
 });

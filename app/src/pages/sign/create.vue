@@ -26,11 +26,10 @@
           <AppInput type="link" v-model="sign.example!.display" placeholder="Link do video" />
           <small>Apenas links do youtube</small>
         </label>
-        <legend>Palavras-chave</legend>
+
         <KeywordSelect
             v-model="sign.keywords"
         />
-        {{ sign.keywords }}
       <AppButton type="submit">Criar sinal</AppButton>
     </AppForm>
   </AppCard>

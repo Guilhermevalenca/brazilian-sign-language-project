@@ -19,6 +19,7 @@
 import CourseService from '~/services/CourseService';
 import useBreadcrumbStore from '~/stores/useBreadcrumbStore';
 import type { CourseType } from '~/types/Course';
+import LoadingService from "~/services/LoadingService";
 
 export default defineComponent({
   name: 'homePage',
@@ -37,38 +38,15 @@ export default defineComponent({
             courses: [],
             last_page: 1
           }),
-        }
+        },
     );
 
-    const { $swal } = useNuxtApp();
+    onBeforeMount(() => {
+      LoadingService.show();
+    });
 
     watch(status, ($new) => {
-      $swal.fire({
-        title: 'Carregando...',
-        didOpen: () => {
-          $swal.showLoading();
-        },
-        didClose: () => {
-          $swal.hideLoading();
-        }
-      });
-      if($new === 'success') {
-        $swal.close();
-      } else if($new === 'error') {
-        $swal.fire({
-          icon: 'error',
-          title: 'Algo deu errado',
-          confirmButtonText: 'Tente novamente',
-          allowOutsideClick: false,
-          allowEscapeKey: false,
-        }).then((res) => {
-          if(res.isConfirmed) {
-            refresh();
-          }
-        });
-      }
-    }, {
-      immediate: true,
+      LoadingService.loaded($new, refresh, true);
     });
 
     execute();

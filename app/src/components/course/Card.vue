@@ -24,7 +24,7 @@ export default defineComponent({
   computed: {
     image(): string {
       if(!this.course?.image) {
-        return '/favicon.ico';
+        return '/logo.svg';
       }
       if(String(this.course?.image).startsWith('http')) {
         return String(this.course?.image);

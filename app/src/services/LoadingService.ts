@@ -1,5 +1,7 @@
+import type { SweetAlertOptions } from "sweetalert2";
+
 export default class LoadingService {
-    static show(status: string, refresh: () => any) {
+    static show() {
         const { $swal } = useNuxtApp();
         $swal.fire({
             title: 'Carregando...',
@@ -11,11 +13,16 @@ export default class LoadingService {
                 $swal.hideLoading();
             }
         });
+    }
+
+    static loaded(status: string, refresh: () => any, isHomePage: boolean = false) {
+        const { $swal } = useNuxtApp();
         if (status === 'success') {
             $swal.close();
         } else if (status === 'error') {
             $swal.close();
-            $swal.fire({
+
+            const configSwal: SweetAlertOptions = {
                 icon: 'error',
                 title: 'Algo deu errado',
                 showConfirmButton: true,
@@ -24,13 +31,19 @@ export default class LoadingService {
                 cancelButtonText: 'Voltar para a pagina inicial',
                 allowOutsideClick: false,
                 allowEscapeKey: false,
-            }).then((res) => {
-                if (res.isConfirmed) {
-                    refresh();
-                } else if (res.isDismissed) {
-                    navigateTo('/');
-                }
-            });
+            };
+            if(isHomePage) {
+                configSwal.showCancelButton = false;
+            }
+            setTimeout(() => {
+                $swal.fire(configSwal).then((res) => {
+                    if (res.isConfirmed) {
+                        refresh();
+                    } else if (res.isDismissed) {
+                        navigateTo('/');
+                    }
+                });
+            }, 300);
         }
     }
 }

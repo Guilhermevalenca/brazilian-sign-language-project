@@ -22,15 +22,20 @@
           />
         </label>
       </div>
+
+      <legend>Palavras-chave</legend>
+      <KeywordSelect
+          v-model="subject.keywords"
+      />
+
       <AppButton type="submit">Adicionar Material</AppButton>
     </AppForm>
   </AppCard>
 </template>
 
 <script lang="ts">
-import {defineComponent} from 'vue';
 import SubjectService from '~/services/SubjectService';
-import { type SubjectType } from '~/types/Subject';
+import type { SubjectType } from '~/types/Subject';
 
 export default defineComponent({
   name: "create",
@@ -39,6 +44,7 @@ export default defineComponent({
       subject: {
         name: '',
         courses: [],
+        keywords: [],
       } as SubjectType,
     }
   },
@@ -46,7 +52,7 @@ export default defineComponent({
   methods: {
     async submit() {
       try {
-        await SubjectService.create(this.subject);
+        await SubjectService.create(this.subject, this.subject.keywords?.map((k) => Number(k.id)) as number[]);
         this.$router.go(-1);
       } catch(error) {
 

@@ -50,10 +50,12 @@ export default defineComponent({
           }
       );
 
+      onBeforeMount(() => {
+        LoadingService.show();
+      });
+
       watch(status, ($new) => {
-        LoadingService.show($new, refresh);
-      }, {
-        immediate: true,
+        LoadingService.loaded($new, refresh);
       });
 
       execute();

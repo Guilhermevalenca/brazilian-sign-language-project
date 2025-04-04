@@ -36,6 +36,7 @@ export default defineComponent({
     const user = useUserStore();
     if(this.user) {
       user.data = this.user;
+      user.fetchIsAdmin();
     }
 
     this.$axios.get('/sanctum/csrf-cookie');

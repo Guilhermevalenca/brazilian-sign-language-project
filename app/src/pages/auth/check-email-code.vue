@@ -34,12 +34,30 @@ export default defineComponent({
 
   methods: {
     submit() {
+      this.$swal.fire({
+        title: 'Verificando codigo...',
+      });
+      this.$swal.showLoading();
       AuthService.checkEmailCode(this.code.join(''))
-        .then(() => {
+        .then(async () => {
+          await this.$swal.fire({
+            icon: 'success',
+            title: 'Tudo certo!',
+            timer: 5000,
+            showConfirmButton: true,
+            confirmButtonText: 'OK',
+          })
           this.$router.push('/');
         })
-        .catch((err) => {
-          alert('Não foi possivel verificar o código');
+        .catch(async () => {
+          await this.$swal.fire({
+            icon: 'error',
+            title: 'Algo deu errado',
+            text: 'Ocorreu um erro, gostaria de tentar novamente ?',
+            timer: 10000,
+            showConfirmButton: true,
+            confirmButtonText: 'Tentar novamente',
+          });
         })
     },
     pasteInputs(e: ClipboardEvent) {

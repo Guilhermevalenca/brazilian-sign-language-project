@@ -1,5 +1,5 @@
 <template>
-    <AppInput type="text" v-model="courseSearch" />
+    <AppInput type="text" v-model="courseSearch" placeholder="Pesquise pelo nome do curso" />
     <div class="courses-list-container">
         <div class="courses-list-items" v-for="(course, index) in coursesFiltered" :key="course.id">
             <input
@@ -13,14 +13,14 @@
 </template>
 
 <script lang="ts">
-import Course, { type CourseType } from '~/types/Course';
+import type { CourseType } from '~/types/Course';
 import CourseService from '~/services/CourseService';
 
 export default defineComponent({
     name: 'CourseSelect',
 
     async setup() {
-        const courses = ref<Course[]>([]);
+        const courses = ref<CourseType[]>([]);
         const page = ref<number>(1);
         const last_page = ref<number>(1);
 
@@ -54,7 +54,7 @@ export default defineComponent({
             get(): CourseType[] {
                 return this.modelValue;
             },
-            set(value: Course[]) {
+            set(value: CourseType[]) {
                 this.$emit('update:modelValue', value);
             }
         },

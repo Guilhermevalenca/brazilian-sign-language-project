@@ -24,6 +24,10 @@
         @change="course.image = $event.target.files[0]"
       />
     </label>
+    <legend>Palavras-chave</legend>
+    <KeywordSelect
+      v-model="course.keywords"
+    />
     <AppButton type="submit">Criar Curso</AppButton>
   </AppForm>
 </AppCard>
@@ -40,17 +44,35 @@ export default{
     course: {
       name: '',
       image: '',
-    } as CourseType
+      keywords: [],
+    } as CourseType,
   }),
 
   methods: {
     async submit() {
-      console.log(this.course);
       try {
-        await CourseService.create(this.course);
+        this.$swal.fire({
+          title: 'Criando curso...',
+        });
+        this.$swal.showLoading();
+        await CourseService.create(this.course, this.course.keywords?.map((k) => Number(k.id)) as number[]);
+        await this.$swal.fire({
+          icon: 'success',
+          title: 'Curso criado com sucesso!',
+          timer: 10000,
+          showConfirmButton: true,
+          confirmButtonText: 'OK',
+        });
         this.$router.push('/');
       } catch(e) {
-        alert('deu errado!');
+        this.$swal.fire({
+          icon: 'error',
+          title: 'Algo deu errado',
+          text: 'Ocorreu um erro, gostaria de tentar novamente ?',
+          timer: 10000,
+          showConfirmButton: true,
+          confirmButtonText: 'Tentar novamente',
+        });
       }
     }
   }
