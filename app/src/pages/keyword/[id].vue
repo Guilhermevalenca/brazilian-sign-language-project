@@ -1,8 +1,12 @@
 <template>
     <pre>{{ keyword }}</pre>
-    <button @click="showUpdateKeyword = !showUpdateKeyword">Atualizar tarefa</button>
+    <button @click="showUpdateKeyword = !showUpdateKeyword">Atualizar palavra-chave</button>
     <form v-if="showUpdateKeyword">
-        <input  type="text" v-model="newKeyword.name"/>
+        <AppInput
+            type="text"
+            v-model="newKeyword.name"
+            name="new-keyword.name"
+        />
         <button type="submit">Atualizar</button>
     </form>
 </template>

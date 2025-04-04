@@ -10,24 +10,22 @@
           <AppInput 
             type="text" 
             placeholder="Digite o nome da matéria"
+            name="subject.name"
             v-model="subject.name"  
           />
         </label>
       </div>
       <div>
-        <label>
-          Selecionar cursos:
-          <SubjectCourseSelect 
+        <legend>Selecionar cursos:</legend>
+        <SubjectCourseSelect
             v-model="subject.courses"
-          />
-        </label>
+        />
       </div>
 
       <legend>Palavras-chave</legend>
       <KeywordSelect
           v-model="subject.keywords"
       />
-
       <AppButton type="submit">Adicionar Material</AppButton>
     </AppForm>
   </AppCard>
@@ -39,15 +37,14 @@ import type { SubjectType } from '~/types/Subject';
 
 export default defineComponent({
   name: "create",
-  data(){
-    return{
-      subject: {
-        name: '',
-        courses: [],
-        keywords: [],
-      } as SubjectType,
-    }
-  },
+
+  data: () => ({
+    subject: {
+      name: '',
+      courses: [],
+      keywords: [],
+    } as SubjectType,
+  }),
 
   methods: {
     async submit() {

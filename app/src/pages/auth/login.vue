@@ -4,10 +4,20 @@
       <h1>Login</h1>
     <AppForm @submit.prevent="submit">
         <label>Email:
-          <AppInput type="email" v-model="user.email" placeholder="Email" />
+          <AppInput
+              type="email"
+              v-model="user.email"
+              placeholder="Email"
+              name="user.email"
+          />
         </label>
         <label>Senha:
-          <AppInput type="password" v-model="user.password" placeholder="Password" />
+          <AppInput
+              type="password"
+              v-model="user.password"
+              placeholder="Password"
+              name="user.password"
+          />
         </label>
       <FormActions>
         <NuxtLink to="/auth/register"> Não Tenho uma conta</NuxtLink>

@@ -3,7 +3,7 @@
   <div class="course-card" tabindex="0" role="button">
     <NuxtImg 
       :src="image"
-      alt="Icone do curso"
+      :alt="'Icone do curso: ' + course?.name"
       format="webp"
     />
     <legend>{{ course?.name }}</legend>

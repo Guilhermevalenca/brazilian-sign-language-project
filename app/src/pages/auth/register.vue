@@ -4,16 +4,35 @@
     <h1>Cadastro</h1>
     <AppForm @submit.prevent="submit">
       <label>Nome:
-        <AppInput v-model="user.name" placeholder="Digite seu nome" />
+        <AppInput
+            v-model="user.name"
+            placeholder="Digite seu nome"
+            name="user.name"
+        />
       </label>
       <label>Email:
-        <AppInput type="email" v-model="user.email" placeholder="Digite seu email" />
+        <AppInput
+            type="email"
+            v-model="user.email"
+            placeholder="Digite seu email"
+            name="user.email"
+        />
       </label>
       <label>Senha:
-        <AppInput type="password" v-model="user.password" placeholder="Escolha uma senha" />
+        <AppInput
+            type="password"
+            v-model="user.password"
+            placeholder="Escolha uma senha"
+            name="user.password"
+        />
       </label>
       <label>Confirme sua senha:
-        <AppInput type="password" v-model="user.password_confirmation" placeholder="Confirme sua senha" />
+        <AppInput
+            type="password"
+            v-model="user.password_confirmation"
+            placeholder="Confirme sua senha"
+            name="user.password_confirmation"
+        />
       </label>
       <FormActions>
         <NuxtLink to="/auth/login" margin-left="auto" >Já tenho uma conta</NuxtLink>

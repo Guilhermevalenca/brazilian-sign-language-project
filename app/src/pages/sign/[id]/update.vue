@@ -3,23 +3,47 @@
     <form @submit.prevent="submit">
         <div>
             <p>informações do sinal</p>
-            <input v-model="sign.name" placeholder="Nome do sinal">
+            <AppInput
+                v-model="sign.name"
+                placeholder="Nome do sinal"
+                name="sign.name"
+            />
             <br />
-            <input v-model="sign.display" placeholder="Link do video">
+            <AppInput
+                v-model="sign.display"
+                placeholder="Link do video"
+                name="sign.display"
+            />
             <small>Apenas links do youtube</small>
         </div>
         <div>
             <p>descrição do sinal <span class="tw-text-xs">* Campos não obrigatorios</span></p>
-            <textarea v-model="sign.description!.text" placeholder="Descrição do sinal"></textarea>
+            <textarea
+                v-model="sign.description!.text"
+                placeholder="Descrição do sinal"
+                name="sign.description.text"
+            />
             <br />
-            <input v-model="sign.description!.display" placeholder="Video descrevendo o sinal">
+            <AppInput
+                v-model="sign.description!.display"
+                placeholder="Video descrevendo o sinal"
+                name="sign.description.display"
+            />
             <small>Apenas links do youtube</small>
         </div>
         <div>
             <p>Exemplo de uso do sinal <span class="tw-text-xs">* Campos não obrigatorios</span></p>
-            <input v-model="sign.example!.description" placeholder="descrição do exemplo" />
+            <AppInput
+                v-model="sign.example!.description"
+                placeholder="descrição do exemplo"
+                name="sign.example.description"
+            />
             <br />
-            <input v-model="sign.example!.display" placeholder="link do exemplo" />
+            <AppInput
+                v-model="sign.example!.display"
+                placeholder="link do exemplo"
+                name="sign.example.display"
+            />
             <small>Apenas links do youtube</small>
         </div>
         <button type="submit">Atualizar sinal</button>

@@ -1,5 +1,10 @@
 <template>
-  <img src="~/assets/logos/ou-logo-simp.svg" :class="['logo-medium',variants[variant]]" v-bind="$attrs">
+  <NuxtImg
+      src="~/assets/logos/ou-logo-simp.svg"
+      :class="['logo-medium',variants[variant]]"
+      v-bind="$attrs"
+      alt="Logo da plataforma"
+  />
   <slot />
 </template>
 

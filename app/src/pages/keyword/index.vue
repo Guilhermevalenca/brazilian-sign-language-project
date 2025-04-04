@@ -2,7 +2,12 @@
     <div>
         <button @click="showAddKeyword = !showAddKeyword">Adicionar palavra-chave</button>
         <form v-if="showAddKeyword" @submit.prevent="submit">
-            <input type="text" v-model="newKeyword.name" placeholder="nome da nova palavra-chave" />
+            <AppInput
+                type="text"
+                v-model="newKeyword.name"
+                placeholder="nome da nova palavra-chave"
+                name="new-keyword.name"
+            />
             <br />
             <button>Adicionar</button>
         </form>
@@ -11,7 +16,12 @@
     <div>
         <fieldset>
             <legend>Buscar palavra-chave</legend>
-            <input type="text" v-model="keywordSearch" placeholder="palavra-chave" />
+            <AppInput
+                type="text"
+                v-model="keywordSearch"
+                placeholder="palavra-chave"
+                name="keyword-search"
+            />
         </fieldset>
     </div>
     <br />

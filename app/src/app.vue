@@ -32,14 +32,16 @@ export default defineComponent({
     }
   },
 
-  async mounted() {
+  mounted() {
     const user = useUserStore();
     if(this.user) {
       user.data = this.user;
-      user.fetchIsAdmin();
+      Promise.all([
+        user.fetchIsAdmin(),
+        this.$axios.get('/sanctum/csrf-cookie'),
+      ]);
     }
 
-    this.$axios.get('/sanctum/csrf-cookie');
   },
 });
 </script>

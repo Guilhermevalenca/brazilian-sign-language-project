@@ -13,6 +13,7 @@
       <AppInput 
         placeholder="Digite o nome do curso"
         v-model="course.name"
+        name="course.name"
       />
     </label>
     <label>
@@ -22,6 +23,7 @@
         placeholder="Escolha uma imagem" 
         accept="image/*" 
         @change="course.image = $event.target.files[0]"
+        name="course.image"
       />
     </label>
     <legend>Palavras-chave</legend>

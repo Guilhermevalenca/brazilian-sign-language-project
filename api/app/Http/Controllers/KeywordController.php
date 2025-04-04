@@ -46,7 +46,8 @@ class KeywordController extends Controller
     }
     public function create()
     {
-        return response(Keyword::orderBy('id', 'desc')->paginate(), 200);
+        $keywords = Keyword::orderBy('name')->paginate();
+        return response($keywords, 200);
     }
 
     /**

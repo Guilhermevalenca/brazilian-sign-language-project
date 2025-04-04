@@ -8,6 +8,7 @@
         maxlength="1"
         pattern="[0-9]"
         class="tw-w-2"
+        :name="'code-' + index"
     />
   </div>
   <button type="submit">Verificar código</button>

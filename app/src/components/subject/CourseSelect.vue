@@ -1,15 +1,13 @@
 <template>
-    <AppInput type="text" v-model="courseSearch" placeholder="Pesquise pelo nome do curso" />
-    <div class="courses-list-container">
-        <div class="courses-list-items" v-for="(course, index) in coursesFiltered" :key="course.id">
-            <input
-                type="checkbox"
-                :id="`course-${course.id}`"
-                @input="$event.target?.checked ? selected[index] = course : selected.splice(index, 1)"
-            />
-            <label :for="`course-${course.id}`">{{ course.name }}</label>
-        </div>
-    </div>
+  <client-only>
+    <AppSelect
+        v-model="selected"
+        :items="courses"
+        labelInput="name"
+        placeholder="Pesquise pelo curso"
+        id="course"
+    />
+  </client-only>
 </template>
 
 <script lang="ts">
@@ -17,86 +15,58 @@ import type { CourseType } from '~/types/Course';
 import CourseService from '~/services/CourseService';
 
 export default defineComponent({
-    name: 'CourseSelect',
+  name: 'CourseSelect',
 
-    async setup() {
-        const courses = ref<CourseType[]>([]);
-        const page = ref<number>(1);
-        const last_page = ref<number>(1);
+  async setup() {
+    const courses = ref<CourseType[]>([]);
+    const page = ref<number>(1);
+    const last_page = ref<number>(1);
 
-        async function getCourses() {
-            const data = await CourseService.fetch(page.value);
-            courses.value.push(...data.courses);
-            last_page.value = data.last_page;
-        }
-        
-        await getCourses();
-
-        return {
-            courses,
-            page,
-            last_page,
-            getCourses,
-        }
-    },
-
-    props: {
-        modelValue: {
-            type: Object as PropType<CourseType[]>,
-            required: true
-        }
-    },
-
-    emits: ['update:modelValue'],
-
-    computed: {
-        selected: {
-            get(): CourseType[] {
-                return this.modelValue;
-            },
-            set(value: CourseType[]) {
-                this.$emit('update:modelValue', value);
-            }
-        },
-        coursesFiltered(): CourseType[] {
-            return this.courses.filter((course: CourseType) => {
-                if(course.name) {
-                    return course.name.toLowerCase().includes(this.courseSearch.toLowerCase());
-                } else {
-                    return false;
-                }
-            })
-        }
-    },
-
-    data: () => ({
-        courseSearch: '',
-    }),
-
-    mounted() {
-        const moreCourses = async () => {
-            if(this.page < this.last_page) {
-                this.page++;
-                await this.getCourses();
-                setTimeout(moreCourses, 300);
-            }
-        }
-        setTimeout(moreCourses, 300);
+    async function getCourses() {
+      const data = await CourseService.fetch(page.value);
+      courses.value.push(...data.courses);
+      last_page.value = data.last_page;
     }
+
+    getCourses();
+
+    return {
+      courses,
+      page,
+      last_page,
+      getCourses,
+    }
+  },
+
+  props: {
+    modelValue: {
+      type: Object as PropType<CourseType[]>,
+      required: true
+    }
+  },
+
+  emits: ['update:modelValue'],
+
+  computed: {
+    selected: {
+      get(): CourseType[] {
+        return this.modelValue;
+      },
+      set(value: CourseType[]) {
+        this.$emit('update:modelValue', value);
+      }
+    },
+  },
+
+  mounted() {
+    const moreCourses = async () => {
+      if(this.page < this.last_page) {
+        this.page++;
+        await this.getCourses();
+        setTimeout(moreCourses, 300);
+      }
+    }
+    setTimeout(moreCourses, 300);
+  }
 });
 </script>
-
-
-<style scoped lang="scss">
-.courses-list-container{
-  display: flex;
-  flex-direction: column;
-  overflow-y: auto;
-  height: 10rem;
-}
-.courses-list-items{
-  display: flex;
-  flex-direction: row;
-  gap:1rem;
-}
-</style>
