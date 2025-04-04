@@ -5,9 +5,9 @@
     </div>
     <div class="index-content">
       <CourseCard
-        v-for="course in courses" :key="course.id"
-        :course="course"
-        @click="$router.push(`/course/${course.id}`)"
+          v-for="course in courses" :key="course.id"
+          :course="course"
+          @click="$router.push(`/course/${course.id}`)"
       />
     </div>
     <Pagination v-model:page="page" :last-page="last_page"/>
@@ -24,47 +24,81 @@ export default defineComponent({
   name: 'homePage',
 
   async setup() {
-        const courses = ref<(CourseType)[]>([]);
-        const page = ref(1);
-        const last_page = ref(1);
+    const page = ref(1);
 
-        async function getCourses() {
-            const data = await CourseService.fetch(page.value);
-            courses.value = data.courses;
-            last_page.value = data.last_page;
+    const { status, data, refresh, execute } = useAsyncData<{
+      courses: CourseType[],
+      last_page: number,
+    }>(
+        'fetchCourses',
+        () => CourseService.fetch(page.value),
+        {
+          default: () => ({
+            courses: [],
+            last_page: 1
+          }),
         }
+    );
 
-        try {
-          getCourses();
-        } catch(error) {
-          console.log(error);
-        }
+    const { $swal } = useNuxtApp();
 
-        return {
-            courses,
-            page,
-            last_page,
-            getCourses
+    watch(status, ($new) => {
+      $swal.fire({
+        title: 'Carregando...',
+        didOpen: () => {
+          $swal.showLoading();
+        },
+        didClose: () => {
+          $swal.hideLoading();
         }
+      });
+      if($new === 'success') {
+        $swal.close();
+      } else if($new === 'error') {
+        $swal.fire({
+          icon: 'error',
+          title: 'Algo deu errado',
+          confirmButtonText: 'Tente novamente',
+          allowOutsideClick: false,
+          allowEscapeKey: false,
+        }).then((res) => {
+          if(res.isConfirmed) {
+            refresh();
+          }
+        });
+      }
+    }, {
+      immediate: true,
+    });
+
+    execute();
+
+    return {
+      courses: computed(() => data.value?.courses ?? []),
+      page,
+      last_page: computed(() => data.value?.last_page ?? 1),
+      status,
+      refresh,
+    };
+  },
+
+  watch: {
+    page() {
+      if(this.page <= 0) {
+        this.page = 1;
+      }
+      if(this.page > this.last_page) {
+        this.page = this.last_page;
+      }
+      this.refresh();
     },
-    
-    watch: {
-        page() {
-            if(this.page <= 0) {
-                this.page = 1;
-            }
-            if(this.page > this.last_page) {
-                this.page = this.last_page;
-            }
-            this.getCourses();
-        }
-    },
+  },
 
-    mounted() {
-      useBreadcrumbStore().home();
-    }
+  mounted() {
+    useBreadcrumbStore().home();
+  }
 });
-  
+
 </script>
 <style lang="scss" scoped>
 .index-content{

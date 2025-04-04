@@ -9,7 +9,6 @@
   <LayoutAdmActions />
   <LayoutAppFooter />
 </template>
-
 <style lang="scss" scoped>
 section {
   margin: 0 auto;

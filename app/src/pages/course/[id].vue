@@ -26,6 +26,7 @@
 import CourseService from '~/services/CourseService';
 import useBreadcrumbStore from '~/stores/useBreadcrumbStore';
 import type { CourseType } from '~/types/Course';
+import LoadingService from "~/services/LoadingService";
 
 export default defineComponent({
     name: 'coursePage',
@@ -33,29 +34,35 @@ export default defineComponent({
     async setup() {
         const { id } = useRoute().params;
         const page = ref(1);
-        const last_page = ref(1);
-        const course = ref<CourseType>({
-            name: '',
-            image: '',
-            subjects: [],
-        });
 
-        async function getCourse() {
-            const data = await CourseService.find(Number(id), page.value);
-            course.value = data.course;
-            last_page.value = data.last_page;
-        }
-        try {
-            getCourse();
-        } catch(error) {
-            console.log(error);
-        }
+      const { data, status, execute, refresh } = useAsyncData(
+          'fetchSubject',
+          () => CourseService.find(Number(id), page.value),
+          {
+            default: () => ({
+              course: {
+                name: '',
+                image: '',
+                subjects: [],
+              } as CourseType,
+              last_page: 1
+            })
+          }
+      );
+
+      watch(status, ($new) => {
+        LoadingService.show($new, refresh);
+      }, {
+        immediate: true,
+      });
+
+      execute();
 
         return {
-            course,
+            course: computed((): CourseType => data.value.course),
             page,
-            last_page,
-            getCourse,
+            last_page: computed(() => data.value.last_page),
+            refresh,
             id
         }
     },
@@ -68,7 +75,7 @@ export default defineComponent({
             if(this.page > this.last_page) {
                 this.page = this.last_page;
             }
-            this.getCourse();
+            this.refresh();
         },
         "course.name": {
             handler($new) {
