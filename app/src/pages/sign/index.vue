@@ -1,51 +1,75 @@
 <template>
   <div class="content-container-list">
     <Pagination v-model:page="page" :lastPage="last_page"/>
-  <div 
-    class="signs-container" tabindex="0" 
-    v-for="sign in signs" :key="sign.id" 
-    @click="$router.push(`/sign/${sign.id}`)"
-    role="button"
-  >
-    <div class="sign-card-item">
-      <h1>{{ sign.name }}</h1>
+    <div
+        class="signs-container" tabindex="0"
+        v-for="sign in signs" :key="sign.id"
+        @click="$router.push(`/sign/${sign.id}`)"
+        role="button"
+    >
+      <div class="sign-card-item">
+        <h1>{{ sign.name }}</h1>
       </div>
-  </div>
-  <Pagination v-model:page="page" :lastPage="last_page"/>
+    </div>
+    <Pagination v-model:page="page" :lastPage="last_page"/>
   </div>
 </template>
 
 <script lang="ts">
 import SignService from "~/services/SignService";
 import {type SignType} from "~/types/Sign";
+import LoadingService from "~/services/LoadingService";
 
 export default defineComponent({
-    name: 'signPage',
+  name: 'signPage',
 
-    async setup() {
+  async setup() {
     const page = ref(1);
-    const last_page = ref(1);
-    const signs = ref<SignType[]>([]);
 
-    async function fetchSigns() {
-      const data = await SignService.fetch(page.value);
-      signs.value = data.signs;
-      last_page.value = data.last_page;
-    };
+    const { data, status, execute, refresh } = useAsyncData(
+        'fetchSigns',
+        () => SignService.fetch(page.value),
+        {
+          default: () => ({
+            signs: [],
+            last_page: 1
+          })
+        }
+    );
 
-    fetchSigns();
+    onBeforeMount(() => {
+      LoadingService.show();
+    });
+
+    watch(status, ($new) => {
+      LoadingService.loaded($new, refresh);
+    });
+
+    execute();
 
     return {
       page,
-      last_page,
-      signs,
-      fetchSigns,
+      last_page: computed(() => data.value.last_page),
+      signs: computed(() => data.value.signs),
+      refresh,
     };
   },
 
   watch: {
-    async page() {
-      await this.fetchSigns();
+    async page($new) {
+      if($new <= 0) {
+        this.page = 1;
+      }
+      if($new > this.last_page) {
+        this.page = this.last_page;
+      }
+      this.$swal.fire({
+        icon: 'info',
+        title: 'Carregando sinais',
+      });
+      this.$swal.showLoading();
+      await this.refresh();
+      this.$swal.close();
     }
   }
 });

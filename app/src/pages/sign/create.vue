@@ -92,6 +92,11 @@ export default defineComponent({
     methods: {
         async submit() {
             try {
+              this.$swal.fire({
+                icon: 'info',
+                title: 'Criando sinal...',
+              });
+              this.$swal.showLoading();
               const sign: SignType = {...this.sign};
               if(sign.example?.description === '' || sign.example?.display === '') {
                 delete sign.example;
@@ -100,9 +105,23 @@ export default defineComponent({
                 delete sign.description;
               }
               await SignService.create(sign);
+              await this.$swal.fire({
+                icon: 'success',
+                title: 'Sinal criado com sucesso',
+                timer: 10000,
+                showConfirmButton: true,
+                confirmButtonText: 'OK',
+              });
               this.$router.go(-1);
             } catch (e) {
-                console.log(e);
+              this.$swal.fire({
+                icon: 'error',
+                title: 'Algo deu errado',
+                text: 'Ocorreu um erro, gostaria de tentar novamente ?',
+                timer: 10000,
+                showConfirmButton: true,
+                confirmButtonText: 'OK',
+              });
             }
         }
     }

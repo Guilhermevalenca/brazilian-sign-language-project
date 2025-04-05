@@ -71,14 +71,20 @@ export default defineComponent({
   },
 
   watch: {
-    page() {
+    async page() {
       if(this.page <= 0) {
         this.page = 1;
       }
       if(this.page > this.last_page) {
         this.page = this.last_page;
       }
-      this.refresh();
+      this.$swal.fire({
+        icon: 'info',
+        title: 'Carregando sinais',
+      });
+      this.$swal.showLoading();
+      await this.refresh();
+      this.$swal.close();
     },
     "subject.name": {
       handler($new) {

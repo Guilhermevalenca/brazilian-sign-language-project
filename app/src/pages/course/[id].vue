@@ -7,7 +7,7 @@
     <ul>
         <fieldset>
             <legend>Materias</legend>
-            <div 
+            <div
                 v-for="subject in course.subjects" 
                 :key="subject.id"
                 @click="$router.push(`/subject/${subject.id}`)"    
@@ -70,14 +70,20 @@ export default defineComponent({
     },
 
     watch: {
-        page() {
+        async page() {
             if(this.page <= 0) {
                 this.page = 1;
             }
             if(this.page > this.last_page) {
                 this.page = this.last_page;
             }
-            this.refresh();
+            this.$swal.fire({
+                icon: 'info',
+                title: 'Carregando matérias',
+            });
+            this.$swal.showLoading();
+            await this.refresh();
+            this.$swal.close();
         },
         "course.name": {
             handler($new) {

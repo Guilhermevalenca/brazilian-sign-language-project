@@ -49,10 +49,29 @@ export default defineComponent({
   methods: {
     async submit() {
       try {
+        this.$swal.fire({
+          icon: 'info',
+          title: 'Criando materia...',
+        });
+        this.$swal.showLoading();
         await SubjectService.create(this.subject, this.subject.keywords?.map((k) => Number(k.id)) as number[]);
+        await this.$swal.fire({
+          icon: 'success',
+          title: 'Materia criada com sucesso',
+          timer: 10000,
+          showConfirmButton: true,
+          confirmButtonText: 'OK',
+        });
         this.$router.go(-1);
       } catch(error) {
-
+        this.$swal.fire({
+          icon: 'error',
+          title: 'Algo deu errado',
+          text: 'Ocorreu um erro, gostaria de tentar novamente ?',
+          timer: 10000,
+          showConfirmButton: true,
+          confirmButtonText: 'OK',
+        });
       }
     }
   }

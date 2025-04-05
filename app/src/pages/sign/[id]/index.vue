@@ -81,7 +81,19 @@ export default defineComponent({
   methods: {
     async destroy() {
       try {
+        this.$swal.fire({
+          icon: 'info',
+          title: 'Deletando sinal...',
+        });
+        this.$swal.showLoading();
         await SignService.delete(Number(this.id));
+        await this.$swal.fire({
+          icon: 'success',
+          title: 'Sinal deletado com sucesso',
+          timer: 10000,
+          showConfirmButton: true,
+          confirmButtonText: 'OK',
+        });
         this.$router.go(-1);
       } catch(e) {
         console.log(e);
