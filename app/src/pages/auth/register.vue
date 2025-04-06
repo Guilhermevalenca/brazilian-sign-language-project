@@ -75,43 +75,54 @@ export default defineComponent({
         title: 'Registrando...',
       });
       this.$swal.showLoading();
-      const res = await AuthService.register(this.user);
-      if(res) {
-        const updateDataUser = async () => {
-          const userStore = useUserStore();
-          try {
-            const { data } = await UserService.fetch();
-            userStore.data = data;
-            this.$swal.fire({
-              icon: 'success',
-              title: 'Registro bem sucedido!',
-              timer: 5000,
-              showConfirmButton: true,
-              confirmButtonText: 'OK',
-            })
-                .then(() => {
-                  this.$router.push('/auth/check-email-code');
-                })
-          } catch(error) {
-            this.$swal.fire({
-              icon: 'error',
-              title: 'Algo deu errado',
-              text: 'Ocorreu um erro, gostaria de tentar novamente ?',
-              timer: 10000,
-              showConfirmButton: true,
-              confirmButtonText: 'Tentar novamente',
-              showCancelButton: true,
-              cancelButtonText: 'Cancelar',
-            })
-                .then((res) => {
-                  if(res.isConfirmed) {
-                    updateDataUser();
-                  }
-                });
+      try {
+        const res = await AuthService.register(this.user);
+        if(res) {
+          const updateDataUser = async () => {
+            const userStore = useUserStore();
+            try {
+              const { data } = await UserService.fetch();
+              userStore.data = data;
+              this.$swal.fire({
+                icon: 'success',
+                title: 'Registro bem sucedido!',
+                timer: 5000,
+                showConfirmButton: true,
+                confirmButtonText: 'OK',
+              })
+                  .then(() => {
+                    this.$router.push('/auth/check-email-code');
+                  })
+            } catch(error) {
+              this.$swal.fire({
+                icon: 'error',
+                title: 'Algo deu errado',
+                text: 'Ocorreu um erro, gostaria de tentar novamente ?',
+                timer: 10000,
+                showConfirmButton: true,
+                confirmButtonText: 'Tentar novamente',
+                showCancelButton: true,
+                cancelButtonText: 'Cancelar',
+              })
+                  .then((res) => {
+                    if(res.isConfirmed) {
+                      updateDataUser();
+                    }
+                  });
+            }
           }
+          await updateDataUser();
+        } else {
+          this.$swal.fire({
+            icon: 'error',
+            title: 'Algo deu errado',
+            text: 'Ocorreu um erro, gostaria de tentar novamente ?',
+            timer: 10000,
+            showConfirmButton: true,
+            confirmButtonText: 'OK',
+          });
         }
-        await updateDataUser();
-      } else {
+      } catch(e) {
         this.$swal.fire({
           icon: 'error',
           title: 'Algo deu errado',

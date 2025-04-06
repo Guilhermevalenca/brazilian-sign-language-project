@@ -58,7 +58,8 @@ export default defineComponent({
         title: 'Realizando login...',
       });
       this.$swal.showLoading();
-      const response = AuthService.login(this.user);
+      try {
+        const response = AuthService.login(this.user);
 
       if(await response) {
         const updateDataUser = async () => {
@@ -106,6 +107,16 @@ export default defineComponent({
           icon: 'error',
           title: 'Não foi possivel fazer login',
           text: 'Email ou senha incorretos',
+          timer: 10000,
+          showConfirmButton: true,
+          confirmButtonText: 'OK',
+        });
+      }
+      } catch(e) {
+        this.$swal.fire({
+          icon: 'error',
+          title: 'Algo deu errado',
+          text: 'Ocorreu um erro, gostaria de tentar novamente ?',
           timer: 10000,
           showConfirmButton: true,
           confirmButtonText: 'OK',
