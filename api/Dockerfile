@@ -5,13 +5,7 @@ WORKDIR /app
 
 COPY composer.json composer.lock ./
 
-RUN composer install \
-    --ignore-platform-reqs \
-    --no-interaction \
-    --no-plugins \
-    --no-scripts \
-    --prefer-dist \
-    --no-dev
+RUN composer install
 
 COPY . .
 
@@ -53,6 +47,10 @@ RUN chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
 COPY docker/start.sh /usr/local/bin/start
 RUN chmod +x /usr/local/bin/start
 
-EXPOSE 80
+EXPOSE 80/tcp
+EXPOSE 80/udp
+
+EXPOSE 443/tcp
+EXPOSE 443/udp
 
 CMD ["/usr/local/bin/start"]
