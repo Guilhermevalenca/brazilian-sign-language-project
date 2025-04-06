@@ -1,7 +1,6 @@
 services:
   app:
     image: 'node:20-alpine'
-    entrypoint: /bin/sh
     ports:
       - '3000:3000'
     working_dir: /app
@@ -10,3 +9,4 @@ services:
         source: .
         target: /app
     tty: true
+    command: sh -c "npm install && npm run dev"

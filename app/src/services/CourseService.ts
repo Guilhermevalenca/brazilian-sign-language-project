@@ -12,14 +12,17 @@ export default class CourseService {
         });
         
         return {
-            courses: data.data,
+            courses: data.data as CourseType[],
             last_page: data.last_page
         }
     }
 
-    static async create(course: CourseType) {
+    static async create(course: CourseType, keywords: number[]) {
         const { $axios } = useNuxtApp();
-        return $axios.post('/api/courses', course, {
+        return $axios.post('/api/courses', {
+            ...course,
+            keywords,
+        }, {
             headers: {
                 'Content-Type': 'multipart/form-data'
             }
@@ -37,6 +40,7 @@ export default class CourseService {
             course: {
                 id: data.id,
                 name: data.name,
+                image: data.image,
                 subjects: data.subjects.data,
             } as CourseType,
             last_page: data.subjects.last_page

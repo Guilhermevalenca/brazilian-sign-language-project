@@ -5,9 +5,9 @@
     </div>
     <div class="index-content">
       <CourseCard
-        v-for="course in courses" :key="course.id"
-        :course="course"
-        @click="$router.push(`/course/${course.id}`)"
+          v-for="course in courses" :key="course.id"
+          :course="course"
+          @click="$router.push(`/course/${course.id}`)"
       />
     </div>
     <Pagination v-model:page="page" :last-page="last_page"/>
@@ -17,49 +17,75 @@
 
 <script lang="ts">
 import CourseService from '~/services/CourseService';
-import { type CourseType } from '~/types/Course';
+import useBreadcrumbStore from '~/stores/useBreadcrumbStore';
+import type { CourseType } from '~/types/Course';
+import LoadingService from "~/services/LoadingService";
 
 export default defineComponent({
   name: 'homePage',
 
   async setup() {
-        const courses = ref<(CourseType)[]>([]);
-        const page = ref(1);
-        const last_page = ref(1);
+    const page = ref(1);
 
-        async function getCourses() {
-            const data = await CourseService.fetch(page.value);
-            courses.value = data.courses;
-            last_page.value = data.last_page;
-        }
+    const { status, data, refresh, execute } = useAsyncData<{
+      courses: CourseType[],
+      last_page: number,
+    }>(
+        'fetchCourses',
+        () => CourseService.fetch(page.value),
+        {
+          default: () => ({
+            courses: [],
+            last_page: 1
+          }),
+        },
+    );
 
-        try {
-          getCourses();
-        } catch(error) {
-          console.log(error);
-        }
+    onBeforeMount(() => {
+      LoadingService.show();
+      setTimeout(() => {
+        LoadingService.loaded(status.value, refresh, true);
+      }, 300);
+    });
 
-        return {
-            courses,
-            page,
-            last_page,
-            getCourses
-        }
+    watch(status, ($new) => {
+      LoadingService.loaded($new, refresh, true);
+    });
+
+    execute();
+
+    return {
+      courses: computed(() => data.value?.courses ?? []),
+      page,
+      last_page: computed(() => data.value?.last_page ?? 1),
+      status,
+      refresh,
+    };
+  },
+
+  watch: {
+    async page() {
+      if(this.page <= 0) {
+        this.page = 1;
+      }
+      if(this.page > this.last_page) {
+        this.page = this.last_page;
+      }
+      this.$swal.fire({
+        icon: 'info',
+        title: 'Carregando cursos',
+      });
+      this.$swal.showLoading();
+      await this.refresh();
+      this.$swal.close();
     },
-    
-    watch: {
-        page() {
-            if(this.page <= 0) {
-                this.page = 1;
-            }
-            if(this.page > this.last_page) {
-                this.page = this.last_page;
-            }
-            this.getCourses();
-        }
-    }
+  },
+
+  mounted() {
+    useBreadcrumbStore().home();
+  }
 });
-  
+
 </script>
 <style lang="scss" scoped>
 .index-content{

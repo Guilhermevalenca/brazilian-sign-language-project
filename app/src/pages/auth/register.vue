@@ -4,16 +4,35 @@
     <h1>Cadastro</h1>
     <AppForm @submit.prevent="submit">
       <label>Nome:
-        <AppInput v-model="user.name" placeholder="Digite seu nome" />
+        <AppInput
+            v-model="user.name"
+            placeholder="Digite seu nome"
+            name="user.name"
+        />
       </label>
       <label>Email:
-        <AppInput type="email" v-model="user.email" placeholder="Digite seu email" />
+        <AppInput
+            type="email"
+            v-model="user.email"
+            placeholder="Digite seu email"
+            name="user.email"
+        />
       </label>
       <label>Senha:
-        <AppInput type="password" v-model="user.password" placeholder="Escolha uma senha" />
+        <AppInput
+            type="password"
+            v-model="user.password"
+            placeholder="Escolha uma senha"
+            name="user.password"
+        />
       </label>
       <label>Confirme sua senha:
-        <AppInput type="password" v-model="user.password_confirmation" placeholder="Confirme sua senha" />
+        <AppInput
+            type="password"
+            v-model="user.password_confirmation"
+            placeholder="Confirme sua senha"
+            name="user.password_confirmation"
+        />
       </label>
       <FormActions>
         <NuxtLink to="/auth/login" margin-left="auto" >Já tenho uma conta</NuxtLink>
@@ -52,18 +71,66 @@ export default defineComponent({
 
   methods: {
     async submit() {
-      const res = await AuthService.register(this.user);
-      if(res) {
-        const userStore = useUserStore();
-        try {
-          const { data } = await UserService.fetch();
-          userStore.data = data;
-          this.$router.push('/auth/check-email-code');
-        } catch(error) {
-          alert('o cadastro foi bem sucedido, mas algo deu errado ao buscar os seus dados');
+      this.$swal.fire({
+        title: 'Registrando...',
+      });
+      this.$swal.showLoading();
+      try {
+        const res = await AuthService.register(this.user);
+        if(res) {
+          const updateDataUser = async () => {
+            const userStore = useUserStore();
+            try {
+              const { data } = await UserService.fetch();
+              userStore.data = data;
+              this.$swal.fire({
+                icon: 'success',
+                title: 'Registro bem sucedido!',
+                timer: 5000,
+                showConfirmButton: true,
+                confirmButtonText: 'OK',
+              })
+                  .then(() => {
+                    this.$router.push('/auth/check-email-code');
+                  })
+            } catch(error) {
+              this.$swal.fire({
+                icon: 'error',
+                title: 'Algo deu errado',
+                text: 'Ocorreu um erro, gostaria de tentar novamente ?',
+                timer: 10000,
+                showConfirmButton: true,
+                confirmButtonText: 'Tentar novamente',
+                showCancelButton: true,
+                cancelButtonText: 'Cancelar',
+              })
+                  .then((res) => {
+                    if(res.isConfirmed) {
+                      updateDataUser();
+                    }
+                  });
+            }
+          }
+          await updateDataUser();
+        } else {
+          this.$swal.fire({
+            icon: 'error',
+            title: 'Algo deu errado',
+            text: 'Ocorreu um erro, gostaria de tentar novamente ?',
+            timer: 10000,
+            showConfirmButton: true,
+            confirmButtonText: 'OK',
+          });
         }
-      } else {
-        alert('não foi possivel cadastra-lo');
+      } catch(e) {
+        this.$swal.fire({
+          icon: 'error',
+          title: 'Algo deu errado',
+          text: 'Ocorreu um erro, gostaria de tentar novamente ?',
+          timer: 10000,
+          showConfirmButton: true,
+          confirmButtonText: 'OK',
+        });
       }
     }
   },
