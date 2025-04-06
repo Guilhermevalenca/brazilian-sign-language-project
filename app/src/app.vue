@@ -14,7 +14,7 @@ export default defineComponent({
   name: 'App',
 
   async setup() {
-    const token = useCookie('token').value;
+    const token = useCookie('token');
     if(token) {
       try {
         const { data } = await UserService.fetch();
@@ -22,6 +22,7 @@ export default defineComponent({
           user: data
         }
       } catch(error) {
+        token.value = null;
         return {
           user: null
         }

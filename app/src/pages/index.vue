@@ -43,6 +43,9 @@ export default defineComponent({
 
     onBeforeMount(() => {
       LoadingService.show();
+      setTimeout(() => {
+        LoadingService.loaded(status.value, refresh, true);
+      }, 300);
     });
 
     watch(status, ($new) => {

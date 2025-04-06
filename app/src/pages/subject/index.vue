@@ -33,7 +33,11 @@ export default defineComponent({
     });
 
     watch(status, ($new) => {
+      console.log($new);
       LoadingService.loaded($new, refresh);
+    }, {
+      immediate: true,
+      deep: true,
     });
 
     execute();
