@@ -1,18 +1,22 @@
 <template>
 <Pagination v-model:page="page" :lastPage="last_page" />
 <div>
-    <ul>{{ course.name }}</ul>
-    <ul>{{ course.image }}</ul>
+    <CourseCard :course="course" />
+    <br />
+    <br />
     <ul>
-        <div 
-            v-for="subject in course.subjects" 
-            :key="subject.id"
-            @click="$router.push(`/subject/${subject.id}`)"    
-        >
-            <ul>{{ subject.name }}</ul>
-            <br />
-            <br />
-        </div>
+        <fieldset>
+            <legend>Materias</legend>
+            <div
+                v-for="subject in course.subjects" 
+                :key="subject.id"
+                @click="$router.push(`/subject/${subject.id}`)"    
+            >
+                <ul>{{ subject.name }}</ul>
+                <br />
+                <br />
+            </div>
+        </fieldset>
     </ul>
 </div>
 <Pagination v-model:page="page" :lastPage="last_page" />
@@ -20,7 +24,9 @@
 
 <script lang="ts">
 import CourseService from '~/services/CourseService';
+import useBreadcrumbStore from '~/stores/useBreadcrumbStore';
 import type { CourseType } from '~/types/Course';
+import LoadingService from "~/services/LoadingService";
 
 export default defineComponent({
     name: 'coursePage',
@@ -28,42 +34,67 @@ export default defineComponent({
     async setup() {
         const { id } = useRoute().params;
         const page = ref(1);
-        const last_page = ref(1);
-        const course = ref<CourseType>({
-            name: '',
-            image: '',
-            subjects: [],
-        });
 
-        async function getCourse() {
-            const data = await CourseService.find(Number(id), page.value);
-            course.value = data.course;
-            last_page.value = data.last_page;
-        }
-        try {
-            getCourse();
-        } catch(error) {
-            console.log(error);
-        }
+      const { data, status, execute, refresh } = useAsyncData(
+          'fetchSubject',
+          () => CourseService.find(Number(id), page.value),
+          {
+            default: () => ({
+              course: {
+                name: '',
+                image: '',
+                subjects: [],
+              } as CourseType,
+              last_page: 1
+            })
+          }
+      );
+
+      onBeforeMount(() => {
+        LoadingService.show();
+        setTimeout(() => {
+        LoadingService.loaded(status.value, refresh);
+      }, 300);
+      });
+
+      watch(status, ($new) => {
+        LoadingService.loaded($new, refresh);
+      });
+
+      execute();
 
         return {
-            course,
+            course: computed((): CourseType => data.value.course),
             page,
-            last_page,
-            getCourse,
+            last_page: computed(() => data.value.last_page),
+            refresh,
+            id
         }
     },
 
     watch: {
-        page() {
+        async page() {
             if(this.page <= 0) {
                 this.page = 1;
             }
             if(this.page > this.last_page) {
                 this.page = this.last_page;
             }
-            this.getCourse();
+            this.$swal.fire({
+                icon: 'info',
+                title: 'Carregando matérias',
+            });
+            this.$swal.showLoading();
+            await this.refresh();
+            this.$swal.close();
+        },
+        "course.name": {
+            handler($new) {
+                useBreadcrumbStore().activeCourse($new ?? '', '/course/' + this.id);
+            },
+            deep: true,
+            immediate: true,
         }
-    }
+    },
 })
 </script>

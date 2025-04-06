@@ -21,7 +21,7 @@ class SignRequest extends FormRequest
             'example.display' => ['required_with:example', 'string'],
             
             'keywords' => ['required', 'array'],
-            'keywords.*.id' => ['required', 'integer', 'exists:keywords,id'],
+            'keywords.*' => ['required', 'integer', 'exists:keywords,id'],
         ];
     }
 }

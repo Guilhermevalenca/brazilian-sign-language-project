@@ -12,7 +12,7 @@ export default defineStore("user", {
             const { $axios } = useNuxtApp();
             const { data } = await $axios.get('/api/users/is_admin');
             this.is_admin = data.is_admin;
-            setTimeout(() => {
+            setTimeout(async () => {
                 this.fetchIsAdmin();
             }, 5 * 60 * 1000); //5 min
         },

@@ -15,9 +15,12 @@ export default class SubjectService {
             last_page,
         }
     }
-    static async create(subject: SubjectType) {
+    static async create(subject: SubjectType, keywords: number[]) {
         const { $axios } = useNuxtApp();
-        return $axios.post('/api/subjects', subject);
+        return $axios.post('/api/subjects', {
+            ...subject,
+            keywords,
+        });
     }
 
     static async find(id: number, page: number) {
