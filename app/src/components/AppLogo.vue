@@ -1,5 +1,5 @@
 <template>
-  <NuxtImg
+  <img
       src="~/assets/logos/ou-logo-simp.svg"
       :class="['logo-medium',variants[variant]]"
       v-bind="$attrs"
