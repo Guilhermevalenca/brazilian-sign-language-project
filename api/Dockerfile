@@ -47,9 +47,6 @@ COPY docker/laravel.conf /etc/nginx/conf.d/default.conf
 
 COPY --from=builder /app .
 
-RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
-RUN chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
-
 COPY docker/start.sh /usr/local/bin/start
 RUN chmod +x /usr/local/bin/start
 
