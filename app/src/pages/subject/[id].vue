@@ -1,25 +1,23 @@
 <template>
-<Pagination v-model:page="page" :lastPage="last_page" />
-<div>
-    <ul>
-        <strong>{{ subject.name }}</strong>
-    </ul>
-    <br />
-    <br />
-    <ul>
-        <fieldset>
-            <legend>Sinais</legend>
-            <div 
+<div class="content-container-list">
+  <div class="content-title">
+    <h1>Sinais da disciplina: {{ subject.name }}</h1>
+  </div>
+            <AppCard
+                variant="list"
                 v-for="sign in subject.signs" :key="sign.id"
                 @click="$router.push(`/sign/${sign.id}`)"
             >
-                <ul>{{ sign.name }}</ul>
-                <ul>{{ sign.display }}</ul>
-                <br />
-                <br />
-            </div>
-        </fieldset>
-    </ul>
+                {{ sign.name }}
+              <div class="video-previa">
+                <iframe
+                    allow="autoplay; encrypted-media"
+                    :src="`${sign.display}${sign.display.includes('?') ? '&' : '?'}autoplay=1&mute=1`"
+                    loading="lazy"
+                >
+                </iframe>
+              </div>
+            </AppCard>
 </div>
 <Pagination v-model:page="page" :lastPage="last_page" />
 </template>
@@ -82,3 +80,10 @@ export default defineComponent({
     }
 })
 </script>
+<style lang="scss" scoped>
+iframe{
+  width: 120px;
+  height: 80px;
+  border: none;
+}
+</style>

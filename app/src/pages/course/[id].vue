@@ -1,23 +1,18 @@
 <template>
-<Pagination v-model:page="page" :lastPage="last_page" />
-<div>
-    <CourseCard :course="course" />
-    <br />
-    <br />
-    <ul>
-        <fieldset>
-            <legend>Materias</legend>
-            <div 
-                v-for="subject in course.subjects" 
+<div class="content-container-list">
+  <div class="content-title">
+    <h1>Disciplinas de: {{ course.name }}</h1>
+  </div>
+            <AppCard
+                v-for="subject in course.subjects"
+                tabindex="1"
+                variant="list"
+                role="button"
                 :key="subject.id"
                 @click="$router.push(`/subject/${subject.id}`)"    
             >
                 <ul>{{ subject.name }}</ul>
-                <br />
-                <br />
-            </div>
-        </fieldset>
-    </ul>
+            </AppCard>
 </div>
 <Pagination v-model:page="page" :lastPage="last_page" />
 </template>
