@@ -23,7 +23,7 @@ class UpdateCourseRequest extends FormRequest
     {
         return [
             'name' => ['string'],
-            'subjects' => ['required'],
+            'subjects' => ['nullable'],
             'subjects.*' => ['integer', 'exists:subjects,id'],
             'image' => ['image', 'mimes:jpeg,png,jpg,gif,svg'],
             'keywords' => ['required'],
