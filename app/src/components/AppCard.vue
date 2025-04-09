@@ -1,18 +1,33 @@
+<template>
+  <div :class="['card-default',variants[variant]]" v-bind="$attrs">
+    <slot/>
+  </div>
+</template>
+
 <script lang="ts">
 
 export default{
-name: "AppCard"
+name: "AppCard",
+  props:{
+    variant: {
+      type: String,
+      default: "default",
+      validator: (value:string)=>["default", "list"].includes(value)
+    },
+  },
+  computed:{
+    variants(){
+      return{
+        default: 'card-default',
+        list: 'card-list'
+      }
+    }
+  }
 }
 </script>
 
-<template>
-<div class="card-app">
-  <slot/>
-</div>
-</template>
-
 <style lang="scss" scoped>
-.card-app {
+.card-default {
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -20,10 +35,18 @@ name: "AppCard"
   align-items: center;
   justify-content: center;
   background-color: $tertiary-color;
-  padding: 3rem;
+  padding: 2rem;
   width: 35vw;
-  height: auto;
+  height: fit-content;
   box-shadow: 0 1px 1px  0 rgba(0, 0, 0, 0.2);
   border-radius: 2rem;
+}
+.card-list{
+  @extend .card-default;
+  padding: 1em;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
 }
 </style>

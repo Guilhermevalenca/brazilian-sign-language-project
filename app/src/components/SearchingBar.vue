@@ -2,7 +2,13 @@
   <div class="searching-bar-container">
     <form @submit.prevent="submit" v-bind="$attrs">
       <div class="searching-bar">
-        <input class="searching-bar-input" type="text" v-model="search" required @input="searchAction" placeholder="Buscar ...">
+        <input
+            class="searching-bar-input" type="text"
+            v-model="search" required
+            @input="searchAction"
+            placeholder="Buscar ..."
+            name="search-bar"
+        >
         <button type="submit" class="search-button">
           <img src="~/assets/icons/search.svg" width="24px" height="24px">
         </button>

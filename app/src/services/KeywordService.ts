@@ -33,7 +33,10 @@ export default class KeywordService {
         if(token) {
             $axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
         }
-        return $axios.get('/api/keywords/' + id);
+        const { data } = await $axios.get('/api/keywords/' + id);
+        return {
+            keyword: data
+        }
     }
 
     static async update(keyword: KeywordType, id: number) {

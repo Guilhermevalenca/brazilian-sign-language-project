@@ -82,7 +82,7 @@ class SignController extends Controller
         $validated['display'] = $this->getVideoId($validated['display'], 'sign');
 
         $sign->update($validated);
-        $sign->keywords()->sync(array_column($validated['keywords'], 'id'));
+        $sign->keywords()->sync($validated['keywords']);
 
         if (isset($validated['description'])) {
             if (!$this->validUrl($validated['description']['display'])) {

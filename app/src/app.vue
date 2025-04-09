@@ -1,9 +1,7 @@
 <template>
-  <div>
-    <NuxtLayout>
-      <NuxtPage />
-    </NuxtLayout>
-  </div>
+  <NuxtLayout>
+    <NuxtPage />
+  </NuxtLayout>
 </template>
 
 
@@ -16,7 +14,7 @@ export default defineComponent({
   name: 'App',
 
   async setup() {
-    const token = useCookie('token').value;
+    const token = useCookie('token');
     if(token) {
       try {
         const { data } = await UserService.fetch();
@@ -24,6 +22,7 @@ export default defineComponent({
           user: data
         }
       } catch(error) {
+        token.value = null;
         return {
           user: null
         }
@@ -34,13 +33,16 @@ export default defineComponent({
     }
   },
 
-  async mounted() {
+  mounted() {
     const user = useUserStore();
     if(this.user) {
       user.data = this.user;
+      Promise.all([
+        user.fetchIsAdmin(),
+        this.$axios.get('/sanctum/csrf-cookie'),
+      ]);
     }
 
-    this.$axios.get('/sanctum/csrf-cookie');
   },
 });
 </script>

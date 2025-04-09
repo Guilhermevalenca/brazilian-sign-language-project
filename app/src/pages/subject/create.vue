@@ -10,45 +10,68 @@
           <AppInput 
             type="text" 
             placeholder="Digite o nome da matéria"
+            name="subject.name"
             v-model="subject.name"  
           />
         </label>
       </div>
       <div>
-        <label>
-          Selecionar cursos:
-          <SubjectCourseSelect 
+        <legend>Selecionar cursos:</legend>
+        <SubjectCourseSelect
             v-model="subject.courses"
-          />
-        </label>
+        />
       </div>
+
+      <legend>Palavras-chave</legend>
+      <KeywordSelect
+          v-model="subject.keywords"
+      />
       <AppButton type="submit">Adicionar Material</AppButton>
     </AppForm>
   </AppCard>
 </template>
 
 <script lang="ts">
-import {defineComponent} from 'vue';
 import SubjectService from '~/services/SubjectService';
-import { type SubjectType } from '~/types/Subject';
+import type { SubjectType } from '~/types/Subject';
 
 export default defineComponent({
   name: "create",
-  data(){
-    return{
-      subject: {
-        name: '',
-        courses: [],
-      } as SubjectType,
-    }
-  },
+
+  data: () => ({
+    subject: {
+      name: '',
+      courses: [],
+      keywords: [],
+    } as SubjectType,
+  }),
 
   methods: {
     async submit() {
       try {
-        await SubjectService.create(this.subject);
+        this.$swal.fire({
+          icon: 'info',
+          title: 'Criando materia...',
+        });
+        this.$swal.showLoading();
+        await SubjectService.create(this.subject, this.subject.keywords?.map((k) => Number(k.id)) as number[]);
+        await this.$swal.fire({
+          icon: 'success',
+          title: 'Materia criada com sucesso',
+          timer: 10000,
+          showConfirmButton: true,
+          confirmButtonText: 'OK',
+        });
+        this.$router.go(-1);
       } catch(error) {
-
+        this.$swal.fire({
+          icon: 'error',
+          title: 'Algo deu errado',
+          text: 'Ocorreu um erro, gostaria de tentar novamente ?',
+          timer: 10000,
+          showConfirmButton: true,
+          confirmButtonText: 'OK',
+        });
       }
     }
   }

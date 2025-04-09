@@ -19,11 +19,11 @@ export default class SignService {
         return $axios.post('/api/signs', sign);
     }
 
-    static async find(id: number) {
+    static async find(id: number): Promise<{sign: SignType}> {
         const { $axios } = useNuxtApp();
         const { data } = await $axios.get('/api/signs/' + id); 
         return {
-            data,
+            sign: data,
         }
     }
 

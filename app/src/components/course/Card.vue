@@ -3,7 +3,7 @@
   <div class="course-card" tabindex="0" role="button">
     <NuxtImg 
       :src="image"
-      alt="Icone do curso"
+      :alt="'Icone do curso: ' + course?.name"
       format="webp"
     />
     <legend>{{ course?.name }}</legend>
@@ -24,7 +24,7 @@ export default defineComponent({
   computed: {
     image(): string {
       if(!this.course?.image) {
-        return '/favicon.ico';
+        return '/logo.svg';
       }
       if(String(this.course?.image).startsWith('http')) {
         return String(this.course?.image);

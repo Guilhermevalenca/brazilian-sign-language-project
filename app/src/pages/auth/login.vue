@@ -4,10 +4,20 @@
       <h1>Login</h1>
     <AppForm @submit.prevent="submit">
         <label>Email:
-          <AppInput type="email" v-model="user.email" placeholder="Email" />
+          <AppInput
+              type="email"
+              v-model="user.email"
+              placeholder="Email"
+              name="user.email"
+          />
         </label>
         <label>Senha:
-          <AppInput type="password" v-model="user.password" placeholder="Password" />
+          <AppInput
+              type="password"
+              v-model="user.password"
+              placeholder="Password"
+              name="user.password"
+          />
         </label>
       <FormActions>
         <NuxtLink to="/auth/register"> Não Tenho uma conta</NuxtLink>
@@ -18,8 +28,7 @@
 </template>
 
 <script lang="ts">
-
-import type { Usertype } from "~/types/User";
+import type { UserType } from "~/types/User";
 import AuthService from "~/services/AuthService";
 import useUserStore from '~/stores/useUserStore';
 import UserService from '~/services/UserService';
@@ -45,20 +54,73 @@ export default defineComponent({
 
   methods: {
     async submit() {
-      const response = AuthService.login(this.user);
+      this.$swal.fire({
+        title: 'Realizando login...',
+      });
+      this.$swal.showLoading();
+      try {
+        const response = AuthService.login(this.user);
 
       if(await response) {
-        try {
-          const { data } = await UserService.fetch();
-          useUserStore().data = data;
+        const updateDataUser = async () => {
+          try {
+            this.$swal.fire({
+              icon: 'info',
+              title: 'Login bem sucedido',
+              text: 'Aguarde enquanto buscamos os seus dados',
+            });
+            this.$swal.showLoading();
+            const { data } = await UserService.fetch();
+            useUserStore().data = data;
+            await useUserStore().fetchIsAdmin();
+            this.$swal.fire({
+              icon: 'success',
+              title: 'Tudo certo!',
+              timer: 5000,
+              showConfirmButton: true,
+              confirmButtonText: 'OK',
+            })
+                .then(() => {
+                  this.$router.push('/');
+                });
+          } catch(error) {
+            this.$swal.fire({
+              icon: 'error',
+              title: 'Login bem sucedido, mas algo deu errado ao buscar os seus dados',
+              timer: 10000,
+              showConfirmButton: true,
+              confirmButtonText: 'Tentar novamente',
+              showCancelButton: true,
+              cancelButtonText: 'Cancelar',
+            })
+                .then((res) => {
+                  if(res.isConfirmed) {
+                    updateDataUser();
+                  }
+                })
 
-          await useUserStore().fetchIsAdmin();
-          this.$router.push('/');
-        } catch(error) {
-          alert('login bem sucedido, mas algo deu errado ao buscar os seus dados');
+          }
         }
+        await updateDataUser();
       } else {
-        alert('login falhou');
+        this.$swal.fire({
+          icon: 'error',
+          title: 'Não foi possivel fazer login',
+          text: 'Email ou senha incorretos',
+          timer: 10000,
+          showConfirmButton: true,
+          confirmButtonText: 'OK',
+        });
+      }
+      } catch(e) {
+        this.$swal.fire({
+          icon: 'error',
+          title: 'Algo deu errado',
+          text: 'Ocorreu um erro, gostaria de tentar novamente ?',
+          timer: 10000,
+          showConfirmButton: true,
+          confirmButtonText: 'OK',
+        });
       }
     }
   }
