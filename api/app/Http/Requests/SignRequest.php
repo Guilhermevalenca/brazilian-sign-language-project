@@ -22,6 +22,9 @@ class SignRequest extends FormRequest
             
             'keywords' => ['required', 'array'],
             'keywords.*' => ['required', 'integer', 'exists:keywords,id'],
+
+            'subjects' => ['required', 'array'],
+            'subjects.*' => ['required', 'integer', 'exists:subjects,id'],
         ];
     }
 }
