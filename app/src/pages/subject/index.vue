@@ -30,10 +30,12 @@ export default defineComponent({
 
     onBeforeMount(() => {
       LoadingService.show();
+      setTimeout(() => {
+        LoadingService.loaded(status.value, refresh);
+      }, 300);
     });
 
     watch(status, ($new) => {
-      console.log($new);
       LoadingService.loaded($new, refresh);
     }, {
       immediate: true,
