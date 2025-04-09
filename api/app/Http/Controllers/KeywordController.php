@@ -52,9 +52,6 @@ class KeywordController extends Controller
             ->get()
             ->groupBy('type');
 
-
-        
-
         return response($this->mergerKeywordsWithResults($keywords, $results), 200);
     }
 
@@ -163,14 +160,28 @@ class KeywordController extends Controller
         }
 
         foreach ($results as $type => $items) {
-            foreach ($items as $item) {
+            foreach ($items as $key => $item) {
                 $exists = collect($mergedResults[$type])->contains('id', $item->id);
                 if (!$exists) {
-                    $mergedResults[$type][] = $item;
+                    //excluindo o campo type do item
+                    $mergedResults[$type][] = [
+                        'id' => $item->id,
+                        'name' => $item->name,
+                    ];
                 }
             }
         }
 
+        //removendo demais campos types
+        foreach ($mergedResults as $type => $items) {
+            foreach ($items as $key => $item) {
+                $mergedResults[$type][$key] = [
+                    'id' => $item['id'],
+                    'name' => $item['name'],
+                ];
+            }
+        }
+        
         return $mergedResults;
     }
 
