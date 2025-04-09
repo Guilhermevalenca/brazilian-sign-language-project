@@ -18,11 +18,6 @@ class SignController extends Controller
     {
         $validated = $request->validated();
 
-        $validated = [
-            ...$validated,
-            'keywords' => array_column($validated['keywords'], 'id'),
-        ];
-
         if (!$this->validUrl($validated['display'])) {
             return response([
                 'error' => 'O link precisa ser do youtube',
@@ -34,6 +29,7 @@ class SignController extends Controller
         $sign = Sign::create($validated);
 
         $sign->keywords()->attach($validated['keywords']);
+        $sign->subjects()->attach($validated['subjects']);
 
         if (isset($validated['description'])) {
             if (!$this->validUrl($validated['description']['display'])) {

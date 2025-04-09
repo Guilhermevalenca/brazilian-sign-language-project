@@ -35,7 +35,7 @@ class Sign extends Model
 
     public function suggestions(): BelongsToMany
     {
-        return $this->belongsToMany(Suggestion::class);
+        return $this->belongsToMany(Suggestion::class, 'suggestion_sign', 'sign_id', 'suggestion_id');
     }
 
     public function subjects(): BelongsToMany
