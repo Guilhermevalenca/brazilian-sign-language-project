@@ -1,5 +1,5 @@
 <template>
-  <client-only>
+  <client-only v-if="keywords.length > 0">
     <AppSelect
         v-model="selected"
         :items="keywords"
@@ -8,6 +8,9 @@
         id="keyword"
     />
   </client-only>
+  <div v-show="keywords.length === 0">
+    <span>Nenhuma palavra-chave encontrada</span>
+  </div>
   <div role="button" @click="isAddKeyword = !isAddKeyword" class="acordion-container">
     <div class="acordion-title">
       Adicionar palavra-chave
@@ -44,7 +47,6 @@ export default defineComponent({
     const last_page = ref(1);
 
     async function getKeywords() {
-      console.log(page.value);
       const data = await KeywordService.fetch(page.value);
       keywords.value.push(...data.keywords);
       last_page.value = data.last_page;
@@ -82,6 +84,7 @@ export default defineComponent({
         return this.modelValue;
       },
       set(value: KeywordType[]) {
+        console.log(value);
         this.$emit('update:modelValue', value);
       }
     }
@@ -134,7 +137,9 @@ export default defineComponent({
   },
 
   async mounted() {
-    this.getAllKeywords();
+    setTimeout(() => {
+      this.getAllKeywords();
+    }, 300);
   }
 });
 </script>
