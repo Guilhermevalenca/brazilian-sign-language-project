@@ -5,7 +5,6 @@
         :items="keywords"
         labelInput="name"
         placeholder="Pesquise pela palavra-chave"
-        legend="Selecione as categorias:"
         id="keyword"
     />
   </client-only>
