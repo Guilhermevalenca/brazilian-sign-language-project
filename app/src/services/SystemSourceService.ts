@@ -27,10 +27,6 @@ export default class SystemSourceService {
         page: number
     ) {
         if(search) {
-            const courses: CourseType[] = [];
-            const subjects: SubjectType[] = [];
-            const signs: SignType[] = [];
-
             const { $axios } = useNuxtApp();
             const { data } = await $axios.post(`/api/keywords/with_filters`, {
                 search,
@@ -40,25 +36,14 @@ export default class SystemSourceService {
                     page,
                 }
             });
-            for(const value of data.data) {
-                if(value.courses) {
-                    //@ts-ignore
-                    courses.push(value.courses);
-                }
-                if(value.subjects) {
-                    //@ts-ignore
-                    subjects.push(value.subjects);
-                }
-                if(value.signs) {
-                    //@ts-ignore
-                    signs.push(value.signs);
-                }
-            }
+
+            console.log(data);
+
             return {
-                courses,
-                subjects,
-                signs,
-                last_page: data.last_page ?? 1
+                courses: data.data.courses ?? [],
+                subjects: data.data.subjects ?? [],
+                signs: data.data.signs ?? [],
+                last_page: data.last_page
             }
         }
     }

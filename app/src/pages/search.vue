@@ -1,5 +1,5 @@
 <template>
-  <form>
+  <fieldset>
     <p>Filtros</p>
     <div class="tw-flex tw-gap-2">
       <div>
@@ -15,7 +15,7 @@
         <label>Sinais</label>
       </div>
     </div>
-  </form>
+  </fieldset>
   <client-only>
     <Pagination v-model:page="page" :lastPage="last_page" />
   </client-only>
@@ -47,11 +47,6 @@ export default defineComponent({
 
   async setup() {
     const searchData = searchBarData();
-    const results = ref({
-      courses: [],
-      subjects: [],
-      signs: []
-    });
     const filterOptions = ref<FilterOptionsType>({
       courses: false,
       subjects: false,
@@ -59,7 +54,7 @@ export default defineComponent({
     });
     const page = ref(1);
 
-    const { data, status, execute, refresh } = useAsyncData(
+    const { data, status, refresh } = useAsyncData(
         'fetchSubjects',
         () => SystemSourceService.searchActionWithFilter(
             String(searchData?.value),
@@ -70,7 +65,8 @@ export default defineComponent({
           default: () => ({
             courses: [],
             subjects: [],
-            signs: []
+            signs: [],
+            last_page: 1,
           })
         }
     );
@@ -83,12 +79,11 @@ export default defineComponent({
     });
 
     watch(status, ($new) => {
-      LoadingService.loaded($new, refresh, true);
+      LoadingService.loaded($new, refresh);
     });
 
-    execute();
-
     watch(searchData, async () => {
+      page.value = 1;
       await refresh();
     });
 
@@ -96,7 +91,7 @@ export default defineComponent({
       courses: computed(() => data.value?.courses),
       subjects: computed(() => data.value?.subjects),
       signs: computed(() => data.value?.signs),
-      last_page: computed((): number => data.value?.last_page ?? 1),
+      last_page: computed((): number => data.value?.last_page),
       filterOptions,
       refresh,
       page,
@@ -109,9 +104,6 @@ export default defineComponent({
         this.refresh();
       },
       deep: true,
-    },
-    search() {
-      this.page = 1;
     },
     async page() {
       if(this.page <= 0) {

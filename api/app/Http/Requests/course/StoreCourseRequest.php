@@ -24,7 +24,7 @@ class StoreCourseRequest extends FormRequest
         return [
             'name' => ['required', 'string'],
             'subjects' => ['nullable'],
-            'subjects.*' => ['integer', 'exists:subjects,id'],
+            'subjects.*' => ['required_with:subjects', 'integer', 'exists:subjects,id'],
             'image' => ['required', 'image', 'mimes:jpeg,png,jpg,gif,svg'],
             'keywords' => ['required'],
             'keywords.*' => ['required', 'exists:keywords,id'],

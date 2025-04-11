@@ -12,7 +12,8 @@
         <input
             type="checkbox"
             :id="`select-${value.id}-${id}`"
-            @input="(event) => inputAction(event.target?.checked, index, value)"
+            @input="(event) => inputAction(event.target?.checked, value)"
+            :checked="selected.includes(value)"
         />
         {{ value[labelInput] }}
       </label>
@@ -72,12 +73,12 @@ export default defineComponent({
   },
 
   methods: {
-    inputAction(checked: boolean, index: number, value: any) {
+    inputAction(checked: boolean, value: any) {
       let internalSelected = [];
       if(checked) {
         internalSelected = [...this.selected, value];
       } else {
-        internalSelected = this.selected.filter((_, selectedIndex) => selectedIndex !== index)
+        internalSelected = this.selected.filter((item: any) => item.id !== value.id);
       }
       this.selected = internalSelected;
     }
