@@ -3,7 +3,7 @@
     <div>
       <h1>Adicionar Materia</h1>
     </div>
-    <AppForm>
+    <AppForm @submit.prevent="submit">
       <div>
         <label>
           Nome:
@@ -54,7 +54,7 @@ export default defineComponent({
           title: 'Criando materia...',
         });
         this.$swal.showLoading();
-        await SubjectService.create(this.subject, this.subject.keywords?.map((k) => Number(k.id)) as number[]);
+        await SubjectService.create(this.subject, this.subject.courses ?? [], this.subject.keywords ?? []);
         await this.$swal.fire({
           icon: 'success',
           title: 'Materia criada com sucesso',
