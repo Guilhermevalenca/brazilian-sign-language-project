@@ -175,10 +175,7 @@ class KeywordController extends Controller
 
         return response([
             'data' => $mergeResult,
-            'last_page' => $keywords->lastPage(),
-            'results' => $results,
-            'adjustsKeywords' => $adjustsKeywords,
-            'keywords' => $keywords,
+            'last_page' => $keywords->lastPage()
         ], 200);
     }
 
