@@ -6,8 +6,9 @@ export default class UserService {
         const token = useCookie('token').value;
         if(token) {
             $axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+            return $axios.get('/api/users');
         }
-        return $axios.get('/api/users');
+        throw new Error('User is not logged in');
     }
 
     static async fetchFavorites(page: number) {
