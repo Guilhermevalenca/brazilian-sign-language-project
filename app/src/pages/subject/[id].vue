@@ -8,7 +8,6 @@
         v-for="sign in subject.signs" :key="sign.id"
         @click="$router.push(`/sign/${sign.id}`)"
     >
-      {{ sign.name }}
       <div class="video-previa">
         <iframe
             allow="autoplay; encrypted-media"
@@ -17,6 +16,7 @@
         >
         </iframe>
       </div>
+      {{ sign.name }}
     </AppCard>
   </div>
   <Pagination v-model:page="page" :lastPage="last_page" />
@@ -98,7 +98,7 @@ export default defineComponent({
 })
 </script>
 <style lang="scss" scoped>
-frame{
+iframe{
   width: 120px;
   height: 80px;
   border: none;

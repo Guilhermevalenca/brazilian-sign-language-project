@@ -1,13 +1,13 @@
 <template>
   <client-only>
     <div style="display: flex">
-      <span @click="$router.push('/')">-> Pagina inicial</span>
+      <span @click="$router.push('/')">> Pagina inicial</span>
       <div
         v-for="(value, index) in breadcrumb.path" 
         :key="index"
         @click="$router.push(value.path)"
       >
-        -> {{ value.activated }} - {{ value.name }}
+         > {{ value.activated }} : {{ value.name }}
       </div>
     </div>
   </client-only>
