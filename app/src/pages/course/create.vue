@@ -1,7 +1,7 @@
 <template>
 <AppCard>
   <div class="navigation">
-    <AppButton type="button" @click="$router.push('/')" variant="navigation">
+    <AppButton type="button" @click="navigateTo('/')" variant="navigation">
       <img src="~/assets/icons/arrow-left.svg" width="24" height="24">
       Voltar
     </AppButton>
@@ -65,7 +65,7 @@ export default{
           showConfirmButton: true,
           confirmButtonText: 'OK',
         });
-        this.$router.push('/');
+        navigateTo('/');
       } catch(e) {
         this.$swal.fire({
           icon: 'error',

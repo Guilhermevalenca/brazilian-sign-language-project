@@ -1,9 +1,10 @@
 import type { SignType } from "~/types/Sign";
-import type {KeywordType} from "~/types/Keyword";
+import type { KeywordType } from "~/types/Keyword";
+import Service from "~/services/Service";
 
-export default class SignService {
+export default class SignService extends Service {
     static async fetch(page: number) {
-        const { $axios } = useNuxtApp();
+        const $axios = this.axiosInstance();
         const { data } = await $axios.get('/api/signs', {
             params: {
                 page,
@@ -16,7 +17,7 @@ export default class SignService {
     }
 
     static async create(sign: SignType) {
-        const { $axios } = useNuxtApp();
+        const $axios = this.axiosInstance();
         return $axios.post('/api/signs', {
             ...sign,
             keywords: sign.keywords?.map((keyword: KeywordType) => keyword.id),
@@ -25,7 +26,7 @@ export default class SignService {
     }
 
     static async find(id: number): Promise<{sign: SignType}> {
-        const { $axios } = useNuxtApp();
+        const $axios = this.axiosInstance();
         const { data } = await $axios.get('/api/signs/' + id); 
         return {
             sign: data,
@@ -33,12 +34,12 @@ export default class SignService {
     }
 
     static async update(sign: SignType, id: number) {
-        const { $axios } = useNuxtApp();
+        const $axios = this.axiosInstance();
         return $axios.put('/api/signs/' + id, sign);
     }
 
     static async delete(id: number) {
-        const { $axios } = useNuxtApp();
+        const $axios = this.axiosInstance();
         return $axios.delete('/api/signs/' + id);
     }
 }

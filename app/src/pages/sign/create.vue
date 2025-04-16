@@ -78,7 +78,7 @@ export default defineComponent({
 
   async setup() {
     definePageMeta({
-      middleware: 'is-admin',
+      middleware: ['is-admin'],
     })
   },
 
@@ -122,7 +122,7 @@ export default defineComponent({
           showConfirmButton: true,
           confirmButtonText: 'OK',
         });
-        this.$router.go(-1);
+        navigateTo(-1);
       } catch (e) {
         this.$swal.fire({
           icon: 'error',

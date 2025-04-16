@@ -19,15 +19,13 @@ class DatabaseSeeder extends Seeder
             'is_admin' => true
         ]);
 
-        User::factory(10)->create();
-
         $this->call([
             CourseSeeder::class,
             SubjectSeeder::class,
             SignSeeder::class,
             DescriptionSeeder::class,
             ExampleSeeder::class,
-            FavoriteSeeder::class,
+//            FavoriteSeeder::class,
             SuggestionSeeder::class,
             KeywordSeeder::class,
             PivotSeeder::class
