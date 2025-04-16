@@ -153,7 +153,7 @@ export default defineComponent({
           showConfirmButton: true,
           confirmButtonText: 'OK',
         });
-        this.$router.push('/auth/login');
+        navigateTo('/auth/login');
       } catch(error) {
         this.$swal.fire({
           icon: 'error',

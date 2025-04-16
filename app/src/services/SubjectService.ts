@@ -1,11 +1,13 @@
 import type { SubjectType } from "~/types/Subject";
-import type {KeywordType} from "~/types/Keyword";
-import type {CourseType} from "~/types/Course";
-export default class SubjectService {
+import type { KeywordType } from "~/types/Keyword";
+import type { CourseType } from "~/types/Course";
+import Service from "~/services/Service";
+
+export default class SubjectService extends Service {
     static async fetch(
         page: number
     ): Promise<{subjects: SubjectType[], last_page: number}> {
-        const { $axios } = useNuxtApp();
+        const $axios = this.axiosInstance();
         const { data: { data, last_page } } = await $axios.get('/api/subjects', {
             params: {
                 page,
@@ -18,7 +20,7 @@ export default class SubjectService {
         }
     }
     static async create(subject: SubjectType, courses: CourseType[], keywords: KeywordType[]) {
-        const { $axios } = useNuxtApp();
+        const $axios = this.axiosInstance();
         return $axios.post('/api/subjects', {
             ...subject,
             courses: courses.map((course: CourseType) => course.id),
@@ -27,7 +29,7 @@ export default class SubjectService {
     }
 
     static async find(id: number, page: number) {
-        const { $axios } = useNuxtApp();
+        const $axios = this.axiosInstance();
         const { data } = await $axios.get('/api/subjects/' + id, {
             params: {
                 page,
@@ -37,7 +39,7 @@ export default class SubjectService {
             subject: {
                 id: data.id,
                 name: data.name,
-                signs: data.signs.data,
+                signs: data.signs.data ?? [],
             },
             last_page: data.signs.last_page
         }

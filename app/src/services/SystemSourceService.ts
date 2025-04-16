@@ -1,7 +1,5 @@
 import type { AxiosResponse } from "axios";
-import type {SubjectType} from "~/types/Subject";
-import type {SignType} from "~/types/Sign";
-import type {CourseType} from "~/types/Course";
+import Service from "~/services/Service";
 
 export type FilterOptionsType = {
     courses: false,
@@ -9,10 +7,10 @@ export type FilterOptionsType = {
     signs: false,
 }
 
-export default class SystemSourceService {
+export default class SystemSourceService extends Service {
     static async searchAction(search: string): Promise<AxiosResponse | undefined> {
         if(search) {
-            const { $axios } = useNuxtApp();
+            const $axios = this.axiosInstance();
             return $axios.get(`/api/keywords`, {
                 params: {
                     search,
@@ -27,7 +25,7 @@ export default class SystemSourceService {
         page: number
     ) {
         if(search) {
-            const { $axios } = useNuxtApp();
+            const $axios = this.axiosInstance();
             const { data } = await $axios.post(`/api/keywords/with_filters`, {
                 search,
                 filterOptions

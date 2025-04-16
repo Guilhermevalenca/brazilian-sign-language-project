@@ -1,35 +1,40 @@
 <template>
-  <button @click="$router.push(`/sign/${sign?.id}/update`)">Atualizar</button>
+  <button @click="navigateTo(`/sign/${sign?.id}/update`)">Atualizar</button>
   <br />
   <button @click="destroy">deletar ou apagar</button>
   <span class="tw-text-xs">*Esta opção apagará o contéudo para sempre</span>
   <br />
-  <iframe
-      :src="sign?.display"
-      frameborder="0"
-      allowfullscreen
-  >
-  </iframe>
-  <!-- apenas para listar as informações do objeto -->
-  <p>informações:</p>
-  <div>
-    <fieldset>
-      <legend>Sinal</legend>
-      <ul>{{ sign?.name }}</ul>
-      <ul>{{ sign?.display }}</ul>
-    </fieldset>
-    <fieldset>
-      <legend>Descrição</legend>
-      <ul>{{ sign?.description?.text }}</ul>
-      <ul>{{ sign?.description?.display }}</ul>
-    </fieldset>
-    <fieldset>
-      <legend>Exemplo</legend>
-      <ul>{{ sign?.example?.description }}</ul>
-      <ul>{{ sign?.example?.display }}</ul>
-    </fieldset>
+  <div class="content-container">
+    <div class="views-menu">
+      <div
+          @click="currentComponent = 'SignView'"
+          :class="{ active: currentComponent === 'SignView' }"
+          role="button"
+          tabindex="1"
+      >Sinal
+      </div>
+      <div
+          @click="currentComponent = 'SignDescriptionView'"
+          :class="{ active: currentComponent === 'SignDescriptionView' }"
+          role="button"
+          tabindex="1"
+      >Descrição do sinal
+      </div>
+      <div
+          @click="currentComponent = 'SignExampleView'"
+          :class="{ active: currentComponent === 'SignExampleView' }"
+          role="button"
+          tabindex="1"
+      >Exemplo de uso
+      </div>
+    </div>
+    <AppCard variant="default" class="abacate">
+      <component :is="currentComponent" :sign="sign"
+      />
+    </AppCard>
+
   </div>
-</template>
+  </template>
 
 <script lang="ts">
 
@@ -38,11 +43,15 @@ import useBreadcrumbStore from '~/stores/useBreadcrumbStore';
 import type { SignType } from '~/types/Sign';
 import SubjectService from "~/services/SubjectService";
 import LoadingService from "~/services/LoadingService";
+import {SignDescriptionView} from "#components";
+import {SignExampleView} from "#components";
+import SignView from "~/components/sign/SignView.vue";
 
 export default defineComponent({
   name: 'signPage',
-
+  components: {SignDescriptionView,SignExampleView,SignView},
   async setup() {
+    const currentComponent= ref('SignView');
     const { id } = useRoute().params;
 
     const { data, status, execute, refresh } = useAsyncData(
@@ -77,6 +86,7 @@ export default defineComponent({
 
     return {
       sign: computed((): SignType => data.value.sign as SignType),
+      currentComponent,
       id
     }
   },
@@ -97,11 +107,11 @@ export default defineComponent({
           showConfirmButton: true,
           confirmButtonText: 'OK',
         });
-        this.$router.go(-1);
+        navigateTo(-1);
       } catch(e) {
         console.log(e);
       }
-    }
+    },
   },
 
   watch: {
@@ -115,3 +125,38 @@ export default defineComponent({
   }
 });
 </script>
+<style lang="scss" scoped>
+.views-menu{
+  flex-flow: row nowrap;
+  justify-content: space-around;
+  border-top-right-radius: 1em;
+  border-top-left-radius: 1em;
+  width: 100%;
+  height: 3em;
+  display: flex;
+  background-color: $primary-color;
+  div{
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    align-content: center;
+    width: 100%;
+    height: 100%;
+    color: $light-texts;
+    border-top-right-radius: 1em;
+    border-top-left-radius: 1em;
+    cursor: pointer;
+  }
+  div.active{
+    background-color: $tertiary-color;
+    border-top: solid 3px $primary-color-hovered;
+    color: $soft-black-1;
+  }
+}
+.abacate {
+  width: 50vw;
+  border-top-right-radius: 0em;
+  border-top-left-radius: 0em;
+  padding: 2em;
+}
+</style>

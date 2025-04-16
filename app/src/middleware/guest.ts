@@ -1,13 +1,15 @@
-export default defineNuxtRouteMiddleware(async (to, from) => {
-    const token = useCookie('token').value;
-    if(token) {
-        const { $axios } = useNuxtApp();
-        $axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+import Service from "~/services/Service";
+
+export default defineNuxtRouteMiddleware((to, from) => {
+    setTimeout(async () => {
         try {
+            const $axios = Service.axiosInstance();
             await $axios.get('/api/users');
-            return navigateTo('/');
+            return navigateTo('/', {
+                redirectCode: 301
+            });
         } catch(e) {
             return;
         }
-    }
+    }, 1);
 });

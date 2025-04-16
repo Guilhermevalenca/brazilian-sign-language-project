@@ -62,7 +62,7 @@ export default defineComponent({
           showConfirmButton: true,
           confirmButtonText: 'OK',
         });
-        this.$router.go(-1);
+        navigateTo(-1);
       } catch(error) {
         this.$swal.fire({
           icon: 'error',

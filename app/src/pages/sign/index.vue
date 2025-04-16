@@ -4,7 +4,7 @@
     <div
         class="signs-container" tabindex="0"
         v-for="sign in signs" :key="sign.id"
-        @click="$router.push(`/sign/${sign.id}`)"
+        @click="navigateTo(`/sign/${sign.id}`)"
         role="button"
     >
       <div class="sign-card-item">

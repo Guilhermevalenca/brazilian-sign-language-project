@@ -91,7 +91,7 @@ export default defineComponent({
                 confirmButtonText: 'OK',
               })
                   .then(() => {
-                    this.$router.push('/auth/check-email-code');
+                    navigateTo('/auth/check-email-code');
                   })
             } catch(error) {
               this.$swal.fire({
