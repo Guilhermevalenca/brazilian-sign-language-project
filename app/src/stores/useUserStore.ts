@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
 import { type UserType } from "~/types/User";
+import Service from "~/services/Service";
 
 export default defineStore("user", {
     state: () => ({
@@ -9,7 +10,7 @@ export default defineStore("user", {
 
     actions: {
         async fetchIsAdmin() {
-            const { $axios } = useNuxtApp();
+            const $axios = Service.axiosInstance();
             const { data } = await $axios.get('/api/users/is_admin');
             this.is_admin = data.is_admin;
             setTimeout(async () => {

@@ -1,6 +1,5 @@
 <template>
-
-  <button @click="$router.push(`/sign/${sign?.id}/update`)">Atualizar</button>
+  <button @click="navigateTo(`/sign/${sign?.id}/update`)">Atualizar</button>
   <br />
   <button @click="destroy">deletar ou apagar</button>
   <span class="tw-text-xs">*Esta opção apagará o contéudo para sempre</span>
@@ -113,7 +112,7 @@ export default defineComponent({
           showConfirmButton: true,
           confirmButtonText: 'OK',
         });
-        this.$router.go(-1);
+        navigateTo(-1);
       } catch(e) {
         console.log(e);
       }

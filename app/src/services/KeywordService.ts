@@ -1,12 +1,9 @@
 import { type KeywordType } from "~/types/Keyword";
+import Service from "~/services/Service";
 
-export default class KeywordService {
+export default class KeywordService extends Service {
     static async fetch(page: number) {
-        const { $axios } = useNuxtApp();
-        const token = useCookie('token').value;
-        if(token) {
-            $axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-        }
+        const $axios = this.axiosInstance();
         const { data } = await $axios.get('/api/keywords/create', {
             params: {
                 page,
@@ -19,20 +16,12 @@ export default class KeywordService {
     }
 
     static async create(keyword: KeywordType) {
-        const { $axios } = useNuxtApp();
-        const token = useCookie('token').value;
-        if(token) {
-            $axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-        }
+        const $axios = this.axiosInstance();
         return $axios.post('/api/keywords', keyword);
     }
 
     static async find(id: number) {
-        const { $axios } = useNuxtApp();
-        const token = useCookie('token').value;
-        if(token) {
-            $axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-        }
+        const $axios = this.axiosInstance();
         const { data } = await $axios.get('/api/keywords/' + id);
         return {
             keyword: data
@@ -40,11 +29,7 @@ export default class KeywordService {
     }
 
     static async update(keyword: KeywordType, id: number) {
-        const { $axios } = useNuxtApp();
-        const token = useCookie('token').value;
-        if(token) {
-            $axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-        }
+        const $axios = this.axiosInstance();
         return $axios.put('/api/keywords/' + id, keyword);
     }
 }

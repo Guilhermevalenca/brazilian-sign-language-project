@@ -1,3 +1,4 @@
+name: brazilian-sign-language
 services:
   app:
     image: 'node:20-alpine'

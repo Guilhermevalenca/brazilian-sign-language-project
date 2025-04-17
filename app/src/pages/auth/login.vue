@@ -73,16 +73,8 @@ export default defineComponent({
             const { data } = await UserService.fetch();
             useUserStore().data = data;
             await useUserStore().fetchIsAdmin();
-            this.$swal.fire({
-              icon: 'success',
-              title: 'Tudo certo!',
-              timer: 5000,
-              showConfirmButton: true,
-              confirmButtonText: 'OK',
-            })
-                .then(() => {
-                  this.$router.push('/');
-                });
+            this.$swal.close();
+            navigateTo('/');
           } catch(error) {
             this.$swal.fire({
               icon: 'error',
