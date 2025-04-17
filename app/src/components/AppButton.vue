@@ -56,6 +56,7 @@ export default {
   transform: translateY(4px)
 }
 .button-navigation{
+  justify-content: flex-start;
   background-color: $primary-color;
 }
 .button-navigation:hover{

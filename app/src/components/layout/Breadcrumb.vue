@@ -1,15 +1,15 @@
 <template>
   <client-only>
-    <div style="display: flex">
-      <span @click="navigateTo('/')">> Pagina inicial</span>
-      <div
+    <nav style="display: flex">
+      <span @click="navigateTo('/')"> > Pagina inicial </span>
+      <span
         v-for="(value, index) in breadcrumb.path"
         :key="index"
         @click="navigateTo(value.path)"
       >
-         > {{ value.activated }} : {{ value.name }}
-      </div>
-    </div>
+          > {{ value.activated }} : {{ value.name }}
+      </span>
+    </nav>
   </client-only>
 </template>
 
@@ -45,5 +45,7 @@ export default defineComponent({
 </script>
 
 <style>
-
+span{
+  cursor: pointer ;
+}
 </style>

@@ -3,6 +3,7 @@
   <main>
     <section>
       <LayoutBreadcrumb />
+      <LayoutBackButton v-show="!isHome"/>
       <slot />
     </section>
   </main>
@@ -19,6 +20,11 @@ export default defineComponent({
   data: () => ({
     user: null as null | ReturnType<typeof useUserStore>
   }),
+  computed:{
+    isHome(){
+      return useRoute().path === "/"
+    }
+  },
 
   mounted() {
     this.user = useUserStore();
