@@ -6,7 +6,10 @@
         allowfullscreen
     >
     </iframe>
-    {{ sign?.example?.description }}
+    <p>
+      {{ sign?.example?.description }}
+    </p>
+
   </div>
 </template>
 
@@ -20,5 +23,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-
+p{
+  padding: 1em;
+}
 </style>

@@ -1,33 +1,39 @@
 <template>
+
   <button @click="$router.push(`/sign/${sign?.id}/update`)">Atualizar</button>
   <br />
   <button @click="destroy">deletar ou apagar</button>
   <span class="tw-text-xs">*Esta opção apagará o contéudo para sempre</span>
   <br />
   <div class="content-container">
-    <div class="views-menu">
-      <div
-          @click="currentComponent = 'SignView'"
-          :class="{ active: currentComponent === 'SignView' }"
-          role="button"
-          tabindex="1"
-      >Sinal
+    <transition-group name="contents">
+      <div class="views-menu">
+        <div
+            @click="currentComponent = 'SignView'"
+            :class="{ active: currentComponent === 'SignView' }"
+            role="button"
+            tabindex="1"
+        >Sinal
+        </div>
+
+        <div
+            @click="currentComponent = 'SignDescriptionView'"
+            :class="{ active: currentComponent === 'SignDescriptionView' }"
+            role="button"
+            tabindex="1"
+        >Descrição do sinal
+        </div>
+
+        <div
+            @click="currentComponent = 'SignExampleView'"
+            :class="{ active: currentComponent === 'SignExampleView' }"
+            role="button"
+            tabindex="1"
+        >Exemplo de uso
+        </div>
+
       </div>
-      <div
-          @click="currentComponent = 'SignDescriptionView'"
-          :class="{ active: currentComponent === 'SignDescriptionView' }"
-          role="button"
-          tabindex="1"
-      >Descrição do sinal
-      </div>
-      <div
-          @click="currentComponent = 'SignExampleView'"
-          :class="{ active: currentComponent === 'SignExampleView' }"
-          role="button"
-          tabindex="1"
-      >Exemplo de uso
-      </div>
-    </div>
+    </transition-group>
     <AppCard variant="default" class="abacate">
       <component :is="currentComponent" :sign="sign"
       />
@@ -158,5 +164,14 @@ export default defineComponent({
   border-top-right-radius: 0em;
   border-top-left-radius: 0em;
   padding: 2em;
+}
+.contents-enter-active,
+.contents-leave-active {
+  transition: all 0.5s ease;
+}
+.contents-enter-from,
+.contents-leave-to {
+  opacity: 0;
+  transform: translateX(30px);
 }
 </style>

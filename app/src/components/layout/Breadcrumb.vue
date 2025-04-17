@@ -3,7 +3,7 @@
     <div style="display: flex">
       <span @click="$router.push('/')">> Pagina inicial</span>
       <div
-        v-for="(value, index) in breadcrumb.path" 
+        v-for="(value, index) in breadcrumb.path"
         :key="index"
         @click="$router.push(value.path)"
       >
@@ -32,7 +32,7 @@ export default defineComponent({
         sign: this.breadcrumb.sign
       }));
     });
-    
+
     const breadcrumb = localStorage.getItem('breadcrumb');
     if (breadcrumb) {
       const parsedBreadcrumb = JSON.parse(breadcrumb);
@@ -41,7 +41,6 @@ export default defineComponent({
       this.breadcrumb.sign = parsedBreadcrumb.sign;
     }
   },
-
 });
 </script>
 
