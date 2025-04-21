@@ -1,53 +1,72 @@
 <template>
-  <div>atualizar sinal</div>
-  <form @submit.prevent="submit">
-    <div>
-      <p>informações do sinal</p>
-      <AppInput
-          v-model="sign.name"
-          placeholder="Nome do sinal"
-          name="sign.name"
+  <AppCard>
+    <h1>Atualizar sinal</h1>
+    <AppForm @submit.prevent="submit">
+      <section>
+        <legend>Informações do sinal</legend>
+        <label>
+          Nome:
+          <AppInput
+              v-model="sign.name"
+              placeholder="Nome do sinal"
+              name="sign.name"
+          />
+        </label>
+        <label>
+          Link do video:
+          <AppInput
+              type="link"
+              v-model="sign.display"
+              placeholder="Link do video"
+              name="sign.display"
+          />
+          <small>Apenas links do youtube</small>
+        </label>
+      </section>
+
+      <label>Descrição do sinal <span class="tw-text-xs">*Campos não obrigatorios</span>
+        <AppTextarea
+            v-model="sign.description!.text"
+            placeholder="Escreva uma descrição para o sinal"
+        />
+        <AppInput
+            type="link"
+            v-model="sign.description!.display"
+            placeholder="Link do video"
+            name="sign.description.display"
+        />
+        <small>Apenas links do youtube</small>
+      </label>
+
+      <label>Exemplo de uso do sinal <span class="tw-text-xs">*Campos não obrigatorios</span>
+        <AppTextarea
+            v-model="sign.example!.description"
+            placeholder="Escreva uma descrição para uso"
+        />
+        <AppInput
+            type="link"
+            v-model="sign.example!.display"
+            placeholder="Link do video"
+            name="sign.example.display"
+        />
+        <small>Apenas links do youtube</small>
+      </label>
+
+      <legend>Selecione as palavras-chave</legend>
+      <KeywordSelect
+          v-model="sign.keywords"
       />
       <br />
-      <AppInput
-          v-model="sign.display"
-          placeholder="Link do video"
-          name="sign.display"
-      />
-      <small>Apenas links do youtube</small>
-    </div>
-    <div>
-      <p>descrição do sinal <span class="tw-text-xs">* Campos não obrigatorios</span></p>
-      <textarea
-          v-model="sign.description!.text"
-          placeholder="Descrição do sinal"
-          name="sign.description.text"
+
+      <legend>Selecione as materiais relacionadas</legend>
+      <SignSubjectSelect
+          v-model="sign.subjects"
       />
       <br />
-      <AppInput
-          v-model="sign.description!.display"
-          placeholder="Video descrevendo o sinal"
-          name="sign.description.display"
-      />
-      <small>Apenas links do youtube</small>
-    </div>
-    <div>
-      <p>Exemplo de uso do sinal <span class="tw-text-xs">* Campos não obrigatorios</span></p>
-      <AppInput
-          v-model="sign.example!.description"
-          placeholder="descrição do exemplo"
-          name="sign.example.description"
-      />
-      <br />
-      <AppInput
-          v-model="sign.example!.display"
-          placeholder="link do exemplo"
-          name="sign.example.display"
-      />
-      <small>Apenas links do youtube</small>
-    </div>
-    <button type="submit">Atualizar sinal</button>
-  </form>
+
+      <AppButton type="submit">Atualizar sinal</AppButton>
+    </AppForm>
+  </AppCard>
 </template>
 
 <script lang="ts">
@@ -80,7 +99,9 @@ export default defineComponent({
               example: {
                 description: '',
                 display: '',
-              }
+              },
+              keywords: [],
+              subjects: [],
             }
           })
         }

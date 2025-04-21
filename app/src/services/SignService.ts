@@ -25,11 +25,18 @@ export default class SignService extends Service {
         });
     }
 
-    static async find(id: number): Promise<{sign: SignType}> {
+    static async find(id: number, isEdit: boolean = false): Promise<{sign: SignType}> {
         const $axios = this.axiosInstance();
-        const { data } = await $axios.get('/api/signs/' + id); 
-        return {
-            sign: data,
+        if(isEdit) {
+            const { data } = await $axios.get('/api/signs/' + id + '/edit');
+            return {
+                sign: data,
+            }
+        } else {
+            const { data } = await $axios.get('/api/signs/' + id);
+            return {
+                sign: data,
+            }
         }
     }
 
