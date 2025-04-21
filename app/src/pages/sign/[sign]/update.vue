@@ -82,7 +82,7 @@ export default defineComponent({
       middleware: 'is-admin',
     });
 
-    const { id } = useRoute().params;
+    const { sign: id } = useRoute().params;
 
     const { data, status, execute, refresh } = useAsyncData(
         'fetchSign',

@@ -39,7 +39,7 @@ class SubjectController extends Controller
     {
         $subject->signs = $subject->signs()
             ->orderBy('name')
-            ->paginate();
+            ->paginate(8);
         return response($subject, 200);
     }
     /**

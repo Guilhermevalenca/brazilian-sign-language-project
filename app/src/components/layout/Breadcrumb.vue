@@ -1,7 +1,11 @@
 <template>
   <client-only>
-    <nav style="display: flex" class="breadcrumb">
-      <span class="breadcrumb-item" @click="navigateTo('/')">Pagina inicial </span>
+    <nav class="breadcrumb">
+      <span
+          class="breadcrumb-item"
+          @click="navigateTo('/')"
+          :class="{current: route.path === '/'}"
+      >Pagina inicial </span>
       <span
           class="breadcrumb-item"
           :class="{current: route.path === value.path}"

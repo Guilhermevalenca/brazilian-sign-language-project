@@ -13,6 +13,7 @@ Route::prefix('signs')
         Route::middleware(['auth:sanctum', 'ability:user-admin'])
             ->group(function() {
 
+                Route::get('/{sign}/edit','edit');
                 Route::post('/','store');
                 Route::put('/{sign}','update');
                 Route::delete('/{sign}','destroy');
