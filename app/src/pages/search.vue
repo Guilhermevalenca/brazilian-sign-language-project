@@ -1,41 +1,46 @@
 <template>
-  <fieldset>
-    <p>Filtros</p>
-    <div class="tw-flex tw-gap-2">
-      <div>
-        <input type="checkbox" v-model="filterOptions.courses" />
-        <label>Cursos</label>
+    <div class="results-screen">
+      <h2>Filtros</h2>
+
+      <div class="filters-container">
+        <label class="filter-item">
+          <input type="checkbox" v-model="filterOptions.courses" class="accent-blue-500" />
+          <span>Cursos</span>
+        </label>
+        <label class="filter-item">
+          <input type="checkbox" v-model="filterOptions.subjects" class="accent-green-500" />
+          <span>Matérias</span>
+        </label>
+        <label class="filter-item">
+          <input type="checkbox" v-model="filterOptions.signs" class="accent-purple-500" />
+          <span>Sinais</span>
+        </label>
       </div>
-      <div>
-        <input type="checkbox" v-model="filterOptions.subjects" />
-        <label>Materias</label>
-      </div>
-      <div>
-        <input type="checkbox" v-model="filterOptions.signs" />
-        <label>Sinais</label>
-      </div>
+
+        <h2>Resultados</h2>
+        <div class="content-results-screen">
+          <div class="results">
+            <h3>Cursos</h3>
+            <AppCard variant="list" v-for="(course , index) in courses " :key="course.id" @click="navigateTo(`/course/${course.id}`)"> {{ course.name }}</AppCard>
+            <EmptySection :content="courses"/>
+          </div>
+
+          <div class="results">
+            <h3>Matérias</h3>
+            <AppCard variant="list" v-for="(subject, index) in subjects" :key="subject.id" @click="navigateTo(`/subject/${subject.id}`)">{{ subject.name }}</AppCard>
+            <EmptySection :content="subjects"/>
+          </div>
+
+          <div class="results">
+            <h3>Sinais</h3>
+            <AppCard variant="list" v-for="(sign, index) in signs" :key="sign.id" @click="navigateTo(`/sign/${sign.id}`)">{{ sign.name }}</AppCard>
+              <EmptySection :content="signs"/>
+          </div>
+        </div>
+      <client-only>
+        <Pagination v-model:page="page" :lastPage="last_page" />
+      </client-only>
     </div>
-  </fieldset>
-  <client-only>
-    <Pagination v-model:page="page" :lastPage="last_page" />
-  </client-only>
-  <fieldset>
-    <p>Resultados:</p>
-    <div class="tw-flex tw-gap-2">
-      <div>
-        <p>Cursos</p>
-        <pre>{{ courses }}</pre>
-      </div>
-      <div>
-        <p>Materias</p>
-        <pre>{{ subjects }}</pre>
-      </div>
-      <div>
-        <p>Sinais</p>
-        <pre>{{ signs }}</pre>
-      </div>
-    </div>
-  </fieldset>
 </template>
 
 <script lang="ts">
@@ -128,3 +133,24 @@ export default defineComponent({
   }
 })
 </script>
+<style lang="scss" scoped>
+.results-screen{
+  display: flex;
+  flex-flow: column wrap;
+  gap: 1em;
+}
+.filters-container{
+  display: flex;
+  flex-flow: column wrap;
+}
+.content-results-screen{
+  display: flex;
+  flex-flow: column wrap;
+  align-items: flex-start;
+}
+.results{
+  display: flex;
+  flex-flow: column wrap;
+  gap: 0.5em;
+}
+</style>
