@@ -23,7 +23,7 @@ export default defineComponent({
     definePageMeta({
       middleware: 'is-admin',
     });
-    const { id } = useRoute().params;
+    const { keyword: id } = useRoute().params;
 
     const { data, status, execute, refresh } = useAsyncData(
         'fetchKeyword',

@@ -46,6 +46,7 @@
 <script lang="ts">
 import SystemSourceService, { type FilterOptionsType } from '~/services/SystemSourceService';
 import LoadingService from "~/services/LoadingService";
+import useBreadcrumbStore from "~/stores/useBreadcrumbStore";
 
 export default defineComponent({
   name: 'searchPage',
@@ -126,6 +127,10 @@ export default defineComponent({
       this.$swal.close();
     }
   },
+
+  mounted() {
+    useBreadcrumbStore().activeSearch();
+  }
 })
 </script>
 <style lang="scss" scoped>

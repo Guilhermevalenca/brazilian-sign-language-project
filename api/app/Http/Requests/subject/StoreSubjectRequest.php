@@ -23,8 +23,8 @@ class StoreSubjectRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string'],
-            'courses' => ['array'],
-            'courses.*' => ['integer', 'exists:courses,id'],
+            'courses' => ['nullable', 'array'],
+            'courses.*' => ['required_with:courses', 'integer', 'exists:courses,id'],
             'keywords' => ['required', 'array'],
             'keywords.*' => ['required', 'integer', 'exists:keywords,id'],
         ];

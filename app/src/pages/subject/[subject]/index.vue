@@ -1,44 +1,51 @@
 <template>
   <div class="content-container-list">
     <div class="content-title">
-      <h1>Disciplinas de: {{ course?.name }}</h1>
+      <h1>Sinais da disciplina: {{ subject?.name }}</h1>
     </div>
     <AppCard
-        v-for="subject in course?.subjects ?? []" :key="subject.id"
-        tabindex="1"
         variant="list"
-        role="button"
-        @click="navigateTo(`/subject/${subject.id}`)"
+        v-for="sign in subject?.signs ?? []" :key="sign.id"
+        @click="navigateTo(`/sign/${sign.id}`)"
     >
-      <ul>{{ subject.name }}</ul>
+      <div class="video-previa">
+        <LazyClientOnly>
+          <iframe
+              allow="autoplay; encrypted-media"
+              :src="`${sign.display}${sign.display.includes('?') ? '&' : '?'}autoplay=0&mute=1`"
+              loading="lazy"
+          >
+          </iframe>
+        </LazyClientOnly>
+      </div>
+      {{ sign.name }}
     </AppCard>
   </div>
   <Pagination v-model:page="page" :lastPage="last_page" />
 </template>
 
 <script lang="ts">
-import CourseService from '~/services/CourseService';
+import SubjectService from '~/services/SubjectService';
 import useBreadcrumbStore from '~/stores/useBreadcrumbStore';
-import type { CourseType } from '~/types/Course';
+import type { SubjectType } from '~/types/Subject';
 import LoadingService from "~/services/LoadingService";
 
 export default defineComponent({
-  name: 'coursePage',
+  name: 'subjectPage',
 
   async setup() {
-    const { id } = useRoute().params;
+    const { subject: id } = useRoute().params;
     const page = ref(1);
 
     const { data, status, execute, refresh } = useAsyncData(
         'fetchSubject',
-        () => CourseService.find(Number(id), page.value),
+        () => SubjectService.find(Number(id), page.value),
         {
           default: () => ({
-            course: {
+            subject: {
               name: '',
-              image: '',
-              subjects: [],
-            } as CourseType,
+              signs: [],
+            },
             last_page: 1
           })
         }
@@ -47,6 +54,7 @@ export default defineComponent({
     onBeforeMount(() => {
       LoadingService.show();
       setTimeout(() => {
+        console.log(status.value);
         LoadingService.loaded(status.value, refresh);
       }, 300);
     });
@@ -58,11 +66,11 @@ export default defineComponent({
     execute();
 
     return {
-      course: computed((): CourseType => data.value.course),
+      subject: computed((): SubjectType => data.value.subject),
       page,
       last_page: computed(() => data.value.last_page),
       refresh,
-      id
+      id,
     }
   },
 
@@ -76,19 +84,26 @@ export default defineComponent({
       }
       this.$swal.fire({
         icon: 'info',
-        title: 'Carregando matérias',
+        title: 'Carregando sinais',
       });
       this.$swal.showLoading();
       await this.refresh();
       this.$swal.close();
     },
-    "course.name": {
+    ["subject.name"]: {
       handler($new) {
-        useBreadcrumbStore().activeCourse($new ?? '', '/course/' + this.id);
+        useBreadcrumbStore().activeSubject($new ?? '', '/subject/' + this.id);
       },
       deep: true,
-      immediate: true,
+      immediate: true
     }
-  },
+  }
 })
 </script>
+<style lang="scss" scoped>
+iframe{
+  width: 120px;
+  height: 80px;
+  border: none;
+}
+</style>

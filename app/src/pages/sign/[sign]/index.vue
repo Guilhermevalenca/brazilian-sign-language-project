@@ -39,14 +39,12 @@
     </AppCard>
 
   </div>
-  </template>
+</template>
 
 <script lang="ts">
-
 import SignService from '~/services/SignService';
 import useBreadcrumbStore from '~/stores/useBreadcrumbStore';
 import type { SignType } from '~/types/Sign';
-import SubjectService from "~/services/SubjectService";
 import LoadingService from "~/services/LoadingService";
 import {SignDescriptionView} from "#components";
 import {SignExampleView} from "#components";
@@ -57,7 +55,7 @@ export default defineComponent({
   components: {SignDescriptionView,SignExampleView,SignView},
   async setup() {
     const currentComponent= ref('SignView');
-    const { id } = useRoute().params;
+    const { sign: id } = useRoute().params;
 
     const { data, status, execute, refresh } = useAsyncData(
         'fetchSubject',
