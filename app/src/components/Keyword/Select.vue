@@ -137,8 +137,8 @@ export default defineComponent({
   },
 
   async mounted() {
-    setTimeout(() => {
-      this.getAllKeywords();
+    setTimeout(async () => {
+      await this.getAllKeywords();
     }, 300);
   }
 });

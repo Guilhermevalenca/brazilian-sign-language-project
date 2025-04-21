@@ -86,7 +86,7 @@ export default defineComponent({
 
     const { data, status, execute, refresh } = useAsyncData(
         'fetchSign',
-        () => SignService.find(Number(id)),
+        () => SignService.find(Number(id), true),
         {
           default: () => ({
             sign: {
@@ -149,7 +149,7 @@ export default defineComponent({
           showConfirmButton: true,
           confirmButtonText: 'OK',
         });
-        navigateTo(-1);
+        navigateTo('/');
       } catch (e) {
         this.$swal.fire({
           icon: 'error',

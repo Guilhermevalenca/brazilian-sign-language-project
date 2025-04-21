@@ -13,7 +13,7 @@
             type="checkbox"
             :id="`select-${value.id}-${id}`"
             @input="(event) => inputAction(event.target?.checked, value)"
-            :checked="selected.includes(value)"
+            :checked="isIncluded(value)"
         />
         {{ value[labelInput] }}
       </label>
@@ -27,7 +27,7 @@ export default defineComponent({
 
   props: {
     modelValue: {
-      type: Array,
+      type: Array as PropType<any[]>,
       require: true,
     },
     items: {
@@ -81,11 +81,10 @@ export default defineComponent({
         internalSelected = this.selected.filter((item: any) => item.id !== value.id);
       }
       this.selected = internalSelected;
+    },
+    isIncluded(value: any) {
+      return this.selected.some((item: any) => item.id === value.id);
     }
-  },
-
-  mounted() {
-    console.log(this.items);
   }
 })
 </script>
