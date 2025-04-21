@@ -9,13 +9,13 @@
       <span
           class="breadcrumb-item"
           :class="{current: route.path === value.path}"
-        v-for="(value, index) in breadcrumb.path"
-        :key="index"
-        @click="navigateTo(value.path)"
+          v-for="(value, index) in breadcrumb.path"
+          :key="index"
+          @click="navigateTo(value.path)"
       >
         <span class="breadcrumb-separator"> > </span>
         <span>
-           {{ value.activated }} : {{ value.name }}
+           {{ value.activated }} <span v-show="value.name">: {{ value.name }}</span>
         </span>
       </span>
     </nav>
