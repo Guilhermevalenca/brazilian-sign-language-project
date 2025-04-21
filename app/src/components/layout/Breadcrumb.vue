@@ -33,11 +33,6 @@ export default defineComponent({
     route: useRoute(),
     router: useRouter(),
   }),
-  methods:{
-    navigateTo(path:string){
-      this.router.push(path)
-    }
-  },
 
   mounted() {
     window.addEventListener("beforeunload", (event) => {
