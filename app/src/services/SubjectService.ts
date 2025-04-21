@@ -13,7 +13,7 @@ export default class SubjectService extends Service {
                 page,
             }
         });
-        
+
         return {
             subjects: data,
             last_page,
@@ -43,5 +43,27 @@ export default class SubjectService extends Service {
             },
             last_page: data.signs.last_page
         }
+    }
+
+    static async edit(id: number) {
+        const $axios = this.axiosInstance();
+        const { data } = await $axios.get('api/subjects/' + id + '/edit');
+        return {
+            subject: {
+                id: data.id,
+                name: data.name,
+                keywords: data.keywords ?? [],
+                courses: data.courses ?? [],
+            },
+        }
+    }
+
+    static async update(subject: SubjectType, id: number) {
+        const $axios = this.axiosInstance();
+        return $axios.put('/api/subjects/' + id, {
+            ...subject,
+            keywords: subject.keywords?.map((keyword: KeywordType) => keyword.id),
+            courses: subject.courses?.map((course: CourseType) => course.id),
+        });
     }
 }
