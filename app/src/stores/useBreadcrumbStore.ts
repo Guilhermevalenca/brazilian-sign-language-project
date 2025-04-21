@@ -18,7 +18,7 @@ export default defineStore('breadcrumb', {
       path: ''
     },
     search: {
-      isActive: false
+      isActive: false,
     }
    }),
   actions: {
@@ -65,7 +65,7 @@ export default defineStore('breadcrumb', {
         return [{
           activated: 'busca',
           name: '',
-          path: ''
+          path: '/search'
         }];
       }
 
