@@ -71,6 +71,7 @@ header {
   z-index: 0;
   position: fixed;
   width: 100vw;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
 }
 .header-content{
   box-sizing: border-box;

@@ -1,6 +1,7 @@
 <template>
   <div class="content-container">
     <iframe
+        v-if="sign?.display === String"
         class="medium-iframe"
         :src="sign?.description?.display"
         allowfullscreen

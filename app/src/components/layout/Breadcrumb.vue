@@ -1,13 +1,18 @@
 <template>
   <client-only>
-    <nav style="display: flex">
-      <span @click="navigateTo('/')"> > Pagina inicial </span>
+    <nav style="display: flex" class="breadcrumb">
+      <span class="breadcrumb-item" @click="navigateTo('/')">Pagina inicial </span>
       <span
+          class="breadcrumb-item"
+          :class="{current: route.path === value.path}"
         v-for="(value, index) in breadcrumb.path"
         :key="index"
         @click="navigateTo(value.path)"
       >
-          > {{ value.activated }} : {{ value.name }}
+        <span class="breadcrumb-separator"> > </span>
+        <span>
+           {{ value.activated }} : {{ value.name }}
+        </span>
       </span>
     </nav>
   </client-only>
@@ -20,8 +25,15 @@ export default defineComponent({
   name: "Breadcrumb",
 
   data: () => ({
-    breadcrumb: useBreadcrumbStore()
+    breadcrumb: useBreadcrumbStore(),
+    route: useRoute(),
+    router: useRouter(),
   }),
+  methods:{
+    navigateTo(path:string){
+      this.router.push(path)
+    }
+  },
 
   mounted() {
     window.addEventListener("beforeunload", (event) => {
@@ -44,8 +56,23 @@ export default defineComponent({
 });
 </script>
 
-<style>
-span{
-  cursor: pointer ;
+<style lang="scss" scoped>
+.breadcrumb{
+  display:flex;
+  gap: 0.5em;
+}
+.breadcrumb-item{
+  cursor: pointer;
+  user-select: none;
+  &.clickable {
+    cursor: pointer;
+    &:hover {
+      color: $primary-color-hovered;
+      text-decoration: underline;
+    }
+  }
+}
+.current{
+  color: $primary-color-hovered;
 }
 </style>
