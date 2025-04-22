@@ -84,7 +84,6 @@ export default defineComponent({
         return this.modelValue;
       },
       set(value: KeywordType[]) {
-        console.log(value);
         this.$emit('update:modelValue', value);
       }
     }
@@ -137,8 +136,8 @@ export default defineComponent({
   },
 
   async mounted() {
-    setTimeout(() => {
-      this.getAllKeywords();
+    setTimeout(async () => {
+      await this.getAllKeywords();
     }, 300);
   }
 });

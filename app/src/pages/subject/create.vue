@@ -26,7 +26,7 @@
       <KeywordSelect
           v-model="subject.keywords"
       />
-      <AppButton type="submit">Adicionar Material</AppButton>
+      <AppButton type="submit">Adicionar Materia</AppButton>
     </AppForm>
   </AppCard>
 </template>
@@ -62,7 +62,7 @@ export default defineComponent({
           showConfirmButton: true,
           confirmButtonText: 'OK',
         });
-        navigateTo(-1);
+        navigateTo('/');
       } catch(error) {
         this.$swal.fire({
           icon: 'error',

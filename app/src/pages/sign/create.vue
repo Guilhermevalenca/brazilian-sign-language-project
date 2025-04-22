@@ -122,7 +122,7 @@ export default defineComponent({
           showConfirmButton: true,
           confirmButtonText: 'OK',
         });
-        navigateTo(-1);
+        navigateTo('/');
       } catch (e) {
         this.$swal.fire({
           icon: 'error',

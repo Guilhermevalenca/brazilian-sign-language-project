@@ -12,8 +12,9 @@ Route::prefix('subjects')
 
         //Route::middleware(['auth:sanctum', 'ability:user-admin'])
         //->group(function () {
-    
+
         Route::post('/', 'store');
+        Route::get('/{subject}/edit', 'edit');
         Route::put('/{subject}', 'update');
         Route::delete('/{subject}', 'destroy');
 

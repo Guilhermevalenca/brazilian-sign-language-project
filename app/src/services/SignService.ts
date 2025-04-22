@@ -25,17 +25,45 @@ export default class SignService extends Service {
         });
     }
 
-    static async find(id: number): Promise<{sign: SignType}> {
+    static async find(id: number, isEdit: boolean = false): Promise<{sign: SignType}> {
         const $axios = this.axiosInstance();
-        const { data } = await $axios.get('/api/signs/' + id); 
-        return {
-            sign: data,
+        if(isEdit) {
+            const { data } = await $axios.get('/api/signs/' + id + '/edit');
+            console.log(data);
+            return {
+                sign: {
+                    id: data.id,
+                    name: data.name,
+                    display: data.display,
+                    description: data.description ?? {
+                        sign_id: data.id,
+                        text: '',
+                        display: '',
+                    },
+                    example: data.example ?? {
+                        sign_id: data.id,
+                        description: '',
+                        display: '',
+                    },
+                    keywords: data.keywords ?? [],
+                    subjects: data.subjects ?? [],
+                },
+            }
+        } else {
+            const { data } = await $axios.get('/api/signs/' + id);
+            return {
+                sign: data,
+            }
         }
     }
 
     static async update(sign: SignType, id: number) {
         const $axios = this.axiosInstance();
-        return $axios.put('/api/signs/' + id, sign);
+        return $axios.put('/api/signs/' + id, {
+            ...sign,
+            keywords: sign.keywords?.map((keyword: KeywordType) => keyword.id),
+            subjects: sign.subjects?.map((subject: KeywordType) => subject.id),
+        });
     }
 
     static async delete(id: number) {

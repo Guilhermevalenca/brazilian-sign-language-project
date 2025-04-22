@@ -1,13 +1,19 @@
 <template>
-  <div class="content-container">
-    <iframe
-        class="medium-iframe"
-        :src="sign?.description?.display"
-        allowfullscreen
-    >
-    </iframe>
-    {{ sign?.description?.text }}
-  </div>
+    <div v-if="sign?.description" class="content-container">
+      <iframe
+          v-if="sign?.description?.display"
+          class="medium-iframe"
+          :src="sign?.description?.display"
+          allowfullscreen
+      >
+      </iframe>
+      <p class="content-text">
+        {{ sign?.description?.text }}
+      </p>
+    </div>
+    <div v-else class="content-container">
+      <EmptySection/>
+    </div>
 </template>
 
 <script lang="ts">

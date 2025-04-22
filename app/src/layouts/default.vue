@@ -3,6 +3,7 @@
   <main>
     <section>
       <LayoutBreadcrumb />
+      <LayoutBackButton v-show="!isHome"/>
       <slot />
     </section>
   </main>
@@ -19,6 +20,11 @@ export default defineComponent({
   data: () => ({
     user: null as null | ReturnType<typeof useUserStore>
   }),
+  computed:{
+    isHome(){
+      return useRoute().path === "/"
+    }
+  },
 
   mounted() {
     this.user = useUserStore();
@@ -28,9 +34,8 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 section {
-  margin: 0 auto;
+  margin: 8em auto 0 auto;
   width: 60vw;
-  margin-top: 8em;
   overflow-y: auto;
 }
 </style>

@@ -1,12 +1,18 @@
 <template>
-  <div class="content-container">
+  <div v-if="sign?.example" class="content-container">
     <iframe
+        v-if="sign?.example?.display"
         class="medium-iframe"
         :src="sign?.example?.display"
         allowfullscreen
     >
     </iframe>
-    {{ sign?.example?.description }}
+    <p class="content-text">
+      {{ sign?.example?.description }}
+    </p>
+  </div>
+  <div v-else class="content-container">
+    <EmptySection/>
   </div>
 </template>
 

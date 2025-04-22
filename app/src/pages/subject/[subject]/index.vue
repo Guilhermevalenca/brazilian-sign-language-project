@@ -4,6 +4,7 @@
       <h1>Sinais da disciplina: {{ subject?.name }}</h1>
     </div>
     <AppCard
+        class="sign-view"
         variant="list"
         v-for="sign in subject?.signs ?? []" :key="sign.id"
         @click="navigateTo(`/sign/${sign.id}`)"
@@ -34,7 +35,7 @@ export default defineComponent({
   name: 'subjectPage',
 
   async setup() {
-    const { id } = useRoute().params;
+    const { subject: id } = useRoute().params;
     const page = ref(1);
 
     const { data, status, execute, refresh } = useAsyncData(
@@ -105,5 +106,9 @@ iframe{
   width: 120px;
   height: 80px;
   border: none;
+  border-radius: 1em;
+}
+.sign-view{
+  padding: 0.5em;
 }
 </style>

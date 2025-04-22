@@ -26,7 +26,7 @@ export default defineComponent({
   name: 'coursePage',
 
   async setup() {
-    const { id } = useRoute().params;
+    const { course: id } = useRoute().params;
     const page = ref(1);
 
     const { data, status, execute, refresh } = useAsyncData(

@@ -5,43 +5,46 @@
   <span class="tw-text-xs">*Esta opção apagará o contéudo para sempre</span>
   <br />
   <div class="content-container">
-    <div class="views-menu">
-      <div
-          @click="currentComponent = 'SignView'"
-          :class="{ active: currentComponent === 'SignView' }"
-          role="button"
-          tabindex="1"
-      >Sinal
+    <transition name="slide">
+      <div class="views-menu">
+        <div
+            @click="currentComponent = 'SignView'"
+            :class="{ active: currentComponent === 'SignView' }"
+            role="button"
+            tabindex="1"
+        >Sinal
+        </div>
+
+        <div
+            @click="currentComponent = 'SignDescriptionView'"
+            :class="{ active: currentComponent === 'SignDescriptionView' }"
+            role="button"
+            tabindex="1"
+        >Descrição do sinal
+        </div>
+
+        <div
+            @click="currentComponent = 'SignExampleView'"
+            :class="{ active: currentComponent === 'SignExampleView' }"
+            role="button"
+            tabindex="1"
+        >Exemplo de uso
+        </div>
+
       </div>
-      <div
-          @click="currentComponent = 'SignDescriptionView'"
-          :class="{ active: currentComponent === 'SignDescriptionView' }"
-          role="button"
-          tabindex="1"
-      >Descrição do sinal
-      </div>
-      <div
-          @click="currentComponent = 'SignExampleView'"
-          :class="{ active: currentComponent === 'SignExampleView' }"
-          role="button"
-          tabindex="1"
-      >Exemplo de uso
-      </div>
-    </div>
+    </transition>
     <AppCard variant="default" class="abacate">
       <component :is="currentComponent" :sign="sign"
       />
     </AppCard>
 
   </div>
-  </template>
+</template>
 
 <script lang="ts">
-
 import SignService from '~/services/SignService';
 import useBreadcrumbStore from '~/stores/useBreadcrumbStore';
 import type { SignType } from '~/types/Sign';
-import SubjectService from "~/services/SubjectService";
 import LoadingService from "~/services/LoadingService";
 import {SignDescriptionView} from "#components";
 import {SignExampleView} from "#components";
@@ -52,7 +55,7 @@ export default defineComponent({
   components: {SignDescriptionView,SignExampleView,SignView},
   async setup() {
     const currentComponent= ref('SignView');
-    const { id } = useRoute().params;
+    const { sign: id } = useRoute().params;
 
     const { data, status, execute, refresh } = useAsyncData(
         'fetchSubject',
@@ -107,7 +110,7 @@ export default defineComponent({
           showConfirmButton: true,
           confirmButtonText: 'OK',
         });
-        navigateTo(-1);
+        navigateTo('/');
       } catch(e) {
         console.log(e);
       }
@@ -146,6 +149,12 @@ export default defineComponent({
     border-top-right-radius: 1em;
     border-top-left-radius: 1em;
     cursor: pointer;
+    user-select: none;
+  }
+  div:hover{
+      justify-self: center;
+      transform: scale(1,1);
+      background-color: $primary-color-hovered;
   }
   div.active{
     background-color: $tertiary-color;
@@ -159,4 +168,14 @@ export default defineComponent({
   border-top-left-radius: 0em;
   padding: 2em;
 }
+.slide-enter-active,
+.slide-leave-active {
+  transition: all 0.3s ease;
+}
+.slide-enter-from,
+.slide-leave-to {
+  transform: translateY(-20px);
+  opacity: 0;
+}
+
 </style>
