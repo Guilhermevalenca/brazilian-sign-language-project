@@ -77,7 +77,8 @@ export default class CourseService extends Service {
         }
 
         if(typeof course.image === 'string') {
-            delete data?.image;
+            //@ts-ignore
+            delete data.image;
             headers['Content-Type'] = 'application/json';
         }
 
