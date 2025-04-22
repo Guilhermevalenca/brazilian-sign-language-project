@@ -5,7 +5,7 @@
   <span class="tw-text-xs">*Esta opção apagará o contéudo para sempre</span>
   <br />
   <div class="content-container">
-    <transition-group name="contents">
+    <transition name="slide">
       <div class="views-menu">
         <div
             @click="currentComponent = 'SignView'"
@@ -32,7 +32,7 @@
         </div>
 
       </div>
-    </transition-group>
+    </transition>
     <AppCard variant="default" class="abacate">
       <component :is="currentComponent" :sign="sign"
       />
@@ -149,6 +149,12 @@ export default defineComponent({
     border-top-right-radius: 1em;
     border-top-left-radius: 1em;
     cursor: pointer;
+    user-select: none;
+  }
+  div:hover{
+      justify-self: center;
+      transform: scale(1,1);
+      background-color: $primary-color-hovered;
   }
   div.active{
     background-color: $tertiary-color;
@@ -162,13 +168,14 @@ export default defineComponent({
   border-top-left-radius: 0em;
   padding: 2em;
 }
-.contents-enter-active,
-.contents-leave-active {
-  transition: all 0.5s ease;
+.slide-enter-active,
+.slide-leave-active {
+  transition: all 0.3s ease;
 }
-.contents-enter-from,
-.contents-leave-to {
+.slide-enter-from,
+.slide-leave-to {
+  transform: translateY(-20px);
   opacity: 0;
-  transform: translateX(30px);
 }
+
 </style>
