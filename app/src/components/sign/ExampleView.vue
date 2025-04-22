@@ -1,21 +1,22 @@
 <template>
-  <div class="content-container">
+  <div v-if="sign?.example" class="content-container">
     <iframe
-        v-if="sign?.display === String"
+        v-if="sign?.example?.display"
         class="medium-iframe"
         :src="sign?.example?.display"
         allowfullscreen
     >
     </iframe>
-    <p>
+    <p class="content-text">
       {{ sign?.example?.description }}
     </p>
+  </div>
+  <div v-else class="content-container">
+    <EmptySection/>
   </div>
 </template>
 
 <script lang="ts">
-
-
 export default {
   name: 'ExampleView',
   props:{
@@ -25,7 +26,5 @@ export default {
 </script>
 
 <style scoped lang="scss">
-p{
-  padding: 1em;
-}
+
 </style>

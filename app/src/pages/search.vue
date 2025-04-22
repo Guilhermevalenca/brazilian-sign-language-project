@@ -21,20 +21,22 @@
         <div class="content-results-screen">
           <div class="results">
             <h3>Cursos</h3>
-            <AppCard variant="list" v-for="(course , index) in courses " :key="course.id" @click="navigateTo(`/course/${course.id}`)"> {{ course.name }}</AppCard>
-            <EmptySection :content="courses"/>
+            <AppCard variant="list"  v-for="(course , index) in courses " :key="course.id" @click="navigateTo(`/course/${course.id}`)"> {{ course.name }}</AppCard>
+            <EmptySection/>
           </div>
 
           <div class="results">
             <h3>Matérias</h3>
-            <AppCard variant="list" v-for="(subject, index) in subjects" :key="subject.id" @click="navigateTo(`/subject/${subject.id}`)">{{ subject.name }}</AppCard>
-            <EmptySection :content="subjects"/>
+            <div v-if="!subjects">
+              <AppCard variant="list" v-for="(subject, index) in subjects" :key="subject.id" @click="navigateTo(`/subject/${subject.id}`)">{{ subject.name }}</AppCard>
+            </div>
+            <EmptySection v-else/>
           </div>
 
           <div class="results">
             <h3>Sinais</h3>
             <AppCard variant="list" v-for="(sign, index) in signs" :key="sign.id" @click="navigateTo(`/sign/${sign.id}`)">{{ sign.name }}</AppCard>
-              <EmptySection :content="signs"/>
+              <EmptySection/>
           </div>
         </div>
       <client-only>
