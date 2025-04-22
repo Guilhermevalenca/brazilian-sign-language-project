@@ -84,7 +84,6 @@ export default defineComponent({
         return this.modelValue;
       },
       set(value: KeywordType[]) {
-        console.log(value);
         this.$emit('update:modelValue', value);
       }
     }

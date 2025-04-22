@@ -1,5 +1,6 @@
 import { type CourseType } from "~/types/Course";
 import Service from "~/services/Service";
+import type {KeywordType} from "~/types/Keyword";
 
 export default class CourseService extends Service {
     static async fetch(
@@ -18,11 +19,11 @@ export default class CourseService extends Service {
         }
     }
 
-    static async create(course: CourseType, keywords: number[]) {
+    static async create(course: CourseType) {
         const $axios = this.axiosInstance();
         return $axios.post('/api/courses', {
             ...course,
-            keywords,
+            keywords: course.keywords?.map((keyword: KeywordType) => keyword.id),
         }, {
             headers: {
                 'Content-Type': 'multipart/form-data'
@@ -46,5 +47,44 @@ export default class CourseService extends Service {
             } as CourseType,
             last_page: data.subjects.last_page
         }
+    }
+
+    static async edit(id: number) {
+        const $axios = this.axiosInstance();
+        const { data } = await $axios.get('api/courses/' + id + '/edit');
+        return {
+            course: {
+                id: data.id,
+                name: data.name,
+                image: data.image,
+                keywords: data.keywords ?? [],
+            },
+        }
+    }
+
+    static async update(course: CourseType, id: number) {
+        const $axios = this.axiosInstance();
+
+        const data = {
+            ...course,
+            keywords: course.keywords?.map((keyword: KeywordType) => keyword.id) ?? [],
+        } as CourseType & {
+            image?: string | File;
+            keywords: number[];
+        }
+        const headers = {
+            'Content-Type': 'multipart/form-data'
+        }
+
+        if(typeof course.image === 'string') {
+            delete data?.image;
+            headers['Content-Type'] = 'application/json';
+        }
+
+        console.log(data);
+
+        return $axios.put('/api/courses/' + id, data, {
+            headers,
+        });
     }
 }
