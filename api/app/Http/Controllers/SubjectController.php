@@ -42,6 +42,14 @@ class SubjectController extends Controller
             ->paginate(8);
         return response($subject, 200);
     }
+
+    public function edit(Subject $subject) {
+        $subject->load([
+            'courses',
+            'keywords'
+        ]);
+        return response($subject, 200);
+    }
     /**
      * Update the specified resource in storage.
      */
