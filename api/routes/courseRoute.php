@@ -14,6 +14,7 @@ Route::prefix('courses')
             ->group(function () {
 
                 Route::post('/', 'store');
+                Route::get('/{course}/edit', 'edit');
                 Route::put('/{course}', 'update');
                 Route::delete('/{course}', 'destroy');
 

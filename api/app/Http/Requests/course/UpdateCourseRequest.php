@@ -23,11 +23,11 @@ class UpdateCourseRequest extends FormRequest
     {
         return [
             'name' => ['string'],
-            'subjects' => ['nullable'],
-            'subjects.*' => ['integer', 'exists:subjects,id'],
-            'image' => ['image', 'mimes:jpeg,png,jpg,gif,svg'],
+            'subjects' => ['nullable', 'array'],
+            'subjects.*' => ['required_with:subjects', 'integer', 'exists:subjects,id'],
+            'image' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,svg'],
             'keywords' => ['required'],
-            'keywords.*' => ['integer', 'exists:keywords,id'],
+            'keywords.*' => ['required_with:keywords', 'integer', 'exists:keywords,id'],
         ];
     }
 }

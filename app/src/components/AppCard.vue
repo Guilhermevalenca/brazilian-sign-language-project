@@ -36,7 +36,7 @@ name: "AppCard",
   justify-content: center;
   background-color: $tertiary-color;
   padding: 2rem;
-  width: 35vw;
+  min-width: 35vw;
   height: fit-content;
   box-shadow: 0 1px 1px  0 rgba(0, 0, 0, 0.2);
   border-radius: 2rem;
@@ -45,7 +45,7 @@ name: "AppCard",
   @extend .card-default;
   padding: 1em;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
   cursor: pointer;
 }

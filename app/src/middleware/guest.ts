@@ -1,6 +1,15 @@
+import Service from "~/services/Service";
+
 export default defineNuxtRouteMiddleware((to, from) => {
-    const token = useCookie('token').value;
-    if(token) {
-        return navigateTo('/');
-    }
+    setTimeout(async () => {
+        try {
+            const $axios = Service.axiosInstance();
+            await $axios.get('/api/users');
+            return navigateTo('/', {
+                redirectCode: 301
+            });
+        } catch(e) {
+            return;
+        }
+    }, 1);
 });

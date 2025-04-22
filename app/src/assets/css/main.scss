@@ -53,3 +53,12 @@ legend{
   @extend .content-container;
   gap:0.5rem;
 }
+.medium-iframe{
+  border-radius: 2em;
+  width:560px;
+  height:315px;
+}
+.content-text{
+  padding: 1em;
+  text-align: left;
+}

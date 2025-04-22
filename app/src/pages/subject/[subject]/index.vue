@@ -1,22 +1,25 @@
 <template>
   <div class="content-container-list">
     <div class="content-title">
-      <h1>Sinais da disciplina: {{ subject.name }}</h1>
+      <h1>Sinais da disciplina: {{ subject?.name }}</h1>
     </div>
     <AppCard
+        class="sign-view"
         variant="list"
-        v-for="sign in subject.signs" :key="sign.id"
-        @click="$router.push(`/sign/${sign.id}`)"
+        v-for="sign in subject?.signs ?? []" :key="sign.id"
+        @click="navigateTo(`/sign/${sign.id}`)"
     >
-      {{ sign.name }}
       <div class="video-previa">
-        <iframe
-            allow="autoplay; encrypted-media"
-            :src="`${sign.display}${sign.display.includes('?') ? '&' : '?'}autoplay=1&mute=1`"
-            loading="lazy"
-        >
-        </iframe>
+        <LazyClientOnly>
+          <iframe
+              allow="autoplay; encrypted-media"
+              :src="`${sign.display}${sign.display.includes('?') ? '&' : '?'}autoplay=0&mute=1`"
+              loading="lazy"
+          >
+          </iframe>
+        </LazyClientOnly>
       </div>
+      {{ sign.name }}
     </AppCard>
   </div>
   <Pagination v-model:page="page" :lastPage="last_page" />
@@ -32,7 +35,7 @@ export default defineComponent({
   name: 'subjectPage',
 
   async setup() {
-    const { id } = useRoute().params;
+    const { subject: id } = useRoute().params;
     const page = ref(1);
 
     const { data, status, execute, refresh } = useAsyncData(
@@ -52,6 +55,7 @@ export default defineComponent({
     onBeforeMount(() => {
       LoadingService.show();
       setTimeout(() => {
+        console.log(status.value);
         LoadingService.loaded(status.value, refresh);
       }, 300);
     });
@@ -87,7 +91,7 @@ export default defineComponent({
       await this.refresh();
       this.$swal.close();
     },
-    "subject.name": {
+    ["subject.name"]: {
       handler($new) {
         useBreadcrumbStore().activeSubject($new ?? '', '/subject/' + this.id);
       },
@@ -98,9 +102,13 @@ export default defineComponent({
 })
 </script>
 <style lang="scss" scoped>
-frame{
+iframe{
   width: 120px;
   height: 80px;
   border: none;
+  border-radius: 1em;
+}
+.sign-view{
+  padding: 0.5em;
 }
 </style>

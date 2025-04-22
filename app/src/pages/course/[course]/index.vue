@@ -1,15 +1,14 @@
 <template>
   <div class="content-container-list">
     <div class="content-title">
-      <h1>Disciplinas de: {{ course.name }}</h1>
+      <h1>Disciplinas de: {{ course?.name }}</h1>
     </div>
     <AppCard
-        v-for="subject in course.subjects"
+        v-for="subject in course?.subjects ?? []" :key="subject.id"
         tabindex="1"
         variant="list"
         role="button"
-        :key="subject.id"
-        @click="$router.push(`/subject/${subject.id}`)"
+        @click="navigateTo(`/subject/${subject.id}`)"
     >
       <ul>{{ subject.name }}</ul>
     </AppCard>
@@ -27,7 +26,7 @@ export default defineComponent({
   name: 'coursePage',
 
   async setup() {
-    const { id } = useRoute().params;
+    const { course: id } = useRoute().params;
     const page = ref(1);
 
     const { data, status, execute, refresh } = useAsyncData(

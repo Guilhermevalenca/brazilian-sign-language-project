@@ -1,8 +1,9 @@
 import type { UserType } from "~/types/User";
+import Service from "~/services/Service";
 
-export default class ProfileService {
+export default class ProfileService extends Service {
     static async updateProfile(user: UserType) {
-        const { $axios } = useNuxtApp();
+        const $axios = this.axiosInstance();
 
         return $axios.put('/api/users', {
             name: user.name,
@@ -11,7 +12,7 @@ export default class ProfileService {
     }
 
     static async updatePassword(user: UserType) {
-        const { $axios } = useNuxtApp();
+        const $axios = this.axiosInstance();
 
         return $axios.put('/api/users/password', {
             password: user.password,
@@ -21,7 +22,7 @@ export default class ProfileService {
     }
 
     static async deleteAccount(password: string) {
-        const { $axios } = useNuxtApp();
+        const $axios = this.axiosInstance();
 
         return $axios.delete('/api/users', {
             data: {

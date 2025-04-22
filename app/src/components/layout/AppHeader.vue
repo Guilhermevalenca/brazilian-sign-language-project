@@ -7,14 +7,14 @@
           </button>
         </div>
         <div  class="logo">
-          <button @click="$router.push('/')">
+          <button @click="navigateTo('/')">
             <img src="~/assets/logos/our-logo.svg" width="288px" height="78px">
           </button>
         </div>
         <SearchingBar/>
         <div v-if="!userStore?.data" class="auth-container">
-          <AppButton variant="default" @click="$router.push('/auth/login')"> Login </AppButton>
-          <AppButton varaiant="default" @click="$router.push('/auth/register')"> Cadastre-se </AppButton>
+          <AppButton variant="default" @click="navigateTo('/auth/login')"> Login </AppButton>
+          <AppButton varaiant="default" @click="navigateTo('/auth/register')"> Cadastre-se </AppButton>
         </div>
         <div v-else>
           <span>{{ userStore.data?.name }}</span>
@@ -48,7 +48,7 @@ export default defineComponent({
     async logout() {
       await AuthService.logout();
       this.userStore!.resetDatas();
-      this.$router.push('/auth/login');
+      navigateTo('/auth/login');
     },
     showMenu(){
       this.isVisibleHere = !this.isVisibleHere;
@@ -71,6 +71,7 @@ header {
   z-index: 0;
   position: fixed;
   width: 100vw;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
 }
 .header-content{
   box-sizing: border-box;

@@ -1,15 +1,24 @@
 <template>
   <client-only>
-    <div style="display: flex">
-      <span @click="$router.push('/')">-> Pagina inicial</span>
-      <div
-        v-for="(value, index) in breadcrumb.path" 
-        :key="index"
-        @click="$router.push(value.path)"
+    <nav class="breadcrumb">
+      <span
+          class="breadcrumb-item"
+          @click="navigateTo('/')"
+          :class="{current: route.path === '/'}"
+      >Pagina inicial </span>
+      <span
+          class="breadcrumb-item"
+          :class="{current: route.path === value.path}"
+          v-for="(value, index) in breadcrumb.path"
+          :key="index"
+          @click="navigateTo(value.path)"
       >
-        -> {{ value.activated }} - {{ value.name }}
-      </div>
-    </div>
+        <span class="breadcrumb-separator"> > </span>
+        <span>
+           {{ value.activated }} <span v-show="value.name">: {{ value.name }}</span>
+        </span>
+      </span>
+    </nav>
   </client-only>
 </template>
 
@@ -20,7 +29,9 @@ export default defineComponent({
   name: "Breadcrumb",
 
   data: () => ({
-    breadcrumb: useBreadcrumbStore()
+    breadcrumb: useBreadcrumbStore(),
+    route: useRoute(),
+    router: useRouter(),
   }),
 
   mounted() {
@@ -32,7 +43,7 @@ export default defineComponent({
         sign: this.breadcrumb.sign
       }));
     });
-    
+
     const breadcrumb = localStorage.getItem('breadcrumb');
     if (breadcrumb) {
       const parsedBreadcrumb = JSON.parse(breadcrumb);
@@ -41,10 +52,27 @@ export default defineComponent({
       this.breadcrumb.sign = parsedBreadcrumb.sign;
     }
   },
-
 });
 </script>
 
-<style>
-
+<style lang="scss" scoped>
+.breadcrumb{
+  margin: 1em;
+  display:flex;
+  gap: 0.5em;
+}
+.breadcrumb-item{
+  cursor: pointer;
+  user-select: none;
+  &.clickable {
+    cursor: pointer;
+    &:hover {
+      color: $primary-color-hovered;
+      text-decoration: underline;
+    }
+  }
+}
+.current{
+  color: $primary-color-hovered;
+}
 </style>

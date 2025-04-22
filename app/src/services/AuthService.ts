@@ -1,10 +1,10 @@
-import type {UserType} from "~/types/User";
-import type {AxiosInstance} from "axios";
+import type { UserType } from "~/types/User";
+import Service from "~/services/Service";
 
-export default class AuthService {
+export default class AuthService extends Service {
 
     static async login(user: UserType): Promise<boolean> {
-        const { $axios } = useNuxtApp();
+        const $axios = this.axiosInstance();
         return $axios.post('api/users/login', {
             email: user.email,
             password: user.password,
@@ -22,7 +22,7 @@ export default class AuthService {
     }
 
     static async logout() {
-        const { $axios } = useNuxtApp();
+        const $axios = this.axiosInstance();
         await $axios.post('api/users/logout');
         delete $axios.defaults.headers.common['Authorization'];
 
@@ -31,7 +31,7 @@ export default class AuthService {
     }
 
     static async register(user: UserType) {
-        const { $axios } = useNuxtApp();
+        const $axios = this.axiosInstance();
         try {
             const { data } = await $axios.post('api/users/register', user);
             const token = useCookie('token');
@@ -47,7 +47,7 @@ export default class AuthService {
         if(code.length !== 8) {
             return;
         }
-        const { $axios } = useNuxtApp();
+        const $axios = this.axiosInstance();
         return $axios.post('api/users/verify-code', {
             code,
         });

@@ -60,9 +60,7 @@ class KeywordController extends Controller
         $request->validated();
 
         $keywords = Keyword::select('id')->where('name', 'like', '%' . $request->search . '%');
-        $courses = null;
-        $subjects = null;
-        $signs = null;
+        $results = null;
 
         if(!$request->filterOptions['courses'] && !$request->filterOptions['subjects'] && !$request->filterOptions['signs']) {
             $keywords = $keywords->with([
@@ -86,15 +84,25 @@ class KeywordController extends Controller
             $signs = Sign::where('name', 'like', '%' . $request->search . '%')
                 ->select('id', 'name', DB::raw("'signs' as type"));
 
+            $results = $courses->unionAll($subjects)
+                ->unionAll($signs);
+
         } else {
+            $courses = null;
+            $subjects = null;
+            $signs = null;
+
             if($request->filterOptions['courses']) {
                 $keywords = $keywords->with([
                     'courses' => function($query) {
                         $query->select('id', 'name')->take(5);
                     },
                 ]);
+
                 $courses = Course::where('name', 'like', '%' . $request->search . '%')
                     ->select('id', 'name', DB::raw("'courses' as type"));
+
+                $results = $courses;
             }
             if($request->filterOptions['subjects']) {
                 $keywords = $keywords->with([
@@ -104,6 +112,12 @@ class KeywordController extends Controller
                 ]);
                 $subjects = Subject::where('name', 'like', '%' . $request->search . '%')
                     ->select('id', 'name', DB::raw("'subjects' as type"));
+
+                if(!$courses) {
+                    $results = $subjects;
+                } else {
+                    $results = $results->unionAll($subjects);
+                }
             }
             if($request->filterOptions['signs']) {
                 $keywords = $keywords->with([ 
@@ -111,25 +125,57 @@ class KeywordController extends Controller
                         $query->select('id', 'name')->take(5);
                     },
                 ]);
+
                 $signs = Sign::where('name', 'like', '%' . $request->search . '%')
                     ->select('id', 'name', DB::raw("'signs' as type"));
+
+                if(!$courses && !$subjects) {
+                    $results = $signs;
+                } else {
+                    $results = $results->unionAll($signs);
+                }
             }
         }
 
-        $keywords = $keywords->paginate();
-        $results = $courses->unionAll($subjects)
-            ->unionAll($signs)
-            ->orderBy('name')
+        $keywords = $keywords->paginate(3);
+        $results = $results->orderBy('name')
             ->take(15)
             ->get()
             ->groupBy('type');
 
-        
-        $mergeResult = $this->mergerKeywordsWithResults($keywords->items()[0], $results);
+        $adjustsKeywords = new class() {
+            public $courses = [];
+            public $subjects = [];
+            public $signs = [];
+        };
+
+        foreach($keywords->items() as $keyword) {
+            if(!$request->filterOptions['courses'] && !$request->filterOptions['subjects'] && !$request->filterOptions['signs']) {
+                $adjustsKeywords->courses = [...$adjustsKeywords->courses, ...$keyword['courses']];
+                $adjustsKeywords->subjects = [...$adjustsKeywords->subjects, ...$keyword['subjects']];
+                $adjustsKeywords->signs = [...$adjustsKeywords->signs, ...$keyword['signs']];
+            } else {
+                if($request->filterOptions['courses']) {
+                    $adjustsKeywords->courses = [...$adjustsKeywords->courses, ...$keyword['courses']];
+                }
+                if($request->filterOptions['subjects']) {
+                    $adjustsKeywords->subjects = [...$adjustsKeywords->subjects, ...$keyword['subjects']];
+                }
+                if($request->filterOptions['signs']) {
+                    $adjustsKeywords->signs = [...$adjustsKeywords->signs, ...$keyword['signs']];
+                }
+            }
+        }
+
+        $adjustsKeywords->courses = collect($adjustsKeywords->courses);
+        $adjustsKeywords->subjects = collect($adjustsKeywords->subjects);
+        $adjustsKeywords->signs = collect($adjustsKeywords->signs);
+
+        $mergeResult = $this->mergerKeywordsWithResults($adjustsKeywords, $results);
 
         return response([
             'data' => $mergeResult,
-            'last_page' => $keywords->lastPage(),
+            'last_page' => $keywords->lastPage()
         ], 200);
     }
 

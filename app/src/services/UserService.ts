@@ -1,19 +1,16 @@
 import type { SignType } from "~/types/Sign";
+import Service from "~/services/Service";
 
-export default class UserService {
+export default class UserService extends Service {
     static async fetch() {
-        const { $axios } = useNuxtApp();
-        const token = useCookie('token').value;
-        if(token) {
-            $axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-        }
+        const $axios = this.axiosInstance();
         return $axios.get('/api/users');
     }
 
     static async fetchFavorites(page: number) {
         let last_page = 1;
         const favorites: SignType[] = [];
-        const { $axios } = useNuxtApp();
+        const $axios = this.axiosInstance();
         try {
             const { data } = await $axios.get(`api/favorites`, { 
                 params: { 

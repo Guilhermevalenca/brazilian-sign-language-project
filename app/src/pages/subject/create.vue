@@ -3,7 +3,7 @@
     <div>
       <h1>Adicionar Materia</h1>
     </div>
-    <AppForm>
+    <AppForm @submit.prevent="submit">
       <div>
         <label>
           Nome:
@@ -26,7 +26,7 @@
       <KeywordSelect
           v-model="subject.keywords"
       />
-      <AppButton type="submit">Adicionar Material</AppButton>
+      <AppButton type="submit">Adicionar Materia</AppButton>
     </AppForm>
   </AppCard>
 </template>
@@ -54,7 +54,7 @@ export default defineComponent({
           title: 'Criando materia...',
         });
         this.$swal.showLoading();
-        await SubjectService.create(this.subject, this.subject.keywords?.map((k) => Number(k.id)) as number[]);
+        await SubjectService.create(this.subject, this.subject.courses ?? [], this.subject.keywords ?? []);
         await this.$swal.fire({
           icon: 'success',
           title: 'Materia criada com sucesso',
@@ -62,7 +62,7 @@ export default defineComponent({
           showConfirmButton: true,
           confirmButtonText: 'OK',
         });
-        this.$router.go(-1);
+        navigateTo('/');
       } catch(error) {
         this.$swal.fire({
           icon: 'error',

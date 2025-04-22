@@ -1,20 +1,20 @@
 import type { AxiosError } from "axios";
+import Service from "~/services/Service";
 
-export default defineNuxtRouteMiddleware(async (to, from) => {
-    const token = useCookie('token').value;
-    if(token) {
-        const { $axios } = useNuxtApp();
-        $axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+export default defineNuxtRouteMiddleware((to, from) => {
+    setTimeout(async () => {
         try {
+            const $axios = Service.axiosInstance();
             const { data } = await $axios.get('/api/users/is_admin');
-            console.log(data);
             if(!data.is_admin) {
-                return navigateTo('/');
+                return navigateTo('/', {
+                    redirectCode: 301
+                });
             }
         } catch(e: AxiosError | any) {
-            return navigateTo('/');
+            return navigateTo('/', {
+                redirectCode: 301
+            });
         }
-    } else {
-        return navigateTo('/auth/login');
-    }
+    }, 1);
 });

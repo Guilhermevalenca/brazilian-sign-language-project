@@ -48,7 +48,7 @@ export default defineComponent({
             showConfirmButton: true,
             confirmButtonText: 'OK',
           })
-          this.$router.push('/');
+          navigateTo('/');
         })
         .catch(async () => {
           await this.$swal.fire({

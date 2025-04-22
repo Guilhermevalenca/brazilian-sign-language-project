@@ -17,6 +17,9 @@ export default defineStore('breadcrumb', {
       name: '',
       path: ''
     },
+    search: {
+      isActive: false,
+    }
    }),
   actions: {
     activeCourse(name: string = '', path: string) {
@@ -25,35 +28,47 @@ export default defineStore('breadcrumb', {
       this.course.path = path;
       
       this.subject.isActive = false;
-      
       this.sign.isActive = false;
+      this.search.isActive = false;
     },
     activeSubject(name: string = '', path: string) {
-      this.course.isActive = true;
-
       this.subject.isActive = true;
       this.subject.name = name;
       this.subject.path = path;
-      
+
+      this.course.isActive = true;
       this.sign.isActive = false;
+      this.search.isActive = false;
     },
     activeSign(name: string = '', path: string) {
-      this.course.isActive = true;
-      
-      this.subject.isActive = true;
-      
       this.sign.isActive = true;
       this.sign.name = name;
       this.sign.path = path;
+
+      this.course.isActive = true;
+      this.subject.isActive = true;
+      this.search.isActive = false;
+    },
+    activeSearch() {
+      this.search.isActive = true;
     },
     home() {
       this.course.isActive = false;
       this.subject.isActive = false;
       this.sign.isActive = false;
+      this.search.isActive = false;
     }
   },
   getters: {
     path(): {activated: string, name: string, path: string}[] {
+      if(this.search.isActive) {
+        return [{
+          activated: 'busca',
+          name: '',
+          path: '/search'
+        }];
+      }
+
       const result: {activated: string, name: string, path: string}[] = [];
       
       if(this.course.isActive) {

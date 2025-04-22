@@ -46,6 +46,7 @@ export default {
   width: auto;
   min-width: 8rem;
   height: 2.5rem;
+  user-select: none;
 }
 .button-default:hover{
   background-color: #1E5AC0;
@@ -56,6 +57,7 @@ export default {
   transform: translateY(4px)
 }
 .button-navigation{
+  justify-content: flex-start;
   background-color: $primary-color;
 }
 .button-navigation:hover{
