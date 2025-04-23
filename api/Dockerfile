@@ -49,7 +49,7 @@ COPY --from=builder /app .
 
 COPY docker/start.sh /usr/local/bin/start
 RUN chmod +x /usr/local/bin/start
-RUN chmod 777 -R storage
+RUN chmod 777 -R storage/app/public
 
 EXPOSE 80/tcp
 EXPOSE 80/udp
