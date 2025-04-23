@@ -57,7 +57,4 @@ RUN echo "upload_max_filesize = 1000M" >> /usr/local/etc/php/conf.d/uploads.ini 
 EXPOSE 80/tcp
 EXPOSE 80/udp
 
-EXPOSE 443/tcp
-EXPOSE 443/udp
-
 CMD ["/usr/local/bin/start"]
