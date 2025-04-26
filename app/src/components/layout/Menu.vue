@@ -1,5 +1,5 @@
 <template>
-  <nav class="menu-container-closed" tabindex="0"  :class="{'menu-container-open': isVisible}">
+  <nav class="menu-container-closed" tabindex="0"  :class="{'menu-container-open': isVisible}" ref="menuContainer">
     <button @click="navigateTo('/')">
       <img src="~/assets/icons/home.svg" width="24px" height="24px">
       <span v-show="isVisible">Inicio</span>
@@ -20,7 +20,7 @@ export default {
   name: "Menu",
   props:{
     isVisible: Boolean,
-  }
+  },
 }
 </script>
 @import url('https://fonts.googleapis.com/css2?family=Quantico:ital,wght@0,400;0,700;1,400;1,700&display=swap');

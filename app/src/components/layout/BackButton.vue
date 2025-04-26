@@ -1,11 +1,13 @@
 <template>
-  <AppButton
-      variant="navigation"
-      @click="back()"
-  >
-    <img src="~/assets/icons/arrow-left.svg" width="24" height="24">
-    Voltar
-  </AppButton>
+  <div>
+    <AppButton
+        variant="navigation"
+        @click="back()"
+    >
+      <img src="~/assets/icons/arrow-left.svg" width="24" height="24">
+      Voltar
+    </AppButton>
+  </div>
 </template>
 
 <script lang="ts">
@@ -26,5 +28,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-
+div{
+  margin: 1em;
+}
 </style>
