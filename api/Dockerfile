@@ -54,6 +54,8 @@ RUN chmod 777 -R storage/app/public
 RUN echo "upload_max_filesize = 1000M" >> /usr/local/etc/php/conf.d/uploads.ini && \
     echo "post_max_size = 10000M" >> /usr/local/etc/php/conf.d/uploads.ini
 
+VOLUME [ "/var/www/html/storage" ]
+
 EXPOSE 80/tcp
 EXPOSE 80/udp
 
