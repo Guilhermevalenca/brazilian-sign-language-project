@@ -21,20 +21,6 @@ export default {
   props:{
     isVisible: Boolean,
   },
-  methods:{
-    closeMenu(event: MouseEvent) {
-      const menu = this.$refs.menuContainer as HTMLElement;
-      if (menu && !menu.contains(event.target as Node)) {
-        this.showOptions = false;
-      }
-    },
-    mounted() {
-      document.addEventListener("click", this.closeMenu);
-    },
-    beforeUnmount() {
-      document.removeEventListener("click", this.closeMenu);
-    },
-  }
 }
 </script>
 @import url('https://fonts.googleapis.com/css2?family=Quantico:ital,wght@0,400;0,700;1,400;1,700&display=swap');
