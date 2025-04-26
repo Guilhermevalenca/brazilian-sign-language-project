@@ -72,6 +72,7 @@ export default defineComponent({
   color: #FFFFFF;
   border-radius: 10rem;
   gap: 1em;
+  margin:1.5em;
 }
 .container-pagination-item{
   display: flex;
