@@ -89,9 +89,13 @@ class CourseController extends Controller
         return response($course, 200);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
+    public function edit(Course $course) {
+        $course->load([
+            'keywords',
+        ]);
+        return response($course, 200);
+    }
+
     public function update(UpdateCourseRequest $request, Course $course)
     {
         $validated = $request->validated();
@@ -123,11 +127,11 @@ class CourseController extends Controller
                 $keywords = $request->input('keywords');
 
                 // Se for string JSON, decodifica
-                if (is_string($subjects)) {
+                if (is_string($keywords)) {
                     $validated['keywords'] = json_decode($keywords, true);
                 }
                 // Se já for array, usa diretamente
-                elseif (is_array($subjects)) {
+                elseif (is_array($keywords)) {
                     $validated['keywords'] = $keywords;
                 }
             }

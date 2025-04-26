@@ -21,13 +21,15 @@
         <div class="content-results-screen">
           <div class="results">
             <h3>Cursos</h3>
-            <AppCard variant="list"  v-for="(course , index) in courses " :key="course.id" @click="navigateTo(`/course/${course.id}`)"> {{ course.name }}</AppCard>
-            <EmptySection/>
+            <div v-if="courses && courses.length > 0">
+              <AppCard variant="list"  v-for="(course , index) in courses " :key="course.id" @click="navigateTo(`/course/${course.id}`)"> {{ course.name }}</AppCard>
+            </div>
+            <EmptySection v-else/>
           </div>
 
           <div class="results">
             <h3>Matérias</h3>
-            <div v-if="!subjects">
+            <div v-if="subjects && subjects.length > 0">
               <AppCard variant="list" v-for="(subject, index) in subjects" :key="subject.id" @click="navigateTo(`/subject/${subject.id}`)">{{ subject.name }}</AppCard>
             </div>
             <EmptySection v-else/>
@@ -35,8 +37,10 @@
 
           <div class="results">
             <h3>Sinais</h3>
-            <AppCard variant="list" v-for="(sign, index) in signs" :key="sign.id" @click="navigateTo(`/sign/${sign.id}`)">{{ sign.name }}</AppCard>
-              <EmptySection/>
+            <div v-if="signs && signs.length > 0">
+              <AppCard variant="list" v-for="(sign, index) in signs" :key="sign.id" @click="navigateTo(`/sign/${sign.id}`)">{{ sign.name }}</AppCard>
+            </div>
+            <EmptySection v-else/>
           </div>
         </div>
       <client-only>
@@ -62,7 +66,7 @@ export default defineComponent({
     });
     const page = ref(1);
 
-    const { data, status, refresh } = useAsyncData(
+    const { data, status, refresh, execute } = useAsyncData(
         'fetchSubjects',
         () => SystemSourceService.searchActionWithFilter(
             String(searchData?.value),
@@ -95,10 +99,12 @@ export default defineComponent({
       await refresh();
     });
 
+    execute();
+
     return {
-      courses: computed(() => data.value?.courses),
-      subjects: computed(() => data.value?.subjects),
-      signs: computed(() => data.value?.signs),
+      courses: computed(() => data.value?.courses ?? []),
+      subjects: computed(() => data.value?.subjects ?? []),
+      signs: computed(() => data.value?.signs ?? []),
       last_page: computed((): number => data.value?.last_page),
       filterOptions,
       refresh,

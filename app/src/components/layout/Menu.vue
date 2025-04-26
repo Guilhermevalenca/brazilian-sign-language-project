@@ -4,10 +4,10 @@
       <img src="~/assets/icons/home.svg" width="24px" height="24px">
       <span v-show="isVisible">Inicio</span>
     </button>
-    <button @click="navigateTo('/favorite')">
-      <img src="~/assets/icons/favorite.svg" width="24px" height="24px">
-      <span v-show="isVisible">Favoritos</span>
-    </button>
+<!--    <button @click="navigateTo('/favorite')">-->
+<!--      <img src="~/assets/icons/favorite.svg" width="24px" height="24px">-->
+<!--      <span v-show="isVisible">Favoritos</span>-->
+<!--    </button>-->
     <button @click="navigateTo('/about')">
       <img src="~/assets/icons/info.svg" width="24px" height="24px">
       <span v-show="isVisible">Sobre nós</span>
