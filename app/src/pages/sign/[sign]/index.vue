@@ -1,9 +1,4 @@
 <template>
-  <button @click="navigateTo(`/sign/${sign?.id}/update`)">Atualizar</button>
-  <br />
-  <button @click="destroy">deletar ou apagar</button>
-  <span class="tw-text-xs">*Esta opção apagará o contéudo para sempre</span>
-  <br />
   <div class="content-container">
     <transition name="slide">
       <div class="views-menu">

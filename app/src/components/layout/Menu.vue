@@ -1,5 +1,5 @@
 <template>
-  <nav class="menu-container-closed" tabindex="0"  :class="{'menu-container-open': isVisible}">
+  <nav class="menu-container-closed" tabindex="0"  :class="{'menu-container-open': isVisible}" ref="menuContainer">
     <button @click="navigateTo('/')">
       <img src="~/assets/icons/home.svg" width="24px" height="24px">
       <span v-show="isVisible">Inicio</span>
@@ -20,6 +20,20 @@ export default {
   name: "Menu",
   props:{
     isVisible: Boolean,
+  },
+  methods:{
+    closeMenu(event: MouseEvent) {
+      const menu = this.$refs.menuContainer as HTMLElement;
+      if (menu && !menu.contains(event.target as Node)) {
+        this.showOptions = false;
+      }
+    },
+    mounted() {
+      document.addEventListener("click", this.closeMenu);
+    },
+    beforeUnmount() {
+      document.removeEventListener("click", this.closeMenu);
+    },
   }
 }
 </script>

@@ -82,6 +82,7 @@ export default defineComponent({
   display: flex;
   justify-content: center;
   border: none;
+  border-radius: 1em;
   background-color: $primary-color;
   padding: 0.5em;
   width: 2.5em;
