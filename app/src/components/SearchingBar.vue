@@ -5,7 +5,7 @@
         <input
             class="searching-bar-input" type="text"
             v-model="search" required
-            @input="searchAction"
+
             placeholder="Buscar ..."
             name="search-bar"
         >
