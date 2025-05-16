@@ -21,14 +21,15 @@ class KeywordController extends Controller
             'search' => ['required', 'string'],
         ]);
         //buscando os 5 primeiros baseados na palavra chave
-        $keywords = Keyword::select('id')->where('name', 'like', '%' . $request->search . '%')
+        $keywords = Keyword::select('id')
+            ->whereRaw('LOWER(name) LIKE ?', ['%' . strtolower($request->search) . '%'])
             ->with([
                 'courses' => function($query) {
                     $query->select('id', 'name')->take(5);
-                }, 
+                },
                 'subjects' => function($query) {
                     $query->select('id', 'name')->take(5);
-                }, 
+                },
                 'signs' => function($query) {
                     $query->select('id', 'name')->take(5);
                 }
@@ -36,14 +37,14 @@ class KeywordController extends Controller
             ->first();
 
         //buscando mais 5 dados de cada, baseado no nome deles
-        $courses = Course::where('name', 'like', '%' . $request->search . '%')
-            ->select('id', 'name', DB::raw("'courses' as type"));
+        $courses = Course::select('id', 'name', DB::raw("'courses' as type"))
+            ->whereRaw('LOWER(name) LIKE ?', ['%' . strtolower($request->search) . '%']);
 
-        $subjects = Subject::where('name', 'like', '%' . $request->search . '%')
-            ->select('id', 'name', DB::raw("'subjects' as type"));
+        $subjects = Subject::select('id', 'name', DB::raw("'subjects' as type"))
+            ->whereRaw('LOWER(name) LIKE ?', ['%' . strtolower($request->search) . '%']);
 
-        $signs = Sign::where('name', 'like', '%' . $request->search . '%')
-            ->select('id', 'name', DB::raw("'signs' as type"));
+        $signs = Sign::select('id', 'name', DB::raw("'signs' as type"))
+            ->whereRaw('LOWER(name) LIKE ?', ['%' . strtolower($request->search) . '%']);
 
         $results = $courses->unionAll($subjects)
             ->unionAll($signs)
@@ -55,11 +56,12 @@ class KeywordController extends Controller
         return response($this->mergerKeywordsWithResults($keywords, $results), 200);
     }
 
-    public function withFilters(WithFiltersKeywordRequest $request) 
+    public function withFilters(WithFiltersKeywordRequest $request)
     {
         $request->validated();
 
-        $keywords = Keyword::select('id')->where('name', 'like', '%' . $request->search . '%');
+        $keywords = Keyword::select('id')
+            ->whereRaw('LOWER(name) LIKE ?', ['%' . strtolower($request->search) . '%']);
         $results = null;
 
         if(!$request->filterOptions['courses'] && !$request->filterOptions['subjects'] && !$request->filterOptions['signs']) {
@@ -69,20 +71,20 @@ class KeywordController extends Controller
                 },
                 'subjects' => function($query) {
                     $query->select('id', 'name')->take(5);
-                }, 
+                },
                 'signs' => function($query) {
                     $query->select('id', 'name')->take(5);
                 }
             ]);
 
-            $courses = Course::where('name', 'like', '%' . $request->search . '%')
-                ->select('id', 'name', DB::raw("'courses' as type"));
+            $courses = Course::select('id', 'name', DB::raw("'courses' as type"))
+                ->whereRaw('LOWER(name) LIKE ?', ['%' . strtolower($request->search) . '%']);
 
-            $subjects = Subject::where('name', 'like', '%' . $request->search . '%')
-                ->select('id', 'name', DB::raw("'subjects' as type"));
+            $subjects = Subject::select('id', 'name', DB::raw("'subjects' as type"))
+                ->whereRaw('LOWER(name) LIKE ?', ['%' . strtolower($request->search) . '%']);
 
-            $signs = Sign::where('name', 'like', '%' . $request->search . '%')
-                ->select('id', 'name', DB::raw("'signs' as type"));
+            $signs = Sign::select('id', 'name', DB::raw("'signs' as type"))
+                ->whereRaw('LOWER(name) LIKE ?', ['%' . strtolower($request->search) . '%']);
 
             $results = $courses->unionAll($subjects)
                 ->unionAll($signs);
@@ -99,8 +101,8 @@ class KeywordController extends Controller
                     },
                 ]);
 
-                $courses = Course::where('name', 'like', '%' . $request->search . '%')
-                    ->select('id', 'name', DB::raw("'courses' as type"));
+                $courses = Course::select('id', 'name', DB::raw("'courses' as type"))
+                    ->whereRaw('LOWER(name) LIKE ?', ['%' . strtolower($request->search) . '%']);
 
                 $results = $courses;
             }
@@ -110,8 +112,8 @@ class KeywordController extends Controller
                         $query->select('id', 'name')->take(5);
                     },
                 ]);
-                $subjects = Subject::where('name', 'like', '%' . $request->search . '%')
-                    ->select('id', 'name', DB::raw("'subjects' as type"));
+                $subjects = Subject::select('id', 'name', DB::raw("'subjects' as type"))
+                    ->whereRaw('LOWER(name) LIKE ?', ['%' . strtolower($request->search) . '%']);
 
                 if(!$courses) {
                     $results = $subjects;
@@ -120,14 +122,14 @@ class KeywordController extends Controller
                 }
             }
             if($request->filterOptions['signs']) {
-                $keywords = $keywords->with([ 
+                $keywords = $keywords->with([
                     'signs' => function($query) {
                         $query->select('id', 'name')->take(5);
                     },
                 ]);
 
-                $signs = Sign::where('name', 'like', '%' . $request->search . '%')
-                    ->select('id', 'name', DB::raw("'signs' as type"));
+                $signs = Sign::select('id', 'name', DB::raw("'signs' as type"))
+                    ->whereRaw('LOWER(name) LIKE ?', ['%' . strtolower($request->search) . '%']);
 
                 if(!$courses && !$subjects) {
                     $results = $signs;
@@ -186,19 +188,19 @@ class KeywordController extends Controller
             'subjects' => [],
             'signs' => [],
         ];
-    
+
         if ($keywords && $keywords->courses) {
             $mergedResults['courses'] = $keywords->courses->map(function ($course) {
                 return ['id' => $course->id, 'name' => $course->name, 'type' => 'courses'];
             })->toArray();
         }
-    
+
         if ($keywords && $keywords->subjects) {
             $mergedResults['subjects'] = $keywords->subjects->map(function ($subject) {
                 return ['id' => $subject->id, 'name' => $subject->name, 'type' => 'subjects'];
             })->toArray();
         }
-    
+
         if ($keywords && $keywords->signs) {
             $mergedResults['signs'] = $keywords->signs->map(function ($sign) {
                 return ['id' => $sign->id, 'name' => $sign->name, 'type' => 'signs'];
@@ -227,7 +229,7 @@ class KeywordController extends Controller
                 ];
             }
         }
-        
+
         return $mergedResults;
     }
 
@@ -247,7 +249,7 @@ class KeywordController extends Controller
         ]);
 
         Keyword::create([
-            'name' => $request->name 
+            'name' => $request->name
         ]);
 
         return response(null, 201);
