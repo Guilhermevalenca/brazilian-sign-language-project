@@ -1,4 +1,7 @@
 *
 !.gitignore
-
+!courses
 !courses/logistica.jpg
+!courses/administracao.jpeg
+!courses/gestao-da-qualidade.jpeg
+!courses/sistemas-internet.jpg
