@@ -36,7 +36,7 @@ import LoadingService from "~/services/LoadingService";
 
 const { course: id } = useRoute().params;
 const { data, refresh, status, execute } = useAsyncData(
-    'fetchCourse',
+    `fetchCourseEdit-${id}`,
     () => CourseService.edit(Number(id)),
     {
       default: () => ({

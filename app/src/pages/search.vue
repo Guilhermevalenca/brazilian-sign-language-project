@@ -67,7 +67,7 @@ export default defineComponent({
     const page = ref(1);
 
     const { data, status, refresh, execute } = useAsyncData(
-        'fetchSubjects',
+        `fetchSearch-${searchData?.value}`,
         () => SystemSourceService.searchActionWithFilter(
             String(searchData?.value),
             filterOptions.value,
@@ -79,7 +79,9 @@ export default defineComponent({
             subjects: [],
             signs: [],
             last_page: 1,
-          })
+          }),
+          immediate: false,
+          lazy: true,
         }
     );
 

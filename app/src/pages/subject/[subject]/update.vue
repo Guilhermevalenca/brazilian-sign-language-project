@@ -43,7 +43,7 @@ export default defineComponent({
     const { subject } = useRoute().params;
 
     const { data, status, execute, refresh } = useAsyncData(
-        'fetchSubject',
+        `fetchSubjectEdit-${subject}`,
         () => SubjectService.edit(Number(subject)),
         {
           default: () => ({

@@ -29,11 +29,19 @@
       </div>
     </transition>
     <AppCard variant="default" class="abacate">
-      <component :is="currentComponent" :sign="sign"
-      />
+      <keep-alive>
+        <component :is="currentComponent" :sign="sign" />
+      </keep-alive>
     </AppCard>
-
+    <br />
+    <AppButton
+      @click="() => navigateTo('/sign/' + sign.id + '/update')"
+      v-if="userStore.is_admin"
+    >
+      Atualizar este sinal
+    </AppButton>
   </div>
+  <br />
 </template>
 
 <script lang="ts">
@@ -41,19 +49,20 @@ import SignService from '~/services/SignService';
 import useBreadcrumbStore from '~/stores/useBreadcrumbStore';
 import type { SignType } from '~/types/Sign';
 import LoadingService from "~/services/LoadingService";
-import {SignDescriptionView} from "#components";
-import {SignExampleView} from "#components";
+import { SignDescriptionView } from "#components";
+import { SignExampleView } from "#components";
 import SignView from "~/components/sign/SignView.vue";
+import useUserStore from "~/stores/useUserStore";
 
 export default defineComponent({
   name: 'signPage',
-  components: {SignDescriptionView,SignExampleView,SignView},
+  components: { SignDescriptionView, SignExampleView, SignView },
   async setup() {
     const currentComponent= ref('SignView');
     const { sign: id } = useRoute().params;
 
     const { data, status, execute, refresh } = useAsyncData(
-        'fetchSubject',
+        'fetchSign',
         () => SignService.find(Number(id)),
         {
           default: () => ({
@@ -61,7 +70,9 @@ export default defineComponent({
               name: '',
               display: '',
             }
-          })
+          }),
+          immediate: false,
+          lazy: true,
         }
     );
 
@@ -85,7 +96,8 @@ export default defineComponent({
     return {
       sign: computed((): SignType => data.value.sign as SignType),
       currentComponent,
-      id
+      id,
+      userStore: useUserStore(),
     }
   },
 

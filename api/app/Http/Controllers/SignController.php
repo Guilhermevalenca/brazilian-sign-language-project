@@ -142,7 +142,9 @@ class SignController extends Controller
 
     private function getVideoId($display)
     {
-        if (strpos($display, "watch?v=") !== false) {
+        if(strpos($display, "embed") !== false) {
+            return $display;
+        } elseif (strpos($display, "watch?v=") !== false) {
             preg_match('/watch\?v=([^&\s]+)/', $display, $matches);
             if (!empty($matches[1])) {
                 $display = $matches[1];

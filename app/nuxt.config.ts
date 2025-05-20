@@ -4,7 +4,7 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   ssr: true,
   srcDir: 'src',
-  debug: true,
+  debug: false,
   css: ['~/assets/css/main.scss'],
   routeRules: {
     '/about': { isr: true },
