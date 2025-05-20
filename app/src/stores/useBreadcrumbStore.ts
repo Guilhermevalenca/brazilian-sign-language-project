@@ -19,6 +19,9 @@ export default defineStore('breadcrumb', {
     },
     search: {
       isActive: false,
+    },
+    about: {
+      isActive: false
     }
    }),
   actions: {
@@ -52,11 +55,15 @@ export default defineStore('breadcrumb', {
     activeSearch() {
       this.search.isActive = true;
     },
+    activeAbout() {
+      this.about.isActive = true;
+    },
     home() {
       this.course.isActive = false;
       this.subject.isActive = false;
       this.sign.isActive = false;
       this.search.isActive = false;
+      this.about.isActive = false;
     }
   },
   getters: {
@@ -66,6 +73,14 @@ export default defineStore('breadcrumb', {
           activated: 'busca',
           name: '',
           path: '/search'
+        }];
+      }
+
+      if(this.about.isActive) {
+        return [{
+          activated: 'sobre',
+          name: '',
+          path: '/about'
         }];
       }
 

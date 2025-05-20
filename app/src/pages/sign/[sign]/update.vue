@@ -85,7 +85,7 @@ export default defineComponent({
     const { sign: id } = useRoute().params;
 
     const { data, status, execute, refresh } = useAsyncData(
-        'fetchSign',
+        `fetchSignEdit-${id}`,
         () => SignService.find(Number(id), true),
         {
           default: () => ({

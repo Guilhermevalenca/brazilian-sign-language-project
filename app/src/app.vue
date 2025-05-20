@@ -32,6 +32,11 @@ export default defineComponent({
     }
   },
 
+  beforeMount() {
+    //removendo scrollbar horizontal
+    document.body.style.overflowX = 'hidden';
+  },
+
   mounted() {
     const user = useUserStore();
     if(this.user) {

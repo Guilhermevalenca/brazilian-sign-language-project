@@ -3,12 +3,12 @@
       <div class="header-content">
         <div>
           <button @click="showMenu()">
-            <img src="~/assets/icons/menu.svg" width="24px" height="24px">
+            <img src="~/assets/icons/menu.svg" width="24px" height="24px" alt="Menu">
           </button>
         </div>
         <div  class="logo">
           <button @click="navigateTo('/')">
-            <img src="~/assets/logos/our-logo.svg" width="288px" height="78px">
+            <img src="~/assets/logos/our-logo.svg" width="288px" height="78px" alt="Logo">
           </button>
         </div>
         <SearchingBar/>
@@ -70,8 +70,10 @@ header {
   top: 0;
   z-index: 0;
   position: fixed;
-  width: 100vw;
   box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
+  margin: 0;
+  padding: 0;
+  width: 100vw;
 }
 .header-content{
   box-sizing: border-box;

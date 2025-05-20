@@ -48,7 +48,9 @@ export default defineComponent({
               signs: [],
             },
             last_page: 1
-          })
+          }),
+          immediate: false,
+          lazy: true,
         }
     );
 
@@ -61,6 +63,7 @@ export default defineComponent({
     });
 
     watch(status, ($new) => {
+      console.log($new);
       LoadingService.loaded($new, refresh);
     });
 
@@ -91,7 +94,7 @@ export default defineComponent({
       await this.refresh();
       this.$swal.close();
     },
-    ["subject.name"]: {
+    "subject.name": {
       handler($new) {
         useBreadcrumbStore().activeSubject($new ?? '', '/subject/' + this.id);
       },
