@@ -30,7 +30,7 @@ export default defineComponent({
     const page = ref(1);
 
     const { data, status, execute, refresh } = useAsyncData(
-        'fetchSubject',
+        'fetchCourse',
         () => CourseService.find(Number(id), page.value),
         {
           default: () => ({
@@ -40,7 +40,9 @@ export default defineComponent({
               subjects: [],
             } as CourseType,
             last_page: 1
-          })
+          }),
+          immediate: false,
+          lazy: true,
         }
     );
 
