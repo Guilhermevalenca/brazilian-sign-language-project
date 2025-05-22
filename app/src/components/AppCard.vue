@@ -29,14 +29,18 @@ name: "AppCard",
 <style lang="scss" scoped>
 .card-default {
   display: flex;
-  flex-direction: column;
+  flex-flow: column wrap;
+  text-wrap: auto;
+  overflow-wrap: break-word;
+  word-break: break-word;
   gap: 1rem;
   justify-self: center;
   align-items: center;
   justify-content: center;
   background-color: $tertiary-color;
   padding: 2rem;
-  min-width: 35vw;
+  min-width: 40vw;
+  max-width: 40vw;
   height: fit-content;
   box-shadow: 0 1px 1px  0 rgba(0, 0, 0, 0.2);
   border-radius: 2rem;

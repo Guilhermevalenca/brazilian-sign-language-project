@@ -55,6 +55,7 @@ legend{
   justify-items: center;
 }
 .content-container-list{
+  flex-wrap: wrap;
   @extend .content-container;
   margin-top: 1em;
   gap:0.5rem;
@@ -67,4 +68,10 @@ legend{
 .content-text{
   padding: 1em;
   text-align: left;
+}
+div,
+p,
+h1,h2,h3{
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
