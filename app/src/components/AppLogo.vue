@@ -3,7 +3,7 @@
       src="~/assets/logos/ou-logo-simp.svg"
       :class="['logo-medium',variants[variant]]"
       v-bind="$attrs"
-      alt="Logo da plataforma"
+      alt="Logo do Glossário de Libras"
   />
   <slot />
 </template>

@@ -6,9 +6,9 @@
             <img src="~/assets/icons/menu.svg" width="24px" height="24px" alt="Menu">
           </button>
         </div>
-        <div  class="logo">
+        <div class="logo">
           <button @click="navigateTo('/')">
-            <img src="~/assets/logos/our-logo.svg" width="288px" height="78px" alt="Logo">
+            <img src="~/assets/logos/our-logo.svg" width="288px" height="78px" alt="Logo do glossário de libras">
           </button>
         </div>
         <SearchingBar/>
