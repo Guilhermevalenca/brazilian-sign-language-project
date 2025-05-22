@@ -12,14 +12,15 @@ name: "AppCard",
     variant: {
       type: String,
       default: "default",
-      validator: (value:string)=>["default", "list"].includes(value)
+      validator: (value:string)=>["default", "list","screen"].includes(value)
     },
   },
   computed:{
     variants(){
       return{
         default: 'card-default',
-        list: 'card-list'
+        list: 'card-list',
+        screen: 'screen-card'
       }
     }
   }
@@ -44,6 +45,11 @@ name: "AppCard",
   height: fit-content;
   box-shadow: 0 1px 1px  0 rgba(0, 0, 0, 0.2);
   border-radius: 2rem;
+}
+.screen-card{
+  @extend .card-default;
+  min-width: 50vw;
+  max-width: 50vw;
 }
 .card-list{
   @extend .card-default;

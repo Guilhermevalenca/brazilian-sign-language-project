@@ -1,5 +1,5 @@
 <template>
-  <AppCard class="tw-p-8">
+  <AppCard variant="screen" class="tw-p-8">
     <div class="content-container">
       <h1>Bem-vindos(as) ao Glossário Multimídia de Logística em Libras!</h1>
       <br />
