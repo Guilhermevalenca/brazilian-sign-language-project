@@ -1,5 +1,5 @@
 <template>
-    <div v-if="sign?.description" class="content-container-internal">
+    <div v-if="sign?.description" class="content-container">
       <iframe
           v-if="sign?.description?.display"
           class="medium-iframe"

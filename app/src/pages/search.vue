@@ -7,7 +7,7 @@
             <div class="results" v-if="courses && courses.length > 0">
               <AppCard variant="list"  v-for="(course , index) in courses " :key="course.id" @click="navigateTo(`/course/${course.id}`)"> {{ course.name }}</AppCard>
             </div>
-            <EmptySection v-else>
+            <EmptySection class="empty" v-else>
               <p>Nenhum resultado encontrado</p>
             </EmptySection>
           </div>
@@ -17,7 +17,7 @@
             <div class="results" v-if="subjects && subjects.length > 0">
               <AppCard variant="list" v-for="(subject, index) in subjects" :key="subject.id" @click="navigateTo(`/subject/${subject.id}`)">{{ subject.name }}</AppCard>
             </div>
-            <EmptySection v-else>
+            <EmptySection class="empty" v-else>
               <p>Nenhum resultado encontrado</p>
             </EmptySection>
           </div>
@@ -27,7 +27,7 @@
             <div class="results" v-if="signs && signs.length > 0">
               <AppCard variant="list" v-for="(sign, index) in signs" :key="sign.id" @click="navigateTo(`/sign/${sign.id}`)">{{ sign.name }}</AppCard>
             </div>
-            <EmptySection v-else>
+            <EmptySection class="empty" v-else>
               <p>Nenhum resultado encontrado</p>
             </EmptySection>
           </div>
@@ -175,5 +175,11 @@ export default defineComponent({
 .filter-item{
   display: flex;
   gap:0.6em;
+}
+.empty{
+  display: flex;
+  flex-flow: column;
+  align-self: flex-start;
+  margin-left: 0em;
 }
 </style>

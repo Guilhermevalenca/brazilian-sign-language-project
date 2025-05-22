@@ -1,6 +1,6 @@
 <template>
   <h1>{{ sign?.name }}</h1>
-  <div class="content-container-internal">
+  <div class="content-container">
     <iframe
         v-if="sign?.display"
         class="medium-iframe"

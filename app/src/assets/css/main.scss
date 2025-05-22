@@ -54,10 +54,6 @@ legend{
   flex-direction: column;
   justify-items: center;
 }
-content-container-internal{
-  @extend .content-container;
-  margin: 0;
-}
 .content-container-list{
   @extend .content-container;
   margin-top: 1em;
