@@ -1,51 +1,52 @@
 <template>
     <div class="results-screen">
-      <h2>Filtros</h2>
+        <div class="content-results-screen">
+          <h1>Resultados da pesquisa: "{{ searchData }}" </h1>
+          <div v-show="!filterOptions.courses && !filterOptions.subjects && !filterOptions.signs || filterOptions.courses" class="results">
+            <h2>Cursos</h2>
+            <div class="results" v-if="courses && courses.length > 0">
+              <AppCard variant="list"  v-for="(course , index) in courses " :key="course.id" @click="navigateTo(`/course/${course.id}`)"> {{ course.name }}</AppCard>
+            </div>
+            <EmptySection v-else>
+              <p>Nenhum resultado encontrado</p>
+            </EmptySection>
+          </div>
 
+          <div  v-show="!filterOptions.courses && !filterOptions.subjects && !filterOptions.signs || filterOptions.subjects" class="results">
+            <h2>Disciplinas</h2>
+            <div class="results" v-if="subjects && subjects.length > 0">
+              <AppCard variant="list" v-for="(subject, index) in subjects" :key="subject.id" @click="navigateTo(`/subject/${subject.id}`)">{{ subject.name }}</AppCard>
+            </div>
+            <EmptySection v-else>
+              <p>Nenhum resultado encontrado</p>
+            </EmptySection>
+          </div>
+
+          <div  v-show="!filterOptions.courses && !filterOptions.subjects && !filterOptions.signs || filterOptions.signs" class="results">
+            <h2>Sinais</h2>
+            <div class="results" v-if="signs && signs.length > 0">
+              <AppCard variant="list" v-for="(sign, index) in signs" :key="sign.id" @click="navigateTo(`/sign/${sign.id}`)">{{ sign.name }}</AppCard>
+            </div>
+            <EmptySection v-else>
+              <p>Nenhum resultado encontrado</p>
+            </EmptySection>
+          </div>
+        </div>
       <div class="filters-container">
+        <h1>Filtros</h1>
         <label class="filter-item">
           <input type="checkbox" v-model="filterOptions.courses" class="accent-blue-500" />
           <span>Cursos</span>
         </label>
         <label class="filter-item">
           <input type="checkbox" v-model="filterOptions.subjects" class="accent-green-500" />
-          <span>Matérias</span>
+          <span>Disciplinas</span>
         </label>
         <label class="filter-item">
           <input type="checkbox" v-model="filterOptions.signs" class="accent-purple-500" />
           <span>Sinais</span>
         </label>
       </div>
-
-        <h2>Resultados</h2>
-        <div class="content-results-screen">
-          <div class="results">
-            <h3>Cursos</h3>
-            <div v-if="courses && courses.length > 0">
-              <AppCard variant="list"  v-for="(course , index) in courses " :key="course.id" @click="navigateTo(`/course/${course.id}`)"> {{ course.name }}</AppCard>
-            </div>
-            <EmptySection v-else/>
-          </div>
-
-          <div class="results">
-            <h3>Matérias</h3>
-            <div v-if="subjects && subjects.length > 0">
-              <AppCard variant="list" v-for="(subject, index) in subjects" :key="subject.id" @click="navigateTo(`/subject/${subject.id}`)">{{ subject.name }}</AppCard>
-            </div>
-            <EmptySection v-else/>
-          </div>
-
-          <div class="results">
-            <h3>Sinais</h3>
-            <div v-if="signs && signs.length > 0">
-              <AppCard variant="list" v-for="(sign, index) in signs" :key="sign.id" @click="navigateTo(`/sign/${sign.id}`)">{{ sign.name }}</AppCard>
-            </div>
-            <EmptySection v-else/>
-          </div>
-        </div>
-      <client-only>
-        <Pagination v-model:page="page" :lastPage="last_page" />
-      </client-only>
     </div>
 </template>
 
@@ -108,6 +109,7 @@ export default defineComponent({
       subjects: computed(() => data.value?.subjects ?? []),
       signs: computed(() => data.value?.signs ?? []),
       last_page: computed((): number => data.value?.last_page),
+      searchData,
       filterOptions,
       refresh,
       page,
@@ -144,23 +146,34 @@ export default defineComponent({
 })
 </script>
 <style lang="scss" scoped>
-.results-screen{
+.results-screen {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 1em;
+  align-items: start;
+  margin-bottom: 10em;
+}
+
+.filters-container {
+  margin-left: auto;
   display: flex;
-  flex-flow: column wrap;
+  flex-direction: column;
+  gap: 0.5em;
+}
+
+.content-results-screen {
+  display: flex;
+  flex-direction: column;
   gap: 1em;
 }
-.filters-container{
+
+.results {
   display: flex;
-  flex-flow: column wrap;
-}
-.content-results-screen{
-  display: flex;
-  flex-flow: column wrap;
-  align-items: flex-start;
-}
-.results{
-  display: flex;
-  flex-flow: column wrap;
+  flex-direction: column;
   gap: 0.5em;
+}
+.filter-item{
+  display: flex;
+  gap:0.6em;
 }
 </style>

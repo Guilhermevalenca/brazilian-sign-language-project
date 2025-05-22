@@ -6,3 +6,5 @@ export default defineComponent({
   name: "AppFooter",
 });
 </script>
+<style>
+</style>

@@ -14,12 +14,17 @@ button{
   color: $light-texts;
   font-size: 1rem;
 }
-body,
+h1{
+  font-size: 2em;
+}
+h2{
+  font-size: 1.6em;
+}
 html{
   background-color: $background-color;
   width: 100vw;
   height:100vh;
-  font-size: 1rem;
+  font-size: 1.08rem;
   color: $soft-black-1;
 }
 .content-title{
@@ -27,7 +32,7 @@ html{
   flex-direction: row;
   align-self: center;
   justify-self: center;
-  font-size: 1.5em;
+  font-size: 1em;
 }
 input,
 textarea{
@@ -49,8 +54,13 @@ legend{
   flex-direction: column;
   justify-items: center;
 }
+content-container-internal{
+  @extend .content-container;
+  margin: 0;
+}
 .content-container-list{
   @extend .content-container;
+  margin-top: 1em;
   gap:0.5rem;
 }
 .medium-iframe{

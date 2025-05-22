@@ -57,7 +57,7 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .breadcrumb{
-  margin: 1em;
+  margin: 0em;
   display:flex;
   gap: 0.5em;
 }

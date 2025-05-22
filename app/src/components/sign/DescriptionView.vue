@@ -1,5 +1,5 @@
 <template>
-    <div v-if="sign?.description" class="content-container">
+    <div v-if="sign?.description" class="content-container-internal">
       <iframe
           v-if="sign?.description?.display"
           class="medium-iframe"
@@ -12,7 +12,9 @@
       </p>
     </div>
     <div v-else class="content-container">
-      <EmptySection/>
+      <EmptySection>
+        <p>Não há nada aqui...</p>
+      </EmptySection>
     </div>
 </template>
 
