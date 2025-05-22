@@ -12,7 +12,9 @@
     </p>
   </div>
   <div v-else class="content-container">
-    <EmptySection/>
+    <EmptySection>
+      <p>Não há nada aqui...</p>
+    </EmptySection>
   </div>
 </template>
 

@@ -1,4 +1,13 @@
 <template>
+  <div class="update-container">
+    <AppButton
+        @click="() => navigateTo('/sign/' + sign.id + '/update')"
+        v-if="userStore.is_admin"
+    >
+      <img src="~/assets/icons/edit.svg" width="24px" height="24px">
+      Editar
+    </AppButton>
+  </div>
   <div class="content-container">
     <transition name="slide">
       <div class="views-menu">
@@ -33,15 +42,7 @@
         <component :is="currentComponent" :sign="sign" />
       </keep-alive>
     </AppCard>
-    <br />
-    <AppButton
-      @click="() => navigateTo('/sign/' + sign.id + '/update')"
-      v-if="userStore.is_admin"
-    >
-      Atualizar este sinal
-    </AppButton>
   </div>
-  <br />
 </template>
 
 <script lang="ts">
@@ -183,6 +184,13 @@ export default defineComponent({
 .slide-leave-to {
   transform: translateY(-20px);
   opacity: 0;
+}
+.update-container{
+  display: flex;
+  flex-flow: column nowrap;
+  margin-right: 2em;
+align-items: flex-end;
+  padding: 0.5em;
 }
 
 </style>

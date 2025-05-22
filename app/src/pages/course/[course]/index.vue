@@ -1,8 +1,8 @@
 <template>
-  <div class="content-container-list">
-    <div class="content-title">
-      <h1>Disciplinas de: {{ course?.name }}</h1>
-    </div>
+  <div class="content-title">
+    <h1>Disciplinas de: {{ course?.name }}</h1>
+  </div>
+  <div v-if="course?.subjects && course?.subjects.length > 0" class="content-container-list">
     <AppCard
         v-for="subject in course?.subjects ?? []" :key="subject.id"
         tabindex="1"
@@ -13,6 +13,9 @@
       <ul>{{ subject.name }}</ul>
     </AppCard>
   </div>
+  <EmptySection v-else>
+    <p> Nenhuma disciplina encontrada em {{ course.name }}.</p>
+  </EmptySection>
   <Pagination v-model:page="page" :lastPage="last_page" />
 </template>
 

@@ -1,8 +1,8 @@
 <template>
-  <div class="content-container-list">
-    <div class="content-title">
-      <h1>Sinais da disciplina: {{ subject?.name }}</h1>
-    </div>
+  <div class="content-title">
+    <h1>Sinais da disciplina: {{ subject?.name }}</h1>
+  </div>
+  <div v-if="subject?.signs && subject?.signs.length > 0" class="content-container-list">
     <AppCard
         class="sign-view"
         variant="list"
@@ -22,6 +22,9 @@
       {{ sign.name }}
     </AppCard>
   </div>
+  <EmptySection v-else>
+    <p> Nenhum sinal encontrado em {{ subject.name }}.</p>
+  </EmptySection>
   <Pagination v-model:page="page" :lastPage="last_page" />
 </template>
 

@@ -3,11 +3,16 @@
   <main>
     <section>
       <LayoutBreadcrumb />
-      <LayoutBackButton v-show="!isHome"/>
+      <div class="layout-actions">
+        <LayoutBackButton v-show="!isHome"/>
+      </div>
       <slot />
     </section>
   </main>
   <LayoutAdmActions v-if="user && user.is_admin" />
+  <div class="space">
+
+  </div>
   <LayoutAppFooter />
 </template>
 
@@ -38,4 +43,10 @@ section {
   width: 60vw;
   overflow-y: auto;
 }
+.layout-actions{
+  display: grid;
+  grid-template-columns: auto 1fr;
+}.space{
+  height: 5em;
+ }
 </style>

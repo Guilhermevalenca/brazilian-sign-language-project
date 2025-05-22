@@ -29,6 +29,6 @@ export default {
 
 <style scoped lang="scss">
 div{
-  margin: 1em;
+  margin: 0.6em;
 }
 </style>

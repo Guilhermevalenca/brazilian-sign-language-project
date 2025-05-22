@@ -70,7 +70,7 @@ export default defineStore('breadcrumb', {
     path(): {activated: string, name: string, path: string}[] {
       if(this.search.isActive) {
         return [{
-          activated: 'busca',
+          activated: 'Busca',
           name: '',
           path: '/search'
         }];
@@ -78,7 +78,7 @@ export default defineStore('breadcrumb', {
 
       if(this.about.isActive) {
         return [{
-          activated: 'sobre',
+          activated: 'Sobre',
           name: '',
           path: '/about'
         }];
@@ -88,21 +88,21 @@ export default defineStore('breadcrumb', {
       
       if(this.course.isActive) {
         result.push({
-          activated: 'curso',
+          activated: 'Curso',
           name: this.course.name,
           path: this.course.path
         });
 
         if(this.subject.isActive) {
           result.push({
-            activated: 'disciplina',
+            activated: 'Disciplina',
             name: this.subject.name,
             path: this.subject.path
           });
           
           if(this.sign.isActive) {
             result.push({
-              activated: 'sinal',
+              activated: 'Sinal',
               name: this.sign.name,
               path: this.sign.path
             });
