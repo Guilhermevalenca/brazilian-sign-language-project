@@ -19,7 +19,9 @@
           </iframe>
         </LazyClientOnly>
       </div>
-      {{ sign.name }}
+      <p>
+        {{ sign.name }}
+      </p>
     </AppCard>
   </div>
   <EmptySection v-else>
@@ -115,6 +117,8 @@ iframe{
   border-radius: 1em;
 }
 .sign-view{
+  display: flex;
+  flex-flow: row;
   padding: 0.5em;
 }
 </style>

@@ -37,7 +37,7 @@
 
       </div>
     </transition>
-    <AppCard variant="default" class="abacate">
+    <AppCard variant="screen" class="abacate">
       <keep-alive>
         <component :is="currentComponent" :sign="sign" />
       </keep-alive>

@@ -5,7 +5,7 @@
           <div v-show="!filterOptions.courses && !filterOptions.subjects && !filterOptions.signs || filterOptions.courses" class="results">
             <h2>Cursos</h2>
             <div class="results" v-if="courses && courses.length > 0">
-              <AppCard variant="list"  v-for="(course , index) in courses " :key="course.id" @click="navigateTo(`/course/${course.id}`)"> {{ course.name }}</AppCard>
+              <AppCard variant="list"  v-for="(course , index) in courses " :key="course.id" @click="navigateTo(`/course/${course.id}`)"><p>{{ course.name }}</p></AppCard>
             </div>
             <EmptySection class="empty" v-else>
               <p>Nenhum resultado encontrado</p>
@@ -15,7 +15,7 @@
           <div  v-show="!filterOptions.courses && !filterOptions.subjects && !filterOptions.signs || filterOptions.subjects" class="results">
             <h2>Disciplinas</h2>
             <div class="results" v-if="subjects && subjects.length > 0">
-              <AppCard variant="list" v-for="(subject, index) in subjects" :key="subject.id" @click="navigateTo(`/subject/${subject.id}`)">{{ subject.name }}</AppCard>
+              <AppCard variant="list" v-for="(subject, index) in subjects" :key="subject.id" @click="navigateTo(`/subject/${subject.id}`)"><p>{{ subject.name }}</p></AppCard>
             </div>
             <EmptySection class="empty" v-else>
               <p>Nenhum resultado encontrado</p>
@@ -165,6 +165,7 @@ export default defineComponent({
   display: flex;
   flex-direction: column;
   gap: 1em;
+  max-width: 45vw;
 }
 
 .results {

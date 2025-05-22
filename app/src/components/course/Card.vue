@@ -44,7 +44,9 @@ export default defineComponent({
   display: flex;
   gap:1em;
   text-align: center;
-  flex-flow: column wrap  ;
+  flex-flow: column wrap ;
+  overflow-wrap: break-word;
+  word-break: break-word;
   align-content: center;
   align-items: center;
   font-size: 1em;
