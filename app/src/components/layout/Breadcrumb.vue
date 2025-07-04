@@ -5,7 +5,7 @@
           class="breadcrumb-item"
           @click="navigateTo('/')"
           :class="{current: route.path === '/'}"
-      >Pagina inicial </span>
+      >Página inicial </span>
       <span
           class="breadcrumb-item"
           :class="{current: route.path === value.path}"
@@ -14,9 +14,7 @@
           @click="navigateTo(value.path)"
       >
         <span class="breadcrumb-separator"> > </span>
-        <span>
-           {{ value.activated }} <span v-show="value.name">: {{ value.name }}</span>
-        </span>
+          <span v-show="value.name">{{ value.name }}</span>
       </span>
     </nav>
   </client-only>

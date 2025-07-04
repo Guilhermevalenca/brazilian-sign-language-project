@@ -2,36 +2,27 @@
     <div class="results-screen">
         <div class="content-results-screen">
           <h1>Resultados da pesquisa: "{{ searchData }}" </h1>
-          <div v-show="!filterOptions.courses && !filterOptions.subjects && !filterOptions.signs || filterOptions.courses" class="results">
-            <h2>Cursos</h2>
-            <div class="results" v-if="courses && courses.length > 0">
-              <AppCard variant="list"  v-for="(course , index) in courses " :key="course.id" @click="navigateTo(`/course/${course.id}`)"><p>{{ course.name }}</p></AppCard>
-            </div>
-            <EmptySection class="empty" v-else>
-              <p>Nenhum resultado encontrado</p>
-            </EmptySection>
-          </div>
 
-          <div  v-show="!filterOptions.courses && !filterOptions.subjects && !filterOptions.signs || filterOptions.subjects" class="results">
-            <h2>Disciplinas</h2>
-            <div class="results" v-if="subjects && subjects.length > 0">
-              <AppCard variant="list" v-for="(subject, index) in subjects" :key="subject.id" @click="navigateTo(`/subject/${subject.id}`)"><p>{{ subject.name }}</p></AppCard>
-            </div>
-            <EmptySection class="empty" v-else>
-              <p>Nenhum resultado encontrado</p>
-            </EmptySection>
-          </div>
-
-          <div  v-show="!filterOptions.courses && !filterOptions.subjects && !filterOptions.signs || filterOptions.signs" class="results">
-            <h2>Sinais</h2>
             <div class="results" v-if="signs && signs.length > 0">
+              <h2>Sinais</h2>
               <AppCard variant="list" v-for="(sign, index) in signs" :key="sign.id" @click="navigateTo(`/sign/${sign.id}`)">{{ sign.name }}</AppCard>
             </div>
-            <EmptySection class="empty" v-else>
-              <p>Nenhum resultado encontrado</p>
-            </EmptySection>
-          </div>
+
+            <div class="results" v-if="courses && courses.length > 0">
+              <h2>Cursos</h2>
+              <AppCard variant="list"  v-for="(course , index) in courses " :key="course.id" @click="navigateTo(`/course/${course.id}`)"><p>{{ course.name }}</p></AppCard>
+            </div>
+
+          <div class="results" v-if="subjects && subjects.length > 0">
+              <h2>Disciplinas</h2>
+              <AppCard variant="list" v-for="(subject, index) in subjects" :key="subject.id" @click="navigateTo(`/subject/${subject.id}`)"><p>{{ subject.name }}</p></AppCard>
+            </div>
+
+          <EmptySection class="empty" v-if="subjects.length === 0 && courses.length === 0 && signs.length === 0">
+            <p>Nenhum resultado encontrado.</p>
+          </EmptySection>
         </div>
+
       <div class="filters-container">
         <h1>Filtros</h1>
         <label class="filter-item">
