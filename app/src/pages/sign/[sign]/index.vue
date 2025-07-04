@@ -76,7 +76,6 @@ export default defineComponent({
           lazy: true,
         }
     );
-
     onBeforeMount(() => {
       LoadingService.show();
       setTimeout(() => {

@@ -1,6 +1,6 @@
 <template>
   <div class="content-title">
-    <h1>Sinais da disciplina: {{ subject?.name }}</h1>
+    <h1>Sinais da disciplina {{ subject?.name }}</h1>
   </div>
   <div v-if="subject?.signs && subject?.signs.length > 0" class="content-container-list">
     <AppCard

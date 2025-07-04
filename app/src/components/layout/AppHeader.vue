@@ -67,13 +67,12 @@ div{
 }
 header {
   box-sizing: border-box;
+  flex-flow: row wrap;
   top: 0;
   z-index: 0;
   position: fixed;
+  width: 100%;
   box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
-  margin: 0;
-  padding: 0;
-  width: 100vw;
 }
 .header-content{
   box-sizing: border-box;
@@ -91,6 +90,7 @@ header {
   justify-content: flex-end;
   padding: 0rem 2rem;
   flex:auto;
+  flex-flow: row wrap;
   gap:1em;
 }
 button {
