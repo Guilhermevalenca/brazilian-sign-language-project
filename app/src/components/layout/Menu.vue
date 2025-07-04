@@ -34,12 +34,11 @@ export default {
   align-self: flex-start;
   align-items: center;
   justify-content: flex-start;
-  gap: 5em;
   height: 100vh;
   width: 5em;
   margin:0;
   position: absolute;
-  padding: 2em 0em;
+  padding: 0em 0em;
   box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
 }
 .menu-container-open{
@@ -47,7 +46,7 @@ export default {
 }
 button{
   width: 100%;
-  padding:1em 2em;
+  padding:2em 2em;
   font-size: 1rem;
   font-weight: bold;
   color: $tertiary-color;

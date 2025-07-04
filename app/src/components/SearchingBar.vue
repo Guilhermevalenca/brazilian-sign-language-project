@@ -76,7 +76,7 @@ export default defineComponent({
   border-top-left-radius: 5rem;
   border-bottom-left-radius: 5rem;
   padding: 0rem 2rem;
-  min-width: 30rem;
+  min-width: 25vw;
   height: 3rem;
 }
 .search-button{

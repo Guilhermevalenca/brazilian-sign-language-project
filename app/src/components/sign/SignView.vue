@@ -1,6 +1,5 @@
 <template>
-  <h1>{{ sign?.name }}</h1>
-  <div class="content-container">
+  <div class="content-container" ref="videoWrapper">
     <iframe
         v-if="sign?.display"
         class="medium-iframe"
@@ -17,10 +16,9 @@ export default {
   name: 'SignView',
   props:{
     sign: Object
-  }
+  },
 }
 </script>
 
 <style scoped lang="scss">
-
 </style>

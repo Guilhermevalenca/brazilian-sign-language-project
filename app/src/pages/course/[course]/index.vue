@@ -1,6 +1,6 @@
 <template>
   <div class="content-title">
-    <h1>Disciplinas de: {{ course?.name }}</h1>
+    <h1>Disciplinas em {{ course?.name }}</h1>
   </div>
   <div v-if="course?.subjects && course?.subjects.length > 0" class="content-container-list">
     <AppCard
