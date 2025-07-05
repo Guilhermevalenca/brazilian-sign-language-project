@@ -1,10 +1,9 @@
 <template>
 <div class="course-card-container">
   <div class="course-card" tabindex="0" role="button">
-    <NuxtImg 
+    <img
       :src="image"
       :alt="'Icone do curso: ' + course?.name"
-      format="webp"
     />
     <legend>{{ course?.name }}</legend>
   </div>
@@ -23,13 +22,7 @@ export default defineComponent({
 
   computed: {
     image(): string {
-      if(!this.course?.image) {
-        return '/logo.svg';
-      }
-      if(String(this.course?.image).startsWith('http')) {
-        return String(this.course?.image);
-      }
-      return import.meta.env.VITE_API_URL + '/storage/' + String(this.course?.image);
+      return this.course?.image ? String(this.course.image) : '/logo.svg';
     }
   }
 });

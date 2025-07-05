@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\course\StoreCourseRequest;
 use App\Http\Requests\course\UpdateCourseRequest;
 use App\Models\Course;
@@ -26,8 +25,9 @@ class CourseController extends Controller
         try {
             $validated = $request->validated();
 
-            $path = $request->file('image')->store('courses', 'public');
-            $validated['image'] = $path;
+            if($request->hasFile('image')) {
+                $validated['image'] = $this->convertImageToString($request->file('image'));
+            }
 
             if ($request->has('subjects')) {
                 $subjects = $request->input('subjects');
@@ -67,10 +67,6 @@ class CourseController extends Controller
             return response()->json($course, 201);
 
         } catch (\Exception $e) {
-            if (isset($path)) {
-                Storage::disk('public')->delete($path);
-            }
-
             return response()->json([
                 'message' => 'Erro ao criar curso',
                 'error' => $e->getMessage(),
@@ -102,13 +98,8 @@ class CourseController extends Controller
 
         try {
             if ($request->hasFile('image')) {
-                //remove a imagem antiga
-                if ($course->image && Storage::disk('public')->exists($course->image)) {
-                    Storage::disk('public')->delete($course->image);
-                }
-                //salva a imagem e cria um path da nova imagem para posteriormente salvar no banco
-                $path = $request->file('image')->store('courses', 'public');
-                $validated['image'] = $path;
+
+                $validated['image'] = $this->convertImageToString($request->file('image'));
             }
             if ($request->has('subjects')) {
                 $subjects = $request->input('subjects');
@@ -145,9 +136,6 @@ class CourseController extends Controller
             $course->update($validated);
             return response($course, 200);
         } catch (\Exception $e) {
-            if (isset($path)) {
-                Storage::disk('public')->delete($path);
-            }
             return response($e->getMessage(), 500);
         }
     }

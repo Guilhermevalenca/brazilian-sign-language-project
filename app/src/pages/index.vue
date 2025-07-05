@@ -38,6 +38,8 @@ export default defineComponent({
             courses: [],
             last_page: 1
           }),
+          lazy: true,
+          immediate: false
         },
     );
 
