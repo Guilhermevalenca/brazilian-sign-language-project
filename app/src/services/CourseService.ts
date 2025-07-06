@@ -65,28 +65,23 @@ export default class CourseService extends Service {
     static async update(course: CourseType, id: number) {
         const $axios = this.axiosInstance();
 
-        const data = {
-            ...course,
-            keywords: course.keywords?.map((keyword: KeywordType) => keyword.id) ?? [],
-        } as CourseType & {
-            image?: string | File;
-            keywords: number[];
-        }
-        const headers = {
-            'Content-Type': 'multipart/form-data'
-        }
-
         if(typeof course.image === 'string') {
             //@ts-ignore
-            delete data.image;
-            headers['Content-Type'] = 'application/json';
+            delete course.image;
         }
 
-        console.log(data);
-
-        return $axios.put('/api/courses/' + id, data, {
-            headers,
-        });
+        return $axios.post('/api/courses/' + id, {
+            ...course,
+            keywords: course.keywords?.map((keyword: KeywordType) => Number(keyword.id)) ?? [],
+        }, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        })
+            .then((response) => {
+                console.log(response.data);
+                return response;
+            });
     }
 
     static async delete(id: number) {

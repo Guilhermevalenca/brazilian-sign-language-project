@@ -42,7 +42,7 @@ export default defineComponent({
   async setup() {
     const { subject } = useRoute().params;
 
-    const { data, status, execute, refresh } = useAsyncData(
+    const { data, status, refresh } = await useAsyncData(
         `fetchSubjectEdit-${subject}`,
         () => SubjectService.edit(Number(subject)),
         {
@@ -53,7 +53,7 @@ export default defineComponent({
               courses: [],
               keywords: [],
             } as SubjectType
-          })
+          }),
         }
     );
 
@@ -67,8 +67,6 @@ export default defineComponent({
     watch(status, ($new) => {
       LoadingService.loaded($new, refresh);
     });
-
-    execute();
 
     return {
       subject: computed(() => data.value.subject),

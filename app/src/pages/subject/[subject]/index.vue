@@ -1,5 +1,6 @@
 <template>
   <AppButton @click="deleteSubject">deletar disciplina</AppButton>
+  <AppButton @click="() => navigateTo('/subject/' + id + '/update')">editar disciplina</AppButton>
   <div class="content-title">
     <h1>Sinais da disciplina {{ subject?.name }}</h1>
   </div>

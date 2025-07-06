@@ -15,7 +15,9 @@ Route::prefix('courses')
 
                 Route::post('/', 'store');
                 Route::get('/{course}/edit', 'edit');
-                Route::put('/{course}', 'update');
+                //não utiliza put por erro no header 'Content-Type': 'multipart/form-data'
+                //não soube resolver e deixei com post por enquanto
+                Route::post('/{course}', 'update');
                 Route::delete('/{course}', 'destroy');
 
             });

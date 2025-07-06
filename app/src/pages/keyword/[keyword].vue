@@ -33,7 +33,9 @@ export default defineComponent({
             keyword: {
               name: '',
             }
-          })
+          }),
+          lazy: true,
+          immediate: false
         }
     );
 

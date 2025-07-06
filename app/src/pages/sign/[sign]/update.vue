@@ -84,7 +84,7 @@ export default defineComponent({
 
     const { sign: id } = useRoute().params;
 
-    const { data, status, execute, refresh } = useAsyncData(
+    const { data, status, refresh } = await useAsyncData(
         `fetchSignEdit-${id}`,
         () => SignService.find(Number(id), true),
         {
@@ -103,7 +103,7 @@ export default defineComponent({
               keywords: [],
               subjects: [],
             }
-          })
+          }),
         }
     );
 
@@ -117,8 +117,6 @@ export default defineComponent({
     watch(status, ($new) => {
       LoadingService.loaded($new, refresh);
     });
-
-    execute();
 
     return {
       sign: computed(() => data.value.sign),
