@@ -33,7 +33,9 @@ export default defineComponent({
           default: () => ({
             signs: [],
             last_page: 1
-          })
+          }),
+          lazy: true,
+          immediate: false
         }
     );
 

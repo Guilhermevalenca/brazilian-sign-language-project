@@ -58,6 +58,8 @@ export default defineComponent({
             keywords: [],
             last_page: 1
           }),
+          lazy: true,
+          immediate: false
         }
     );
 

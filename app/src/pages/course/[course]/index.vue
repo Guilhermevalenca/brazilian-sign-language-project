@@ -1,5 +1,6 @@
 <template>
   <AppButton @click="deleteCourse">deletar curso</AppButton>
+  <AppButton @click="() => navigateTo('/course/' + id + '/update')">editar curso</AppButton>
   <div class="content-title">
     <h1>Disciplinas em {{ course?.name }}</h1>
   </div>

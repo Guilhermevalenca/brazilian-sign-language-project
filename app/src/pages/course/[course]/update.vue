@@ -16,7 +16,7 @@
             type="file"
             placeholder="Escolha uma imagem"
             accept="image/*"
-            @change="course.image = $event.target.files[0]"
+            @input="course.image = $event.target.files[0]"
             name="course.image"
         />
       </label>
@@ -35,7 +35,7 @@ import CourseService from "~/services/CourseService";
 import LoadingService from "~/services/LoadingService";
 
 const { course: id } = useRoute().params;
-const { data, refresh, status, execute } = useAsyncData(
+const { data, refresh, status } = await useAsyncData(
     `fetchCourseEdit-${id}`,
     () => CourseService.edit(Number(id)),
     {
@@ -62,8 +62,6 @@ watch(status, ($new) => {
   LoadingService.loaded($new, refresh);
 });
 
-execute();
-
 async function submit() {
   const { $swal } = useNuxtApp();
   try {
@@ -72,7 +70,9 @@ async function submit() {
       title: 'Atualizando curso...',
     });
     $swal.showLoading();
-    await CourseService.update(course.value, Number(id));
+    await CourseService.update({
+      ...course.value
+    }, Number(id));
     await $swal.fire({
       icon: 'success',
       title: 'Curso atualizado com sucesso',
@@ -82,6 +82,7 @@ async function submit() {
     })
     navigateTo('/');
   } catch (error) {
+    console.log(error);
     $swal.fire({
       icon: 'error',
       title: 'Algo deu errado',
