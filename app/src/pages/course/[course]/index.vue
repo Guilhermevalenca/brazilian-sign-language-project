@@ -1,4 +1,5 @@
 <template>
+  <AppButton @click="deleteCourse">deletar curso</AppButton>
   <div class="content-title">
     <h1>Disciplinas em {{ course?.name }}</h1>
   </div>
@@ -95,5 +96,36 @@ export default defineComponent({
       immediate: true,
     }
   },
+
+  methods: {
+    async deleteCourse() {
+      const { $swal } = useNuxtApp();
+      try {
+        $swal.fire({
+          icon: 'info',
+          title: 'Deletando curso...',
+        });
+        $swal.showLoading();
+        await CourseService.delete(Number(this.id));
+        await $swal.fire({
+          icon: 'success',
+          title: 'Curso deletado com sucesso',
+          timer: 5000,
+          showConfirmButton: true,
+          confirmButtonText: 'OK',
+        });
+        navigateTo('/');
+      } catch(e) {
+        await $swal.fire({
+          icon: 'error',
+          title: 'Algo deu errado',
+          text: 'Ocorreu um erro, gostaria de tentar novamente ?',
+          timer: 3000,
+          showConfirmButton: true,
+          confirmButtonText: 'Tentar novamente',
+        });
+      }
+    }
+  }
 })
 </script>

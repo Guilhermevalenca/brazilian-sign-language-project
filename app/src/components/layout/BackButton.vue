@@ -4,7 +4,7 @@
         variant="navigation"
         @click="back()"
     >
-      <img src="~/assets/icons/arrow-left.svg" width="24" height="24">
+      <img src="~/assets/icons/arrow-left.svg" width="24" height="24" alt="Voltar">
       Voltar
     </AppButton>
   </div>
@@ -17,10 +17,10 @@ export default {
      back(){
        const router = useRouter()
         if(window.history.length > 1){
-          router.back()
+          router.back();
         }
         else{
-          router.push('/')
+          router.push('/');
         }
     }
   }

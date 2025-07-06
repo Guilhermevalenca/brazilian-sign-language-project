@@ -1,4 +1,5 @@
 <template>
+  <AppButton @click="deleteSubject">deletar disciplina</AppButton>
   <div class="content-title">
     <h1>Sinais da disciplina {{ subject?.name }}</h1>
   </div>
@@ -105,6 +106,37 @@ export default defineComponent({
       },
       deep: true,
       immediate: true
+    }
+  },
+
+  methods: {
+    async deleteSubject() {
+      const { $swal } = useNuxtApp();
+      try {
+        $swal.fire({
+          icon: 'info',
+          title: 'Deletando disciplina...',
+        });
+        $swal.showLoading();
+        await SubjectService.delete(Number(this.id));
+        await $swal.fire({
+          icon: 'success',
+          title: 'Disciplina deletada com sucesso',
+          timer: 5000,
+          showConfirmButton: true,
+          confirmButtonText: 'OK',
+        });
+        navigateTo('/');
+      } catch(e) {
+        await $swal.fire({
+          icon: 'error',
+          title: 'Algo deu errado',
+          text: 'Ocorreu um erro, gostaria de tentar novamente ?',
+          timer: 3000,
+          showConfirmButton: true,
+          confirmButtonText: 'Tentar novamente',
+        });
+      }
     }
   }
 })

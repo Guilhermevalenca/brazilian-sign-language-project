@@ -66,4 +66,9 @@ export default class SubjectService extends Service {
             courses: subject.courses?.map((course: CourseType) => course.id),
         });
     }
+
+    static async delete(id: number) {
+        const $axios = this.axiosInstance();
+        return $axios.delete('/api/subjects/' + id);
+    }
 }

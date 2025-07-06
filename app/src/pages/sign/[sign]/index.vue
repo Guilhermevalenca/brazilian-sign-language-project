@@ -1,4 +1,5 @@
 <template>
+  <AppButton @click="deleteSign">deletar sinal</AppButton>
   <div class="update-container">
     <AppButton
         @click="() => navigateTo('/sign/' + sign.id + '/update')"
@@ -102,15 +103,16 @@ export default defineComponent({
   },
 
   methods: {
-    async destroy() {
+    async deleteSign() {
+      const { $swal } = useNuxtApp();
       try {
-        this.$swal.fire({
+        $swal.fire({
           icon: 'info',
           title: 'Deletando sinal...',
         });
-        this.$swal.showLoading();
+        $swal.showLoading();
         await SignService.delete(Number(this.id));
-        await this.$swal.fire({
+        await $swal.fire({
           icon: 'success',
           title: 'Sinal deletado com sucesso',
           timer: 10000,
@@ -119,7 +121,14 @@ export default defineComponent({
         });
         navigateTo('/');
       } catch(e) {
-        console.log(e);
+        await $swal.fire({
+          icon: 'error',
+          title: 'Algo deu errado',
+          text: 'Ocorreu um erro, gostaria de tentar novamente ?',
+          timer: 3000,
+          showConfirmButton: true,
+          confirmButtonText: 'Tentar novamente',
+        });
       }
     },
   },
