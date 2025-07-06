@@ -23,8 +23,6 @@ class StoreUserMonitoringRequest extends FormRequest
     {
         return [
             'part_of_page' => 'required|string|max:255',
-            'reference_id' => 'nullable|integer|max:255',
-            'user_id' => 'nullable|integer|max:255',
             'token' => 'nullable|string|max:255',
             'timestamp' => 'required',
         ];
