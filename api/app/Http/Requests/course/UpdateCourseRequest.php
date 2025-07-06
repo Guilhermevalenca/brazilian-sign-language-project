@@ -22,12 +22,11 @@ class UpdateCourseRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['string'],
+            'name' => ['required', 'string'],
             'subjects' => ['nullable', 'array'],
             'subjects.*' => ['required_with:subjects', 'integer', 'exists:subjects,id'],
             'image' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,svg'],
-            'keywords' => ['required'],
-            'keywords.*' => ['required_with:keywords', 'integer', 'exists:keywords,id'],
+            'keywords.*' => ['exists:keywords,id'],
         ];
     }
 }

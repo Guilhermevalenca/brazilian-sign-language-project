@@ -24,7 +24,9 @@ export default defineComponent({
           default: () => ({
             subjects: [],
             last_page: 1
-          })
+          }),
+          lazy: true,
+          immediate: false
         }
     );
 

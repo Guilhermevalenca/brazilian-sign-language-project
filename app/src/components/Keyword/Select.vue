@@ -52,7 +52,7 @@ export default defineComponent({
       last_page.value = data.last_page;
     }
 
-    getKeywords();
+    await getKeywords();
 
     return {
       keywords,
@@ -98,6 +98,7 @@ export default defineComponent({
         this.$swal.showLoading();
 
         await KeywordService.create(this.newKeyword);
+
         this.page = 1;
         this.keywords = [];
         await this.getAllKeywords();
@@ -128,16 +129,19 @@ export default defineComponent({
     },
     async getAllKeywords() {
       if(this.page < this.last_page) {
-        this.page++;
         await this.getKeywords();
-        setTimeout(this.getAllKeywords, 300);
+        this.page++;
+        setTimeout(() => {
+          this.getAllKeywords();
+        }, 100);
       }
     }
   },
 
   async mounted() {
-    setTimeout(async () => {
-      await this.getAllKeywords();
+    setTimeout(() => {
+      this.page = 2;
+      this.getAllKeywords();
     }, 300);
   }
 });

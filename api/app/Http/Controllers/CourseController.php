@@ -25,7 +25,7 @@ class CourseController extends Controller
         try {
             $validated = $request->validated();
 
-            if($request->hasFile('image')) {
+            if ($request->hasFile('image')) {
                 $validated['image'] = $this->convertImageToString($request->file('image'));
             }
 
@@ -35,8 +35,7 @@ class CourseController extends Controller
                 // Se for string JSON, decodifica
                 if (is_string($subjects)) {
                     $validated['subjects'] = json_decode($subjects, true);
-                }
-                // Se já for array, usa diretamente
+                } // Se já for array, usa diretamente
                 elseif (is_array($subjects)) {
                     $validated['subjects'] = $subjects;
                 }
@@ -48,8 +47,7 @@ class CourseController extends Controller
                 // Se for string JSON, decodifica
                 if (is_string($keywords)) {
                     $validated['keywords'] = json_decode($keywords, true);
-                }
-                // Se já for array, usa diretamente
+                } // Se já for array, usa diretamente
                 elseif (is_array($keywords)) {
                     $validated['keywords'] = $keywords;
                 }
@@ -85,7 +83,8 @@ class CourseController extends Controller
         return response($course, 200);
     }
 
-    public function edit(Course $course) {
+    public function edit(Course $course)
+    {
         $course->load([
             'keywords',
         ]);
@@ -107,8 +106,7 @@ class CourseController extends Controller
                 // Se for string JSON, decodifica
                 if (is_string($subjects)) {
                     $validated['subjects'] = json_decode($subjects, true);
-                }
-                // Se já for array, usa diretamente
+                } // Se já for array, usa diretamente
                 elseif (is_array($subjects)) {
                     $validated['subjects'] = $subjects;
                 }
@@ -120,12 +118,14 @@ class CourseController extends Controller
                 // Se for string JSON, decodifica
                 if (is_string($keywords)) {
                     $validated['keywords'] = json_decode($keywords, true);
-                }
-                // Se já for array, usa diretamente
+                } // Se já for array, usa diretamente
                 elseif (is_array($keywords)) {
                     $validated['keywords'] = $keywords;
                 }
             }
+
+            $course->update($validated);
+
             if (!empty($validated['subjects'])) {
                 $course->subjects()->sync($validated['subjects']);
             }
@@ -133,7 +133,6 @@ class CourseController extends Controller
                 $course->keywords()->sync($validated['keywords']);
             }
 
-            $course->update($validated);
             return response($course, 200);
         } catch (\Exception $e) {
             return response($e->getMessage(), 500);
@@ -147,5 +146,17 @@ class CourseController extends Controller
     {
         $course->delete();
         return (response(null, 204));
+    }
+
+    private function convertImageToString($image)
+    {
+        $binary = file_get_contents($image->getRealPath());
+
+        $json = [
+            'base64' => base64_encode($binary),
+            'mimeType' => $image->getMimeType(),
+        ];
+
+        return 'data: '. $json['mimeType'] . ';base64,' . $json['base64'];
     }
 }
