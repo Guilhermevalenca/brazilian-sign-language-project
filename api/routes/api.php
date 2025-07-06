@@ -12,3 +12,4 @@ require __DIR__ . '/subjectRoute.php';
 require __DIR__ . '/courseRoute.php';
 require __DIR__ . '/keywordRoute.php';
 require __DIR__ . '/userRoute.php';
+require __DIR__ . '/userMonitoring.php';
