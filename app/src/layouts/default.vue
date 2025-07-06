@@ -23,7 +23,7 @@ export default defineComponent({
   name: "DefaultLayout",
 
   data: () => ({
-    user: null as null | ReturnType<typeof useUserStore>
+    user: null as null | ReturnType<typeof useUserStore>,
   }),
   computed:{
     isHome(){

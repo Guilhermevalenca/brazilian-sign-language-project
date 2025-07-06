@@ -88,4 +88,9 @@ export default class CourseService extends Service {
             headers,
         });
     }
+
+    static async delete(id: number) {
+        const $axios = this.axiosInstance();
+        return $axios.delete('/api/courses/' + id);
+    }
 }
