@@ -83,7 +83,7 @@ export default defineComponent({
   display: flex;
   justify-content: center;
   border: none;
-  border-radius: 1em;
+  border-radius: 100%;
   background-color: $primary-color;
   padding: 0.5em;
   width: 2.5em;
@@ -92,11 +92,23 @@ export default defineComponent({
 .pagination-button{
   display: flex;
   align-items: center;
-  background-color: transparent;
+  border: none;
+  border-radius: 100%;
+  padding: 0.2em;
+  background-color: $primary-color;
   border: none;
   img{
     width: 1.5rem;
     height: 1.5rem;
   }
+}
+.active{
+  background-color: $secondary-color;
+  transform: scale(1.2,1.2);
+}
+button:hover{
+  justify-self: center;
+  transform: scale(1.2,1.2);
+  background-color: $primary-color-hovered;
 }
 </style>

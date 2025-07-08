@@ -8,14 +8,14 @@
               <AppCard variant="list" v-for="(sign, index) in signs" :key="sign.id" @click="navigateTo(`/sign/${sign.id}`)">{{ sign.name }}</AppCard>
             </div>
 
+          <div class="results" v-if="subjects && subjects.length > 0">
+            <h2>Disciplinas</h2>
+            <AppCard variant="list" v-for="(subject, index) in subjects" :key="subject.id" @click="navigateTo(`/subject/${subject.id}`)"><p>{{ subject.name }}</p></AppCard>
+          </div>
+
             <div class="results" v-if="courses && courses.length > 0">
               <h2>Cursos</h2>
               <AppCard variant="list"  v-for="(course , index) in courses " :key="course.id" @click="navigateTo(`/course/${course.id}`)"><p>{{ course.name }}</p></AppCard>
-            </div>
-
-          <div class="results" v-if="subjects && subjects.length > 0">
-              <h2>Disciplinas</h2>
-              <AppCard variant="list" v-for="(subject, index) in subjects" :key="subject.id" @click="navigateTo(`/subject/${subject.id}`)"><p>{{ subject.name }}</p></AppCard>
             </div>
 
           <EmptySection class="empty" v-if="subjects.length === 0 && courses.length === 0 && signs.length === 0">
@@ -26,16 +26,18 @@
       <div class="filters-container">
         <h1>Filtros</h1>
         <label class="filter-item">
-          <input type="checkbox" v-model="filterOptions.courses" class="accent-blue-500" />
-          <span>Cursos</span>
+          <input type="checkbox" v-model="filterOptions.signs" class="accent-purple-500" />
+          <span>Sinais</span>
         </label>
+
         <label class="filter-item">
           <input type="checkbox" v-model="filterOptions.subjects" class="accent-green-500" />
           <span>Disciplinas</span>
         </label>
+
         <label class="filter-item">
-          <input type="checkbox" v-model="filterOptions.signs" class="accent-purple-500" />
-          <span>Sinais</span>
+          <input type="checkbox" v-model="filterOptions.courses" class="accent-blue-500" />
+          <span>Cursos</span>
         </label>
       </div>
     </div>

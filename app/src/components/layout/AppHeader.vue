@@ -16,8 +16,10 @@
           <AppButton variant="default" @click="navigateTo('/auth/login')"> Login </AppButton>
           <AppButton varaiant="default" @click="navigateTo('/auth/register')"> Cadastre-se </AppButton>
         </div>
-        <div v-else>
-          <span>{{ userStore.data?.name }}</span>
+        <div class="auth-control-panel" v-else>
+          <div class="user-avatar">
+            <span>{{ userStore.data?.name }}
+            </span></div>
           <AppButton variant="default" @click="logout" >Desconectar</AppButton>
         </div>
       </div>
@@ -99,5 +101,25 @@ button {
   padding: 0;
   margin: 0;
   cursor: pointer;
+}
+.user-avatar{
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+  padding: 0.5em;
+  border: solid 1px;
+  border-radius: 0.5em;
+  border-color: white;
+  color: white;
+}
+.auth-control-panel{
+  display: flex;
+  gap:1em;
+  flex-flow: row wrap;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
 }
 </style>
