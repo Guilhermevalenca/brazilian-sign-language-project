@@ -1,10 +1,27 @@
 <template>
   <header>
-    <div class="header-content">
-      <div>
-        <button @click="showMenu()">
-          <img src="~/assets/icons/menu.svg" width="24px" height="24px" alt="Menu" />
-        </button>
+      <div class="header-content">
+        <div>
+          <button @click="showMenu()">
+            <img src="~/assets/icons/menu.svg" width="24px" height="24px" alt="Menu">
+          </button>
+        </div>
+        <div class="logo">
+          <button @click="navigateTo('/')">
+            <img src="~/assets/logos/our-logo.svg" width="288px" height="78px" alt="Logo do glossário de libras">
+          </button>
+        </div>
+        <SearchingBar/>
+        <div v-if="!userStore?.data" class="auth-container">
+          <AppButton variant="default" @click="navigateTo('/auth/login')"> Login </AppButton>
+          <AppButton varaiant="default" @click="navigateTo('/auth/register')"> Cadastre-se </AppButton>
+        </div>
+        <div class="auth-control-panel" v-else>
+          <div class="user-avatar">
+            <span>{{ userStore.data?.name }}
+            </span></div>
+          <AppButton variant="default" @click="logout" >Desconectar</AppButton>
+        </div>
       </div>
       <div class="logo">
         <button @click="navigateTo('/')">
@@ -107,4 +124,28 @@ button {
   margin: 0;
   cursor: pointer;
 }
+<<<<<<< HEAD
 </style>
+=======
+.user-avatar{
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+  padding: 0.5em;
+  border: solid 1px;
+  border-radius: 0.5em;
+  border-color: white;
+  color: white;
+}
+.auth-control-panel{
+  display: flex;
+  gap:1em;
+  flex-flow: row wrap;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+}
+</style>
+>>>>>>> origin/feature/Adjusts

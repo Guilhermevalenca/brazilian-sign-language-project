@@ -67,6 +67,8 @@ async function searchAction() {
   border-bottom-left-radius: 5rem;
   padding: 0rem 2rem;
   min-width: 25vw;
+  max-width: 30vw;
+  width: auto;
   height: 3rem;
 }
 .search-button {

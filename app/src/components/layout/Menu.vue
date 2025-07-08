@@ -6,7 +6,7 @@
     ref="menuContainer"
   >
     <button title="Início" @click="navigateTo('/')">
-      <img src="~/assets/icons/home.svg" width="24px" height="24px" />
+      <img src="~/assets/icons/home.svg" width="24px" height="24px" alt="Página inicial" />
       <span v-show="isVisible">Inicio</span>
     </button>
     <!--    <button @click="navigateTo('/favorite')">-->
@@ -14,11 +14,11 @@
     <!--      <span v-show="isVisible">Favoritos</span>-->
     <!--    </button>-->
     <button title="Sobre nós" @click="navigateTo('/about')">
-      <img src="~/assets/icons/info.svg" width="24px" height="24px" />
+      <img src="~/assets/icons/info.svg" width="24px" height="24px" alt="Sobre nós" />
       <span v-show="isVisible">Sobre nós</span>
     </button>
     <button v-if="userStore.is_admin" title="Gráficos" @click="navigateTo('/monitoring')">
-      <img src="~/assets/icons/chart-bar.svg" width="24px" height="24px" />
+      <img src="~/assets/icons/chart-bar.svg" width="24px" height="24px" alt="Gráficos" />
       <span v-show="isVisible">Gráficos</span>
     </button>
   </nav>

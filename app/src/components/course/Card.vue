@@ -53,4 +53,7 @@ img {
   width: 8em;
   height: 8em;
 }
+.course-card-container:hover{
+  transform: scale(1.1,1.1);
+}
 </style>

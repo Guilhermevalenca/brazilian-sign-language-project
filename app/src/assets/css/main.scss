@@ -46,7 +46,17 @@ legend {
   font-size: 1.1rem;
   font-weight: bold;
 }
-.content-container {
+
+.update-container{
+  display: flex;
+  flex-flow: row nowrap;
+  margin-right: 2em;
+  gap: 0.5em;
+  align-items: flex-end;
+  justify-self: flex-end;
+  padding-bottom: 0.5em;
+}
+.content-container{
   display: flex;
   align-self: center;
   justify-self: center;

@@ -1,8 +1,16 @@
 <template>
-  <AppButton @click="deleteSubject">deletar disciplina</AppButton>
-  <AppButton @click="() => navigateTo('/subject/' + id + '/update')">editar disciplina</AppButton>
+  <div class="update-container" v-if="userStore.is_admin">
+    <AppButton @click="() => navigateTo('/subject/' + id + '/update')">
+      <img src="~/assets/icons/edit.svg" width="24px" height="24px">
+      Editar disciplina
+    </AppButton>
+    <AppButton @click="deleteSubject">
+      <img src="~/assets/icons/delete.svg" width="24px" height="24px">
+      Excluir disciplina
+    </AppButton>
+  </div>
   <div class="content-title">
-    <h1>Sinais da disciplina {{ subject?.name }}</h1>
+    <h1>Sinais em {{ subject?.name }}</h1>
   </div>
   <div v-if="subject?.signs && subject?.signs.length > 0" class="content-container-list">
     <AppCard
@@ -37,7 +45,8 @@
 import SubjectService from '~/services/SubjectService';
 import useBreadcrumbStore from '~/stores/useBreadcrumbStore';
 import type { SubjectType } from '~/types/Subject';
-import LoadingService from '~/services/LoadingService';
+import LoadingService from "~/services/LoadingService";
+import useUserStore from "~/stores/useUserStore";
 
 export default defineComponent({
   name: 'subjectPage',
@@ -81,7 +90,8 @@ export default defineComponent({
       last_page: computed(() => data.value.last_page),
       refresh,
       id,
-    };
+      userStore: useUserStore(),
+    }
   },
 
   watch: {
@@ -152,5 +162,9 @@ iframe {
   display: flex;
   flex-flow: row;
   padding: 0.5em;
+}
+.sign-view:hover{
+  background-color: #A6E4AF;
+  transform: scale(1.1,1.1);
 }
 </style>
