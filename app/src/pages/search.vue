@@ -1,7 +1,7 @@
 <template>
   <div class="results-screen">
     <div class="content-results-screen">
-      <h1>Resultados da pesquisa: "{{ searchData }}"</h1>
+      <h1>Resultados da pesquisa: "{{ searchData }}" </h1>
 
       <div class="results" v-if="signs && signs.length > 0">
         <h2>Sinais</h2>
@@ -40,53 +40,7 @@
         <span>Cursos</span>
       </label>
     </div>
-
-    <div class="results" v-if="courses && courses.length > 0">
-      <h2>Cursos</h2>
-      <AppCard
-          variant="list"
-          v-for="(course, index) in courses"
-          :key="course.id"
-          @click="navigateTo(`/course/${course.id}`)"
-      ><p>{{ course.name }}</p></AppCard
-      >
-    </div>
-
-    <div class="results" v-if="subjects && subjects.length > 0">
-      <h2>Disciplinas</h2>
-      <AppCard
-          variant="list"
-          v-for="(subject, index) in subjects"
-          :key="subject.id"
-          @click="navigateTo(`/subject/${subject.id}`)"
-      ><p>{{ subject.name }}</p></AppCard
-      >
-    </div>
-
-    <EmptySection
-        class="empty"
-        v-if="subjects.length === 0 && courses.length === 0 && signs.length === 0"
-    >
-      <p>Nenhum resultado encontrado.</p>
-    </EmptySection>
   </div>
-
-  <div class="filters-container">
-    <h1>Filtros</h1>
-    <label class="filter-item">
-      <input type="checkbox" v-model="filterOptions.courses" class="accent-blue-500" />
-      <span>Cursos</span>
-    </label>
-    <label class="filter-item">
-      <input type="checkbox" v-model="filterOptions.subjects" class="accent-green-500" />
-      <span>Disciplinas</span>
-    </label>
-    <label class="filter-item">
-      <input type="checkbox" v-model="filterOptions.signs" class="accent-purple-500" />
-      <span>Sinais</span>
-    </label>
-  </div>
-
 </template>
 
 <script setup lang="ts">
@@ -218,11 +172,11 @@ onUnmounted(() => {
   flex-direction: column;
   gap: 0.5em;
 }
-.filter-item {
+.filter-item{
   display: flex;
-  gap: 0.6em;
+  gap:0.6em;
 }
-.empty {
+.empty{
   display: flex;
   flex-flow: column;
   align-self: flex-start;

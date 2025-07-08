@@ -1,5 +1,5 @@
 <template>
-  <div class="pagination-container">
+  <div class="pagination-container" v-if="lastPage > 1">
     <!-- Botão Anterior -->
     <button class="pagination-button" @click="changePage(page - 1)" :disabled="page === 1">
       <img src="~/assets/icons/arrow-left.svg" alt="Anterior" />
@@ -7,8 +7,7 @@
 
     <!-- Números das Páginas -->
     <button
-      v-for="p in pages"
-      :key="p"
+      v-for="p in lastPage" :key="p"
       class="pagination-number"
       :class="{ active: p === page }"
       @click="changePage(p)"
@@ -23,33 +22,19 @@
   </div>
 </template>
 
-<script lang="ts">
-export default defineComponent({
-  props: {
-    page: { type: Number, required: true }, // Página atual
-    lastPage: { type: Number, required: true }, // Última página dinâmica
-  },
-
-  emits: ['update:page'],
-
-  computed: {
-    Page() {
-      return this.page;
-    },
-
-    pages() {
-      return Array.from({ length: this.lastPage }, (_, i) => i + 1);
-    },
-  },
-
-  methods: {
-    changePage(newPage: number) {
-      if (newPage >= 1 && newPage <= this.lastPage) {
-        this.$emit('update:page', newPage);
-      }
-    },
-  },
+<script setup lang="ts">
+const props = defineProps({
+  page: { type: Number, required: true }, // Página atual
+  lastPage: { type: Number, required: true }, // Última página dinâmica
 });
+
+const emit = defineEmits(['update:page']);
+
+function changePage(newPage: number) {
+  if (newPage >= 1 && newPage <= props.lastPage) {
+    emit('update:page', newPage);
+  }
+}
 </script>
 
 <style lang="scss" scoped>
