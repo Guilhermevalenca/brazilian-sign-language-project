@@ -4,10 +4,9 @@
   </NuxtLayout>
 </template>
 
-
 <script lang="ts">
 import useUserStore from '~/stores/useUserStore';
-import UserService from "~/services/UserService";
+import UserService from '~/services/UserService';
 import type { UserType } from '~/types/User';
 
 export default defineComponent({
@@ -15,21 +14,21 @@ export default defineComponent({
 
   async setup() {
     const token = useCookie('token').value;
-    if(token) {
+    if (token) {
       try {
         const { data } = await UserService.fetch();
         return {
-          user: data
-        }
-      } catch(error) {
+          user: data,
+        };
+      } catch (error) {
         return {
-          user: null
-        }
+          user: null,
+        };
       }
     }
     return {
-      user: null as null | UserType
-    }
+      user: null as null | UserType,
+    };
   },
 
   beforeMount() {
@@ -39,21 +38,17 @@ export default defineComponent({
 
   mounted() {
     const user = useUserStore();
-    if(this.user) {
+    if (this.user) {
       user.data = this.user;
-      Promise.all([
-        user.fetchIsAdmin(),
-        this.$axios.get('/sanctum/csrf-cookie'),
-      ]);
+      Promise.all([user.fetchIsAdmin(), this.$axios.get('/sanctum/csrf-cookie')]);
     }
-
   },
 });
 </script>
 
 <style>
-*{
-  margin:0;
+* {
+  margin: 0;
   padding: 0;
 }
 </style>

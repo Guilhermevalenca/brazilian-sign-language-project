@@ -5,9 +5,10 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreUserMonitoringRequest;
 use App\Http\Requests\UpdateUserMonitoringRequest;
 use App\Models\UserMonitoring;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Laravel\Sanctum\PersonalAccessToken;
-
 
 class UserMonitoringController extends Controller
 {
@@ -17,7 +18,17 @@ class UserMonitoringController extends Controller
 
     public function index()
     {
-        //
+        $avgPartOfPage = UserMonitoring::select(DB::raw('part_of_page, count(*) as count'))
+            ->groupBy('part_of_page')
+            ->orderBy('count', 'desc')
+            ->get();
+
+//        $averageDuration = UserMonitoring::calculateAverageUsageByPartOfPage();
+
+        return response([
+            'avgPartOfPage' => $avgPartOfPage,
+//            'averageDuration' => $averageDuration
+        ], 200);
     }
 
     /**
@@ -33,16 +44,18 @@ class UserMonitoringController extends Controller
      */
     public function store(StoreUserMonitoringRequest $request)
     {
-        $secret = 'plmnop';
+        $secret = env('APP_KEY', 'plmnop');
         $validated = $request->validated();
         $token = $validated['token'] ?? null;
 
         $segments = explode('/', $validated['part_of_page']);
-        $resourceId = end($segments);
-        $page = reset($segments);
-
-        $validated['reference_id'] = $resourceId;
-        $validated['part_of_page'] = $page;
+        if ($segments[0] == '') {
+            $validated['part_of_page'] = $segments[1];
+            $validated['reference_id'] = $segments[2] ?? null;
+        } else {
+            $validated['part_of_page'] = $segments[0];
+            $validated['reference_id'] = $segments[1] ?? null;
+        }
 
         $accessToken = $request->bearerToken();
         if ($accessToken) {
@@ -70,7 +83,6 @@ class UserMonitoringController extends Controller
             'token' => $token,
         ], 201);
     }
-
 
     /**
      * Display the specified resource.

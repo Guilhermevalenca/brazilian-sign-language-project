@@ -24,44 +24,44 @@ script.src = 'https://vlibras.gov.br/app/vlibras-plugin.js';
 document.body.appendChild(script);
 
 function init() {
-    script.removeEventListener('load', init);
-    new window.VLibras.Widget({
-        url: 'https://vlibras.gov.br/app',
-        avatar: 'random',
-        opacity: 1,
-    });
+  script.removeEventListener('load', init);
+  new window.VLibras.Widget({
+    url: 'https://vlibras.gov.br/app',
+    avatar: 'random',
+    opacity: 1,
+  });
 
-    activeLegend();
+  activeLegend();
 }
 
 function activeLegend() {
-    const observer = new MutationObserver((mutations) => {
-        mutations.forEach((mutation) => {
-            if (mutation.attributeName === 'class') {
-                const button = mutation.target;
-                if (!button.classList.contains('vp-enabled')) {
-                    setTimeout(() => {
-                        document.querySelector('.vpw-controls-subtitles').click();
-                    }, 300);
-                    observer.disconnect();
-                }
-            }
-        });
-    });
-
-    function observeButton() {
-        const button = document.querySelector('.vpw-skip-welcome-message');
-
-        if (button) {
-            observer.observe(button, { attributes: true, attributeFilter: ['class'] });
-            mainObserver.disconnect();
+  const observer = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+      if (mutation.attributeName === 'class') {
+        const button = mutation.target;
+        if (!button.classList.contains('vp-enabled')) {
+          setTimeout(() => {
+            document.querySelector('.vpw-controls-subtitles').click();
+          }, 300);
+          observer.disconnect();
         }
+      }
+    });
+  });
+
+  function observeButton() {
+    const button = document.querySelector('.vpw-skip-welcome-message');
+
+    if (button) {
+      observer.observe(button, { attributes: true, attributeFilter: ['class'] });
+      mainObserver.disconnect();
     }
-    const mainObserver = new MutationObserver(() => {
-        if (document.querySelector('.vpw-skip-welcome-message')) {
-            observeButton();
-        }
-    });
+  }
+  const mainObserver = new MutationObserver(() => {
+    if (document.querySelector('.vpw-skip-welcome-message')) {
+      observeButton();
+    }
+  });
 
-    mainObserver.observe(document.body, { childList: true, subtree: true });
+  mainObserver.observe(document.body, { childList: true, subtree: true });
 }

@@ -4,12 +4,12 @@
 
 <script lang="ts">
 export default defineComponent({
-    name: 'favoritesPage',
+  name: 'favoritesPage',
 
-    async setup() {
-        definePageMeta({
-            middleware: 'auth',
-        });
-    },
+  async setup() {
+    definePageMeta({
+      middleware: 'auth',
+    });
+  },
 });
 </script>

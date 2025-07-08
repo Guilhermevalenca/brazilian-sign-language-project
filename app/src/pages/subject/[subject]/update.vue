@@ -8,53 +8,49 @@
         <label>
           Nome:
           <AppInput
-              type="text"
-              placeholder="Digite o nome da matéria"
-              name="subject.name"
-              v-model="subject.name"
+            type="text"
+            placeholder="Digite o nome da matéria"
+            name="subject.name"
+            v-model="subject.name"
           />
         </label>
       </div>
       <div>
         <legend>Selecionar cursos:</legend>
-        <SubjectCourseSelect
-            v-model="subject.courses"
-        />
+        <SubjectCourseSelect v-model="subject.courses" />
       </div>
 
       <legend>Palavras-chave</legend>
-      <KeywordSelect
-          v-model="subject.keywords"
-      />
+      <KeywordSelect v-model="subject.keywords" />
       <AppButton type="submit">Atualizar Materia</AppButton>
     </AppForm>
   </AppCard>
 </template>
 
 <script lang="ts">
-import SubjectService from "~/services/SubjectService";
-import type {SubjectType} from "~/types/Subject";
-import LoadingService from "~/services/LoadingService";
+import SubjectService from '~/services/SubjectService';
+import type { SubjectType } from '~/types/Subject';
+import LoadingService from '~/services/LoadingService';
 
 export default defineComponent({
-  name: "update",
+  name: 'update',
 
   async setup() {
     const { subject } = useRoute().params;
 
     const { data, status, refresh } = await useAsyncData(
-        `fetchSubjectEdit-${subject}`,
-        () => SubjectService.edit(Number(subject)),
-        {
-          default: () => ({
-            subject: {
-              id: Number(subject),
-              name: '',
-              courses: [],
-              keywords: [],
-            } as SubjectType
-          }),
-        }
+      `fetchSubjectEdit-${subject}`,
+      () => SubjectService.edit(Number(subject)),
+      {
+        default: () => ({
+          subject: {
+            id: Number(subject),
+            name: '',
+            courses: [],
+            keywords: [],
+          } as SubjectType,
+        }),
+      },
     );
 
     onBeforeMount(() => {
@@ -71,7 +67,7 @@ export default defineComponent({
     return {
       subject: computed(() => data.value.subject),
       id: Number(subject),
-    }
+    };
   },
 
   methods: {
@@ -101,11 +97,9 @@ export default defineComponent({
           confirmButtonText: 'OK',
         });
       }
-    }
-  }
-})
+    },
+  },
+});
 </script>
 
-<style scoped lang="scss">
-
-</style>
+<style scoped lang="scss"></style>

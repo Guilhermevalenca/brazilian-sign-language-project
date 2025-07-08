@@ -4,50 +4,44 @@
     <AppForm @submit.prevent="submit" enctype="multipart/form-data">
       <label>
         Nome do curso:
-        <AppInput
-            placeholder="Digite o nome do curso"
-            v-model="course.name"
-            name="course.name"
-        />
+        <AppInput placeholder="Digite o nome do curso" v-model="course.name" name="course.name" />
       </label>
       <label>
         Escolha uma imagem:
         <AppInput
-            type="file"
-            placeholder="Escolha uma imagem"
-            accept="image/*"
-            @input="course.image = $event.target.files[0]"
-            name="course.image"
+          type="file"
+          placeholder="Escolha uma imagem"
+          accept="image/*"
+          @input="course.image = $event.target.files[0]"
+          name="course.image"
         />
       </label>
       <legend>Palavras-chave</legend>
-      <KeywordSelect
-          v-model="course.keywords"
-      />
+      <KeywordSelect v-model="course.keywords" />
       <AppButton type="submit">Atualizar Curso</AppButton>
     </AppForm>
   </AppCard>
 </template>
 
 <script setup lang="ts">
-import type { CourseType } from "~/types/Course";
-import CourseService from "~/services/CourseService";
-import LoadingService from "~/services/LoadingService";
+import type { CourseType } from '~/types/Course';
+import CourseService from '~/services/CourseService';
+import LoadingService from '~/services/LoadingService';
 
 const { course: id } = useRoute().params;
 const { data, refresh, status } = await useAsyncData(
-    `fetchCourseEdit-${id}`,
-    () => CourseService.edit(Number(id)),
-    {
-      default: () => ({
-        course: {
-          id: Number(id),
-          name: '',
-          image: '',
-          keywords: [],
-        } as CourseType,
-      }),
-    },
+  `fetchCourseEdit-${id}`,
+  () => CourseService.edit(Number(id)),
+  {
+    default: () => ({
+      course: {
+        id: Number(id),
+        name: '',
+        image: '',
+        keywords: [],
+      } as CourseType,
+    }),
+  },
 );
 const course = computed(() => data.value.course);
 
@@ -70,16 +64,19 @@ async function submit() {
       title: 'Atualizando curso...',
     });
     $swal.showLoading();
-    await CourseService.update({
-      ...course.value
-    }, Number(id));
+    await CourseService.update(
+      {
+        ...course.value,
+      },
+      Number(id),
+    );
     await $swal.fire({
       icon: 'success',
       title: 'Curso atualizado com sucesso',
       timer: 10000,
       showConfirmButton: true,
       confirmButtonText: 'OK',
-    })
+    });
     navigateTo('/');
   } catch (error) {
     console.log(error);
@@ -95,6 +92,4 @@ async function submit() {
 }
 </script>
 
-<style scoped lang="scss">
-
-</style>
+<style scoped lang="scss"></style>

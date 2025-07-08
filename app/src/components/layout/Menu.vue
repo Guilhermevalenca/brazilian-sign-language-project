@@ -1,34 +1,50 @@
 <template>
-  <nav class="menu-container-closed" tabindex="0"  :class="{'menu-container-open': isVisible}" ref="menuContainer">
+  <nav
+    class="menu-container-closed"
+    tabindex="0"
+    :class="{ 'menu-container-open': isVisible }"
+    ref="menuContainer"
+  >
     <button title="Início" @click="navigateTo('/')">
-      <img src="~/assets/icons/home.svg" width="24px" height="24px">
+      <img src="~/assets/icons/home.svg" width="24px" height="24px" alt="Página inicial" />
       <span v-show="isVisible">Inicio</span>
     </button>
-<!--    <button @click="navigateTo('/favorite')">-->
-<!--      <img src="~/assets/icons/favorite.svg" width="24px" height="24px">-->
-<!--      <span v-show="isVisible">Favoritos</span>-->
-<!--    </button>-->
+    <!--    <button @click="navigateTo('/favorite')">-->
+    <!--      <img src="~/assets/icons/favorite.svg" width="24px" height="24px">-->
+    <!--      <span v-show="isVisible">Favoritos</span>-->
+    <!--    </button>-->
     <button title="Sobre nós" @click="navigateTo('/about')">
-      <img src="~/assets/icons/info.svg" width="24px" height="24px">
+      <img src="~/assets/icons/info.svg" width="24px" height="24px" alt="Sobre nós" />
       <span v-show="isVisible">Sobre nós</span>
+    </button>
+    <button v-if="userStore.is_admin" title="Gráficos" @click="navigateTo('/monitoring')">
+      <img src="~/assets/icons/chart-bar.svg" width="24px" height="24px" alt="Gráficos" />
+      <span v-show="isVisible">Gráficos</span>
     </button>
   </nav>
 </template>
 
+<script setup lang="ts">
+import useUserStore from "~/stores/useUserStore";
+
+const userStore = useUserStore();
+</script>
+
 <script lang="ts">
 export default {
-  name: "Menu",
-  props:{
+  name: 'Menu',
+  props: {
     isVisible: Boolean,
   },
-}
+};
 </script>
-@import url('https://fonts.googleapis.com/css2?family=Quantico:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+@import
+url('https://fonts.googleapis.com/css2?family=Quantico:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 
 <style scoped lang="scss">
-.menu-container-closed{
+.menu-container-closed {
   background-color: $primary-color;
-  display:flex;
+  display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
   align-self: flex-start;
@@ -36,17 +52,17 @@ export default {
   justify-content: flex-start;
   height: 100vh;
   width: 5em;
-  margin:0;
+  margin: 0;
   position: absolute;
   padding: 0em 0em;
   box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
 }
-.menu-container-open{
+.menu-container-open {
   width: 14em;
 }
-button{
+button {
   width: 100%;
-  padding:2em 2em;
+  padding: 2em 2em;
   font-size: 1rem;
   font-weight: bold;
   color: $tertiary-color;
@@ -59,7 +75,7 @@ button{
   border: none;
   cursor: pointer;
 }
-button:hover{
+button:hover {
   background-color: $primary-color-hovered;
 }
 </style>

@@ -4,36 +4,41 @@
     <section>
       <LayoutBreadcrumb />
       <div class="layout-actions">
-        <LayoutBackButton v-show="!isHome"/>
+        <LayoutBackButton v-show="!isHome" />
       </div>
       <slot />
     </section>
   </main>
   <LayoutAdmActions v-if="user && user.is_admin" />
-  <div class="space">
-
-  </div>
+  <div class="space"></div>
   <LayoutAppFooter />
 </template>
 
-<script lang="ts">
-import useUserStore from "~/stores/useUserStore";
+<script setup lang="ts">
+import useUserStore from '~/stores/useUserStore';
+import UserMonitoringService from '~/services/UserMonitoringService';
 
-export default defineComponent({
-  name: "DefaultLayout",
+const user = useUserStore();
+const isHome = computed(() => useRoute().path === '/');
 
-  data: () => ({
-    user: null as null | ReturnType<typeof useUserStore>,
-  }),
-  computed:{
-    isHome(){
-      return useRoute().path === "/"
-    }
-  },
+const route = useRoute();
 
-  mounted() {
-    this.user = useUserStore();
+async function sendMonitoring() {
+  let path = route.path;
+  if (path === '/') {
+    path = 'home';
+  } else if (path.startsWith('/auth')) {
+    path = 'auth';
   }
+  if (!path.startsWith('/monitoring')) {
+    UserMonitoringService.register(path);
+  }
+}
+
+onMounted(() => {
+  setInterval(async () => {
+    // sendMonitoring();
+  }, 2000);
 });
 </script>
 
@@ -43,10 +48,11 @@ section {
   width: 60vw;
   overflow-y: auto;
 }
-.layout-actions{
+.layout-actions {
   display: grid;
   grid-template-columns: auto 1fr;
-}.space{
+}
+.space {
   height: 5em;
- }
+}
 </style>

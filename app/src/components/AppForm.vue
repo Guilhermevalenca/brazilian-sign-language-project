@@ -1,17 +1,17 @@
 <script lang="ts">
 export default defineComponent({
-  name: "AppForm"
-})
+  name: 'AppForm',
+});
 </script>
 
 <template>
-<form v-bind="$attrs">
-  <slot/>
-</form>
+  <form v-bind="$attrs">
+    <slot />
+  </form>
 </template>
 
 <style scoped>
-form{
+form {
   display: flex;
   width: 100%;
   flex-direction: column;

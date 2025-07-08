@@ -6,62 +6,56 @@
         <legend>Informações do sinal</legend>
         <label>
           Nome:
-          <AppInput
-              v-model="sign.name"
-              placeholder="Nome do sinal"
-              name="sign.name"
-          />
+          <AppInput v-model="sign.name" placeholder="Nome do sinal" name="sign.name" />
         </label>
         <label>
           Link do video:
           <AppInput
-              type="link"
-              v-model="sign.display"
-              placeholder="Link do video"
-              name="sign.display"
+            type="link"
+            v-model="sign.display"
+            placeholder="Link do video"
+            name="sign.display"
           />
           <small>Apenas links do youtube</small>
         </label>
       </section>
 
-      <label>Descrição do sinal <span class="tw-text-xs">*Campos não obrigatorios</span>
+      <label
+        >Descrição do sinal <span class="tw-text-xs">*Campos não obrigatorios</span>
         <AppTextarea
-            v-model="sign.description!.text"
-            placeholder="Escreva uma descrição para o sinal"
+          v-model="sign.description!.text"
+          placeholder="Escreva uma descrição para o sinal"
         />
         <AppInput
-            type="link"
-            v-model="sign.description!.display"
-            placeholder="Link do video"
-            name="sign.description.display"
+          type="link"
+          v-model="sign.description!.display"
+          placeholder="Link do video"
+          name="sign.description.display"
         />
         <small>Apenas links do youtube</small>
       </label>
 
-      <label>Exemplo de uso do sinal <span class="tw-text-xs">*Campos não obrigatorios</span>
+      <label
+        >Exemplo de uso do sinal <span class="tw-text-xs">*Campos não obrigatorios</span>
         <AppTextarea
-            v-model="sign.example!.description"
-            placeholder="Escreva uma descrição para uso"
+          v-model="sign.example!.description"
+          placeholder="Escreva uma descrição para uso"
         />
         <AppInput
-            type="link"
-            v-model="sign.example!.display"
-            placeholder="Link do video"
-            name="sign.example.display"
+          type="link"
+          v-model="sign.example!.display"
+          placeholder="Link do video"
+          name="sign.example.display"
         />
         <small>Apenas links do youtube</small>
       </label>
 
       <legend>Selecione as palavras-chave</legend>
-      <KeywordSelect
-          v-model="sign.keywords"
-      />
+      <KeywordSelect v-model="sign.keywords" />
       <br />
 
       <legend>Selecione as materiais relacionadas</legend>
-      <SignSubjectSelect
-          v-model="sign.subjects"
-      />
+      <SignSubjectSelect v-model="sign.subjects" />
       <br />
 
       <AppButton type="submit">Atualizar sinal</AppButton>
@@ -72,7 +66,7 @@
 <script lang="ts">
 import SignService from '~/services/SignService';
 import { type SignType } from '~/types/Sign';
-import LoadingService from "~/services/LoadingService";
+import LoadingService from '~/services/LoadingService';
 
 export default defineComponent({
   name: 'updateSignPage',
@@ -85,26 +79,26 @@ export default defineComponent({
     const { sign: id } = useRoute().params;
 
     const { data, status, refresh } = await useAsyncData(
-        `fetchSignEdit-${id}`,
-        () => SignService.find(Number(id), true),
-        {
-          default: () => ({
-            sign: {
-              name: '',
+      `fetchSignEdit-${id}`,
+      () => SignService.find(Number(id), true),
+      {
+        default: () => ({
+          sign: {
+            name: '',
+            display: '',
+            description: {
+              text: '',
               display: '',
-              description: {
-                text: '',
-                display: '',
-              },
-              example: {
-                description: '',
-                display: '',
-              },
-              keywords: [],
-              subjects: [],
-            }
-          }),
-        }
+            },
+            example: {
+              description: '',
+              display: '',
+            },
+            keywords: [],
+            subjects: [],
+          },
+        }),
+      },
     );
 
     onBeforeMount(() => {
@@ -121,7 +115,7 @@ export default defineComponent({
     return {
       sign: computed(() => data.value.sign),
       id,
-    }
+    };
   },
 
   methods: {
@@ -132,11 +126,11 @@ export default defineComponent({
           title: 'Atualizando sinal...',
         });
         this.$swal.showLoading();
-        const sign: SignType = {...this.sign};
-        if(sign.example?.description === '' || sign.example?.display === '') {
+        const sign: SignType = { ...this.sign };
+        if (sign.example?.description === '' || sign.example?.display === '') {
           delete sign.example;
         }
-        if(sign.description?.text === '' || sign.description?.display === '') {
+        if (sign.description?.text === '' || sign.description?.display === '') {
           delete sign.description;
         }
         await SignService.update(sign, Number(this.id));
@@ -158,7 +152,7 @@ export default defineComponent({
           confirmButtonText: 'OK',
         });
       }
-    }
-  }
+    },
+  },
 });
 </script>

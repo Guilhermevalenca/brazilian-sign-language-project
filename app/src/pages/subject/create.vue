@@ -7,25 +7,21 @@
       <div>
         <label>
           Nome:
-          <AppInput 
-            type="text" 
+          <AppInput
+            type="text"
             placeholder="Digite o nome da matéria"
             name="subject.name"
-            v-model="subject.name"  
+            v-model="subject.name"
           />
         </label>
       </div>
       <div>
         <legend>Selecionar cursos:</legend>
-        <SubjectCourseSelect
-            v-model="subject.courses"
-        />
+        <SubjectCourseSelect v-model="subject.courses" />
       </div>
 
       <legend>Palavras-chave</legend>
-      <KeywordSelect
-          v-model="subject.keywords"
-      />
+      <KeywordSelect v-model="subject.keywords" />
       <AppButton type="submit">Adicionar Materia</AppButton>
     </AppForm>
   </AppCard>
@@ -36,7 +32,7 @@ import SubjectService from '~/services/SubjectService';
 import type { SubjectType } from '~/types/Subject';
 
 export default defineComponent({
-  name: "create",
+  name: 'create',
 
   data: () => ({
     subject: {
@@ -54,7 +50,11 @@ export default defineComponent({
           title: 'Criando materia...',
         });
         this.$swal.showLoading();
-        await SubjectService.create(this.subject, this.subject.courses ?? [], this.subject.keywords ?? []);
+        await SubjectService.create(
+          this.subject,
+          this.subject.courses ?? [],
+          this.subject.keywords ?? [],
+        );
         await this.$swal.fire({
           icon: 'success',
           title: 'Materia criada com sucesso',
@@ -63,7 +63,7 @@ export default defineComponent({
           confirmButtonText: 'OK',
         });
         navigateTo('/');
-      } catch(error) {
+      } catch (error) {
         this.$swal.fire({
           icon: 'error',
           title: 'Algo deu errado',
@@ -73,11 +73,9 @@ export default defineComponent({
           confirmButtonText: 'OK',
         });
       }
-    }
-  }
-})
+    },
+  },
+});
 </script>
 
-<style scoped lang="scss">
-
-</style>
+<style scoped lang="scss"></style>
