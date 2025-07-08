@@ -54,7 +54,6 @@ export default defineComponent({
       if(this.search) {
         searchData.value = this.search;
         navigateTo('/search');
-        this.search = ''
       }
     }
 
@@ -78,6 +77,8 @@ export default defineComponent({
   border-bottom-left-radius: 5rem;
   padding: 0rem 2rem;
   min-width: 25vw;
+  max-width: 30vw;
+  width: auto;
   height: 3rem;
 }
 .search-button{
