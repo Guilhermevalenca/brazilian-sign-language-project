@@ -6,17 +6,22 @@
   </div>
   <div v-if="course?.subjects && course?.subjects.length > 0" class="content-container-list">
     <AppCard
-        v-for="subject in course?.subjects ?? []" :key="subject.id"
-        tabindex="1"
-        variant="list"
-        role="button"
-        @click="navigateTo(`/subject/${subject.id}`)"
+      v-for="subject in course?.subjects ?? []"
+      :key="subject.id"
+      tabindex="1"
+      variant="list"
+      role="button"
+      @click="navigateTo(`/subject/${subject.id}`)"
     >
-      <ul>{{ subject.name }}</ul>
+      <ul>
+        {{
+          subject.name
+        }}
+      </ul>
     </AppCard>
   </div>
   <EmptySection v-else>
-    <p> Nenhuma disciplina encontrada em {{ course.name }}.</p>
+    <p>Nenhuma disciplina encontrada em {{ course.name }}.</p>
   </EmptySection>
   <Pagination v-model:page="page" :lastPage="last_page" />
 </template>
@@ -25,7 +30,7 @@
 import CourseService from '~/services/CourseService';
 import useBreadcrumbStore from '~/stores/useBreadcrumbStore';
 import type { CourseType } from '~/types/Course';
-import LoadingService from "~/services/LoadingService";
+import LoadingService from '~/services/LoadingService';
 
 export default defineComponent({
   name: 'coursePage',
@@ -35,20 +40,20 @@ export default defineComponent({
     const page = ref(1);
 
     const { data, status, execute, refresh } = useAsyncData(
-        'fetchCourse',
-        () => CourseService.find(Number(id), page.value),
-        {
-          default: () => ({
-            course: {
-              name: '',
-              image: '',
-              subjects: [],
-            } as CourseType,
-            last_page: 1
-          }),
-          immediate: false,
-          lazy: true,
-        }
+      'fetchCourse',
+      () => CourseService.find(Number(id), page.value),
+      {
+        default: () => ({
+          course: {
+            name: '',
+            image: '',
+            subjects: [],
+          } as CourseType,
+          last_page: 1,
+        }),
+        immediate: false,
+        lazy: true,
+      },
     );
 
     onBeforeMount(() => {
@@ -69,16 +74,16 @@ export default defineComponent({
       page,
       last_page: computed(() => data.value.last_page),
       refresh,
-      id
-    }
+      id,
+    };
   },
 
   watch: {
     async page() {
-      if(this.page <= 0) {
+      if (this.page <= 0) {
         this.page = 1;
       }
-      if(this.page > this.last_page) {
+      if (this.page > this.last_page) {
         this.page = this.last_page;
       }
       this.$swal.fire({
@@ -89,13 +94,13 @@ export default defineComponent({
       await this.refresh();
       this.$swal.close();
     },
-    "course.name": {
+    'course.name': {
       handler($new) {
         useBreadcrumbStore().activeCourse($new ?? '', '/course/' + this.id);
       },
       deep: true,
       immediate: true,
-    }
+    },
   },
 
   methods: {
@@ -116,7 +121,7 @@ export default defineComponent({
           confirmButtonText: 'OK',
         });
         navigateTo('/');
-      } catch(e) {
+      } catch (e) {
         await $swal.fire({
           icon: 'error',
           title: 'Algo deu errado',
@@ -126,7 +131,7 @@ export default defineComponent({
           confirmButtonText: 'Tentar novamente',
         });
       }
-    }
-  }
-})
+    },
+  },
+});
 </script>

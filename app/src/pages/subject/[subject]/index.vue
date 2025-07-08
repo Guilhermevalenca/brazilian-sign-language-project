@@ -6,17 +6,18 @@
   </div>
   <div v-if="subject?.signs && subject?.signs.length > 0" class="content-container-list">
     <AppCard
-        class="sign-view"
-        variant="list"
-        v-for="sign in subject?.signs ?? []" :key="sign.id"
-        @click="navigateTo(`/sign/${sign.id}`)"
+      class="sign-view"
+      variant="list"
+      v-for="sign in subject?.signs ?? []"
+      :key="sign.id"
+      @click="navigateTo(`/sign/${sign.id}`)"
     >
       <div class="video-previa">
         <LazyClientOnly>
           <iframe
-              allow="autoplay; encrypted-media"
-              :src="`${sign.display}${sign.display.includes('?') ? '&' : '?'}autoplay=0&mute=1`"
-              loading="lazy"
+            allow="autoplay; encrypted-media"
+            :src="`${sign.display}${sign.display.includes('?') ? '&' : '?'}autoplay=0&mute=1`"
+            loading="lazy"
           >
           </iframe>
         </LazyClientOnly>
@@ -27,7 +28,7 @@
     </AppCard>
   </div>
   <EmptySection v-else>
-    <p> Nenhum sinal encontrado em {{ subject.name }}.</p>
+    <p>Nenhum sinal encontrado em {{ subject.name }}.</p>
   </EmptySection>
   <Pagination v-model:page="page" :lastPage="last_page" />
 </template>
@@ -36,7 +37,7 @@
 import SubjectService from '~/services/SubjectService';
 import useBreadcrumbStore from '~/stores/useBreadcrumbStore';
 import type { SubjectType } from '~/types/Subject';
-import LoadingService from "~/services/LoadingService";
+import LoadingService from '~/services/LoadingService';
 
 export default defineComponent({
   name: 'subjectPage',
@@ -46,31 +47,29 @@ export default defineComponent({
     const page = ref(1);
 
     const { data, status, execute, refresh } = useAsyncData(
-        'fetchSubject',
-        () => SubjectService.find(Number(id), page.value),
-        {
-          default: () => ({
-            subject: {
-              name: '',
-              signs: [],
-            },
-            last_page: 1
-          }),
-          immediate: false,
-          lazy: true,
-        }
+      'fetchSubject',
+      () => SubjectService.find(Number(id), page.value),
+      {
+        default: () => ({
+          subject: {
+            name: '',
+            signs: [],
+          },
+          last_page: 1,
+        }),
+        immediate: false,
+        lazy: true,
+      },
     );
 
     onBeforeMount(() => {
       LoadingService.show();
       setTimeout(() => {
-        console.log(status.value);
         LoadingService.loaded(status.value, refresh);
       }, 300);
     });
 
     watch(status, ($new) => {
-      console.log($new);
       LoadingService.loaded($new, refresh);
     });
 
@@ -82,15 +81,15 @@ export default defineComponent({
       last_page: computed(() => data.value.last_page),
       refresh,
       id,
-    }
+    };
   },
 
   watch: {
     async page() {
-      if(this.page <= 0) {
+      if (this.page <= 0) {
         this.page = 1;
       }
-      if(this.page > this.last_page) {
+      if (this.page > this.last_page) {
         this.page = this.last_page;
       }
       this.$swal.fire({
@@ -101,13 +100,13 @@ export default defineComponent({
       await this.refresh();
       this.$swal.close();
     },
-    "subject.name": {
+    'subject.name': {
       handler($new) {
         useBreadcrumbStore().activeSubject($new ?? '', '/subject/' + this.id);
       },
       deep: true,
-      immediate: true
-    }
+      immediate: true,
+    },
   },
 
   methods: {
@@ -128,7 +127,7 @@ export default defineComponent({
           confirmButtonText: 'OK',
         });
         navigateTo('/');
-      } catch(e) {
+      } catch (e) {
         await $swal.fire({
           icon: 'error',
           title: 'Algo deu errado',
@@ -138,18 +137,18 @@ export default defineComponent({
           confirmButtonText: 'Tentar novamente',
         });
       }
-    }
-  }
-})
+    },
+  },
+});
 </script>
 <style lang="scss" scoped>
-iframe{
+iframe {
   width: 120px;
   height: 80px;
   border: none;
   border-radius: 1em;
 }
-.sign-view{
+.sign-view {
   display: flex;
   flex-flow: row;
   padding: 0.5em;

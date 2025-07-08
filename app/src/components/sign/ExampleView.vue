@@ -1,10 +1,10 @@
 <template>
   <div v-if="sign?.example" class="content-container">
     <iframe
-        v-if="sign?.example?.display"
-        class="medium-iframe"
-        :src="sign?.example?.display"
-        allowfullscreen
+      v-if="sign?.example?.display"
+      class="medium-iframe"
+      :src="sign?.example?.display"
+      allowfullscreen
     >
     </iframe>
     <p class="content-text">
@@ -21,12 +21,10 @@
 <script lang="ts">
 export default {
   name: 'ExampleView',
-  props:{
-    sign: Object
-  }
-}
+  props: {
+    sign: Object,
+  },
+};
 </script>
 
-<style scoped lang="scss">
-
-</style>
+<style scoped lang="scss"></style>

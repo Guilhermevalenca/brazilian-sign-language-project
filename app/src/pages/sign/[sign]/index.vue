@@ -1,11 +1,8 @@
 <template>
   <AppButton @click="deleteSign">deletar sinal</AppButton>
   <div class="update-container">
-    <AppButton
-        @click="() => navigateTo('/sign/' + sign.id + '/update')"
-        v-if="userStore.is_admin"
-    >
-      <img src="~/assets/icons/edit.svg" width="24px" height="24px">
+    <AppButton @click="() => navigateTo('/sign/' + sign.id + '/update')" v-if="userStore.is_admin">
+      <img src="~/assets/icons/edit.svg" width="24px" height="24px" />
       Editar
     </AppButton>
   </div>
@@ -13,29 +10,31 @@
     <transition name="slide">
       <div class="views-menu">
         <div
-            @click="currentComponent = 'SignView'"
-            :class="{ active: currentComponent === 'SignView' }"
-            role="button"
-            tabindex="1"
-        >Sinal
+          @click="currentComponent = 'SignView'"
+          :class="{ active: currentComponent === 'SignView' }"
+          role="button"
+          tabindex="1"
+        >
+          Sinal
         </div>
 
         <div
-            @click="currentComponent = 'SignDescriptionView'"
-            :class="{ active: currentComponent === 'SignDescriptionView' }"
-            role="button"
-            tabindex="1"
-        >Descrição do sinal
+          @click="currentComponent = 'SignDescriptionView'"
+          :class="{ active: currentComponent === 'SignDescriptionView' }"
+          role="button"
+          tabindex="1"
+        >
+          Descrição do sinal
         </div>
 
         <div
-            @click="currentComponent = 'SignExampleView'"
-            :class="{ active: currentComponent === 'SignExampleView' }"
-            role="button"
-            tabindex="1"
-        >Exemplo de uso
+          @click="currentComponent = 'SignExampleView'"
+          :class="{ active: currentComponent === 'SignExampleView' }"
+          role="button"
+          tabindex="1"
+        >
+          Exemplo de uso
         </div>
-
       </div>
     </transition>
     <AppCard variant="screen" class="abacate">
@@ -50,32 +49,32 @@
 import SignService from '~/services/SignService';
 import useBreadcrumbStore from '~/stores/useBreadcrumbStore';
 import type { SignType } from '~/types/Sign';
-import LoadingService from "~/services/LoadingService";
-import { SignDescriptionView } from "#components";
-import { SignExampleView } from "#components";
-import SignView from "~/components/sign/SignView.vue";
-import useUserStore from "~/stores/useUserStore";
+import LoadingService from '~/services/LoadingService';
+import { SignDescriptionView } from '#components';
+import { SignExampleView } from '#components';
+import SignView from '~/components/sign/SignView.vue';
+import useUserStore from '~/stores/useUserStore';
 
 export default defineComponent({
   name: 'signPage',
   components: { SignDescriptionView, SignExampleView, SignView },
   async setup() {
-    const currentComponent= ref('SignView');
+    const currentComponent = ref('SignView');
     const { sign: id } = useRoute().params;
 
     const { data, status, execute, refresh } = useAsyncData(
-        'fetchSign',
-        () => SignService.find(Number(id)),
-        {
-          default: () => ({
-            sign: {
-              name: '',
-              display: '',
-            }
-          }),
-          immediate: false,
-          lazy: true,
-        }
+      'fetchSign',
+      () => SignService.find(Number(id)),
+      {
+        default: () => ({
+          sign: {
+            name: '',
+            display: '',
+          },
+        }),
+        immediate: false,
+        lazy: true,
+      },
     );
     onBeforeMount(() => {
       LoadingService.show();
@@ -99,7 +98,7 @@ export default defineComponent({
       currentComponent,
       id,
       userStore: useUserStore(),
-    }
+    };
   },
 
   methods: {
@@ -120,7 +119,7 @@ export default defineComponent({
           confirmButtonText: 'OK',
         });
         navigateTo('/');
-      } catch(e) {
+      } catch (e) {
         await $swal.fire({
           icon: 'error',
           title: 'Algo deu errado',
@@ -134,18 +133,18 @@ export default defineComponent({
   },
 
   watch: {
-    "sign.name": {
+    'sign.name': {
       handler($new) {
         useBreadcrumbStore().activeSign($new ?? '', '/sign/' + this.id);
       },
       deep: true,
       immediate: true,
-    }
-  }
+    },
+  },
 });
 </script>
 <style lang="scss" scoped>
-.views-menu{
+.views-menu {
   flex-flow: row nowrap;
   justify-content: space-around;
   border-top-right-radius: 1em;
@@ -154,7 +153,7 @@ export default defineComponent({
   height: 3em;
   display: flex;
   background-color: $primary-color;
-  div{
+  div {
     display: flex;
     flex-flow: row wrap;
     justify-content: center;
@@ -167,12 +166,12 @@ export default defineComponent({
     cursor: pointer;
     user-select: none;
   }
-  div:hover{
-      justify-self: center;
-      transform: scale(1,1);
-      background-color: $primary-color-hovered;
+  div:hover {
+    justify-self: center;
+    transform: scale(1, 1);
+    background-color: $primary-color-hovered;
   }
-  div.active{
+  div.active {
     background-color: $tertiary-color;
     border-top: solid 3px $primary-color-hovered;
     color: $soft-black-1;
@@ -193,12 +192,11 @@ export default defineComponent({
   transform: translateY(-20px);
   opacity: 0;
 }
-.update-container{
+.update-container {
   display: flex;
   flex-flow: column nowrap;
   margin-right: 2em;
-align-items: flex-end;
+  align-items: flex-end;
   padding: 0.5em;
 }
-
 </style>

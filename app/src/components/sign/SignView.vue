@@ -1,11 +1,6 @@
 <template>
   <div class="content-container" ref="videoWrapper">
-    <iframe
-        v-if="sign?.display"
-        class="medium-iframe"
-        :src="sign?.display"
-        allowfullscreen
-    >
+    <iframe v-if="sign?.display" class="medium-iframe" :src="sign?.display" allowfullscreen>
     </iframe>
     {{ sign?.text }}
   </div>
@@ -14,11 +9,10 @@
 <script lang="ts">
 export default {
   name: 'SignView',
-  props:{
-    sign: Object
+  props: {
+    sign: Object,
   },
-}
+};
 </script>
 
-<style scoped lang="scss">
-</style>
+<style scoped lang="scss"></style>

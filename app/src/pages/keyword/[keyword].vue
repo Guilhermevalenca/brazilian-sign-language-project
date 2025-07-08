@@ -2,11 +2,7 @@
   <pre>{{ keyword }}</pre>
   <button @click="showUpdateKeyword = !showUpdateKeyword">Atualizar palavra-chave</button>
   <form v-if="showUpdateKeyword">
-    <AppInput
-        type="text"
-        v-model="newKeyword.name"
-        name="new-keyword.name"
-    />
+    <AppInput type="text" v-model="newKeyword.name" name="new-keyword.name" />
     <button type="submit">Atualizar</button>
   </form>
 </template>
@@ -14,7 +10,7 @@
 <script lang="ts">
 import KeywordService from '~/services/KeywordService';
 import { type KeywordType } from '~/types/Keyword';
-import LoadingService from "~/services/LoadingService";
+import LoadingService from '~/services/LoadingService';
 
 export default defineComponent({
   name: 'keywordPage',
@@ -26,17 +22,17 @@ export default defineComponent({
     const { keyword: id } = useRoute().params;
 
     const { data, status, execute, refresh } = useAsyncData(
-        'fetchKeyword',
-        () => KeywordService.find(Number(id)),
-        {
-          default: () => ({
-            keyword: {
-              name: '',
-            }
-          }),
-          lazy: true,
-          immediate: false
-        }
+      'fetchKeyword',
+      () => KeywordService.find(Number(id)),
+      {
+        default: () => ({
+          keyword: {
+            name: '',
+          },
+        }),
+        lazy: true,
+        immediate: false,
+      },
     );
 
     onBeforeMount(() => {
@@ -56,17 +52,17 @@ export default defineComponent({
       keyword: computed(() => data.value.keyword),
       id: Number(id),
       refresh,
-    }
+    };
   },
 
   data() {
     const newKeyword: KeywordType = {
       name: this.keyword?.name,
-    }
+    };
     return {
       showUpdateKeyword: false,
       newKeyword,
-    }
+    };
   },
 
   methods: {
@@ -88,7 +84,7 @@ export default defineComponent({
           showConfirmButton: true,
           confirmButtonText: 'OK',
         });
-      } catch(e) {
+      } catch (e) {
         this.$swal.fire({
           icon: 'error',
           title: 'Algo deu errado',
@@ -98,7 +94,7 @@ export default defineComponent({
           confirmButtonText: 'OK',
         });
       }
-    }
-  }
+    },
+  },
 });
 </script>

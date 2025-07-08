@@ -1,41 +1,41 @@
 <template>
   <AppCard>
-    <AppLogo/>
+    <AppLogo />
     <h1>Cadastro</h1>
     <AppForm @submit.prevent="submit">
-      <label>Nome:
+      <label
+        >Nome:
+        <AppInput v-model="user.name" placeholder="Digite seu nome" name="user.name" />
+      </label>
+      <label
+        >Email:
         <AppInput
-            v-model="user.name"
-            placeholder="Digite seu nome"
-            name="user.name"
+          type="email"
+          v-model="user.email"
+          placeholder="Digite seu email"
+          name="user.email"
         />
       </label>
-      <label>Email:
+      <label
+        >Senha:
         <AppInput
-            type="email"
-            v-model="user.email"
-            placeholder="Digite seu email"
-            name="user.email"
+          type="password"
+          v-model="user.password"
+          placeholder="Escolha uma senha"
+          name="user.password"
         />
       </label>
-      <label>Senha:
+      <label
+        >Confirme sua senha:
         <AppInput
-            type="password"
-            v-model="user.password"
-            placeholder="Escolha uma senha"
-            name="user.password"
-        />
-      </label>
-      <label>Confirme sua senha:
-        <AppInput
-            type="password"
-            v-model="user.password_confirmation"
-            placeholder="Confirme sua senha"
-            name="user.password_confirmation"
+          type="password"
+          v-model="user.password_confirmation"
+          placeholder="Confirme sua senha"
+          name="user.password_confirmation"
         />
       </label>
       <FormActions>
-        <NuxtLink to="/auth/login" margin-left="auto" >Já tenho uma conta</NuxtLink>
+        <NuxtLink to="/auth/login" margin-left="auto">Já tenho uma conta</NuxtLink>
         <AppButton type="submit">Cadastrar-se</AppButton>
       </FormActions>
     </AppForm>
@@ -43,18 +43,18 @@
 </template>
 
 <script lang="ts">
-import type { UserType } from "~/types/User";
+import type { UserType } from '~/types/User';
 import useUserStore from '~/stores/useUserStore';
-import AuthService from "~/services/AuthService";
-import UserService from "~/services/UserService";
+import AuthService from '~/services/AuthService';
+import UserService from '~/services/UserService';
 
 export default defineComponent({
-  name: "register",
+  name: 'register',
 
   async setup() {
     definePageMeta({
       middleware: 'guest',
-    })
+    });
   },
 
   data() {
@@ -66,7 +66,7 @@ export default defineComponent({
     };
     return {
       user,
-    }
+    };
   },
 
   methods: {
@@ -77,40 +77,42 @@ export default defineComponent({
       this.$swal.showLoading();
       try {
         const res = await AuthService.register(this.user);
-        if(res) {
+        if (res) {
           const updateDataUser = async () => {
             const userStore = useUserStore();
             try {
               const { data } = await UserService.fetch();
               userStore.data = data;
-              this.$swal.fire({
-                icon: 'success',
-                title: 'Registro bem sucedido!',
-                timer: 5000,
-                showConfirmButton: true,
-                confirmButtonText: 'OK',
-              })
-                  .then(() => {
-                    navigateTo('/auth/check-email-code');
-                  })
-            } catch(error) {
-              this.$swal.fire({
-                icon: 'error',
-                title: 'Algo deu errado',
-                text: 'Ocorreu um erro, gostaria de tentar novamente ?',
-                timer: 10000,
-                showConfirmButton: true,
-                confirmButtonText: 'Tentar novamente',
-                showCancelButton: true,
-                cancelButtonText: 'Cancelar',
-              })
-                  .then((res) => {
-                    if(res.isConfirmed) {
-                      updateDataUser();
-                    }
-                  });
+              this.$swal
+                .fire({
+                  icon: 'success',
+                  title: 'Registro bem sucedido!',
+                  timer: 5000,
+                  showConfirmButton: true,
+                  confirmButtonText: 'OK',
+                })
+                .then(() => {
+                  navigateTo('/auth/check-email-code');
+                });
+            } catch (error) {
+              this.$swal
+                .fire({
+                  icon: 'error',
+                  title: 'Algo deu errado',
+                  text: 'Ocorreu um erro, gostaria de tentar novamente ?',
+                  timer: 10000,
+                  showConfirmButton: true,
+                  confirmButtonText: 'Tentar novamente',
+                  showCancelButton: true,
+                  cancelButtonText: 'Cancelar',
+                })
+                .then((res) => {
+                  if (res.isConfirmed) {
+                    updateDataUser();
+                  }
+                });
             }
-          }
+          };
           await updateDataUser();
         } else {
           this.$swal.fire({
@@ -122,7 +124,7 @@ export default defineComponent({
             confirmButtonText: 'OK',
           });
         }
-      } catch(e) {
+      } catch (e) {
         this.$swal.fire({
           icon: 'error',
           title: 'Algo deu errado',
@@ -132,8 +134,7 @@ export default defineComponent({
           confirmButtonText: 'OK',
         });
       }
-    }
+    },
   },
 });
-
 </script>

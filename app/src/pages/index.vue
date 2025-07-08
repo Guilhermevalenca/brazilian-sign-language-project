@@ -5,21 +5,21 @@
     </div>
     <div class="index-content">
       <CourseCard
-          v-for="course in courses" :key="course.id"
-          :course="course"
-          @click="navigateTo(`/course/${course.id}`)"
+        v-for="course in courses"
+        :key="course.id"
+        :course="course"
+        @click="navigateTo(`/course/${course.id}`)"
       />
     </div>
-    <Pagination v-model:page="page" :last-page="last_page"/>
+    <Pagination v-model:page="page" :last-page="last_page" />
   </div>
-
 </template>
 
 <script lang="ts">
 import CourseService from '~/services/CourseService';
 import useBreadcrumbStore from '~/stores/useBreadcrumbStore';
 import type { CourseType } from '~/types/Course';
-import LoadingService from "~/services/LoadingService";
+import LoadingService from '~/services/LoadingService';
 
 export default defineComponent({
   name: 'homePage',
@@ -28,20 +28,16 @@ export default defineComponent({
     const page = ref(1);
 
     const { status, data, refresh, execute } = useAsyncData<{
-      courses: CourseType[],
-      last_page: number,
-    }>(
-        'fetchCourses',
-        () => CourseService.fetch(page.value),
-        {
-          default: () => ({
-            courses: [],
-            last_page: 1
-          }),
-          lazy: true,
-          immediate: false
-        },
-    );
+      courses: CourseType[];
+      last_page: number;
+    }>('fetchCourses', () => CourseService.fetch(page.value), {
+      default: () => ({
+        courses: [],
+        last_page: 1,
+      }),
+      lazy: true,
+      immediate: false,
+    });
 
     onBeforeMount(() => {
       LoadingService.show();
@@ -67,10 +63,10 @@ export default defineComponent({
 
   watch: {
     async page() {
-      if(this.page <= 0) {
+      if (this.page <= 0) {
         this.page = 1;
       }
-      if(this.page > this.last_page) {
+      if (this.page > this.last_page) {
         this.page = this.last_page;
       }
       this.$swal.fire({
@@ -85,12 +81,11 @@ export default defineComponent({
 
   mounted() {
     useBreadcrumbStore().home();
-  }
+  },
 });
-
 </script>
 <style lang="scss" scoped>
-.index-content{
+.index-content {
   display: flex;
   align-self: center;
   justify-self: center;

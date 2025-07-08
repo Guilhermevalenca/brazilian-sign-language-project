@@ -1,19 +1,14 @@
 <template>
-  <AppInput
-      v-model="search"
-      type="text"
-      :placeholder="placeholder"
-      :name="'search-' + id"
-  />
-  <legend v-if="legend">{{legend}}</legend>
+  <AppInput v-model="search" type="text" :placeholder="placeholder" :name="'search-' + id" />
+  <legend v-if="legend">{{ legend }}</legend>
   <div class="list-container">
     <div v-for="(value, index) in filteredItems" :key="index + '-' + id">
       <label>
         <input
-            type="checkbox"
-            :id="`select-${value.id}-${id}`"
-            @input="(event) => inputAction(event.target?.checked, value)"
-            :checked="isIncluded(value)"
+          type="checkbox"
+          :id="`select-${value.id}-${id}`"
+          @input="(event) => inputAction(event.target?.checked, value)"
+          :checked="isIncluded(value)"
         />
         {{ value[labelInput] }}
       </label>
@@ -23,7 +18,7 @@
 
 <script lang="ts">
 export default defineComponent({
-  name: "AppSelect",
+  name: 'AppSelect',
 
   props: {
     modelValue: {
@@ -32,22 +27,22 @@ export default defineComponent({
     },
     items: {
       type: Array as PropType<any[]>,
-      require: true
+      require: true,
     },
     labelInput: {
       type: String,
-      require: true
+      require: true,
     },
     placeholder: {
-      type: String
+      type: String,
     },
     legend: {
-      type: String
+      type: String,
     },
     id: {
       type: String,
       require: true,
-    }
+    },
   },
   emits: ['update:modelValue'],
 
@@ -57,8 +52,10 @@ export default defineComponent({
 
   computed: {
     filteredItems() {
-      if(this.search !== '' && this.items?.length > 0) {
-        return this.items.filter((item) => item[String(this.labelInput)].toLowerCase().includes(this.search.toLowerCase()));
+      if (this.search !== '' && this.items?.length > 0) {
+        return this.items.filter((item) =>
+          item[String(this.labelInput)].toLowerCase().includes(this.search.toLowerCase()),
+        );
       }
       return this.items;
     },
@@ -67,15 +64,18 @@ export default defineComponent({
         return this.modelValue;
       },
       set(value: any[]) {
-        this.$emit('update:modelValue', value.filter(item => item !== null));
-      }
-    }
+        this.$emit(
+          'update:modelValue',
+          value.filter((item) => item !== null),
+        );
+      },
+    },
   },
 
   methods: {
     inputAction(checked: boolean, value: any) {
       let internalSelected = [];
-      if(checked) {
+      if (checked) {
         internalSelected = [...this.selected, value];
       } else {
         internalSelected = this.selected.filter((item: any) => item.id !== value.id);
@@ -84,13 +84,13 @@ export default defineComponent({
     },
     isIncluded(value: any) {
       return this.selected.some((item: any) => item.id === value.id);
-    }
-  }
-})
+    },
+  },
+});
 </script>
 
 <style scoped lang="scss">
-.list-container{
+.list-container {
   display: flex;
   flex-direction: column;
   overflow-y: auto;
@@ -99,6 +99,6 @@ export default defineComponent({
 label {
   display: flex;
   flex-direction: row;
-  gap:1rem;
+  gap: 1rem;
 }
 </style>

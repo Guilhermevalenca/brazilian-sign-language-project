@@ -3,8 +3,7 @@
 </template>
 <script lang="ts">
 export default defineComponent({
-  name: "AppFooter",
+  name: 'AppFooter',
 });
 </script>
-<style>
-</style>
+<style></style>

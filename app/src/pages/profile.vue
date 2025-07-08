@@ -54,7 +54,7 @@ export default defineComponent({
       },
       passwordDelete: '',
       userStore: null as null | ReturnType<typeof useUserStore>,
-    }
+    };
   },
 
   mounted() {
@@ -68,8 +68,8 @@ export default defineComponent({
         this.user.name = String(this.userStore?.data?.name ?? '');
       },
       deep: true,
-      immediate: true
-    }
+      immediate: true,
+    },
   },
 
   methods: {
@@ -81,7 +81,7 @@ export default defineComponent({
         });
         this.$swal.showLoading();
         await ProfileService.updateProfile(this.user);
-        if(this.userStore) {
+        if (this.userStore) {
           this.userStore.data.name = this.user.name;
           this.userStore.data.email = this.user.email;
         }
@@ -92,7 +92,7 @@ export default defineComponent({
           icon: 'success',
           title: 'Perfil atualizado com sucesso!',
         });
-      } catch(error) {
+      } catch (error) {
         this.$swal.fire({
           icon: 'error',
           title: 'Algo deu errado',
@@ -102,7 +102,6 @@ export default defineComponent({
           confirmButtonText: 'OK',
         });
       }
-
     },
     async submitPassword() {
       try {
@@ -119,7 +118,7 @@ export default defineComponent({
           icon: 'success',
           title: 'Senha atualizada com sucesso!',
         });
-      } catch(error) {
+      } catch (error) {
         this.$swal.fire({
           icon: 'error',
           title: 'Algo deu errado',
@@ -137,7 +136,7 @@ export default defineComponent({
           title: 'Excluindo conta...',
         });
         this.$swal.showLoading();
-        await ProfileService.deleteAccount(this.passwordDelete)
+        await ProfileService.deleteAccount(this.passwordDelete);
         localStorage.removeItem('token');
         delete this.$axios.defaults.headers.common['Authorization'];
 
@@ -154,7 +153,7 @@ export default defineComponent({
           confirmButtonText: 'OK',
         });
         navigateTo('/auth/login');
-      } catch(error) {
+      } catch (error) {
         this.$swal.fire({
           icon: 'error',
           title: 'Algo deu errado',
@@ -164,7 +163,7 @@ export default defineComponent({
           confirmButtonText: 'OK',
         });
       }
-    }
-  }
-})
+    },
+  },
+});
 </script>

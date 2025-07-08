@@ -1,11 +1,11 @@
 <template>
   <client-only>
     <AppSelect
-        v-model="selected"
-        :items="courses"
-        labelInput="name"
-        placeholder="Pesquise pelo curso"
-        id="course"
+      v-model="selected"
+      :items="courses"
+      labelInput="name"
+      placeholder="Pesquise pelo curso"
+      id="course"
     />
   </client-only>
 </template>
@@ -35,14 +35,14 @@ export default defineComponent({
       page,
       last_page,
       getCourses,
-    }
+    };
   },
 
   props: {
     modelValue: {
       type: Object as PropType<CourseType[]>,
-      required: true
-    }
+      required: true,
+    },
   },
 
   emits: ['update:modelValue'],
@@ -54,19 +54,19 @@ export default defineComponent({
       },
       set(value: CourseType[]) {
         this.$emit('update:modelValue', value);
-      }
+      },
     },
   },
 
   mounted() {
     const moreCourses = async () => {
-      if(this.page < this.last_page) {
+      if (this.page < this.last_page) {
         this.page++;
         await this.getCourses();
         setTimeout(moreCourses, 300);
       }
-    }
+    };
     setTimeout(moreCourses, 300);
-  }
+  },
 });
 </script>

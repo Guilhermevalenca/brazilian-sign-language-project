@@ -1,27 +1,27 @@
 <script lang="ts">
-import type { NuxtError } from '#app'
+import type { NuxtError } from '#app';
 
 export default defineComponent({
-    name: "error",
+  name: 'error',
 
-    props: {
-        error: Object as () => NuxtError
+  props: {
+    error: Object as () => NuxtError,
+  },
+
+  methods: {
+    handleError() {
+      clearError({ redirect: '/' });
     },
-
-    methods: {
-        handleError() {
-            clearError({ redirect: '/' })
-        }
-    }
+  },
 });
 </script>
 
 <template>
   <section>
     <div>
-        <h1>Algo deu errado</h1>
-        <h2>{{ error?.statusCode }}</h2>
-        <AppButton @click="handleError">Voltar para a pagina inicial</AppButton>
+      <h1>Algo deu errado</h1>
+      <h2>{{ error?.statusCode }}</h2>
+      <AppButton @click="handleError">Voltar para a pagina inicial</AppButton>
     </div>
   </section>
 </template>
