@@ -17,8 +17,18 @@
       <img src="~/assets/icons/info.svg" width="24px" height="24px" />
       <span v-show="isVisible">Sobre nós</span>
     </button>
+    <button v-if="userStore.is_admin" title="Gráficos" @click="navigateTo('/monitoring')">
+      <img src="~/assets/icons/chart-bar.svg" width="24px" height="24px" />
+      <span v-show="isVisible">Gráficos</span>
+    </button>
   </nav>
 </template>
+
+<script setup lang="ts">
+import useUserStore from "~/stores/useUserStore";
+
+const userStore = useUserStore();
+</script>
 
 <script lang="ts">
 export default {

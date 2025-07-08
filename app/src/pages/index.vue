@@ -85,7 +85,7 @@ export default defineComponent({
 });
 </script>
 <style lang="scss" scoped>
-.index-content{
+.index-content {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   flex-wrap: wrap;

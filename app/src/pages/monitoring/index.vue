@@ -11,30 +11,28 @@ import {
   ArcElement,
 } from 'chart.js';
 import UserMonitoringService from '~/services/UserMonitoringService';
+import type {AvgPartOfPageType} from "~/types/UserMonitoring";
+import useBreadcrumbStore from "~/stores/useBreadcrumbStore";
 
 ChartJS.register(Title, Tooltip, Legend, CategoryScale, LinearScale, BarElement, ArcElement);
 
-interface IAvgPartOfPage {
-  part_of_page: string;
-  count: number;
-}
-
-const { data } = await useAsyncData(
-    'fetch-user-monitoring',
-    () => UserMonitoringService.fetch(),
-    {
-      default: () => ({
-        avgPartOfPage: [],
-      }),
-});
+const { data, status, refresh } = await useAsyncData(
+  'fetch-user-monitoring',
+  () => UserMonitoringService.fetch(),
+  {
+    default: () => ({
+      avgPartOfPage: [],
+    }),
+  },
+);
 
 onMounted(async () => {
   UserMonitoringService.fetch();
 });
 
-const avgPartOfPage = computed((): IAvgPartOfPage[] => {
+const avgPartOfPage = computed((): AvgPartOfPageType[] => {
   if (data.value.avgPartOfPage) {
-    const translated = data.value.avgPartOfPage.map(({ part_of_page, count }: IAvgPartOfPage) => {
+    const translated = data.value.avgPartOfPage.map(({ part_of_page, count }: AvgPartOfPageType) => {
       let part = '';
       switch (part_of_page) {
         case 'subject':
@@ -63,9 +61,9 @@ const avgPartOfPage = computed((): IAvgPartOfPage[] => {
       };
     });
 
-    const response = translated.filter((item: IAvgPartOfPage) => item.part_of_page !== 'Outro');
+    const response = translated.filter((item: AvgPartOfPageType) => item.part_of_page !== 'Outro');
     let totalOther = 0;
-    translated.forEach((item: IAvgPartOfPage) => {
+    translated.forEach((item: AvgPartOfPageType) => {
       if (item.part_of_page === 'Outro') {
         totalOther += item.count;
       }
@@ -88,6 +86,11 @@ const barOptions = {
     title: { display: true, text: 'Quantidade de acessos por paginas' },
   },
 };
+
+
+onMounted(() => {
+  useBreadcrumbStore().activeMonitoring();
+});
 </script>
 
 <template>

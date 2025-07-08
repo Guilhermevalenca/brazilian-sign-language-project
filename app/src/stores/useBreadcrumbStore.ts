@@ -23,6 +23,9 @@ export default defineStore('breadcrumb', {
     about: {
       isActive: false,
     },
+    monitoring: {
+      isActive: false,
+    }
   }),
   actions: {
     activeCourse(name: string = '', path: string) {
@@ -53,9 +56,11 @@ export default defineStore('breadcrumb', {
       this.search.isActive = false;
     },
     activeSearch() {
+      this.home();
       this.search.isActive = true;
     },
     activeAbout() {
+      this.home();
       this.about.isActive = true;
     },
     home() {
@@ -64,15 +69,19 @@ export default defineStore('breadcrumb', {
       this.sign.isActive = false;
       this.search.isActive = false;
       this.about.isActive = false;
+      this.monitoring.isActive = false;
     },
+    activeMonitoring() {
+      this.home();
+      this.monitoring.isActive = true;
+    }
   },
   getters: {
-    path(): { activated: string; name: string; path: string }[] {
+    path(): { name: string; path: string }[] {
       if (this.search.isActive) {
         return [
           {
-            activated: 'Busca',
-            name: '',
+            name: 'Busca',
             path: '/search',
           },
         ];
@@ -81,32 +90,37 @@ export default defineStore('breadcrumb', {
       if (this.about.isActive) {
         return [
           {
-            activated: 'Sobre',
-            name: '',
+            name: 'Sobre',
             path: '/about',
           },
         ];
       }
 
-      const result: { activated: string; name: string; path: string }[] = [];
+      if (this.monitoring.isActive) {
+        return [
+          {
+            name: 'Monitoramento',
+            path: '/monitoring',
+          },
+        ];
+      }
+
+      const result: { name: string; path: string }[] = [];
 
       if (this.course.isActive) {
         result.push({
-          activated: 'Curso',
           name: this.course.name,
           path: this.course.path,
         });
 
         if (this.subject.isActive) {
           result.push({
-            activated: 'Disciplina',
             name: this.subject.name,
             path: this.subject.path,
           });
 
           if (this.sign.isActive) {
             result.push({
-              activated: 'Sinal',
               name: this.sign.name,
               path: this.sign.path,
             });
