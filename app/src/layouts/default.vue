@@ -37,7 +37,7 @@ async function sendMonitoring() {
 
 onMounted(() => {
   setInterval(async () => {
-    // sendMonitoring();
+    sendMonitoring();
   }, 2000);
 });
 </script>
