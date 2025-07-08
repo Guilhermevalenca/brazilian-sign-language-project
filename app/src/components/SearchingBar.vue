@@ -54,6 +54,7 @@ export default defineComponent({
       if(this.search) {
         searchData.value = this.search;
         navigateTo('/search');
+        this.search = ''
       }
     }
 
