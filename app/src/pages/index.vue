@@ -1,8 +1,8 @@
 <template>
+  <div class="content-title">
+    <h1>Cursos</h1>
+  </div>
   <div class="content-container">
-    <div class="content-title">
-      <h1>Cursos</h1>
-    </div>
     <div class="index-content">
       <CourseCard
         v-for="course in courses"
@@ -85,16 +85,11 @@ export default defineComponent({
 });
 </script>
 <style lang="scss" scoped>
-.index-content {
-  display: flex;
-  align-self: center;
-  justify-self: center;
-  align-items: stretch;
-  align-content: stretch;
-  flex-direction: row;
+.index-content{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   flex-wrap: wrap;
-  justify-content: space-around;
-  gap: 4em;
+  gap: 3em;
   padding: 2em;
 }
 </style>
