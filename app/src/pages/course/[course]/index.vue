@@ -14,6 +14,7 @@
   </div>
   <div v-if="course?.subjects && course?.subjects.length > 0" class="content-container-list">
     <AppCard
+        class="subject"
         v-for="subject in course?.subjects ?? []" :key="subject.id"
         tabindex="1"
         variant="list"
@@ -138,3 +139,9 @@ export default defineComponent({
   }
 })
 </script>
+<style lang="scss" scoped>
+.subject:hover{
+  background-color: #A6E4AF;
+  transform: scale(1.1,1.1);
+}
+</style>
