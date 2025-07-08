@@ -1,6 +1,14 @@
 <template>
-  <AppButton @click="deleteCourse">deletar curso</AppButton>
-  <AppButton @click="() => navigateTo('/course/' + id + '/update')">editar curso</AppButton>
+  <div class="update-container" v-if="userStore.is_admin">
+    <AppButton @click="() => navigateTo('/course/' + id + '/update')">
+      <img src="~/assets/icons/edit.svg" width="24px" height="24px">
+      Editar curso
+    </AppButton>
+    <AppButton @click="deleteCourse">
+      <img src="~/assets/icons/delete.svg" width="24px" height="24px">
+      Excluir curso
+    </AppButton>
+  </div>
   <div class="content-title">
     <h1>Disciplinas em {{ course?.name }}</h1>
   </div>
@@ -26,6 +34,7 @@ import CourseService from '~/services/CourseService';
 import useBreadcrumbStore from '~/stores/useBreadcrumbStore';
 import type { CourseType } from '~/types/Course';
 import LoadingService from "~/services/LoadingService";
+import useUserStore from "~/stores/useUserStore";
 
 export default defineComponent({
   name: 'coursePage',
@@ -69,7 +78,8 @@ export default defineComponent({
       page,
       last_page: computed(() => data.value.last_page),
       refresh,
-      id
+      id,
+      userStore: useUserStore(),
     }
   },
 
@@ -82,7 +92,6 @@ export default defineComponent({
         this.page = this.last_page;
       }
       this.$swal.fire({
-        icon: 'info',
         title: 'Carregando matérias',
       });
       this.$swal.showLoading();
@@ -103,7 +112,6 @@ export default defineComponent({
       const { $swal } = useNuxtApp();
       try {
         $swal.fire({
-          icon: 'info',
           title: 'Deletando curso...',
         });
         $swal.showLoading();

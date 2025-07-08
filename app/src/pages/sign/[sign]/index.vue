@@ -1,13 +1,15 @@
 <template>
-  <AppButton @click="deleteSign">deletar sinal</AppButton>
-  <div class="update-container">
-    <AppButton
-        @click="() => navigateTo('/sign/' + sign.id + '/update')"
-        v-if="userStore.is_admin"
-    >
-      <img src="~/assets/icons/edit.svg" width="24px" height="24px">
-      Editar
-    </AppButton>
+    <div class="update-container" v-if="userStore.is_admin">
+      <AppButton
+          @click="() => navigateTo('/sign/' + sign.id + '/update')"
+      >
+        <img src="~/assets/icons/edit.svg" width="24px" height="24px">
+        Editar
+      </AppButton>
+      <AppButton @click="deleteSign">
+        <img src="~/assets/icons/delete.svg" width="24px" height="24px">
+        Apagar
+      </AppButton>
   </div>
   <div class="content-container">
     <transition name="slide">
@@ -107,7 +109,6 @@ export default defineComponent({
       const { $swal } = useNuxtApp();
       try {
         $swal.fire({
-          icon: 'info',
           title: 'Deletando sinal...',
         });
         $swal.showLoading();
@@ -192,13 +193,6 @@ export default defineComponent({
 .slide-leave-to {
   transform: translateY(-20px);
   opacity: 0;
-}
-.update-container{
-  display: flex;
-  flex-flow: column nowrap;
-  margin-right: 2em;
-align-items: flex-end;
-  padding: 0.5em;
 }
 
 </style>
