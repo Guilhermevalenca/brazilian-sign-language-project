@@ -1,32 +1,24 @@
 <template>
   <div class="pagination-container">
     <!-- Botão Anterior -->
-    <button
-        class="pagination-button"
-        @click="changePage(page - 1)"
-        :disabled="page === 1"
-    >
-      <img src="~/assets/icons/arrow-left.svg" alt="Anterior"/>
+    <button class="pagination-button" @click="changePage(page - 1)" :disabled="page === 1">
+      <img src="~/assets/icons/arrow-left.svg" alt="Anterior" />
     </button>
 
     <!-- Números das Páginas -->
     <button
-        v-for="p in pages"
-        :key="p"
-        class="pagination-number"
-        :class="{ active: p === page }"
-        @click="changePage(p)"
+      v-for="p in pages"
+      :key="p"
+      class="pagination-number"
+      :class="{ active: p === page }"
+      @click="changePage(p)"
     >
       {{ p }}
     </button>
 
     <!-- Botão Próximo -->
-    <button
-        class="pagination-button"
-        @click="changePage(page + 1)"
-        :disabled="page === lastPage"
-    >
-      <img src="~/assets/icons/arrow-right.svg" alt="Próximo"/>
+    <button class="pagination-button" @click="changePage(page + 1)" :disabled="page === lastPage">
+      <img src="~/assets/icons/arrow-right.svg" alt="Próximo" />
     </button>
   </div>
 </template>
@@ -47,7 +39,7 @@ export default defineComponent({
 
     pages() {
       return Array.from({ length: this.lastPage }, (_, i) => i + 1);
-    }
+    },
   },
 
   methods: {
@@ -55,13 +47,13 @@ export default defineComponent({
       if (newPage >= 1 && newPage <= this.lastPage) {
         this.$emit('update:page', newPage);
       }
-    }
-  }
+    },
+  },
 });
 </script>
 
 <style lang="scss" scoped>
-.pagination-container{
+.pagination-container {
   display: flex;
   flex-flow: row nowrap;
   box-sizing: border-box;
@@ -69,17 +61,17 @@ export default defineComponent({
   align-content: center;
   justify-content: center;
   background-color: transparent;
-  color: #FFFFFF;
+  color: #ffffff;
   border-radius: 10rem;
   gap: 1em;
-  margin:1.5em;
+  margin: 1.5em;
 }
-.container-pagination-item{
+.container-pagination-item {
   display: flex;
   flex: auto;
   padding: 0.5rem;
 }
-.pagination-number{
+.pagination-number {
   display: flex;
   justify-content: center;
   border: none;
@@ -89,7 +81,7 @@ export default defineComponent({
   width: 2.5em;
   height: 2.5em;
 }
-.pagination-button{
+.pagination-button {
   display: flex;
   align-items: center;
   border: none;
@@ -97,7 +89,7 @@ export default defineComponent({
   padding: 0.2em;
   background-color: $primary-color;
   border: none;
-  img{
+  img {
     width: 1.5rem;
     height: 1.5rem;
   }

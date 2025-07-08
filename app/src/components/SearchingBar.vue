@@ -3,74 +3,64 @@
     <form @submit.prevent="submit" v-bind="$attrs">
       <div class="searching-bar">
         <input
-            class="searching-bar-input" type="text"
-            v-model="search" required
-
-            placeholder="Buscar ..."
-            name="search-bar"
-        >
+          class="searching-bar-input"
+          type="text"
+          v-model="searchData"
+          required
+          placeholder="Buscar ..."
+          name="search-bar"
+        />
         <button type="submit" class="search-button">
-          <img src="~/assets/icons/search.svg" width="24px" height="24px">
+          <img src="~/assets/icons/search.svg" width="24px" height="24px" />
         </button>
       </div>
     </form>
   </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import SystemSourceService from '~/services/SystemSourceService';
 
-export default defineComponent({
-  name: 'AppSearch',
-
-  data: () => ({
-    search: '',
-    results: {
-      courses: [],
-      subjects: [],
-      signs: [],
-    },
-  }),
-
-  methods: {
-    async searchAction() {
-      if(this.search) {
-        await SystemSourceService.searchAction(this.search)
-            .then(res => {
-              if(res) {
-                this.results.courses = res.data.courses;
-                this.results.subjects = res.data.subjects;
-                this.results.signs = res.data.signs;
-              }
-            });
-      } else {
-        this.results.courses = [];
-        this.results.subjects = [];
-        this.results.signs = [];
-      }
-    },
-    async submit() {
-      const searchData = searchBarData();
-      if(this.search) {
-        searchData.value = this.search;
-        navigateTo('/search');
-      }
-    }
-
-  }
+const searchData = searchBarData();
+const results = ref({
+  courses: [],
+  subjects: [],
+  signs: [],
 });
+
+async function submit() {
+  if (searchData.value) {
+    navigateTo('/search');
+  }
+}
+async function searchAction() {
+  if (searchData.value) {
+    await SystemSourceService.searchAction(searchData.value).then((res) => {
+      if (res) {
+        results.value.courses = res.data.courses;
+        results.value.subjects = res.data.subjects;
+        results.value.signs = res.data.signs;
+      }
+    });
+  } else {
+    results.value.courses = [];
+    results.value.subjects = [];
+    results.value.signs = [];
+  }
+}
 </script>
-<style lang="scss" scoped >
-.searching-bar-container{
+
+<style lang="scss" scoped>
+.searching-bar-container {
   display: flex;
   flex: auto;
 }
-.searching-bar{
+.searching-bar {
   display: flex;
   flex-direction: row;
-  flex:auto;
+  flex: auto;
 }
-.searching-bar-input{
+.searching-bar-input {
   font-size: 1rem;
   border: none;
   border-top-left-radius: 5rem;
@@ -81,20 +71,18 @@ export default defineComponent({
   width: auto;
   height: 3rem;
 }
-.search-button{
+.search-button {
   background-color: $secondary-color;
   border: none;
   border-top-right-radius: 10rem;
   border-bottom-right-radius: 10rem;
-  cursor:pointer;
+  cursor: pointer;
   width: 4rem;
   height: 3rem;
 }
-.searching-bar-input:focus{
-  outline:$secondary-color 1px solid ;
+.searching-bar-input:focus {
+  outline: $secondary-color 1px solid;
   border: $secondary-color 1px solid;
   box-shadow: none;
 }
-
-
 </style>

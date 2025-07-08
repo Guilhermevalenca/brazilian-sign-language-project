@@ -1,11 +1,11 @@
 <template>
   <client-only v-if="keywords.length > 0">
     <AppSelect
-        v-model="selected"
-        :items="keywords"
-        labelInput="name"
-        placeholder="Pesquise pela palavra-chave"
-        id="keyword"
+      v-model="selected"
+      :items="keywords"
+      labelInput="name"
+      placeholder="Pesquise pela palavra-chave"
+      id="keyword"
     />
   </client-only>
   <div v-show="keywords.length === 0">
@@ -15,13 +15,15 @@
     <div class="acordion-title">
       Adicionar palavra-chave
       <img
-          src="~/assets/icons/arrow-down.svg"
-          width="16px" height="16px"
-          :class="{rotate: isAddKeyword}"
-      >
+        src="~/assets/icons/arrow-down.svg"
+        width="16px"
+        height="16px"
+        :class="{ rotate: isAddKeyword }"
+      />
     </div>
     <transition name="slide">
-      <div v-if="isAddKeyword" class="acordion-content" @click.stop> <!-- 🔹 Adicionando @click.stop -->
+      <div v-if="isAddKeyword" class="acordion-content" @click.stop>
+        <!-- 🔹 Adicionando @click.stop -->
         <AppForm @submit.prevent="submit">
           <label>
             <AppInput placeholder="Adicionar palavra-chave" v-model="newKeyword.name" />
@@ -35,7 +37,7 @@
 
 <script lang="ts">
 import type { PropType } from 'vue';
-import type {KeywordType} from '~/types/Keyword';
+import type { KeywordType } from '~/types/Keyword';
 import KeywordService from '~/services/KeywordService';
 
 export default defineComponent({
@@ -59,7 +61,7 @@ export default defineComponent({
       page,
       last_page,
       getKeywords,
-    }
+    };
   },
 
   data: () => ({
@@ -72,8 +74,8 @@ export default defineComponent({
   props: {
     modelValue: {
       type: Array as PropType<KeywordType[]>,
-      required: true
-    }
+      required: true,
+    },
   },
 
   emits: ['update:modelValue'],
@@ -85,8 +87,8 @@ export default defineComponent({
       },
       set(value: KeywordType[]) {
         this.$emit('update:modelValue', value);
-      }
-    }
+      },
+    },
   },
 
   methods: {
@@ -109,33 +111,34 @@ export default defineComponent({
           title: 'Palavra-chave criada com sucesso!',
           icon: 'success',
         });
-      } catch(e) {
-        this.$swal.fire({
-          icon: 'error',
-          title: 'Algo deu errado',
-          text: 'Ocorreu um erro, gostaria de tentar novamente ?',
-          timer: 10000,
-          showConfirmButton: true,
-          confirmButtonText: 'Tentar novamente',
-          showCancelButton: true,
-          cancelButtonText: 'Cancelar',
-        })
-            .then((res) => {
-              if(res.isConfirmed) {
-                this.submit();
-              }
-            })
+      } catch (e) {
+        this.$swal
+          .fire({
+            icon: 'error',
+            title: 'Algo deu errado',
+            text: 'Ocorreu um erro, gostaria de tentar novamente ?',
+            timer: 10000,
+            showConfirmButton: true,
+            confirmButtonText: 'Tentar novamente',
+            showCancelButton: true,
+            cancelButtonText: 'Cancelar',
+          })
+          .then((res) => {
+            if (res.isConfirmed) {
+              this.submit();
+            }
+          });
       }
     },
     async getAllKeywords() {
-      if(this.page < this.last_page) {
+      if (this.page < this.last_page) {
         await this.getKeywords();
         this.page++;
         setTimeout(() => {
           this.getAllKeywords();
         }, 100);
       }
-    }
+    },
   },
 
   async mounted() {
@@ -143,29 +146,29 @@ export default defineComponent({
       this.page = 2;
       this.getAllKeywords();
     }, 300);
-  }
+  },
 });
 </script>
 <style lang="scss" scoped>
-.keywords-list-container{
+.keywords-list-container {
   display: flex;
   flex-direction: column;
   overflow-y: auto;
   height: 10rem;
 }
-.keywords-list-items{
+.keywords-list-items {
   display: flex;
   flex-direction: row;
-  gap:1rem;
+  gap: 1rem;
 }
-.acordion-container{
+.acordion-container {
   display: flex;
   flex-direction: column;
   padding: 1rem;
   gap: 1rem;
   border: solid 1px $primary-color;
   border-radius: 1rem;
-  .acordion-title{
+  .acordion-title {
     display: flex;
     flex-direction: row;
     align-content: center;
@@ -173,16 +176,20 @@ export default defineComponent({
     justify-content: space-between;
   }
 }
-.rotate{
+.rotate {
   transform: rotate(180deg);
   transition: transform 0.3s ease-in-out;
 }
-.slide-enter-active, .slide-leave-active {
-  transition: max-height 0.5s ease-in-out, opacity 0.3s ease-in-out;
+.slide-enter-active,
+.slide-leave-active {
+  transition:
+    max-height 0.5s ease-in-out,
+    opacity 0.3s ease-in-out;
   overflow: hidden;
 }
 
-.slide-enter-from, .slide-leave-to {
+.slide-enter-from,
+.slide-leave-to {
   max-height: 0;
   opacity: 0;
 }
@@ -190,6 +197,8 @@ export default defineComponent({
 .acordion-content {
   max-height: 500px; /* Ajuste conforme necessário */
   overflow: hidden;
-  transition: max-height 0.5s ease-in-out, opacity 0.3s ease-in-out;
+  transition:
+    max-height 0.5s ease-in-out,
+    opacity 0.3s ease-in-out;
 }
 </style>

@@ -4,26 +4,20 @@
     <AppForm @submit.prevent="submit" enctype="multipart/form-data">
       <label>
         Nome do curso:
-        <AppInput
-            placeholder="Digite o nome do curso"
-            v-model="course.name"
-            name="course.name"
-        />
+        <AppInput placeholder="Digite o nome do curso" v-model="course.name" name="course.name" />
       </label>
       <label>
         Escolha uma imagem:
         <AppInput
-            type="file"
-            placeholder="Escolha uma imagem"
-            accept="image/*"
-            @change="course.image = $event.target.files[0]"
-            name="course.image"
+          type="file"
+          placeholder="Escolha uma imagem"
+          accept="image/*"
+          @change="course.image = $event.target.files[0]"
+          name="course.image"
         />
       </label>
       <legend>Palavras-chave</legend>
-      <KeywordSelect
-          v-model="course.keywords"
-      />
+      <KeywordSelect v-model="course.keywords" />
       <AppButton type="submit">Criar Curso</AppButton>
     </AppForm>
   </AppCard>
@@ -33,8 +27,8 @@
 import { type CourseType } from '~/types/Course';
 import CourseService from '~/services/CourseService';
 
-export default{
-  name: "create",
+export default {
+  name: 'create',
 
   data: () => ({
     course: {
@@ -60,7 +54,7 @@ export default{
           confirmButtonText: 'OK',
         });
         navigateTo('/');
-      } catch(e) {
+      } catch (e) {
         this.$swal.fire({
           icon: 'error',
           title: 'Algo deu errado',
@@ -70,19 +64,19 @@ export default{
           confirmButtonText: 'Tentar novamente',
         });
       }
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>
-.navigation{
+.navigation {
   display: flex;
   flex-flow: row nowrap;
   justify-content: flex-start;
   width: 100%;
   box-sizing: border-box;
-  AppButton{
+  AppButton {
     display: flex;
     align-content: center;
     flex: auto;

@@ -3,10 +3,10 @@
     <button @click="showAddKeyword = !showAddKeyword">Adicionar palavra-chave</button>
     <form v-if="showAddKeyword" @submit.prevent="submit">
       <AppInput
-          type="text"
-          v-model="newKeyword.name"
-          placeholder="nome da nova palavra-chave"
-          name="new-keyword.name"
+        type="text"
+        v-model="newKeyword.name"
+        placeholder="nome da nova palavra-chave"
+        name="new-keyword.name"
       />
       <br />
       <button>Adicionar</button>
@@ -17,10 +17,10 @@
     <fieldset>
       <legend>Buscar palavra-chave</legend>
       <AppInput
-          type="text"
-          v-model="keywordSearch"
-          placeholder="palavra-chave"
-          name="keyword-search"
+        type="text"
+        v-model="keywordSearch"
+        placeholder="palavra-chave"
+        name="keyword-search"
       />
     </fieldset>
   </div>
@@ -32,13 +32,22 @@
       <NuxtLink :to="`/keyword/${keyword.id}`">Atualizar palavra-chave</NuxtLink>
     </fieldset>
   </div>
-  <AppButton @click="() => {page++; refresh()}" :disabled="page === last_page">Carregar mais palavras-chave</AppButton>
+  <AppButton
+    @click="
+      () => {
+        page++;
+        refresh();
+      }
+    "
+    :disabled="page === last_page"
+    >Carregar mais palavras-chave</AppButton
+  >
 </template>
 
 <script lang="ts">
 import type { KeywordType } from '~/types/Keyword';
 import KeywordService from '~/services/KeywordService';
-import LoadingService from "~/services/LoadingService";
+import LoadingService from '~/services/LoadingService';
 
 export default defineComponent({
   name: 'keywordPage',
@@ -51,16 +60,16 @@ export default defineComponent({
     const page = ref(1);
 
     const { data, status, execute, refresh } = useAsyncData(
-        'fetchKeywords',
-        () => KeywordService.fetch(page.value),
-        {
-          default: () => ({
-            keywords: [],
-            last_page: 1
-          }),
-          lazy: true,
-          immediate: false
-        }
+      'fetchKeywords',
+      () => KeywordService.fetch(page.value),
+      {
+        default: () => ({
+          keywords: [],
+          last_page: 1,
+        }),
+        lazy: true,
+        immediate: false,
+      },
     );
 
     onBeforeMount(() => {
@@ -81,7 +90,7 @@ export default defineComponent({
       page,
       last_page: computed(() => data.value.last_page),
       refresh,
-    }
+    };
   },
 
   data: () => ({
@@ -89,7 +98,7 @@ export default defineComponent({
     newKeyword: {
       name: '',
     } as KeywordType,
-    showAddKeyword: false
+    showAddKeyword: false,
   }),
 
   methods: {
@@ -112,7 +121,7 @@ export default defineComponent({
           confirmButtonText: 'OK',
           showConfirmButton: true,
         });
-      } catch(e) {
+      } catch (e) {
         this.$swal.fire({
           icon: 'error',
           title: 'Algo deu errado',
@@ -122,19 +131,19 @@ export default defineComponent({
           confirmButtonText: 'OK',
         });
       }
-    }
+    },
   },
 
   computed: {
     keywordsFiltered(): KeywordType[] {
       return this.keywords.filter((keyword: KeywordType) => {
-        if(keyword.name) {
+        if (keyword.name) {
           return keyword.name.toLowerCase().includes(this.keywordSearch.toLowerCase());
         } else {
           return false;
         }
-      })
-    }
-  }
-})
+      });
+    },
+  },
+});
 </script>

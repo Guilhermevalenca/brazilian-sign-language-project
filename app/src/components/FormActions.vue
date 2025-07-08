@@ -1,18 +1,18 @@
 <template>
-<div>
-  <slot/>
-</div>
+  <div>
+    <slot />
+  </div>
 </template>
 
 <script lang="ts">
 export default {
-  name: "FormActions"
-}
+  name: 'FormActions',
+};
 </script>
 
 <style scoped>
-div{
-  display:flex;
+div {
+  display: flex;
   flex: auto;
   gap: 1rem;
   justify-content: flex-end;

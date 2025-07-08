@@ -6,10 +6,9 @@
   <Pagination v-model:page="page" :lastPage="last_page" />
 </template>
 
-
 <script lang="ts">
 import SubjectService from '~/services/SubjectService';
-import LoadingService from "~/services/LoadingService";
+import LoadingService from '~/services/LoadingService';
 
 export default defineComponent({
   name: 'subjectPage',
@@ -18,16 +17,16 @@ export default defineComponent({
     const page = ref<number>(1);
 
     const { data, status, execute, refresh } = useAsyncData(
-        'fetchSubjects',
-        () => SubjectService.fetch(page.value),
-        {
-          default: () => ({
-            subjects: [],
-            last_page: 1
-          }),
-          lazy: true,
-          immediate: false
-        }
+      'fetchSubjects',
+      () => SubjectService.fetch(page.value),
+      {
+        default: () => ({
+          subjects: [],
+          last_page: 1,
+        }),
+        lazy: true,
+        immediate: false,
+      },
     );
 
     onBeforeMount(() => {
@@ -37,12 +36,16 @@ export default defineComponent({
       }, 300);
     });
 
-    watch(status, ($new) => {
-      LoadingService.loaded($new, refresh);
-    }, {
-      immediate: true,
-      deep: true,
-    });
+    watch(
+      status,
+      ($new) => {
+        LoadingService.loaded($new, refresh);
+      },
+      {
+        immediate: true,
+        deep: true,
+      },
+    );
 
     execute();
 
@@ -51,15 +54,15 @@ export default defineComponent({
       page,
       last_page: computed(() => data.value.last_page),
       refresh,
-    }
+    };
   },
 
   watch: {
     async page($new) {
-      if($new <= 0) {
+      if ($new <= 0) {
         this.page = 1;
       }
-      if($new > this.last_page) {
+      if ($new > this.last_page) {
         this.page = this.last_page;
       }
       this.$swal.fire({
@@ -69,7 +72,7 @@ export default defineComponent({
       this.$swal.showLoading();
       await this.refresh();
       this.$swal.close();
-    }
-  }
-})
+    },
+  },
+});
 </script>

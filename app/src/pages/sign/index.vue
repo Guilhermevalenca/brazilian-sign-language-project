@@ -1,24 +1,26 @@
 <template>
   <div class="content-container-list">
-    <Pagination v-model:page="page" :lastPage="last_page"/>
+    <Pagination v-model:page="page" :lastPage="last_page" />
     <div
-        class="signs-container" tabindex="0"
-        v-for="sign in signs" :key="sign.id"
-        @click="navigateTo(`/sign/${sign.id}`)"
-        role="button"
+      class="signs-container"
+      tabindex="0"
+      v-for="sign in signs"
+      :key="sign.id"
+      @click="navigateTo(`/sign/${sign.id}`)"
+      role="button"
     >
       <div class="sign-card-item">
         <h1>{{ sign.name }}</h1>
       </div>
     </div>
-    <Pagination v-model:page="page" :lastPage="last_page"/>
+    <Pagination v-model:page="page" :lastPage="last_page" />
   </div>
 </template>
 
 <script lang="ts">
-import SignService from "~/services/SignService";
-import {type SignType} from "~/types/Sign";
-import LoadingService from "~/services/LoadingService";
+import SignService from '~/services/SignService';
+import { type SignType } from '~/types/Sign';
+import LoadingService from '~/services/LoadingService';
 
 export default defineComponent({
   name: 'signPage',
@@ -27,16 +29,16 @@ export default defineComponent({
     const page = ref(1);
 
     const { data, status, execute, refresh } = useAsyncData(
-        'fetchSigns',
-        () => SignService.fetch(page.value),
-        {
-          default: () => ({
-            signs: [],
-            last_page: 1
-          }),
-          lazy: true,
-          immediate: false
-        }
+      'fetchSigns',
+      () => SignService.fetch(page.value),
+      {
+        default: () => ({
+          signs: [],
+          last_page: 1,
+        }),
+        lazy: true,
+        immediate: false,
+      },
     );
 
     onBeforeMount(() => {
@@ -62,10 +64,10 @@ export default defineComponent({
 
   watch: {
     async page($new) {
-      if($new <= 0) {
+      if ($new <= 0) {
         this.page = 1;
       }
-      if($new > this.last_page) {
+      if ($new > this.last_page) {
         this.page = this.last_page;
       }
       this.$swal.fire({
@@ -75,13 +77,13 @@ export default defineComponent({
       this.$swal.showLoading();
       await this.refresh();
       this.$swal.close();
-    }
-  }
+    },
+  },
 });
 </script>
 
 <style scoped lang="scss">
-.signs-container{
+.signs-container {
   display: flex;
   flex-flow: row nowrap;
   justify-content: stretch;
@@ -92,7 +94,7 @@ export default defineComponent({
   border-radius: 1rem;
   padding: 0.8rem;
 }
-.sign-card-item{
+.sign-card-item {
   display: flex;
   flex: auto;
 }

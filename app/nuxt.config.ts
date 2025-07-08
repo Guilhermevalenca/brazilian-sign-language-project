@@ -26,7 +26,7 @@ export default defineNuxtConfig({
       autoprefixer: {},
     },
   },
-  modules: ['@pinia/nuxt', '@nuxt/image'],
+  modules: ['@pinia/nuxt', '@nuxt/image', '@nuxt/eslint'],
   pinia: {
     storesDirs: ['./stores/**'],
   },

@@ -8,27 +8,27 @@
 
 $font-default: DM Sans;
 
-*{
+* {
   font-family: $font-default;
 }
-button{
+button {
   color: $light-texts;
   font-size: 1rem;
 }
-h1{
+h1 {
   font-size: 2em;
 }
-h2{
+h2 {
   font-size: 1.6em;
 }
-html{
+html {
   background-color: $background-color;
   width: 100vw;
-  height:100vh;
+  height: 100vh;
   font-size: 1.08rem;
   color: $soft-black-1;
 }
-.content-title{
+.content-title {
   display: flex;
   flex-direction: row;
   align-self: flex-start;
@@ -36,16 +36,17 @@ html{
   font-size: 1em;
 }
 input,
-textarea{
+textarea {
   font-size: 1rem;
 }
-label{
+label {
   color: $soft-black-2;
 }
-legend{
+legend {
   font-size: 1.1rem;
   font-weight: bold;
 }
+
 .update-container{
   display: flex;
   flex-flow: row nowrap;
@@ -64,25 +65,27 @@ legend{
   flex-direction: column;
   justify-items: center;
 }
-.content-container-list{
+.content-container-list {
   flex-wrap: wrap;
   @extend .content-container;
   margin-top: 1em;
-  gap:0.5rem;
+  gap: 0.5rem;
 }
-.medium-iframe{
+.medium-iframe {
   box-sizing: border-box;
   border-radius: 2em;
-  width:50vw;
-  height:60vh;
+  width: 50vw;
+  height: 60vh;
 }
-.content-text{
+.content-text {
   padding: 1em;
   text-align: left;
 }
 div,
 p,
-h1,h2,h3{
+h1,
+h2,
+h3 {
   overflow-wrap: break-word;
   word-break: break-word;
 }
