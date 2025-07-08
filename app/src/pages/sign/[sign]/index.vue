@@ -196,7 +196,6 @@ export default defineComponent({
   transform: translateY(-20px);
   opacity: 0;
 }
-<<<<<<< HEAD
 .update-container {
   display: flex;
   flex-flow: column nowrap;
@@ -205,7 +204,3 @@ export default defineComponent({
   padding: 0.5em;
 }
 </style>
-=======
-
-</style>
->>>>>>> origin/feature/Adjusts

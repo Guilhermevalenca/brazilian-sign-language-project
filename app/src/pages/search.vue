@@ -3,70 +3,22 @@
     <div class="content-results-screen">
       <h1>Resultados da pesquisa: "{{ searchData }}"</h1>
 
-            <div class="results" v-if="signs && signs.length > 0">
-              <h2>Sinais</h2>
-              <AppCard variant="list" v-for="(sign, index) in signs" :key="sign.id" @click="navigateTo(`/sign/${sign.id}`)">{{ sign.name }}</AppCard>
-            </div>
-
-          <div class="results" v-if="subjects && subjects.length > 0">
-            <h2>Disciplinas</h2>
-            <AppCard variant="list" v-for="(subject, index) in subjects" :key="subject.id" @click="navigateTo(`/subject/${subject.id}`)"><p>{{ subject.name }}</p></AppCard>
-          </div>
-
-            <div class="results" v-if="courses && courses.length > 0">
-              <h2>Cursos</h2>
-              <AppCard variant="list"  v-for="(course , index) in courses " :key="course.id" @click="navigateTo(`/course/${course.id}`)"><p>{{ course.name }}</p></AppCard>
-            </div>
-
-          <EmptySection class="empty" v-if="subjects.length === 0 && courses.length === 0 && signs.length === 0">
-            <p>Nenhum resultado encontrado.</p>
-          </EmptySection>
-        </div>
-
-      <div class="filters-container">
-        <h1>Filtros</h1>
-        <label class="filter-item">
-          <input type="checkbox" v-model="filterOptions.signs" class="accent-purple-500" />
-          <span>Sinais</span>
-        </label>
-
-        <label class="filter-item">
-          <input type="checkbox" v-model="filterOptions.subjects" class="accent-green-500" />
-          <span>Disciplinas</span>
-        </label>
-
-        <label class="filter-item">
-          <input type="checkbox" v-model="filterOptions.courses" class="accent-blue-500" />
-          <span>Cursos</span>
-        </label>
-      </div>
-
-      <div class="results" v-if="courses && courses.length > 0">
-        <h2>Cursos</h2>
-        <AppCard
-          variant="list"
-          v-for="(course, index) in courses"
-          :key="course.id"
-          @click="navigateTo(`/course/${course.id}`)"
-          ><p>{{ course.name }}</p></AppCard
-        >
+      <div class="results" v-if="signs && signs.length > 0">
+        <h2>Sinais</h2>
+        <AppCard variant="list" v-for="(sign, index) in signs" :key="sign.id" @click="navigateTo(`/sign/${sign.id}`)">{{ sign.name }}</AppCard>
       </div>
 
       <div class="results" v-if="subjects && subjects.length > 0">
         <h2>Disciplinas</h2>
-        <AppCard
-          variant="list"
-          v-for="(subject, index) in subjects"
-          :key="subject.id"
-          @click="navigateTo(`/subject/${subject.id}`)"
-          ><p>{{ subject.name }}</p></AppCard
-        >
+        <AppCard variant="list" v-for="(subject, index) in subjects" :key="subject.id" @click="navigateTo(`/subject/${subject.id}`)"><p>{{ subject.name }}</p></AppCard>
       </div>
 
-      <EmptySection
-        class="empty"
-        v-if="subjects.length === 0 && courses.length === 0 && signs.length === 0"
-      >
+      <div class="results" v-if="courses && courses.length > 0">
+        <h2>Cursos</h2>
+        <AppCard variant="list"  v-for="(course , index) in courses " :key="course.id" @click="navigateTo(`/course/${course.id}`)"><p>{{ course.name }}</p></AppCard>
+      </div>
+
+      <EmptySection class="empty" v-if="subjects.length === 0 && courses.length === 0 && signs.length === 0">
         <p>Nenhum resultado encontrado.</p>
       </EmptySection>
     </div>
@@ -74,19 +26,67 @@
     <div class="filters-container">
       <h1>Filtros</h1>
       <label class="filter-item">
-        <input type="checkbox" v-model="filterOptions.courses" class="accent-blue-500" />
-        <span>Cursos</span>
+        <input type="checkbox" v-model="filterOptions.signs" class="accent-purple-500" />
+        <span>Sinais</span>
       </label>
+
       <label class="filter-item">
         <input type="checkbox" v-model="filterOptions.subjects" class="accent-green-500" />
         <span>Disciplinas</span>
       </label>
+
       <label class="filter-item">
-        <input type="checkbox" v-model="filterOptions.signs" class="accent-purple-500" />
-        <span>Sinais</span>
+        <input type="checkbox" v-model="filterOptions.courses" class="accent-blue-500" />
+        <span>Cursos</span>
       </label>
     </div>
+
+    <div class="results" v-if="courses && courses.length > 0">
+      <h2>Cursos</h2>
+      <AppCard
+          variant="list"
+          v-for="(course, index) in courses"
+          :key="course.id"
+          @click="navigateTo(`/course/${course.id}`)"
+      ><p>{{ course.name }}</p></AppCard
+      >
+    </div>
+
+    <div class="results" v-if="subjects && subjects.length > 0">
+      <h2>Disciplinas</h2>
+      <AppCard
+          variant="list"
+          v-for="(subject, index) in subjects"
+          :key="subject.id"
+          @click="navigateTo(`/subject/${subject.id}`)"
+      ><p>{{ subject.name }}</p></AppCard
+      >
+    </div>
+
+    <EmptySection
+        class="empty"
+        v-if="subjects.length === 0 && courses.length === 0 && signs.length === 0"
+    >
+      <p>Nenhum resultado encontrado.</p>
+    </EmptySection>
   </div>
+
+  <div class="filters-container">
+    <h1>Filtros</h1>
+    <label class="filter-item">
+      <input type="checkbox" v-model="filterOptions.courses" class="accent-blue-500" />
+      <span>Cursos</span>
+    </label>
+    <label class="filter-item">
+      <input type="checkbox" v-model="filterOptions.subjects" class="accent-green-500" />
+      <span>Disciplinas</span>
+    </label>
+    <label class="filter-item">
+      <input type="checkbox" v-model="filterOptions.signs" class="accent-purple-500" />
+      <span>Sinais</span>
+    </label>
+  </div>
+
 </template>
 
 <script setup lang="ts">
@@ -104,22 +104,22 @@ const page = ref(1);
 const { $swal } = useNuxtApp();
 
 const { data, status, refresh } = await useAsyncData(
-  `fetchSearch-${searchData?.value}`,
-  () =>
-    SystemSourceService.searchActionWithFilter(
-      String(searchData?.value),
-      filterOptions.value,
-      page.value,
-    ),
-  {
-    default: () => ({
-      courses: [],
-      subjects: [],
-      signs: [],
-      last_page: 1,
-    }),
-    lazy: true,
-  },
+    `fetchSearch-${searchData?.value}`,
+    () =>
+        SystemSourceService.searchActionWithFilter(
+            String(searchData?.value),
+            filterOptions.value,
+            page.value,
+        ),
+    {
+      default: () => ({
+        courses: [],
+        subjects: [],
+        signs: [],
+        last_page: 1,
+      }),
+      lazy: true,
+    },
 );
 const courses = computed(() => data.value?.courses ?? []);
 const subjects = computed(() => data.value?.subjects ?? []);
@@ -144,14 +144,14 @@ watch(searchData, async () => {
 });
 
 watch(
-  filterOptions,
-  async () => {
-    page.value = 1;
-    await refresh();
-  },
-  {
-    deep: true,
-  },
+    filterOptions,
+    async () => {
+      page.value = 1;
+      await refresh();
+    },
+    {
+      deep: true,
+    },
 );
 
 watch(page, async () => {

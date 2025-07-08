@@ -1,48 +1,26 @@
 <template>
   <header>
-      <div class="header-content">
-        <div>
-          <button @click="showMenu()">
-            <img src="~/assets/icons/menu.svg" width="24px" height="24px" alt="Menu">
-          </button>
-        </div>
-        <div class="logo">
-          <button @click="navigateTo('/')">
-            <img src="~/assets/logos/our-logo.svg" width="288px" height="78px" alt="Logo do glossário de libras">
-          </button>
-        </div>
-        <SearchingBar/>
-        <div v-if="!userStore?.data" class="auth-container">
-          <AppButton variant="default" @click="navigateTo('/auth/login')"> Login </AppButton>
-          <AppButton varaiant="default" @click="navigateTo('/auth/register')"> Cadastre-se </AppButton>
-        </div>
-        <div class="auth-control-panel" v-else>
-          <div class="user-avatar">
-            <span>{{ userStore.data?.name }}
-            </span></div>
-          <AppButton variant="default" @click="logout" >Desconectar</AppButton>
-        </div>
+    <div class="header-content">
+      <div>
+        <button @click="showMenu()">
+          <img src="~/assets/icons/menu.svg" width="24px" height="24px" alt="Menu">
+        </button>
       </div>
       <div class="logo">
         <button @click="navigateTo('/')">
-          <img
-            src="~/assets/logos/our-logo.svg"
-            width="288px"
-            height="78px"
-            alt="Logo do glossário de libras"
-          />
+          <img src="~/assets/logos/our-logo.svg" width="288px" height="78px" alt="Logo do glossário de libras">
         </button>
       </div>
-      <SearchingBar />
+      <SearchingBar/>
       <div v-if="!userStore?.data" class="auth-container">
         <AppButton variant="default" @click="navigateTo('/auth/login')"> Login </AppButton>
-        <AppButton varaiant="default" @click="navigateTo('/auth/register')">
-          Cadastre-se
-        </AppButton>
+        <AppButton varaiant="default" @click="navigateTo('/auth/register')"> Cadastre-se </AppButton>
       </div>
-      <div v-else>
-        <span>{{ userStore.data?.name }}</span>
-        <AppButton variant="default" @click="logout">Desconectar</AppButton>
+      <div class="auth-control-panel" v-else>
+        <div class="user-avatar" @click="navigateTo('/profile')">
+            <span>{{ userStore.data?.name }}</span>
+        </div>
+        <AppButton variant="default" @click="logout" >Desconectar</AppButton>
       </div>
     </div>
     <section>
@@ -124,9 +102,6 @@ button {
   margin: 0;
   cursor: pointer;
 }
-<<<<<<< HEAD
-</style>
-=======
 .user-avatar{
   display: flex;
   flex-flow: row wrap;
@@ -148,4 +123,3 @@ button {
   justify-content: center;
 }
 </style>
->>>>>>> origin/feature/Adjusts
