@@ -56,7 +56,7 @@ export default defineComponent({
     const page = ref(1);
 
     const { data, status, execute, refresh } = useAsyncData(
-      'fetchSubject',
+      'fetch-subject-show',
       () => SubjectService.find(Number(id), page.value),
       {
         default: () => ({

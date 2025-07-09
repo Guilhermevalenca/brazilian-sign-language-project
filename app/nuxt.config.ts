@@ -1,14 +1,15 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   compatibilityDate: '2025-03-16',
-  devtools: { enabled: true },
+  devtools: { enabled: false },
   ssr: true,
   srcDir: 'src',
   debug: false,
   css: ['~/assets/css/main.scss'],
   routeRules: {
-    '/about': { isr: true },
-    '/auth/**': { isr: true },
+    '/about': { isr: true, prerender: true },
+    '/auth/**': { isr: true, prerender: true },
+    '/': { swr: 60 * 60, prerender: true },
   },
   vite: {
     css:

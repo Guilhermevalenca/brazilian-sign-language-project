@@ -1,9 +1,7 @@
 <template>
   <div class="course-card-container">
     <div class="course-card" tabindex="0" role="button">
-      <client-only>
-        <img :src="image" :alt="'Icone do curso: ' + course?.name" />
-      </client-only>
+      <img :src="image" :alt="'Icone do curso: ' + course?.name" />
       <legend>{{ course?.name }}</legend>
     </div>
   </div>

@@ -29,7 +29,7 @@ export default defineComponent({
     const page = ref(1);
 
     const { data, status, execute, refresh } = useAsyncData(
-      'fetchSigns',
+      'fetch-signs',
       () => SignService.fetch(page.value),
       {
         default: () => ({

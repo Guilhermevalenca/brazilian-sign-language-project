@@ -6,10 +6,12 @@
           <img src="~/assets/icons/menu.svg" width="24px" height="24px" alt="Menu">
         </button>
       </div>
-      <div class="logo">
-        <button @click="navigateTo('/')">
-          <img src="~/assets/logos/our-logo.svg" width="288px" height="78px" alt="Logo do glossário de libras">
-        </button>
+      <div class="logo tw-cursor-pointer" @click="navigateTo('/')">
+        <img
+            src="~/assets/logos/our-logo.svg"
+            width="288px" height="78px"
+            alt="Logo do glossário de libras"
+        />
       </div>
       <SearchingBar/>
       <div v-if="!userStore?.data" class="auth-container">
@@ -90,7 +92,7 @@ header {
 .auth-container {
   display: flex;
   justify-content: flex-end;
-  padding: 0rem 2rem;
+  padding: 0 2rem;
   flex: auto;
   flex-flow: row wrap;
   gap: 1em;
@@ -109,9 +111,8 @@ button {
   align-content: center;
   justify-content: center;
   padding: 0.5em;
-  border: solid 1px;
+  border: solid 1px white;
   border-radius: 0.5em;
-  border-color: white;
   color: white;
 }
 .auth-control-panel{

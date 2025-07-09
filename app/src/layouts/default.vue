@@ -44,7 +44,7 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 section {
-  margin: 8em auto 0 auto;
+  margin: 8rem auto 0 auto;
   width: 60vw;
   overflow-y: auto;
 }
@@ -53,6 +53,6 @@ section {
   grid-template-columns: auto 1fr;
 }
 .space {
-  height: 5em;
+  height: 5rem;
 }
 </style>

@@ -49,7 +49,7 @@ export default defineComponent({
     const page = ref(1);
 
     const { data, status, execute, refresh } = useAsyncData(
-      'fetchCourse',
+      'fetch-course-show',
       () => CourseService.find(Number(id), page.value),
       {
         default: () => ({
