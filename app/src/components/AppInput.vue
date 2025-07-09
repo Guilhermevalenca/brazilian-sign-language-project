@@ -1,5 +1,5 @@
 <template>
-  <input v-model="input" >
+  <input v-model="input" />
 </template>
 
 <script setup lang="ts">
@@ -7,7 +7,7 @@ const props = defineProps({
   modelValue: {
     type: String,
     required: true,
-  }
+  },
 });
 const emit = defineEmits(['update:modelValue']);
 

@@ -1,8 +1,5 @@
 <template>
-  <textarea
-    v-bind="$attrs"
-    v-model="input"
-  />
+  <textarea v-bind="$attrs" v-model="input" />
   <slot />
 </template>
 

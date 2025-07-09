@@ -21,7 +21,7 @@ export default defineComponent({
     image(): string {
       return this.course?.image ? String(this.course.image) : '/logo.svg';
     },
-  }
+  },
 });
 </script>
 

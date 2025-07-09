@@ -1,11 +1,19 @@
 <template>
   <div class="update-container" v-if="userStore.is_admin">
     <AppButton @click="() => navigateTo('/subject/' + id + '/update')">
-      <img src="~/assets/icons/edit.svg" width="24px" height="24px" />
+      <img
+          src="~/assets/icons/edit.svg"
+          width="24px" height="24px"
+          alt="Editar disciplina"
+      />
       Editar disciplina
     </AppButton>
     <AppButton @click="deleteSubject">
-      <img src="~/assets/icons/delete.svg" width="24px" height="24px" />
+      <img
+          src="~/assets/icons/delete.svg"
+          width="24px" height="24px"
+          alt="Excluir disciplina"
+      />
       Excluir disciplina
     </AppButton>
   </div>

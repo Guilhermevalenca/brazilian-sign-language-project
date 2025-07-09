@@ -8,7 +8,8 @@
         >Página inicial
       </span>
       <span
-        v-for="(value, index) in breadcrumb.path" :key="index"
+        v-for="(value, index) in breadcrumb.path"
+        :key="index"
         class="breadcrumb-item"
         :class="{ current: route.path === value.path }"
         @click="navigateTo(value.path)"
