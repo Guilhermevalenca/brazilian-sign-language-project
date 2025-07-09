@@ -9,12 +9,12 @@ import useUserStore from '~/stores/useUserStore';
 import UserService from '~/services/UserService';
 
 const userStore = useUserStore();
-const token = useCookie('token').value;
+const token: string | undefined | null = useCookie('token').value;
 if (token) {
   try {
     const { data } = await UserService.fetch();
     userStore.data = data;
-  } catch (error) {
+  } catch (error: any) {
     userStore.data = null;
   }
 }

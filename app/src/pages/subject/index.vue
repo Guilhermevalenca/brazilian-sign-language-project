@@ -11,10 +11,10 @@ import SubjectService from '~/services/SubjectService';
 import LoadingService from '~/services/LoadingService';
 
 export default defineComponent({
-  name: 'subjectPage',
+  name: 'SubjectPage',
 
   async setup() {
-    const page = ref<number>(1);
+    const page = ref(1);
 
     const { data, status, refresh } = useAsyncData(
       'fetch-subjects',
@@ -49,7 +49,7 @@ export default defineComponent({
     return {
       subjects: computed(() => data.value.subjects),
       page,
-      last_page: computed(() => data.value.last_page),
+      last_page: computed(() => data.value.last_page ?? 1),
       refresh,
     };
   },

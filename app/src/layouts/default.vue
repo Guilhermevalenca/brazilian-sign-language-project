@@ -10,7 +10,7 @@
     </section>
   </main>
   <LayoutAdmActions v-if="user && user.is_admin" />
-  <div class="space"></div>
+  <div class="space" />
   <LayoutAppFooter />
 </template>
 
