@@ -16,8 +16,8 @@ export default defineComponent({
   async setup() {
     const page = ref<number>(1);
 
-    const { data, status, execute, refresh } = useAsyncData(
-      'fetchSubjects',
+    const { data, status, refresh } = useAsyncData(
+      'fetch-subjects',
       () => SubjectService.fetch(page.value),
       {
         default: () => ({
@@ -25,7 +25,6 @@ export default defineComponent({
           last_page: 1,
         }),
         lazy: true,
-        immediate: false,
       },
     );
 
@@ -46,8 +45,6 @@ export default defineComponent({
         deep: true,
       },
     );
-
-    execute();
 
     return {
       subjects: computed(() => data.value.subjects),

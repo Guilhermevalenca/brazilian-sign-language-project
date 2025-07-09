@@ -3,24 +3,29 @@
     <div class="header-content">
       <div>
         <button @click="showMenu()">
-          <img src="~/assets/icons/menu.svg" width="24px" height="24px" alt="Menu">
+          <img src="~/assets/icons/menu.svg" width="24px" height="24px" alt="Menu" />
         </button>
       </div>
-      <div class="logo">
-        <button @click="navigateTo('/')">
-          <img src="~/assets/logos/our-logo.svg" width="288px" height="78px" alt="Logo do glossário de libras">
-        </button>
+      <div class="logo tw-cursor-pointer" @click="navigateTo('/')">
+        <img
+          src="~/assets/logos/our-logo.svg"
+          width="288px"
+          height="78px"
+          alt="Logo do glossário de libras"
+        />
       </div>
-      <SearchingBar/>
+      <SearchingBar />
       <div v-if="!userStore?.data" class="auth-container">
         <AppButton variant="default" @click="navigateTo('/auth/login')"> Login </AppButton>
-        <AppButton varaiant="default" @click="navigateTo('/auth/register')"> Cadastre-se </AppButton>
+        <AppButton varaiant="default" @click="navigateTo('/auth/register')">
+          Cadastre-se
+        </AppButton>
       </div>
       <div class="auth-control-panel" v-else>
         <div class="user-avatar" @click="navigateTo('/profile')">
-            <span>{{ userStore.data?.name }}</span>
+          <span>{{ userStore.data?.name }}</span>
         </div>
-        <AppButton variant="default" @click="logout" >Desconectar</AppButton>
+        <AppButton variant="default" @click="logout">Desconectar</AppButton>
       </div>
     </div>
     <section>
@@ -90,7 +95,7 @@ header {
 .auth-container {
   display: flex;
   justify-content: flex-end;
-  padding: 0rem 2rem;
+  padding: 0 2rem;
   flex: auto;
   flex-flow: row wrap;
   gap: 1em;
@@ -102,21 +107,20 @@ button {
   margin: 0;
   cursor: pointer;
 }
-.user-avatar{
+.user-avatar {
   display: flex;
   flex-flow: row wrap;
   align-items: center;
   align-content: center;
   justify-content: center;
   padding: 0.5em;
-  border: solid 1px;
+  border: solid 1px white;
   border-radius: 0.5em;
-  border-color: white;
   color: white;
 }
-.auth-control-panel{
+.auth-control-panel {
   display: flex;
-  gap:1em;
+  gap: 1em;
   flex-flow: row wrap;
   align-items: center;
   align-content: center;

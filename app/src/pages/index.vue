@@ -11,79 +11,62 @@
         @click="navigateTo(`/course/${course.id}`)"
       />
     </div>
-    <Pagination v-model:page="page" :last-page="last_page" />
+    <Pagination v-model:page="page" :last-page="data.last_page" />
   </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import CourseService from '~/services/CourseService';
 import useBreadcrumbStore from '~/stores/useBreadcrumbStore';
 import type { CourseType } from '~/types/Course';
 import LoadingService from '~/services/LoadingService';
 
-export default defineComponent({
-  name: 'homePage',
+const { $swal } = useNuxtApp();
+const page = ref(1);
 
-  async setup() {
-    const page = ref(1);
+const { status, data, refresh } = await useAsyncData<{
+  courses: CourseType[];
+  last_page: number;
+}>('fetch-courses', () => CourseService.fetch(page.value), {
+  default: () => ({
+    courses: [],
+    last_page: 1,
+  }),
+});
+const courses = computed(() => data.value?.courses ?? []);
 
-    const { status, data, refresh, execute } = useAsyncData<{
-      courses: CourseType[];
-      last_page: number;
-    }>('fetchCourses', () => CourseService.fetch(page.value), {
-      default: () => ({
-        courses: [],
-        last_page: 1,
-      }),
-      lazy: true,
-      immediate: false,
-    });
+watch(status, ($new) => {
+  LoadingService.loaded($new, refresh, true);
+});
 
-    onBeforeMount(() => {
-      LoadingService.show();
-      setTimeout(() => {
-        LoadingService.loaded(status.value, refresh, true);
-      }, 300);
-    });
+watch(page, async () => {
+  if (page.value <= 0) {
+    page.value = 1;
+  }
+  if (page.value > data.value.last_page) {
+    page.value = data.value.last_page;
+  }
+  $swal.fire({
+    icon: 'info',
+    title: 'Carregando cursos',
+  });
+  $swal.showLoading();
+  await refresh();
+  $swal.close();
+});
 
-    watch(status, ($new) => {
-      LoadingService.loaded($new, refresh, true);
-    });
+onBeforeMount(() => {
+  LoadingService.show();
+  setTimeout(() => {
+    LoadingService.loaded(status.value, refresh, true);
+  }, 300);
+});
 
-    execute();
-
-    return {
-      courses: computed(() => data.value?.courses ?? []),
-      page,
-      last_page: computed(() => data.value?.last_page ?? 1),
-      status,
-      refresh,
-    };
-  },
-
-  watch: {
-    async page() {
-      if (this.page <= 0) {
-        this.page = 1;
-      }
-      if (this.page > this.last_page) {
-        this.page = this.last_page;
-      }
-      this.$swal.fire({
-        icon: 'info',
-        title: 'Carregando cursos',
-      });
-      this.$swal.showLoading();
-      await this.refresh();
-      this.$swal.close();
-    },
-  },
-
-  mounted() {
-    useBreadcrumbStore().home();
-  },
+onMounted(() => {
+  useBreadcrumbStore().home();
 });
 </script>
+
 <style lang="scss" scoped>
 .index-content {
   display: grid;

@@ -11,8 +11,8 @@ import {
   ArcElement,
 } from 'chart.js';
 import UserMonitoringService from '~/services/UserMonitoringService';
-import type {AvgPartOfPageType} from "~/types/UserMonitoring";
-import useBreadcrumbStore from "~/stores/useBreadcrumbStore";
+import type { AvgPartOfPageType } from '~/types/UserMonitoring';
+import useBreadcrumbStore from '~/stores/useBreadcrumbStore';
 
 ChartJS.register(Title, Tooltip, Legend, CategoryScale, LinearScale, BarElement, ArcElement);
 
@@ -32,34 +32,36 @@ onMounted(async () => {
 
 const avgPartOfPage = computed((): AvgPartOfPageType[] => {
   if (data.value.avgPartOfPage) {
-    const translated = data.value.avgPartOfPage.map(({ part_of_page, count }: AvgPartOfPageType) => {
-      let part = '';
-      switch (part_of_page) {
-        case 'subject':
-          part = 'Disciplina';
-          break;
-        case 'course':
-          part = 'Curso';
-          break;
-        case 'home':
-          part = 'Pagina inicial';
-          break;
-        case 'search':
-          part = 'Busca';
-          break;
-        case 'sign':
-          part = 'Sinais';
-          break;
-        default:
-          part = 'Outro';
-          break;
-      }
+    const translated = data.value.avgPartOfPage.map(
+      ({ part_of_page, count }: AvgPartOfPageType) => {
+        let part = '';
+        switch (part_of_page) {
+          case 'subject':
+            part = 'Disciplina';
+            break;
+          case 'course':
+            part = 'Curso';
+            break;
+          case 'home':
+            part = 'Pagina inicial';
+            break;
+          case 'search':
+            part = 'Busca';
+            break;
+          case 'sign':
+            part = 'Sinais';
+            break;
+          default:
+            part = 'Outro';
+            break;
+        }
 
-      return {
-        part_of_page: part,
-        count,
-      };
-    });
+        return {
+          part_of_page: part,
+          count,
+        };
+      },
+    );
 
     const response = translated.filter((item: AvgPartOfPageType) => item.part_of_page !== 'Outro');
     let totalOther = 0;
@@ -86,7 +88,6 @@ const barOptions = {
     title: { display: true, text: 'Quantidade de acessos por paginas' },
   },
 };
-
 
 onMounted(() => {
   useBreadcrumbStore().activeMonitoring();

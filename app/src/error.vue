@@ -1,19 +1,15 @@
-<script lang="ts">
+<script setup lang="ts">
 import type { NuxtError } from '#app';
 
-export default defineComponent({
-  name: 'error',
-
-  props: {
-    error: Object as () => NuxtError,
-  },
-
-  methods: {
-    handleError() {
-      clearError({ redirect: '/' });
-    },
+const props = defineProps({
+  error: {
+    type: Object as PropType<NuxtError>,
   },
 });
+
+function handleError() {
+  clearError({ redirect: '/' });
+}
 </script>
 
 <template>

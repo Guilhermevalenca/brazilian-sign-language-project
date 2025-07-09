@@ -28,8 +28,8 @@ export default defineComponent({
   async setup() {
     const page = ref(1);
 
-    const { data, status, execute, refresh } = useAsyncData(
-      'fetchSigns',
+    const { data, status, refresh } = useAsyncData(
+      'fetch-signs',
       () => SignService.fetch(page.value),
       {
         default: () => ({
@@ -37,7 +37,6 @@ export default defineComponent({
           last_page: 1,
         }),
         lazy: true,
-        immediate: false,
       },
     );
 
@@ -51,8 +50,6 @@ export default defineComponent({
     watch(status, ($new) => {
       LoadingService.loaded($new, refresh);
     });
-
-    execute();
 
     return {
       page,

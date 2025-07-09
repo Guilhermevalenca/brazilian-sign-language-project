@@ -25,7 +25,7 @@ export default defineStore('breadcrumb', {
     },
     monitoring: {
       isActive: false,
-    }
+    },
   }),
   actions: {
     activeCourse(name: string = '', path: string) {
@@ -74,7 +74,7 @@ export default defineStore('breadcrumb', {
     activeMonitoring() {
       this.home();
       this.monitoring.isActive = true;
-    }
+    },
   },
   getters: {
     path(): { name: string; path: string }[] {

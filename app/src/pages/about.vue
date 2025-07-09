@@ -29,11 +29,13 @@
         <strong>Boa navegação e bons estudos!</strong>
       </p>
       <br />
-      <iframe
-        class="medium-iframe"
-        src="https://www.youtube.com/embed/4Z-P3qQDPbo"
-        allowfullscreen
-      />
+      <client-only>
+        <iframe
+          class="medium-iframe"
+          src="https://www.youtube.com/embed/4Z-P3qQDPbo"
+          allowfullscreen
+        />
+      </client-only>
     </div>
   </AppCard>
 </template>
