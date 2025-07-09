@@ -19,9 +19,11 @@ class UserMonitoringController extends Controller
     public function index()
     {
         $avgPartOfPage = DB::table(
-            DB::raw('(SELECT part_of_page, DATE(timestamp) as date, COUNT(*) as daily_count
-              FROM user_monitorings
-              GROUP BY part_of_page, DATE(timestamp)) as daily_counts')
+            DB::raw('(
+        SELECT part_of_page, DATE(timestamp) as date, COUNT(DISTINCT token) as daily_count
+        FROM user_monitorings
+        GROUP BY part_of_page, DATE(timestamp)
+    ) as daily_counts')
         )
             ->select('part_of_page', DB::raw('AVG(daily_count) as average_daily'))
             ->groupBy('part_of_page')
