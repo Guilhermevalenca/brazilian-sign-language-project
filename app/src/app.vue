@@ -20,10 +20,7 @@ if (token) {
 }
 const { $axios } = useNuxtApp();
 onMounted(() => {
-  Promise.all([
-    userStore.fetchIsAdmin(),
-    $axios.get('/sanctum/csrf-cookie'),
-  ]);
+  Promise.all([userStore.fetchIsAdmin(), $axios.get('/sanctum/csrf-cookie')]);
 });
 
 onBeforeMount(() => {

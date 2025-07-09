@@ -1,15 +1,13 @@
 <template>
-    <div class="update-container" v-if="userStore.is_admin">
-      <AppButton
-          @click="() => navigateTo('/sign/' + sign.id + '/update')"
-      >
-        <img src="~/assets/icons/edit.svg" width="24px" height="24px">
-        Editar
-      </AppButton>
-      <AppButton @click="deleteSign">
-        <img src="~/assets/icons/delete.svg" width="24px" height="24px">
-        Apagar
-      </AppButton>
+  <div class="update-container" v-if="userStore.is_admin">
+    <AppButton @click="() => navigateTo('/sign/' + sign.id + '/update')">
+      <img src="~/assets/icons/edit.svg" width="24px" height="24px" />
+      Editar
+    </AppButton>
+    <AppButton @click="deleteSign">
+      <img src="~/assets/icons/delete.svg" width="24px" height="24px" />
+      Apagar
+    </AppButton>
   </div>
   <div class="content-container">
     <transition name="slide">

@@ -53,7 +53,7 @@ watch(page, async () => {
   $swal.showLoading();
   await refresh();
   $swal.close();
-})
+});
 
 onBeforeMount(() => {
   LoadingService.show();

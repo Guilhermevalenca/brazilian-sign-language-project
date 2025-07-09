@@ -4,7 +4,7 @@ import type { NuxtError } from '#app';
 const props = defineProps({
   error: {
     type: Object as PropType<NuxtError>,
-  }
+  },
 });
 
 function handleError() {
