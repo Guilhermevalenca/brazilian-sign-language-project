@@ -4,7 +4,7 @@
 
 <script lang="ts">
 export default defineComponent({
-  name: 'favoritesPage',
+  name: 'FavoritesPage',
 
   async setup() {
     definePageMeta({

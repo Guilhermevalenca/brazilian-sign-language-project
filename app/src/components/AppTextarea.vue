@@ -1,19 +1,24 @@
 <template>
   <textarea
     v-bind="$attrs"
-    :value="modelValue"
-    @input="$emit('update:modelValue', $event.target.value)"
-  >
-  </textarea>
+    v-model="input"
+  />
   <slot />
 </template>
 
-<script lang="ts">
-export default {
-  name: 'AppTextarea',
-  props: ['modelValue'],
-  emits: ['update:modelValue'],
-};
+<script setup lang="ts">
+const props = defineProps({
+  modelValue: {
+    type: String,
+    required: true,
+  },
+});
+const emit = defineEmits(['update:modelValue']);
+
+const input = computed({
+  get: () => props.modelValue,
+  set: (value) => emit('update:modelValue', value),
+});
 </script>
 
 <style scoped lang="scss">

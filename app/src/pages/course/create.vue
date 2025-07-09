@@ -24,7 +24,7 @@
 </template>
 
 <script lang="ts">
-import { type CourseType } from '~/types/Course';
+import type { CourseType } from '~/types/Course';
 import CourseService from '~/services/CourseService';
 
 export default {

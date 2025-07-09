@@ -1,17 +1,21 @@
 <template>
   <div class="searching-bar-container">
-    <form @submit.prevent="submit" v-bind="$attrs">
+    <form v-bind="$attrs" @submit.prevent="submit">
       <div class="searching-bar">
         <input
+          v-model="searchData"
           class="searching-bar-input"
           type="text"
-          v-model="searchData"
           required
           placeholder="Buscar ..."
           name="search-bar"
-        />
+        >
         <button type="submit" class="search-button">
-          <img src="~/assets/icons/search.svg" width="24px" height="24px" />
+          <img
+              src="~/assets/icons/search.svg"
+              width="24px" height="24px"
+              alt="Buscar"
+          >
         </button>
       </div>
     </form>
@@ -19,35 +23,35 @@
 </template>
 
 <script setup lang="ts">
-import SystemSourceService from '~/services/SystemSourceService';
+// import SystemSourceService from '~/services/SystemSourceService';
 
 const searchData = searchBarData();
-const results = ref({
-  courses: [],
-  subjects: [],
-  signs: [],
-});
+// const results = ref({
+//   courses: [],
+//   subjects: [],
+//   signs: [],
+// });
 
 async function submit() {
   if (searchData.value) {
     navigateTo('/search');
   }
 }
-async function searchAction() {
-  if (searchData.value) {
-    await SystemSourceService.searchAction(searchData.value).then((res) => {
-      if (res) {
-        results.value.courses = res.data.courses;
-        results.value.subjects = res.data.subjects;
-        results.value.signs = res.data.signs;
-      }
-    });
-  } else {
-    results.value.courses = [];
-    results.value.subjects = [];
-    results.value.signs = [];
-  }
-}
+// async function searchAction() {
+//   if (searchData.value) {
+//     await SystemSourceService.searchAction(searchData.value).then((res) => {
+//       if (res) {
+//         results.value.courses = res.data.courses;
+//         results.value.subjects = res.data.subjects;
+//         results.value.signs = res.data.signs;
+//       }
+//     });
+//   } else {
+//     results.value.courses = [];
+//     results.value.subjects = [];
+//     results.value.signs = [];
+//   }
+// }
 </script>
 
 <style lang="scss" scoped>

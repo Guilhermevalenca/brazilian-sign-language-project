@@ -9,7 +9,7 @@
 
 <script lang="ts">
 import KeywordService from '~/services/KeywordService';
-import { type KeywordType } from '~/types/Keyword';
+import type { KeywordType } from '~/types/Keyword';
 import LoadingService from '~/services/LoadingService';
 
 export default defineComponent({

@@ -1,8 +1,14 @@
 <template>
-  <div class="content-container" ref="videoWrapper">
-    <iframe v-if="sign?.display" class="medium-iframe" :src="sign?.display" allowfullscreen>
-    </iframe>
-    {{ sign?.text }}
+  <div ref="videoWrapper" class="content-container">
+    <client-only>
+      <iframe
+          v-if="sign?.display"
+          class="medium-iframe"
+          :src="sign?.display"
+          allowfullscreen
+      />
+    </client-only>
+    <p>{{ sign?.text }}</p>
   </div>
 </template>
 
@@ -11,6 +17,7 @@ export default {
   name: 'SignView',
   props: {
     sign: Object,
+    required: true,
   },
 };
 </script>
