@@ -15,7 +15,7 @@
               src="~/assets/icons/search.svg"
               width="24px" height="24px"
               alt="Buscar"
-          >
+          />
         </button>
       </div>
     </form>
