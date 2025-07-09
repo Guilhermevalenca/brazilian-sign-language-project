@@ -48,7 +48,7 @@ export default defineComponent({
     const { course: id } = useRoute().params;
     const page = ref(1);
 
-    const { data, status, execute, refresh } = useAsyncData(
+    const { data, status, refresh } = useAsyncData(
       'fetch-course-show',
       () => CourseService.find(Number(id), page.value),
       {
@@ -75,8 +75,6 @@ export default defineComponent({
     watch(status, ($new) => {
       LoadingService.loaded($new, refresh);
     });
-
-    execute();
 
     return {
       course: computed((): CourseType => data.value.course),

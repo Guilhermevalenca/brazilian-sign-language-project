@@ -55,7 +55,7 @@ export default defineComponent({
     const { subject: id } = useRoute().params;
     const page = ref(1);
 
-    const { data, status, execute, refresh } = useAsyncData(
+    const { data, status, refresh } = useAsyncData(
       'fetch-subject-show',
       () => SubjectService.find(Number(id), page.value),
       {
@@ -66,7 +66,6 @@ export default defineComponent({
           },
           last_page: 1,
         }),
-        immediate: false,
         lazy: true,
       },
     );
@@ -81,8 +80,6 @@ export default defineComponent({
     watch(status, ($new) => {
       LoadingService.loaded($new, refresh);
     });
-
-    execute();
 
     return {
       subject: computed((): SubjectType => data.value.subject),

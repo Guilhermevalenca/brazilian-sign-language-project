@@ -67,7 +67,7 @@ export default defineComponent({
     const currentComponent = ref('SignView');
     const { sign: id } = useRoute().params;
 
-    const { data, status, execute, refresh } = useAsyncData(
+    const { data, status, refresh } = useAsyncData(
       'fetch-sign-show',
       () => SignService.find(Number(id)),
       {
@@ -77,7 +77,6 @@ export default defineComponent({
             display: '',
           },
         }),
-        immediate: false,
         lazy: true,
       },
     );
@@ -91,12 +90,6 @@ export default defineComponent({
     watch(status, ($new) => {
       LoadingService.loaded($new, refresh);
     });
-
-    try {
-      execute();
-    } catch (e) {
-      console.log(e);
-    }
 
     return {
       sign: computed((): SignType => data.value.sign as SignType),

@@ -9,7 +9,7 @@ export default defineNuxtConfig({
   routeRules: {
     '/about': { isr: true, prerender: true },
     '/auth/**': { isr: true, prerender: true },
-    '/': { swr: 60 * 60, prerender: true },
+    '/': { swr: 60 * 60 },
   },
   vite: {
     css:
