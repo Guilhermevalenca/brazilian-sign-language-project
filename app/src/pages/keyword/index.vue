@@ -59,7 +59,7 @@ export default defineComponent({
 
     const page = ref(1);
 
-    const { data, status, execute, refresh } = useAsyncData(
+    const { data, status, refresh } = useAsyncData(
       'fetchKeywords',
       () => KeywordService.fetch(page.value),
       {
@@ -68,7 +68,6 @@ export default defineComponent({
           last_page: 1,
         }),
         lazy: true,
-        immediate: false,
       },
     );
 

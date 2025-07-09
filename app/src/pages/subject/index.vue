@@ -11,13 +11,13 @@ import SubjectService from '~/services/SubjectService';
 import LoadingService from '~/services/LoadingService';
 
 export default defineComponent({
-  name: 'subjectPage',
+  name: 'SubjectPage',
 
   async setup() {
-    const page = ref<number>(1);
+    const page = ref(1);
 
-    const { data, status, execute, refresh } = useAsyncData(
-      'fetchSubjects',
+    const { data, status, refresh } = useAsyncData(
+      'fetch-subjects',
       () => SubjectService.fetch(page.value),
       {
         default: () => ({
@@ -25,7 +25,6 @@ export default defineComponent({
           last_page: 1,
         }),
         lazy: true,
-        immediate: false,
       },
     );
 
@@ -47,12 +46,10 @@ export default defineComponent({
       },
     );
 
-    execute();
-
     return {
       subjects: computed(() => data.value.subjects),
       page,
-      last_page: computed(() => data.value.last_page),
+      last_page: computed(() => data.value.last_page ?? 1),
       refresh,
     };
   },

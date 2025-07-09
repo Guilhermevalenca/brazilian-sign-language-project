@@ -2,42 +2,37 @@
   <nav
     class="menu-container-closed"
     tabindex="0"
-    :class="{ 'menu-container-open': isVisible }"
     ref="menuContainer"
+    :class="{ 'menu-container-open': props.isVisible }"
   >
     <button title="Início" @click="navigateTo('/')">
       <img src="~/assets/icons/home.svg" width="24px" height="24px" alt="Página inicial" />
-      <span v-show="isVisible">Inicio</span>
+      <span v-show="props.isVisible">Inicio</span>
     </button>
     <!--    <button @click="navigateTo('/favorite')">-->
     <!--      <img src="~/assets/icons/favorite.svg" width="24px" height="24px">-->
-    <!--      <span v-show="isVisible">Favoritos</span>-->
+    <!--      <span v-show="props.isVisible">Favoritos</span>-->
     <!--    </button>-->
     <button title="Sobre nós" @click="navigateTo('/about')">
       <img src="~/assets/icons/info.svg" width="24px" height="24px" alt="Sobre nós" />
-      <span v-show="isVisible">Sobre nós</span>
+      <span v-show="props.isVisible">Sobre nós</span>
     </button>
     <button v-if="userStore.is_admin" title="Gráficos" @click="navigateTo('/monitoring')">
       <img src="~/assets/icons/chart-bar.svg" width="24px" height="24px" alt="Gráficos" />
-      <span v-show="isVisible">Gráficos</span>
+      <span v-show="props.isVisible">Gráficos</span>
     </button>
   </nav>
 </template>
 
 <script setup lang="ts">
-import useUserStore from "~/stores/useUserStore";
+import useUserStore from '~/stores/useUserStore';
 
 const userStore = useUserStore();
+const props = defineProps({
+  isVisible: Boolean,
+});
 </script>
 
-<script lang="ts">
-export default {
-  name: 'Menu',
-  props: {
-    isVisible: Boolean,
-  },
-};
-</script>
 @import
 url('https://fonts.googleapis.com/css2?family=Quantico:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 

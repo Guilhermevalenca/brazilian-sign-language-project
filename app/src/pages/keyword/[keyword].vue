@@ -9,7 +9,7 @@
 
 <script lang="ts">
 import KeywordService from '~/services/KeywordService';
-import { type KeywordType } from '~/types/Keyword';
+import type { KeywordType } from '~/types/Keyword';
 import LoadingService from '~/services/LoadingService';
 
 export default defineComponent({
@@ -21,7 +21,7 @@ export default defineComponent({
     });
     const { keyword: id } = useRoute().params;
 
-    const { data, status, execute, refresh } = useAsyncData(
+    const { data, status, refresh } = useAsyncData(
       'fetchKeyword',
       () => KeywordService.find(Number(id)),
       {
@@ -31,7 +31,6 @@ export default defineComponent({
           },
         }),
         lazy: true,
-        immediate: false,
       },
     );
 
@@ -45,8 +44,6 @@ export default defineComponent({
     watch(status, ($new) => {
       LoadingService.loaded($new, refresh);
     });
-
-    execute();
 
     return {
       keyword: computed(() => data.value.keyword),

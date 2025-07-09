@@ -7,7 +7,8 @@
 
     <!-- Números das Páginas -->
     <button
-      v-for="p in lastPage" :key="p"
+      v-for="p in lastPage"
+      :key="p"
       class="pagination-number"
       :class="{ active: p === page }"
       @click="changePage(p)"
@@ -79,13 +80,13 @@ function changePage(newPage: number) {
     height: 1.5rem;
   }
 }
-.active{
+.active {
   background-color: $secondary-color;
-  transform: scale(1.2,1.2);
+  transform: scale(1.2, 1.2);
 }
-button:hover{
+button:hover {
   justify-self: center;
-  transform: scale(1.2,1.2);
+  transform: scale(1.2, 1.2);
   background-color: $primary-color-hovered;
 }
 </style>

@@ -7,20 +7,16 @@
   </div>
 </template>
 
-<script lang="ts">
-export default {
-  name: 'BackButton',
-  methods: {
-    back() {
-      const router = useRouter();
-      if (window.history.length > 1) {
-        router.back();
-      } else {
-        router.push('/');
-      }
-    },
-  },
-};
+<script setup lang="ts">
+const router = useRouter();
+
+function back() {
+  if (window.history.length > 1) {
+    router.back();
+  } else {
+    navigateTo('/');
+  }
+}
 </script>
 
 <style scoped lang="scss">

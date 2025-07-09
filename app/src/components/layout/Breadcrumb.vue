@@ -3,15 +3,15 @@
     <nav class="breadcrumb">
       <span
         class="breadcrumb-item"
-        @click="navigateTo('/')"
         :class="{ current: route.path === '/' }"
+        @click="navigateTo('/')"
         >Página inicial
       </span>
       <span
-        class="breadcrumb-item"
-        :class="{ current: route.path === value.path }"
         v-for="(value, index) in breadcrumb.path"
         :key="index"
+        class="breadcrumb-item"
+        :class="{ current: route.path === value.path }"
         @click="navigateTo(value.path)"
       >
         <span class="breadcrumb-separator"> > </span>
@@ -34,7 +34,7 @@ export default defineComponent({
   }),
 
   mounted() {
-    window.addEventListener('beforeunload', (event) => {
+    window.addEventListener('beforeunload', () => {
       // event.preventDefault();
       localStorage.setItem(
         'breadcrumb',
@@ -59,7 +59,7 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .breadcrumb {
-  margin: 0em;
+  margin: 0;
   display: flex;
   gap: 0.5em;
 }

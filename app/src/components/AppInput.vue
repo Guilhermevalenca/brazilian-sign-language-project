@@ -1,13 +1,20 @@
 <template>
-  <input :value="modelValue" @input="$emit('update:modelValue', $event.target.value)" />
+  <input v-model="input" />
 </template>
 
-<script lang="ts">
-export default {
-  name: 'AppInput',
-  props: ['modelValue'],
-  emits: ['update:modelValue'],
-};
+<script setup lang="ts">
+const props = defineProps({
+  modelValue: {
+    type: String,
+    required: true,
+  },
+});
+const emit = defineEmits(['update:modelValue']);
+
+const input = computed({
+  get: () => props.modelValue,
+  set: (value) => emit('update:modelValue', value),
+});
 </script>
 
 <style lang="scss" scoped>

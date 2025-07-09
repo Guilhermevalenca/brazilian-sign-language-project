@@ -1,15 +1,21 @@
 <template>
-    <div class="update-container" v-if="userStore.is_admin">
-      <AppButton
-          @click="() => navigateTo('/sign/' + sign.id + '/update')"
-      >
-        <img src="~/assets/icons/edit.svg" width="24px" height="24px">
-        Editar
-      </AppButton>
-      <AppButton @click="deleteSign">
-        <img src="~/assets/icons/delete.svg" width="24px" height="24px">
-        Apagar
-      </AppButton>
+  <div class="update-container" v-if="userStore.is_admin">
+    <AppButton @click="() => navigateTo('/sign/' + sign.id + '/update')">
+      <img
+          src="~/assets/icons/edit.svg"
+          width="24px" height="24px"
+          alt="Editar sinal"
+      />
+      Editar
+    </AppButton>
+    <AppButton @click="deleteSign">
+      <img
+          src="~/assets/icons/delete.svg"
+          width="24px" height="24px"
+          alt="Excluir sinal"
+      />
+      Apagar
+    </AppButton>
   </div>
   <div class="content-container">
     <transition name="slide">
@@ -43,9 +49,11 @@
       </div>
     </transition>
     <AppCard variant="screen" class="abacate">
-      <keep-alive>
-        <component :is="currentComponent" :sign="sign" />
-      </keep-alive>
+      <client-only>
+        <keep-alive>
+          <component :is="currentComponent" :sign="sign" />
+        </keep-alive>
+      </client-only>
     </AppCard>
   </div>
 </template>
@@ -67,8 +75,8 @@ export default defineComponent({
     const currentComponent = ref('SignView');
     const { sign: id } = useRoute().params;
 
-    const { data, status, execute, refresh } = useAsyncData(
-      'fetchSign',
+    const { data, status, refresh } = useAsyncData(
+      'fetch-sign-show',
       () => SignService.find(Number(id)),
       {
         default: () => ({
@@ -77,7 +85,6 @@ export default defineComponent({
             display: '',
           },
         }),
-        immediate: false,
         lazy: true,
       },
     );
@@ -91,12 +98,6 @@ export default defineComponent({
     watch(status, ($new) => {
       LoadingService.loaded($new, refresh);
     });
-
-    try {
-      execute();
-    } catch (e) {
-      console.log(e);
-    }
 
     return {
       sign: computed((): SignType => data.value.sign as SignType),

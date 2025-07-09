@@ -1,12 +1,13 @@
 <template>
   <div v-if="sign?.example" class="content-container">
-    <iframe
-      v-if="sign?.example?.display"
-      class="medium-iframe"
-      :src="sign?.example?.display"
-      allowfullscreen
-    >
-    </iframe>
+    <client-only>
+      <iframe
+        v-if="sign?.example?.display"
+        class="medium-iframe"
+        :src="sign?.example?.display"
+        allowfullscreen
+      />
+    </client-only>
     <p class="content-text">
       {{ sign?.example?.description }}
     </p>
@@ -19,10 +20,13 @@
 </template>
 
 <script lang="ts">
+import type { SignType } from '~/types/Sign';
+
 export default {
   name: 'ExampleView',
   props: {
-    sign: Object,
+    sign: Object as PropType<SignType>,
+    required: true,
   },
 };
 </script>

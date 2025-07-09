@@ -1,11 +1,11 @@
 <template>
   <div class="update-container" v-if="userStore.is_admin">
     <AppButton @click="() => navigateTo('/course/' + id + '/update')">
-      <img src="~/assets/icons/edit.svg" width="24px" height="24px">
+      <img src="~/assets/icons/edit.svg" width="24px" height="24px" alt="Editar curso" />
       Editar curso
     </AppButton>
     <AppButton @click="deleteCourse">
-      <img src="~/assets/icons/delete.svg" width="24px" height="24px">
+      <img src="~/assets/icons/delete.svg" width="24px" height="24px" alt="Excluir curso" />
       Excluir curso
     </AppButton>
   </div>
@@ -14,12 +14,13 @@
   </div>
   <div v-if="course?.subjects && course?.subjects.length > 0" class="content-container-list">
     <AppCard
-        class="subject"
-        v-for="subject in course?.subjects ?? []" :key="subject.id"
-        tabindex="1"
-        variant="list"
-        role="button"
-        @click="navigateTo(`/subject/${subject.id}`)"
+      class="subject"
+      v-for="subject in course?.subjects ?? []"
+      :key="subject.id"
+      tabindex="1"
+      variant="list"
+      role="button"
+      @click="navigateTo(`/subject/${subject.id}`)"
     >
       <ul>
         {{
@@ -38,8 +39,8 @@
 import CourseService from '~/services/CourseService';
 import useBreadcrumbStore from '~/stores/useBreadcrumbStore';
 import type { CourseType } from '~/types/Course';
-import LoadingService from "~/services/LoadingService";
-import useUserStore from "~/stores/useUserStore";
+import LoadingService from '~/services/LoadingService';
+import useUserStore from '~/stores/useUserStore';
 
 export default defineComponent({
   name: 'coursePage',
@@ -48,8 +49,8 @@ export default defineComponent({
     const { course: id } = useRoute().params;
     const page = ref(1);
 
-    const { data, status, execute, refresh } = useAsyncData(
-      'fetchCourse',
+    const { data, status, refresh } = useAsyncData(
+      'fetch-course-show',
       () => CourseService.find(Number(id), page.value),
       {
         default: () => ({
@@ -60,7 +61,6 @@ export default defineComponent({
           } as CourseType,
           last_page: 1,
         }),
-        immediate: false,
         lazy: true,
       },
     );
@@ -76,8 +76,6 @@ export default defineComponent({
       LoadingService.loaded($new, refresh);
     });
 
-    execute();
-
     return {
       course: computed((): CourseType => data.value.course),
       page,
@@ -85,7 +83,7 @@ export default defineComponent({
       refresh,
       id,
       userStore: useUserStore(),
-    }
+    };
   },
 
   watch: {
@@ -139,13 +137,13 @@ export default defineComponent({
           confirmButtonText: 'Tentar novamente',
         });
       }
-    }
-  }
-})
+    },
+  },
+});
 </script>
 <style lang="scss" scoped>
-.subject:hover{
-  background-color: #A6E4AF;
-  transform: scale(1.1,1.1);
+.subject:hover {
+  background-color: #a6e4af;
+  transform: scale(1.1, 1.1);
 }
 </style>
