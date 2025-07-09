@@ -12,9 +12,10 @@ use Illuminate\Http\Request;
 //        GROUP BY part_of_page, DATE(timestamp)
 //    ) as daily_counts')
 //    )
-//        ->select('part_of_page', DB::raw('AVG(daily_count) as average_daily'))
+//        ->select('part_of_page', DB::raw('SUM(daily_count) as average_daily'))
 //        ->groupBy('part_of_page')
 //        ->get();
+//
 //    return response($response, 200);
 //});
 
