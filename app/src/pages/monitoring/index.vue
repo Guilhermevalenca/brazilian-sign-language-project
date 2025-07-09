@@ -26,14 +26,10 @@ const { data, status, refresh } = await useAsyncData(
   },
 );
 
-onMounted(async () => {
-  UserMonitoringService.fetch();
-});
-
 const avgPartOfPage = computed((): AvgPartOfPageType[] => {
   if (data.value.avgPartOfPage) {
     const translated = data.value.avgPartOfPage.map(
-      ({ part_of_page, count }: AvgPartOfPageType) => {
+      ({ part_of_page, average_daily }: AvgPartOfPageType) => {
         let part = '';
         switch (part_of_page) {
           case 'subject':
@@ -58,7 +54,7 @@ const avgPartOfPage = computed((): AvgPartOfPageType[] => {
 
         return {
           part_of_page: part,
-          count,
+          average_daily: Math.round(average_daily),
         };
       },
     );
@@ -67,13 +63,13 @@ const avgPartOfPage = computed((): AvgPartOfPageType[] => {
     let totalOther = 0;
     translated.forEach((item: AvgPartOfPageType) => {
       if (item.part_of_page === 'Outro') {
-        totalOther += item.count;
+        totalOther += item.average_daily;
       }
     });
     if (totalOther > 0) {
       response.push({
         part_of_page: 'Outro',
-        count: totalOther,
+        average_daily: totalOther,
       });
     }
     return response;
@@ -104,7 +100,7 @@ onMounted(() => {
           datasets: [
             {
               label: 'Quantidade de acessos',
-              data: avgPartOfPage.map((i) => i.count),
+              data: avgPartOfPage.map((i) => i.average_daily),
             },
           ],
         }"

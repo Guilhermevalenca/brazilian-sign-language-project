@@ -1,6 +1,6 @@
 type AvgPartOfPageType = {
   part_of_page: string;
-  count: number;
+  average_daily: number;
 };
 
 export type { AvgPartOfPageType };
