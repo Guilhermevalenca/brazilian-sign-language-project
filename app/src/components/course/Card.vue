@@ -1,7 +1,7 @@
 <template>
   <div class="course-card-container">
     <div class="course-card" tabindex="0" role="button">
-      <img :src="image" :alt="'Icone do curso: ' + course?.name" />
+      <img :src="image()" :alt="'Icone do curso: ' + course?.name" />
       <legend>{{ course?.name }}</legend>
     </div>
   </div>
@@ -17,7 +17,7 @@ export default defineComponent({
     course: Object as PropType<CourseType>,
   },
 
-  computed: {
+  methods: {
     image(): string {
       return this.course?.image ? String(this.course.image) : '/logo.svg';
     },

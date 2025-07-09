@@ -9,13 +9,9 @@
           required
           placeholder="Buscar ..."
           name="search-bar"
-        >
+        />
         <button type="submit" class="search-button">
-          <img
-              src="~/assets/icons/search.svg"
-              width="24px" height="24px"
-              alt="Buscar"
-          >
+          <img src="~/assets/icons/search.svg" width="24px" height="24px" alt="Buscar" />
         </button>
       </div>
     </form>

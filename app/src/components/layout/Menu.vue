@@ -6,7 +6,7 @@
     :class="{ 'menu-container-open': props.isVisible }"
   >
     <button title="Início" @click="navigateTo('/')">
-      <img src="~/assets/icons/home.svg" width="24px" height="24px" alt="Página inicial" >
+      <img src="~/assets/icons/home.svg" width="24px" height="24px" alt="Página inicial" />
       <span v-show="props.isVisible">Inicio</span>
     </button>
     <!--    <button @click="navigateTo('/favorite')">-->
@@ -14,11 +14,11 @@
     <!--      <span v-show="props.isVisible">Favoritos</span>-->
     <!--    </button>-->
     <button title="Sobre nós" @click="navigateTo('/about')">
-      <img src="~/assets/icons/info.svg" width="24px" height="24px" alt="Sobre nós" >
+      <img src="~/assets/icons/info.svg" width="24px" height="24px" alt="Sobre nós" />
       <span v-show="props.isVisible">Sobre nós</span>
     </button>
     <button v-if="userStore.is_admin" title="Gráficos" @click="navigateTo('/monitoring')">
-      <img src="~/assets/icons/chart-bar.svg" width="24px" height="24px" alt="Gráficos" >
+      <img src="~/assets/icons/chart-bar.svg" width="24px" height="24px" alt="Gráficos" />
       <span v-show="props.isVisible">Gráficos</span>
     </button>
   </nav>

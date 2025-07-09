@@ -1,11 +1,19 @@
 <template>
   <div class="update-container" v-if="userStore.is_admin">
     <AppButton @click="() => navigateTo('/sign/' + sign.id + '/update')">
-      <img src="~/assets/icons/edit.svg" width="24px" height="24px" />
+      <img
+          src="~/assets/icons/edit.svg"
+          width="24px" height="24px"
+          alt="Editar sinal"
+      />
       Editar
     </AppButton>
     <AppButton @click="deleteSign">
-      <img src="~/assets/icons/delete.svg" width="24px" height="24px" />
+      <img
+          src="~/assets/icons/delete.svg"
+          width="24px" height="24px"
+          alt="Excluir sinal"
+      />
       Apagar
     </AppButton>
   </div>
@@ -41,9 +49,11 @@
       </div>
     </transition>
     <AppCard variant="screen" class="abacate">
-      <keep-alive>
-        <component :is="currentComponent" :sign="sign" />
-      </keep-alive>
+      <client-only>
+        <keep-alive>
+          <component :is="currentComponent" :sign="sign" />
+        </keep-alive>
+      </client-only>
     </AppCard>
   </div>
 </template>

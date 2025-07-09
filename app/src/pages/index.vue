@@ -6,7 +6,7 @@
     <div class="index-content">
       <CourseCard
         v-for="course in courses"
-        :key="course.id"
+        :key="`course.id-${course.id}`"
         :course="course"
         @click="navigateTo(`/course/${course.id}`)"
       />

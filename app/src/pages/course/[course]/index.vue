@@ -1,11 +1,11 @@
 <template>
   <div class="update-container" v-if="userStore.is_admin">
     <AppButton @click="() => navigateTo('/course/' + id + '/update')">
-      <img src="~/assets/icons/edit.svg" width="24px" height="24px" alt="Editar curso">
+      <img src="~/assets/icons/edit.svg" width="24px" height="24px" alt="Editar curso" />
       Editar curso
     </AppButton>
     <AppButton @click="deleteCourse">
-      <img src="~/assets/icons/delete.svg" width="24px" height="24px" alt="Excluir curso">
+      <img src="~/assets/icons/delete.svg" width="24px" height="24px" alt="Excluir curso" />
       Excluir curso
     </AppButton>
   </div>

@@ -1,7 +1,7 @@
 <template>
   <div>
     <AppButton variant="navigation" @click="back()">
-      <img src="~/assets/icons/arrow-left.svg" width="24" height="24" alt="Voltar" >
+      <img src="~/assets/icons/arrow-left.svg" width="24" height="24" alt="Voltar" />
       Voltar
     </AppButton>
   </div>

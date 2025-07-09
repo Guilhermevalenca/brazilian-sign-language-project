@@ -10,7 +10,8 @@
           v-for="(sign, index) in signs"
           :key="sign.id"
           @click="navigateTo(`/sign/${sign.id}`)"
-          >{{ sign.name }}</AppCard>
+          >{{ sign.name }}</AppCard
+        >
       </div>
 
       <div class="results" v-if="subjects && subjects.length > 0">
@@ -20,7 +21,8 @@
           v-for="(subject, index) in subjects"
           :key="subject.id"
           @click="navigateTo(`/subject/${subject.id}`)"
-          ><p>{{ subject.name }}</p></AppCard>
+          ><p>{{ subject.name }}</p></AppCard
+        >
       </div>
 
       <div class="results" v-if="courses && courses.length > 0">
