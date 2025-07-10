@@ -681,6 +681,11 @@
     semver "^7.5.3"
     tar "^7.4.0"
 
+"@mdi/font@^7.4.47":
+  version "7.4.47"
+  resolved "https://registry.yarnpkg.com/@mdi/font/-/font-7.4.47.tgz#2ae522867da3a5c88b738d54b403eb91471903af"
+  integrity sha512-43MtGpd585SNzHZPcYowu/84Vz2a2g31TvPMTm9uTiCSWzaheQySUcSyUH/46fPnuPQWof2yd0pGBtzee/IQWw==
+
 "@napi-rs/wasm-runtime@^0.2.7":
   version "0.2.7"
   resolved "https://registry.npmjs.org/@napi-rs/wasm-runtime/-/wasm-runtime-0.2.7.tgz"
@@ -1223,7 +1228,7 @@
 
 "@pkgr/core@^0.2.4":
   version "0.2.7"
-  resolved "https://registry.yarnpkg.com/@pkgr/core/-/core-0.2.7.tgz#eb5014dfd0b03e7f3ba2eeeff506eed89b028058"
+  resolved "https://registry.npmjs.org/@pkgr/core/-/core-0.2.7.tgz"
   integrity sha512-YLT9Zo3oNPJoBjBc4q8G2mjU4tqIbf5CEOORbUUr48dCD9q3umJ3IPlVqOqDakPfd2HuwccBaqlGhN4Gmr5OWg==
 
 "@polka/url@^1.0.0-next.24":
@@ -1783,6 +1788,13 @@
   version "3.5.13"
   resolved "https://registry.npmjs.org/@vue/shared/-/shared-3.5.13.tgz"
   integrity sha512-/hnE/qP5ZoGpol0a5mDi45bOd7t3tjYJBjsgCsivow7D48cJeV5l05RD82lPqi7gRiphZM37rnhW1l6ZoCNNnQ==
+
+"@vuetify/loader-shared@^2.1.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@vuetify/loader-shared/-/loader-shared-2.1.0.tgz#29410dce04a78fa9cd40c4d9bc417b8d61ce5103"
+  integrity sha512-dNE6Ceym9ijFsmJKB7YGW0cxs7xbYV8+1LjU6jd4P14xOt/ji4Igtgzt0rJFbxu+ZhAzqz853lhB0z8V9Dy9cQ==
+  dependencies:
+    upath "^2.0.1"
 
 abbrev@^3.0.0:
   version "3.0.0"
@@ -2569,7 +2581,7 @@ debug@2.6.9:
   dependencies:
     ms "2.0.0"
 
-debug@4, debug@^4.1.0, debug@^4.1.1, debug@^4.3.1, debug@^4.3.2, debug@^4.3.4, debug@^4.3.5, debug@^4.4.0, debug@^4.4.1:
+debug@4, debug@^4.1.0, debug@^4.1.1, debug@^4.3.1, debug@^4.3.2, debug@^4.3.3, debug@^4.3.4, debug@^4.3.5, debug@^4.4.0, debug@^4.4.1:
   version "4.4.1"
   resolved "https://registry.npmjs.org/debug/-/debug-4.4.1.tgz"
   integrity sha512-KcKCqiftBJcZr++7ykoDIEwSa3XWowTfNPo92BYxjXiyYEVrUQh2aLyhxBCwww+heortUFxEJYcRzosstTEBYQ==
@@ -2900,7 +2912,7 @@ eslint-config-flat-gitignore@^2.1.0:
 
 eslint-config-prettier@^10.1.5:
   version "10.1.5"
-  resolved "https://registry.yarnpkg.com/eslint-config-prettier/-/eslint-config-prettier-10.1.5.tgz#00c18d7225043b6fbce6a665697377998d453782"
+  resolved "https://registry.npmjs.org/eslint-config-prettier/-/eslint-config-prettier-10.1.5.tgz"
   integrity sha512-zc1UmCpNltmVY34vuLRV61r1K27sWuX39E+uyUnY8xS2Bex88VV9cugG+UZbRSRGtGyFboj+D8JODyme1plMpw==
 
 eslint-flat-config-utils@^2.1.0:
@@ -2941,7 +2953,7 @@ eslint-plugin-jsdoc@^51.3.3:
 
 eslint-plugin-prettier@^5.5.1:
   version "5.5.1"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-prettier/-/eslint-plugin-prettier-5.5.1.tgz#470820964de9aedb37e9ce62c3266d2d26d08d15"
+  resolved "https://registry.npmjs.org/eslint-plugin-prettier/-/eslint-plugin-prettier-5.5.1.tgz"
   integrity sha512-dobTkHT6XaEVOo8IO90Q4DOSxnm3Y151QxPJlM/vKC0bVy+d6cVWQZLlFiuZPP0wS6vZwSKeJgKkcS+KfMBlRw==
   dependencies:
     prettier-linter-helpers "^1.0.0"
@@ -3169,7 +3181,7 @@ fast-deep-equal@^3.1.1, fast-deep-equal@^3.1.3:
 
 fast-diff@^1.1.2:
   version "1.3.0"
-  resolved "https://registry.yarnpkg.com/fast-diff/-/fast-diff-1.3.0.tgz#ece407fa550a64d638536cd727e129c61616e0f0"
+  resolved "https://registry.npmjs.org/fast-diff/-/fast-diff-1.3.0.tgz"
   integrity sha512-VxPP4NqbUjj6MaAOafWeUn2cXWLcCtljklUtZf0Ind4XQ+QPtmA0b18zZy0jIQx+ExRVCR/ZQpBmik5lXshNsw==
 
 fast-fifo@^1.2.0, fast-fifo@^1.3.2:
@@ -5100,14 +5112,14 @@ prelude-ls@^1.2.1:
 
 prettier-linter-helpers@^1.0.0:
   version "1.0.0"
-  resolved "https://registry.yarnpkg.com/prettier-linter-helpers/-/prettier-linter-helpers-1.0.0.tgz#d23d41fe1375646de2d0104d3454a3008802cf7b"
+  resolved "https://registry.npmjs.org/prettier-linter-helpers/-/prettier-linter-helpers-1.0.0.tgz"
   integrity sha512-GbK2cP9nraSSUF9N2XwUwqfzlAFlMNYYl+ShE/V+H8a9uNl/oUqB1w2EL54Jh0OlyRSd8RfWYJ3coVS4TROP2w==
   dependencies:
     fast-diff "^1.1.2"
 
 prettier@^3.6.2:
   version "3.6.2"
-  resolved "https://registry.yarnpkg.com/prettier/-/prettier-3.6.2.tgz#ccda02a1003ebbb2bfda6f83a074978f608b9393"
+  resolved "https://registry.npmjs.org/prettier/-/prettier-3.6.2.tgz"
   integrity sha512-I7AIg5boAr5R0FFtJ6rCfD+LFsWHp81dolrFD8S79U9tb8Az2nGrJncnMSnys+bpQJfRUzqs9hnA81OAA3hCuQ==
 
 pretty-bytes@^6.1.1:
@@ -5799,7 +5811,7 @@ sweetalert2@^11.17.2:
 
 synckit@^0.11.7:
   version "0.11.8"
-  resolved "https://registry.yarnpkg.com/synckit/-/synckit-0.11.8.tgz#b2aaae998a4ef47ded60773ad06e7cb821f55457"
+  resolved "https://registry.npmjs.org/synckit/-/synckit-0.11.8.tgz"
   integrity sha512-+XZ+r1XGIJGeQk3VvXhT6xx/VpbHsRzsTkGgF6E5RX9TTXD0118l87puaEBZ566FhqblC6U0d4XnubznJDm30A==
   dependencies:
     "@pkgr/core" "^0.2.4"
@@ -6198,6 +6210,11 @@ unwasm@^0.3.9:
     pkg-types "^1.0.3"
     unplugin "^1.10.0"
 
+upath@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/upath/-/upath-2.0.1.tgz#50c73dea68d6f6b990f51d279ce6081665d61a8b"
+  integrity sha512-1uEe95xksV1O0CYKXo8vQvN1JEbtJp7lb7C5U9HMsIp6IVwntkH/oNUzyVNQSd4S1sYk2FpSSW44FqMc8qee5w==
+
 update-browserslist-db@^1.1.3:
   version "1.1.3"
   resolved "https://registry.npmjs.org/update-browserslist-db/-/update-browserslist-db-1.1.3.tgz"
@@ -6293,6 +6310,15 @@ vite-plugin-vue-tracer@^0.1.3:
     pathe "^2.0.3"
     source-map-js "^1.2.1"
 
+vite-plugin-vuetify@^2.1.1:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/vite-plugin-vuetify/-/vite-plugin-vuetify-2.1.1.tgz#31c958f0c64c436a3165462b81196a7c2ae3a2ff"
+  integrity sha512-Pb7bKhQH8qPMzURmEGq2aIqCJkruFNsyf1NcrrtnjsOIkqJPMcBbiP0oJoO8/uAmyB5W/1JTbbUEsyXdMM0QHQ==
+  dependencies:
+    "@vuetify/loader-shared" "^2.1.0"
+    debug "^4.3.3"
+    upath "^2.0.1"
+
 "vite@^5.0.0 || ^6.0.0", vite@^6.2.2:
   version "6.2.4"
   resolved "https://registry.npmjs.org/vite/-/vite-6.2.4.tgz"
@@ -6360,6 +6386,11 @@ vue@^3.5.13, vue@latest:
     "@vue/runtime-dom" "3.5.13"
     "@vue/server-renderer" "3.5.13"
     "@vue/shared" "3.5.13"
+
+vuetify@^3.9.0:
+  version "3.9.0"
+  resolved "https://registry.yarnpkg.com/vuetify/-/vuetify-3.9.0.tgz#e9412e9ba662fcd4b9946c589a984d157460943a"
+  integrity sha512-vjqyHP5gBFH4x0BAjdRAcS3FXY5OfHaKnC6Hhgln8tePZtKc3AUhF7BEJtcrD3l6XwL8gaYx/wMt+UP7X5EZJw==
 
 webidl-conversions@^3.0.0:
   version "3.0.1"
