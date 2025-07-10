@@ -1,17 +1,19 @@
 <template>
-  <LayoutAppHeader />
-  <main>
-    <section>
-      <LayoutBreadcrumb />
-      <div class="layout-actions">
-        <LayoutBackButton v-show="!isHome" />
-      </div>
-      <slot />
-    </section>
-  </main>
-  <LayoutAdmActions v-if="user && user.is_admin" />
-  <div class="space" />
-  <LayoutAppFooter />
+  <v-app>
+    <LayoutAppHeader />
+    <main>
+      <section>
+        <LayoutBreadcrumb />
+        <div class="layout-actions">
+          <LayoutBackButton v-show="!isHome" />
+        </div>
+        <slot />
+      </section>
+    </main>
+    <LayoutAdmActions v-if="user && user.is_admin" />
+    <div class="space" />
+    <LayoutAppFooter />
+  </v-app>
 </template>
 
 <script setup lang="ts">

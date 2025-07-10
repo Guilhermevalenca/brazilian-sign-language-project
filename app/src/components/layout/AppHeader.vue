@@ -1,5 +1,5 @@
 <template>
-  <header>
+  <v-app-bar>
     <div class="header-content">
       <div>
         <button @click="showMenu()">
@@ -31,7 +31,7 @@
     <section>
       <Menu :isVisible="isVisibleHere" />
     </section>
-  </header>
+  </v-app-bar>
 </template>
 
 <script lang="ts">
@@ -75,10 +75,6 @@ div {
 header {
   box-sizing: border-box;
   flex-flow: row wrap;
-  top: 0;
-  z-index: 0;
-  position: fixed;
-  width: 100%;
   box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
 }
 .header-content {
