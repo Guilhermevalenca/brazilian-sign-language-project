@@ -1,28 +1,51 @@
 <template>
   <div class="adm-actions-container" ref="menuContainer">
     <button class="adm-actions-button" @click="showOptionsAdm()">
-      <img src="~/assets/icons/plus.svg" width="50px" height="50px">
+      <img src="~/assets/icons/plus.svg" width="50px" height="50px" />
     </button>
     <div class="adm-actions-options" v-if="showOptions">
-      <button type="button" @click="navigateTo('/course/create'); selectOption()">Adicionar Curso</button>
-      <button type="button" @click="navigateTo('/sign/create'); selectOption()" >Adicionar Sinal</button>
-      <button type="button" @click="navigateTo('/subject/create'); selectOption()">Adicionar Matéria</button>
+      <button
+        type="button"
+        @click="
+          navigateTo('/course/create');
+          selectOption();
+        "
+      >
+        Adicionar Curso
+      </button>
+      <button
+        type="button"
+        @click="
+          navigateTo('/sign/create');
+          selectOption();
+        "
+      >
+        Adicionar Sinal
+      </button>
+      <button
+        type="button"
+        @click="
+          navigateTo('/subject/create');
+          selectOption();
+        "
+      >
+        Adicionar Matéria
+      </button>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-
-export default{
-  name: "AdmActions",
-  data(){
-    return{
+export default {
+  name: 'AdmActions',
+  data() {
+    return {
       showOptions: false,
-    }
+    };
   },
-  methods:{
-    showOptionsAdm(){
-      this.showOptions = !this.showOptions
+  methods: {
+    showOptionsAdm() {
+      this.showOptions = !this.showOptions;
     },
     closeMenu(event: MouseEvent) {
       const menu = this.$refs.menuContainer as HTMLElement;
@@ -30,30 +53,30 @@ export default{
         this.showOptions = false;
       }
     },
-    selectOption(){
+    selectOption() {
       this.showOptions = false;
-    }
+    },
   },
   mounted() {
-    document.addEventListener("click", this.closeMenu);
+    document.addEventListener('click', this.closeMenu);
   },
   beforeUnmount() {
-    document.removeEventListener("click", this.closeMenu);
+    document.removeEventListener('click', this.closeMenu);
   },
-}
+};
 </script>
 
 <style scoped lang="scss">
-.adm-actions-container{
+.adm-actions-container {
   display: flex;
   flex-direction: column-reverse;
   align-items: center;
   position: fixed;
-  padding:1em;
+  padding: 1em;
   bottom: 2em;
   right: 4em;
 }
-.adm-actions-button{
+.adm-actions-button {
   background-color: $secondary-color;
   border: none;
   width: 6em;
@@ -61,7 +84,7 @@ export default{
   border-radius: 3em;
   position: relative;
 }
-.adm-actions-options{
+.adm-actions-options {
   border-radius: 1em;
   display: flex;
   flex-direction: column;
@@ -70,17 +93,17 @@ export default{
   position: absolute;
   bottom: 6.5em;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
-  button{
+  button {
     color: $tertiary-color;
     background-color: transparent;
     border-radius: 1em;
     border-color: transparent;
     cursor: pointer;
-    padding:1em;
+    padding: 1em;
   }
-  button:hover{
+  button:hover {
     justify-self: center;
-    transform: scale(1.1,1.1);
+    transform: scale(1.1, 1.1);
     background-color: $primary-color-hovered;
   }
 }

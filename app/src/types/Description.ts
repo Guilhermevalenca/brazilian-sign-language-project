@@ -1,5 +1,5 @@
 export type DescriptionType = {
-    sign_id?: number;
-    text: string;
-    display: string;
-}
+  sign_id?: number;
+  text: string;
+  display: string;
+};

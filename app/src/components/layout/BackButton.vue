@@ -1,34 +1,26 @@
 <template>
   <div>
-    <AppButton
-        variant="navigation"
-        @click="back()"
-    >
-      <img src="~/assets/icons/arrow-left.svg" width="24" height="24" alt="Voltar">
+    <AppButton variant="navigation" @click="back()">
+      <img src="~/assets/icons/arrow-left.svg" width="24" height="24" alt="Voltar" />
       Voltar
     </AppButton>
   </div>
 </template>
 
-<script lang="ts">
-export default {
-  name: "BackButton",
-  methods:{
-     back(){
-       const router = useRouter()
-        if(window.history.length > 1){
-          router.back();
-        }
-        else{
-          router.push('/');
-        }
-    }
+<script setup lang="ts">
+const router = useRouter();
+
+function back() {
+  if (window.history.length > 1) {
+    router.back();
+  } else {
+    navigateTo('/');
   }
 }
 </script>
 
 <style scoped lang="scss">
-div{
+div {
   margin: 0.6em;
 }
 </style>

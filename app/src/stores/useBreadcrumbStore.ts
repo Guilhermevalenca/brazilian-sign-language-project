@@ -1,35 +1,38 @@
-import { defineStore } from 'pinia'
+import { defineStore } from 'pinia';
 
 export default defineStore('breadcrumb', {
-  state: () => ({ 
+  state: () => ({
     course: {
       isActive: false,
       name: '',
-      path: ''
+      path: '',
     },
     subject: {
       isActive: false,
       name: '',
-      path: ''
+      path: '',
     },
     sign: {
       isActive: false,
       name: '',
-      path: ''
+      path: '',
     },
     search: {
       isActive: false,
     },
     about: {
-      isActive: false
-    }
-   }),
+      isActive: false,
+    },
+    monitoring: {
+      isActive: false,
+    },
+  }),
   actions: {
     activeCourse(name: string = '', path: string) {
       this.course.isActive = true;
       this.course.name = name;
       this.course.path = path;
-      
+
       this.subject.isActive = false;
       this.sign.isActive = false;
       this.search.isActive = false;
@@ -53,9 +56,11 @@ export default defineStore('breadcrumb', {
       this.search.isActive = false;
     },
     activeSearch() {
+      this.home();
       this.search.isActive = true;
     },
     activeAbout() {
+      this.home();
       this.about.isActive = true;
     },
     home() {
@@ -64,52 +69,65 @@ export default defineStore('breadcrumb', {
       this.sign.isActive = false;
       this.search.isActive = false;
       this.about.isActive = false;
-    }
+      this.monitoring.isActive = false;
+    },
+    activeMonitoring() {
+      this.home();
+      this.monitoring.isActive = true;
+    },
   },
   getters: {
-    path(): {activated: string, name: string, path: string}[] {
-      if(this.search.isActive) {
-        return [{
-          activated: 'Busca',
-          name: '',
-          path: '/search'
-        }];
+    path(): { name: string; path: string }[] {
+      if (this.search.isActive) {
+        return [
+          {
+            name: 'Busca',
+            path: '/search',
+          },
+        ];
       }
 
-      if(this.about.isActive) {
-        return [{
-          activated: 'Sobre',
-          name: '',
-          path: '/about'
-        }];
+      if (this.about.isActive) {
+        return [
+          {
+            name: 'Sobre',
+            path: '/about',
+          },
+        ];
       }
 
-      const result: {activated: string, name: string, path: string}[] = [];
-      
-      if(this.course.isActive) {
+      if (this.monitoring.isActive) {
+        return [
+          {
+            name: 'Monitoramento',
+            path: '/monitoring',
+          },
+        ];
+      }
+
+      const result: { name: string; path: string }[] = [];
+
+      if (this.course.isActive) {
         result.push({
-          activated: 'Curso',
           name: this.course.name,
-          path: this.course.path
+          path: this.course.path,
         });
 
-        if(this.subject.isActive) {
+        if (this.subject.isActive) {
           result.push({
-            activated: 'Disciplina',
             name: this.subject.name,
-            path: this.subject.path
+            path: this.subject.path,
           });
-          
-          if(this.sign.isActive) {
+
+          if (this.sign.isActive) {
             result.push({
-              activated: 'Sinal',
               name: this.sign.name,
-              path: this.sign.path
+              path: this.sign.path,
             });
           }
         }
       }
       return result;
-    }
-  }
-})
+    },
+  },
+});
