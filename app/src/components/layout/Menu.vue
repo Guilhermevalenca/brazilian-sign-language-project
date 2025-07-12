@@ -1,8 +1,14 @@
 <template>
-  <nav class="menu-container-closed" tabindex="0"  :class="{'menu-container-open': isVisible}" ref="menuContainer">
+  <nav
+      class="menu-container-closed" tabindex="0"
+      :class="{'menu-container-open':hovering}"
+      ref="menuContainer"
+      @mouseenter="hovering = true"
+      @mouseleave="hovering = false"
+  >
     <button title="Início" @click="navigateTo('/')">
       <img src="~/assets/icons/home.svg" width="24px" height="24px">
-      <span v-show="isVisible">Inicio</span>
+      <span v-show="hovering">Inicio</span>
     </button>
 <!--    <button @click="navigateTo('/favorite')">-->
 <!--      <img src="~/assets/icons/favorite.svg" width="24px" height="24px">-->
@@ -10,18 +16,14 @@
 <!--    </button>-->
     <button title="Sobre nós" @click="navigateTo('/about')">
       <img src="~/assets/icons/info.svg" width="24px" height="24px">
-      <span v-show="isVisible">Sobre nós</span>
+      <span v-show="hovering">Sobre nós</span>
     </button>
   </nav>
 </template>
 
-<script lang="ts">
-export default {
-  name: "Menu",
-  props:{
-    isVisible: Boolean,
-  },
-}
+<script setup lang="ts">
+import { ref } from 'vue'
+const hovering = ref(false)
 </script>
 @import url('https://fonts.googleapis.com/css2?family=Quantico:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 
@@ -34,10 +36,11 @@ export default {
   align-self: flex-start;
   align-items: center;
   justify-content: flex-start;
-  height: 100vh;
+  position: fixed;
+  left: 0;
   width: 5em;
   margin:0;
-  position: absolute;
+  height: 100vh;
   padding: 0em 0em;
   box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
 }

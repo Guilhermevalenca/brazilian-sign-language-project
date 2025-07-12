@@ -23,9 +23,6 @@
           <AppButton variant="default" @click="logout" >Desconectar</AppButton>
         </div>
       </div>
-    <section>
-      <Menu :isVisible="isVisibleHere" />
-    </section>
   </header>
 </template>
 
@@ -42,7 +39,6 @@ export default defineComponent({
   data() {
     return {
       userStore: null as null | ReturnType<typeof useUserStore>,
-      isVisibleHere: false
     }
   },
 
@@ -52,9 +48,6 @@ export default defineComponent({
       this.userStore!.resetDatas();
       navigateTo('/auth/login');
     },
-    showMenu(){
-      this.isVisibleHere = !this.isVisibleHere;
-    }
   },
 
   mounted() {
@@ -71,8 +64,8 @@ header {
   box-sizing: border-box;
   flex-flow: row wrap;
   top: 0;
+  position: relative;
   z-index: 0;
-  position: fixed;
   width: 100%;
   box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
 }

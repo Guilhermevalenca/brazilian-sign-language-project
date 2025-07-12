@@ -1,5 +1,6 @@
 <template>
   <LayoutAppHeader />
+  <LayoutMenu />
   <main>
     <section>
       <LayoutBreadcrumb />
