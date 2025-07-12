@@ -1,5 +1,5 @@
 <template>
-  <v-app-bar>
+  <header>
     <div class="header-content">
       <div>
         <button @click="showMenu()">
@@ -8,10 +8,10 @@
       </div>
       <div class="logo tw-cursor-pointer" @click="navigateTo('/')">
         <img
-          src="~/assets/logos/our-logo.svg"
-          width="288px"
-          height="78px"
-          alt="Logo do glossário de libras"
+            src="~/assets/logos/our-logo.svg"
+            width="288px"
+            height="78px"
+            alt="Logo do glossário de libras"
         />
       </div>
       <SearchingBar />
@@ -31,7 +31,7 @@
     <section>
       <Menu :isVisible="isVisibleHere" />
     </section>
-  </v-app-bar>
+  </header>
 </template>
 
 <script lang="ts">
@@ -75,6 +75,10 @@ div {
 header {
   box-sizing: border-box;
   flex-flow: row wrap;
+  top: 0;
+  z-index: 0;
+  position: fixed;
+  width: 100%;
   box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
 }
 .header-content {
