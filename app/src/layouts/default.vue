@@ -1,5 +1,6 @@
 <template>
   <LayoutAppHeader />
+  <LayoutMenu/>
   <main>
     <section>
       <LayoutBreadcrumb />
@@ -43,10 +44,15 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
-section {
+@media (max-width: 576px) {
+  main{
+    margin: 8rem auto 0 auto;
+    width: 90vw;
+}
+}
+main {
   margin: 8rem auto 0 auto;
-  width: 60vw;
-  overflow-y: auto;
+  width: 70vw;
 }
 .layout-actions {
   display: grid;

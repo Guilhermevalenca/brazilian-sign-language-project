@@ -1,10 +1,8 @@
 <template>
-  <div class="course-card-container">
     <div class="course-card" tabindex="0" role="button">
       <img :src="image()" :alt="'Icone do curso: ' + course?.name" />
       <legend>{{ course?.name }}</legend>
     </div>
-  </div>
 </template>
 
 <script lang="ts">
@@ -26,12 +24,9 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-.course-card-container {
-  display: grid;
-  grid-template-columns: repeat(1, 3fr); /* Define 4 colunas fixas */
-}
 .course-card {
   display: flex;
+  margin: 0;
   gap: 1em;
   text-align: center;
   flex-flow: column wrap;
@@ -42,6 +37,17 @@ export default defineComponent({
   font-size: 1em;
   width: 10em;
   cursor: pointer;
+  @media (max-width: 576px) {
+      margin: 1em;
+      width: 100%;
+      font-size: 11px;
+
+    img{
+      width: 20em;
+      height: 20em;
+      border-radius: 100%;
+    }
+  }
 }
 img {
   border-style: solid;
@@ -51,7 +57,7 @@ img {
   width: 8em;
   height: 8em;
 }
-.course-card-container:hover {
+.course-card:hover {
   transform: scale(1.1, 1.1);
 }
 </style>

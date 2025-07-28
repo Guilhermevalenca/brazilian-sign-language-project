@@ -1,16 +1,11 @@
 <template>
   <header>
     <div class="header-content">
-      <div>
-        <button @click="showMenu()">
-          <img src="~/assets/icons/menu.svg" width="24px" height="24px" alt="Menu" />
-        </button>
-      </div>
       <div class="logo tw-cursor-pointer" @click="navigateTo('/')">
         <img
           src="~/assets/logos/our-logo.svg"
-          width="288px"
-          height="78px"
+          width="278px"
+          height="68px"
           alt="Logo do glossário de libras"
         />
       </div>
@@ -41,13 +36,9 @@ import Menu from './Menu.vue';
 
 export default defineComponent({
   name: 'AppHeader',
-  components: {
-    Menu,
-  },
   data() {
     return {
       userStore: null as null | ReturnType<typeof useUserStore>,
-      isVisibleHere: false,
     };
   },
 
@@ -56,9 +47,6 @@ export default defineComponent({
       await AuthService.logout();
       this.userStore!.resetDatas();
       navigateTo('/auth/login');
-    },
-    showMenu() {
-      this.isVisibleHere = !this.isVisibleHere;
     },
   },
 
@@ -75,29 +63,27 @@ div {
 header {
   box-sizing: border-box;
   flex-flow: row wrap;
+  height: auto;
   top: 0;
-  z-index: 0;
   position: fixed;
+  z-index: 1000;
   width: 100%;
   box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
 }
 .header-content {
+  display: grid;
+  grid-template-columns: repeat(3,auto);
   box-sizing: border-box;
-  display: flex;
-  flex: auto;
-  flex-flow: row nowrap;
-  justify-content: space-around;
+  height: 5em;
   align-items: center;
-  align-content: stretch;
-  padding: 0.5rem 2rem;
+  align-content: center;
+  padding: 1rem 2rem;
   background-color: $primary-color;
 }
 .auth-container {
   display: flex;
   justify-content: flex-end;
-  padding: 0 2rem;
-  flex: auto;
-  flex-flow: row wrap;
+  flex-flow: row nowrap;
   gap: 1em;
 }
 button {
@@ -121,7 +107,7 @@ button {
 .auth-control-panel {
   display: flex;
   gap: 1em;
-  flex-flow: row wrap;
+  flex-flow: row nowrap;
   align-items: center;
   align-content: center;
   justify-content: center;

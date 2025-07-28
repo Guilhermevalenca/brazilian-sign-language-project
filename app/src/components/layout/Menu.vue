@@ -1,13 +1,14 @@
 <template>
   <nav
     class="menu-container-closed"
+    :class="{ 'menu-container-open': isHovering }"
     tabindex="0"
-    ref="menuContainer"
-    :class="{ 'menu-container-open': props.isVisible }"
+    @mouseenter="isHovering=true"
+    @mouseleave="isHovering=false"
   >
     <button title="Início" @click="navigateTo('/')">
       <img src="~/assets/icons/home.svg" width="24px" height="24px" alt="Página inicial" />
-      <span v-show="props.isVisible">Inicio</span>
+      <span v-if="isHovering">Inicio</span>
     </button>
     <!--    <button @click="navigateTo('/favorite')">-->
     <!--      <img src="~/assets/icons/favorite.svg" width="24px" height="24px">-->
@@ -15,22 +16,22 @@
     <!--    </button>-->
     <button title="Sobre nós" @click="navigateTo('/about')">
       <img src="~/assets/icons/info.svg" width="24px" height="24px" alt="Sobre nós" />
-      <span v-show="props.isVisible">Sobre nós</span>
+      <span v-if="isHovering">Sobre nós</span>
     </button>
     <button v-if="userStore.is_admin" title="Gráficos" @click="navigateTo('/monitoring')">
       <img src="~/assets/icons/chart-bar.svg" width="24px" height="24px" alt="Gráficos" />
-      <span v-show="props.isVisible">Gráficos</span>
+      <span v-if="isHovering">Gráficos</span>
     </button>
   </nav>
 </template>
 
 <script setup lang="ts">
 import useUserStore from '~/stores/useUserStore';
+import { ref } from 'vue';
 
+const isHovering = ref(false)
 const userStore = useUserStore();
-const props = defineProps({
-  isVisible: Boolean,
-});
+
 </script>
 
 @import
@@ -48,12 +49,15 @@ url('https://fonts.googleapis.com/css2?family=Quantico:ital,wght@0,400;0,700;1,4
   height: 100vh;
   width: 5em;
   margin: 0;
-  position: absolute;
+  top: 5em;
+  position: fixed;
   padding: 0em 0em;
-  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: 2px 2px 4px 0 rgba(0, 0, 0, 0.2);
+  z-index: 1001;
 }
 .menu-container-open {
   width: 14em;
+  z-index: 1001;
 }
 button {
   width: 100%;

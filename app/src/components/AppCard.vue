@@ -47,8 +47,7 @@ export default {
 }
 .screen-card {
   @extend .card-default;
-  min-width: 50vw;
-  max-width: 50vw;
+  min-width: 100%;
 }
 .card-list {
   @extend .card-default;
@@ -57,5 +56,9 @@ export default {
   justify-content: flex-start;
   align-items: center;
   cursor: pointer;
+}
+.card-list:hover {
+  background-color: #a6e4af;
+  box-shadow: 0 2px 3px 2px rgba(0, 0, 0, 0.2);
 }
 </style>

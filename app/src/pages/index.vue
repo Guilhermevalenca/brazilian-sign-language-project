@@ -2,13 +2,13 @@
   <div class="content-title">
     <h1>Cursos</h1>
   </div>
-  <div class="content-container">
-    <div class="index-content">
+  <div :class="content-container">
+    <div class="course-card-container">
       <CourseCard
-        v-for="course in courses"
-        :key="`course.id-${course.id}`"
-        :course="course"
-        @click="navigateTo(`/course/${course.id}`)"
+          v-for="course in courses"
+          :key="`course.id-${course.id}`"
+          :course="course"
+          @click="navigateTo(`/course/${course.id}`)"
       />
     </div>
     <Pagination v-model:page="page" :last-page="data.last_page" />
@@ -66,13 +66,23 @@ onMounted(() => {
   useBreadcrumbStore().home();
 });
 </script>
+<style scoped lang="scss">
+  .course-card-container {
+    display: grid;
+    max-width: 100%;
+    grid-template-columns: repeat(auto-fit, minmax(160px, auto));
+    justify-items: center;
+    gap: 1em;
+    padding:0;
+    margin: 0;
+    @media (max-width: 576px) {
+      grid-template-columns: repeat(auto-fill, minmax(320px,1fr));
+    }
+  }
+  .content-title{
+    display: grid;
+    align-self: center;
+    justify-self: center;
+  }
 
-<style lang="scss" scoped>
-.index-content {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  flex-wrap: wrap;
-  gap: 3em;
-  padding: 2em;
-}
 </style>
