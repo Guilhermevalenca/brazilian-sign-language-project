@@ -1,5 +1,5 @@
 <template>
-  <v-app-bar>
+  <header>
     <div class="header-content">
       <div class="logo tw-cursor-pointer" @click="navigateTo('/')">
         <img
@@ -23,16 +23,12 @@
         <AppButton variant="default" @click="logout">Desconectar</AppButton>
       </div>
     </div>
-    <section>
-      <Menu :isVisible="isVisibleHere" />
-    </section>
-  </v-app-bar>
+  </header>
 </template>
 
 <script lang="ts">
 import AuthService from '~/services/AuthService';
 import useUserStore from '~/stores/useUserStore';
-import Menu from './Menu.vue';
 
 export default defineComponent({
   name: 'AppHeader',
