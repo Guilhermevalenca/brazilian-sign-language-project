@@ -155,6 +155,7 @@ export default defineComponent({
   border-top-right-radius: 1em;
   border-top-left-radius: 1em;
   width: 100%;
+  min-width: 100%;
   height: 3em;
   display: flex;
   background-color: $primary-color;
@@ -183,10 +184,9 @@ export default defineComponent({
   }
 }
 .abacate {
-  width: 50vw;
+  box-sizing: border-box;
   border-top-right-radius: 0em;
   border-top-left-radius: 0em;
-  padding: 2em;
 }
 .slide-enter-active,
 .slide-leave-active {
@@ -199,7 +199,7 @@ export default defineComponent({
 }
 .update-container {
   display: flex;
-  flex-flow: column nowrap;
+  flex-flow: row nowrap;
   margin-right: 2em;
   align-items: flex-end;
   padding: 0.5em;

@@ -168,8 +168,4 @@ iframe {
   flex-flow: row;
   padding: 0.5em;
 }
-.sign-view:hover {
-  background-color: #a6e4af;
-  transform: scale(1.1, 1.1);
-}
 </style>

@@ -1,19 +1,18 @@
 <template>
-  <v-app>
-    <LayoutAppHeader />
-    <main>
-      <section>
-        <LayoutBreadcrumb />
-        <div class="layout-actions">
-          <LayoutBackButton v-show="!isHome" />
-        </div>
-        <slot />
-      </section>
-    </main>
-    <LayoutAdmActions v-if="user && user.is_admin" />
-    <div class="space" />
-    <LayoutAppFooter />
-  </v-app>
+  <LayoutAppHeader />
+  <LayoutMenu/>
+  <main>
+    <section>
+      <LayoutBreadcrumb />
+      <div class="layout-actions">
+        <LayoutBackButton v-show="!isHome" />
+      </div>
+      <slot />
+    </section>
+  </main>
+  <LayoutAdmActions v-if="user && user.is_admin" />
+  <div class="space" />
+  <LayoutAppFooter />
 </template>
 
 <script setup lang="ts">
@@ -45,10 +44,15 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
-section {
+@media (max-width: 576px) {
+  main{
+    margin: 8rem auto 0 auto;
+    width: 90vw;
+}
+}
+main {
   margin: 8rem auto 0 auto;
-  width: 60vw;
-  overflow-y: auto;
+  width: 70vw;
 }
 .layout-actions {
   display: grid;
