@@ -1,3 +1,4 @@
+import vuetify, { transformAssetUrls } from 'vite-plugin-vuetify'
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   compatibilityDate: '2025-03-16',
@@ -12,13 +13,20 @@ export default defineNuxtConfig({
     '/': { swr: 60 * 60 },
   },
   vite: {
-    css:
-        {
+    css: {
       preprocessorOptions: {
         scss: {
           additionalData: "@use '~/assets/css/colors.scss' as *;",
         },
       },
+    },
+    vue: {
+      template: {
+        transformAssetUrls,
+      },
+    },
+    optimizeDeps: {
+      include: ['vuetify'],
     },
   },
   postcss: {
@@ -27,9 +35,22 @@ export default defineNuxtConfig({
       autoprefixer: {},
     },
   },
-  modules: ['@pinia/nuxt', '@nuxt/image', '@nuxt/eslint'],
+  modules: [
+    '@pinia/nuxt',
+    '@nuxt/image',
+    '@nuxt/eslint',
+    (_options, nuxt) => {
+      nuxt.hooks.hook('vite:extendConfig', (config) => {
+        // @ts-expect-error
+        config.plugins.push(vuetify({ autoImport: true, styles: 'none' }))
+      })
+    },
+  ],
   pinia: {
     storesDirs: ['./stores/**'],
+  },
+  build: {
+    transpile: ['vuetify'],
   },
   app: {
     head: {

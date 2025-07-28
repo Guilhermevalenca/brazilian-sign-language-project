@@ -1,5 +1,5 @@
 <template>
-  <header>
+  <v-app-bar>
     <div class="header-content">
       <div class="logo tw-cursor-pointer" @click="navigateTo('/')">
         <img
@@ -26,7 +26,7 @@
     <section>
       <Menu :isVisible="isVisibleHere" />
     </section>
-  </header>
+  </v-app-bar>
 </template>
 
 <script lang="ts">
