@@ -53,7 +53,7 @@ async function submit() {
 <style lang="scss" scoped>
 .searching-bar-container {
   display: flex;
-  flex: auto;
+  justify-self: center;
 }
 .searching-bar {
   display: flex;

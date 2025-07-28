@@ -141,9 +141,3 @@ export default defineComponent({
   },
 });
 </script>
-<style lang="scss" scoped>
-.subject:hover {
-  background-color: #a6e4af;
-  transform: scale(1.1, 1.1);
-}
-</style>

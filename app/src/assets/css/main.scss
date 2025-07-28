@@ -29,6 +29,7 @@ html body {
   color: $soft-black-1;
 }
 .content-title {
+  margin: 0 0 2em 0;
   display: flex;
   flex-direction: row;
   align-self: flex-start;
@@ -57,6 +58,8 @@ legend {
   padding-bottom: 0.5em;
 }
 .content-container {
+  width: 100%;
+  max-width: 100%;
   display: flex;
   align-self: center;
   justify-self: center;
@@ -74,8 +77,8 @@ legend {
 .medium-iframe {
   box-sizing: border-box;
   border-radius: 2em;
-  width: 50vw;
-  height: 60vh;
+  width: 60vw;
+  height: 70vh;
 }
 .content-text {
   padding: 1em;
