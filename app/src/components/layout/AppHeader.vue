@@ -74,7 +74,7 @@ header {
   display: grid;
   grid-template-columns: repeat(3,auto);
   box-sizing: border-box;
-  height: 5em;
+  height: 5.4rem;
   align-items: center;
   align-content: center;
   padding: 1rem 2rem;
@@ -84,7 +84,7 @@ header {
   display: flex;
   justify-content: flex-end;
   flex-flow: row nowrap;
-  gap: 1em;
+  gap: 1rem;
 }
 button {
   background: none;
@@ -94,19 +94,20 @@ button {
   cursor: pointer;
 }
 .user-avatar {
+  cursor: pointer;
   display: flex;
   flex-flow: row wrap;
   align-items: center;
   align-content: center;
   justify-content: center;
-  padding: 0.5em;
+  padding: 0.5rem;
   border: solid 1px white;
-  border-radius: 0.5em;
+  border-radius: 0.5rem;
   color: white;
 }
 .auth-control-panel {
   display: flex;
-  gap: 1em;
+  gap: 1rem;
   flex-flow: row nowrap;
   align-items: center;
   align-content: center;
