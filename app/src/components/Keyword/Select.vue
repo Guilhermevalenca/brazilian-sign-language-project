@@ -35,120 +35,103 @@
   </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import type { PropType } from 'vue';
 import type { KeywordType } from '~/types/Keyword';
 import KeywordService from '~/services/KeywordService';
 
-export default defineComponent({
-  name: 'KeywordSelect',
+const { $swal } = useNuxtApp();
 
-  async setup() {
-    const keywords = ref<KeywordType[]>([]);
-    const page = ref(1);
-    const last_page = ref(1);
-
-    async function getKeywords() {
-      const data = await KeywordService.fetch(page.value);
-      keywords.value.push(...data.keywords);
-      last_page.value = data.last_page;
-    }
-
-    await getKeywords();
-
-    return {
-      keywords,
-      page,
-      last_page,
-      getKeywords,
-    };
-  },
-
-  data: () => ({
-    newKeyword: {
-      name: '',
-    } as KeywordType,
-    isAddKeyword: false,
-  }),
-
-  props: {
-    modelValue: {
-      type: Array as PropType<KeywordType[]>,
-      required: true,
-    },
-  },
-
-  emits: ['update:modelValue'],
-
-  computed: {
-    selected: {
-      get(): KeywordType[] {
-        return this.modelValue;
-      },
-      set(value: KeywordType[]) {
-        this.$emit('update:modelValue', value);
-      },
-    },
-  },
-
-  methods: {
-    async submit() {
-      try {
-        this.$swal.fire({
-          title: 'Criando palavra-chave...',
-        });
-        this.$swal.showLoading();
-
-        await KeywordService.create(this.newKeyword);
-
-        this.page = 1;
-        this.keywords = [];
-        await this.getAllKeywords();
-        this.isAddKeyword = false;
-        this.newKeyword.name = '';
-
-        this.$swal.fire({
-          title: 'Palavra-chave criada com sucesso!',
-          icon: 'success',
-        });
-      } catch (e) {
-        this.$swal
-          .fire({
-            icon: 'error',
-            title: 'Algo deu errado',
-            text: 'Ocorreu um erro, gostaria de tentar novamente ?',
-            timer: 10000,
-            showConfirmButton: true,
-            confirmButtonText: 'Tentar novamente',
-            showCancelButton: true,
-            cancelButtonText: 'Cancelar',
-          })
-          .then((res) => {
-            if (res.isConfirmed) {
-              this.submit();
-            }
-          });
-      }
-    },
-    async getAllKeywords() {
-      if (this.page < this.last_page) {
-        await this.getKeywords();
-        this.page++;
-        setTimeout(() => {
-          this.getAllKeywords();
-        }, 100);
-      }
-    },
-  },
-
-  async mounted() {
-    setTimeout(() => {
-      this.page = 2;
-      this.getAllKeywords();
-    }, 300);
+const props = defineProps({
+  modelValue: {
+    type: Array as PropType<KeywordType[]>,
+    required: true,
   },
 });
+const emit = defineEmits(['update:modelValue']);
+
+const selected = computed({
+  get(): KeywordType[] {
+    return props.modelValue;
+  },
+  set(value: KeywordType[]) {
+    emit('update:modelValue', value);
+  },
+});
+
+const keywords = ref<KeywordType[]>([]);
+const page = ref(1);
+const last_page = ref(1);
+const newKeyword = ref<KeywordType>({
+  name: ''
+});
+const isAddKeyword = ref(false);
+
+await getKeywords();
+
+onMounted(async () => {
+  setTimeout(() => {
+    page.value = 2;
+    getAllKeywords();
+  }, 300);
+});
+
+async function getKeywords() {
+  const data = await KeywordService.fetch(page.value);
+  keywords.value = [...keywords.value, ...data.keywords];
+  last_page.value = data.last_page;
+}
+
+async function submit() {
+  try {
+    $swal.fire({
+      title: 'Criando palavra-chave...',
+    });
+    $swal.showLoading();
+
+    await KeywordService.create(newKeyword.value);
+
+    page.value = 1;
+    keywords.value = [];
+    await getAllKeywords();
+    isAddKeyword.value = false;
+    newKeyword.value.name = '';
+
+    $swal.fire({
+      title: 'Palavra-chave criada com sucesso!',
+      icon: 'success',
+    });
+  } catch (e) {
+    $swal
+        .fire({
+          icon: 'error',
+          title: 'Algo deu errado',
+          text: 'Ocorreu um erro, gostaria de tentar novamente ?',
+          timer: 10000,
+          showConfirmButton: true,
+          confirmButtonText: 'Tentar novamente',
+          showCancelButton: true,
+          cancelButtonText: 'Cancelar',
+        })
+        .then((res) => {
+          if (res.isConfirmed) {
+            submit();
+          }
+        });
+  }
+}
+
+async function getAllKeywords() {
+  if (page.value <= last_page.value) {
+    await getKeywords();
+    page.value++;
+    setTimeout(() => {
+      getAllKeywords();
+    }, 100);
+  }
+}
 </script>
+
 <style lang="scss" scoped>
 .keywords-list-container {
   display: flex;

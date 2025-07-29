@@ -10,63 +10,50 @@
   </client-only>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import type { CourseType } from '~/types/Course';
 import CourseService from '~/services/CourseService';
 
-export default defineComponent({
-  name: 'CourseSelect',
+const props = defineProps({
+  modelValue: {
+    type: Array as PropType<CourseType[]>,
+    required: true,
+  },
+});
 
-  async setup() {
-    const courses = ref<CourseType[]>([]);
-    const page = ref<number>(1);
-    const last_page = ref<number>(1);
+const emit = defineEmits(['update:modelValue']);
 
-    async function getCourses() {
+const selected = computed({
+  get(): CourseType[] {
+    return props.modelValue;
+  },
+  set(value: CourseType[]) {
+    emit('update:modelValue', value);
+  },
+});
+
+const courses = ref<CourseType[]>([]);
+const page = ref<number>(1);
+const last_page = ref<number>(1);
+
+const { refresh } = await useAsyncData(
+    'fetch-courses-all-' + page.value,
+    async () => {
       const data = await CourseService.fetch(page.value);
       courses.value.push(...data.courses);
       last_page.value = data.last_page;
+      return null;
     }
+);
 
-    getCourses();
-
-    return {
-      courses,
-      page,
-      last_page,
-      getCourses,
-    };
-  },
-
-  props: {
-    modelValue: {
-      type: Object as PropType<CourseType[]>,
-      required: true,
-    },
-  },
-
-  emits: ['update:modelValue'],
-
-  computed: {
-    selected: {
-      get(): CourseType[] {
-        return this.modelValue;
-      },
-      set(value: CourseType[]) {
-        this.$emit('update:modelValue', value);
-      },
-    },
-  },
-
-  mounted() {
-    const moreCourses = async () => {
-      if (this.page < this.last_page) {
-        this.page++;
-        await this.getCourses();
-        setTimeout(moreCourses, 300);
-      }
-    };
-    setTimeout(moreCourses, 300);
-  },
-});
+onMounted(() => {
+  const moreCourses = async () => {
+    if (page.value < last_page.value) {
+      page.value++;
+      await refresh();
+      setTimeout(moreCourses, 300);
+    }
+  };
+  setTimeout(moreCourses, 300);
+})
 </script>

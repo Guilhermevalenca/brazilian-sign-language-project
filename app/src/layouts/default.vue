@@ -36,11 +36,11 @@ async function sendMonitoring() {
   }
 }
 
-onMounted(() => {
-  setInterval(async () => {
-    sendMonitoring();
-  }, 2000);
-});
+// onMounted(() => {
+//   setInterval(async () => {
+//     sendMonitoring();
+//   }, 2000);
+// });
 </script>
 
 <style lang="scss" scoped>
