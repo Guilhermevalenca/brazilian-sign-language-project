@@ -6,7 +6,7 @@
         <legend>Informações do sinal</legend>
         <label>
           Nome:
-          <AppInput v-model="sign.name" placeholder="Nome do sinal" name="sign.name" />
+          <AppInput v-model="sign.name" placeholder="Nome do sinal" name="sign.name" maxlength="250"/>
         </label>
         <label>
           Link do video:

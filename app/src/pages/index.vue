@@ -2,7 +2,7 @@
   <div class="content-title">
     <h1>Cursos</h1>
   </div>
-  <div :class="content-container">
+  <div>
     <div class="course-card-container">
       <CourseCard
           v-for="course in courses"

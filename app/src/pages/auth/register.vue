@@ -1,7 +1,7 @@
 <template>
   <AppCard>
     <AppLogo />
-    <h1>Cadastro</h1>
+    <h1 style="text-align:center">Cadastro</h1>
     <AppForm @submit.prevent="submit">
       <label
         >Nome:

@@ -19,9 +19,15 @@ button {
 }
 h1 {
   font-size: 2em;
+  width: 100%;
+  white-space: wrap;
+  word-break: break-all;
 }
 h2 {
   font-size: 1.6em;
+  width: 100%;
+  white-space: wrap;
+  word-break: break-all;
 }
 html body {
   background-color: $background-color;
