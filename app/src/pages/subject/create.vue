@@ -12,6 +12,7 @@
             placeholder="Digite o nome da matéria"
             name="subject.name"
             v-model="subject.name"
+            maxlength="250"
           />
         </label>
       </div>

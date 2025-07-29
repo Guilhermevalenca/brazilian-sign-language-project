@@ -1,7 +1,7 @@
 <template>
   <AppCard>
     <AppLogo />
-    <h1>Login</h1>
+    <h1 style="text-align:center">Login</h1>
     <AppForm @submit.prevent="submit">
       <label
         >Email:

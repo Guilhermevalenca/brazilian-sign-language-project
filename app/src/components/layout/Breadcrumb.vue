@@ -61,9 +61,14 @@ export default defineComponent({
 .breadcrumb {
   margin: 0;
   display: flex;
-  gap: 0.5em;
+  gap: 0.5rem;
 }
 .breadcrumb-item {
+  min-width: 2rem;
+  max-width: 15rem;
+  white-space: nowrap;
+  overflow: hidden;    
+  text-overflow: ellipsis;
   cursor: pointer;
   user-select: none;
   &.clickable {

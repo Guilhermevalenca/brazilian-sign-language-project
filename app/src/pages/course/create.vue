@@ -4,7 +4,12 @@
     <AppForm @submit.prevent="submit" enctype="multipart/form-data">
       <label>
         Nome do curso:
-        <AppInput placeholder="Digite o nome do curso" v-model="course.name" name="course.name" />
+        <AppInput
+            placeholder="Digite o nome do curso"
+            v-model="course.name"
+            name="course.name"
+            maxlength="250"
+        />
       </label>
       <label>
         Escolha uma imagem:
