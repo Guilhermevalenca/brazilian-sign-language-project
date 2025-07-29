@@ -23,16 +23,12 @@
         <AppButton variant="default" @click="logout">Desconectar</AppButton>
       </div>
     </div>
-    <section>
-      <Menu :isVisible="isVisibleHere" />
-    </section>
   </header>
 </template>
 
 <script lang="ts">
 import AuthService from '~/services/AuthService';
 import useUserStore from '~/stores/useUserStore';
-import Menu from './Menu.vue';
 
 export default defineComponent({
   name: 'AppHeader',

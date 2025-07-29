@@ -13,6 +13,7 @@
     "format": "prettier --write src/ --config .prettierrc.json"
   },
   "dependencies": {
+    "@mdi/font": "^7.4.47",
     "@nuxt/eslint": "^1.5.2",
     "@nuxt/image": "^1.10.0",
     "@pinia/nuxt": "^0.9.0",
