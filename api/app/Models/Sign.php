@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Support\Facades\DB;
+
 
 class Sign extends Model
 {
@@ -17,6 +19,40 @@ class Sign extends Model
         'name',
         'display'
     ];
+
+    static public function adjustOrderByName()
+    {
+        $sql = "
+            SELECT s.id, s.name, s.display,
+                   k.nat_key
+            FROM signs s
+            CROSS JOIN LATERAL (
+                SELECT string_agg(
+                    CASE
+                        WHEN tok ~ '^\d+$'
+                            THEN to_char(tok::bigint, 'FM00000000000000000000') -- 20 dígitos
+                        ELSE lower(tok)
+                    END,
+                    '' ORDER BY ord
+                ) AS nat_key
+                FROM (
+                    SELECT (regexp_matches(s.name, '\d+|\D+', 'g'))[1] AS tok, ordinality AS ord
+                    FROM regexp_matches(s.name, '\d+|\D+', 'g') WITH ORDINALITY
+                ) AS t
+            ) AS k
+        ";
+
+        return DB::table(DB::raw("({$sql}) as sub"))
+            ->select('sub.id', 'sub.name', 'sub.display')
+            ->orderBy('sub.nat_key')
+            ->orderBy('sub.name');
+    }
+
+    public function adjustOrderByNameOnly()
+    {
+        return self::adjustOrderByName();
+    }
+
 
     public function description(): HasOne
     {

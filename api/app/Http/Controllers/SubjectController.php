@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\subject\StoreSubjectRequest;
 use App\Http\Requests\subject\UpdateSubjectRequest;
 use App\Models\Subject;
+use App\Models\Sign;
+use Illuminate\Support\Facades\DB;
 
 class SubjectController extends Controller
 {
@@ -38,7 +40,29 @@ class SubjectController extends Controller
     public function show(Subject $subject)
     {
         $subject->signs = $subject->signs()
-            ->orderBy('name')
+            ->select('signs.*') // garante que pegamos apenas os campos da tabela signs
+            ->joinSub(function ($query) {
+                $query->select('s.id',
+                    DB::raw("string_agg(
+                            CASE
+                                WHEN tok ~ '^\d+$'
+                                    THEN to_char(tok::bigint, 'FM00000000000000000000')
+                                ELSE lower(tok)
+                            END,
+                            '' ORDER BY ord
+                        ) AS nat_key")
+                )
+                    ->from('signs as s')
+                    ->join(DB::raw("LATERAL (
+                    SELECT (regexp_matches(s.name, '\\d+|\\D+', 'g'))[1] AS tok, ordinality AS ord
+                    FROM regexp_matches(s.name, '\\d+|\\D+', 'g') WITH ORDINALITY
+                ) AS t"), function ($join) {
+                        $join->on('s.id', '=', 's.id'); // join lateral “dummy”, só pra SQL aceitar
+                    })
+                    ->groupBy('s.id');
+            }, 'k', 'k.id', '=', 'signs.id')
+            ->orderBy('k.nat_key')
+            ->orderBy('signs.name')
             ->paginate(8);
         return response($subject, 200);
     }
