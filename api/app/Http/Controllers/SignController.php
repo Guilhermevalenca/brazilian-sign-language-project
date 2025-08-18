@@ -10,7 +10,8 @@ class SignController extends Controller
 {
     public function index()
     {
-        $signs = Sign::orderBy('name')->paginate();
+//        $signs = Sign::orderBy('name')->paginate();
+        $signs = Sign::adjustOrderByName()->paginate();
         return response($signs, 200);
     }
 
