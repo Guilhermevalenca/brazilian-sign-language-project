@@ -1,6 +1,6 @@
 <template>
   <LayoutAppHeader />
-  <LayoutMenu/>
+  <LayoutMenu />
   <main>
     <section>
       <LayoutBreadcrumb />
@@ -36,19 +36,19 @@ async function sendMonitoring() {
   }
 }
 
-// onMounted(() => {
-//   setInterval(async () => {
-//     sendMonitoring();
-//   }, 2000);
-// });
+onMounted(() => {
+  setInterval(async () => {
+    sendMonitoring();
+  }, 5000);
+});
 </script>
 
 <style lang="scss" scoped>
 @media (max-width: 576px) {
-  main{
+  main {
     margin: 8rem auto 0 auto;
     width: 90vw;
-}
+  }
 }
 main {
   margin: 8rem auto 0 auto;
