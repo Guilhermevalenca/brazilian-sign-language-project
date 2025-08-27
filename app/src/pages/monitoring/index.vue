@@ -63,7 +63,7 @@ const barOptions = {
   responsive: true,
   plugins: {
     legend: { display: false },
-    title: { display: true, text: 'Quantidade de acessos desde 08 de AGOSTO de 2025' },
+    title: { display: true, text: 'Quantidade de acessos desde 08 de JULHO de 2025' },
   },
 };
 
