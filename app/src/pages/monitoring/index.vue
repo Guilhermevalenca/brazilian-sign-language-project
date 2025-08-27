@@ -31,30 +31,38 @@ const avgPartOfPage = computed((): AvgPartOfPageType[] => {
     const translated = data.value.avgPartOfPage.map(
       ({ part_of_page, average_daily }: AvgPartOfPageType) => {
         let part = '';
+        let color = '';
+
         switch (part_of_page) {
           case 'subject':
             part = 'Disciplina';
+            color = '#3B82F6';
             break;
           case 'course':
             part = 'Curso';
+            color = '#10B981';
             break;
           case 'home':
-            part = 'Pagina inicial';
+            part = 'Página inicial';
+            color = '#F59E0B';
             break;
           case 'search':
             part = 'Busca';
+            color = '#8B5CF6';
             break;
           case 'sign':
             part = 'Sinais';
+            color = '#EF4444';
             break;
           default:
             part = 'Outro';
-            break;
+            color = '#6B7280';
         }
 
         return {
           part_of_page: part,
           average_daily: Math.round(average_daily),
+          color,
         };
       },
     );
@@ -81,7 +89,7 @@ const barOptions = {
   responsive: true,
   plugins: {
     legend: { display: false },
-    title: { display: true, text: 'Quantidade de acessos por paginas' },
+    title: { display: true, text: 'Quantidade de acessos desde 08 de AGOSTO de 2025' },
   },
 };
 
@@ -99,8 +107,9 @@ onMounted(() => {
           labels: avgPartOfPage.map((i) => i.part_of_page),
           datasets: [
             {
-              label: 'Quantidade de acessos',
+              label: barOptions.plugins.title.text,
               data: avgPartOfPage.map((i) => i.average_daily),
+              backgroundColor: avgPartOfPage.map((i) => i.color),
             },
           ],
         }"
