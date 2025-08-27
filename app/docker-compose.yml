@@ -1,13 +1,30 @@
 name: brazilian-sign-language
 services:
   app:
-    image: 'node:20-alpine'
+    image: 'brazilian-sign-language-app/dev'
     ports:
       - '3000:3000'
     working_dir: /app
+    build:
+      context: .
+      dockerfile: Dockerfile
     volumes:
       - type: bind
         source: .
         target: /app
     tty: true
-    command: sh -c "yarn install && yarn dev"
+    command: sh -c "pnpm install && pnpm dev"
+  app-prod:
+    image: 'brazilian-sign-language-app/prod'
+    ports:
+      - '3000:3000'
+    working_dir: /app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: brazilian-sign-language-app/prod
+    restart: always
+    profiles:
+      - production
+    env_file:
+      - .env.prod

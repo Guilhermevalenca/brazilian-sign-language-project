@@ -4,10 +4,10 @@ WORKDIR /app
 
 COPY . /app
 
-RUN yarn install
+RUN pnpm install
 
-RUN yarn build
+RUN pnpm build
 
 EXPOSE 3000
 
-CMD ["yarn", "preview"]
+CMD ["pnpm", "preview"]
