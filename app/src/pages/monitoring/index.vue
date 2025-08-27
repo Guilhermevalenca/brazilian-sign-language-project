@@ -26,46 +26,10 @@ const { data, status, refresh } = await useAsyncData(
   },
 );
 
+const order = ['Página inicial', 'Busca', 'Cursos', 'Disciplinas', 'Sinais', 'Outros'];
 const avgPartOfPage = computed((): AvgPartOfPageType[] => {
   if (data.value.avgPartOfPage) {
-    const translated = data.value.avgPartOfPage.map(
-      ({ part_of_page, average_daily }: AvgPartOfPageType) => {
-        let part = '';
-        let color = '';
-
-        switch (part_of_page) {
-          case 'subject':
-            part = 'Disciplina';
-            color = '#3B82F6';
-            break;
-          case 'course':
-            part = 'Curso';
-            color = '#10B981';
-            break;
-          case 'home':
-            part = 'Página inicial';
-            color = '#F59E0B';
-            break;
-          case 'search':
-            part = 'Busca';
-            color = '#8B5CF6';
-            break;
-          case 'sign':
-            part = 'Sinais';
-            color = '#EF4444';
-            break;
-          default:
-            part = 'Outro';
-            color = '#6B7280';
-        }
-
-        return {
-          part_of_page: part,
-          average_daily: Math.round(average_daily),
-          color,
-        };
-      },
-    );
+    const translated = data.value.avgPartOfPage;
 
     const response = translated.filter((item: AvgPartOfPageType) => item.part_of_page !== 'Outro');
     let totalOther = 0;
@@ -80,7 +44,17 @@ const avgPartOfPage = computed((): AvgPartOfPageType[] => {
         average_daily: totalOther,
       });
     }
-    return response;
+
+    return response.sort((a: AvgPartOfPageType, b: AvgPartOfPageType) => {
+      const indexA = order.indexOf(a.part_of_page);
+      const indexB = order.indexOf(b.part_of_page);
+
+      // Se não encontrar, coloca no final
+      const finalIndexA = indexA === -1 ? order.length : indexA;
+      const finalIndexB = indexB === -1 ? order.length : indexB;
+
+      return finalIndexA - finalIndexB;
+    });
   }
   return [];
 });

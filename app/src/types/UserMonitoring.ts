@@ -4,4 +4,10 @@ type AvgPartOfPageType = {
   color: string;
 };
 
-export type { AvgPartOfPageType };
+type UserMonitoringDto = {
+  part_of_page: string;
+  token: string | null;
+  timestamp: string | Date;
+};
+
+export type { AvgPartOfPageType, UserMonitoringDto };

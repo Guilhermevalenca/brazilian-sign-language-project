@@ -1,24 +1,36 @@
 import Service from '~/services/Service';
+import { UserMonitoringAdapter } from '~/adapters/UserMonitoringAdapter';
+import type { Adapter } from '~/adapters/Adapter';
+import type { AvgPartOfPageType, UserMonitoringDto } from '~/types/UserMonitoring';
 
-export default class UserMonitoringService extends Service {
-  static async register(path: string) {
+export class UserMonitoringService extends Service {
+  constructor(
+    private readonly userMonitoringAdapter: Adapter<AvgPartOfPageType, UserMonitoringDto>,
+  ) {
+    super();
+  }
+
+  async register(path_of_page: string) {
     const $axios = this.axiosInstance();
-    const { data } = await $axios.post('api/user-monitoring', {
-      part_of_page: path,
-      token: localStorage.getItem('token_monitoring'),
-      timestamp: new Date().toISOString().slice(0, 19).replace('T', ' '),
-    });
+
+    const body: Partial<AvgPartOfPageType> = { part_of_page: path_of_page };
+
+    const { data } = await $axios.post(
+      'api/user-monitoring',
+      this.userMonitoringAdapter.toDto(body),
+    );
     localStorage.setItem('token_monitoring', data.token);
   }
-  static async fetch() {
+
+  async fetch() {
     const $axios = this.axiosInstance();
     const { data } = await $axios.get('/api/user-monitoring');
 
-    console.log(data);
-
     return {
-      avgPartOfPage: data.avgPartOfPage,
+      avgPartOfPage: data.avgPartOfPage.map(this.userMonitoringAdapter.toType),
       // hitsPerReference: data.hitsPerReference
     };
   }
 }
+
+export default new UserMonitoringService(new UserMonitoringAdapter());

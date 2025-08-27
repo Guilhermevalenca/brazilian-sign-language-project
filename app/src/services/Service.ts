@@ -9,4 +9,8 @@ export default class Service {
     }
     return $axios;
   }
+
+  public axiosInstance() {
+    return Service.axiosInstance();
+  }
 }
